@@ -1,11 +1,12 @@
 public class Invitation extends Message
 {
     private String invitationText;
-    private String jobTitle;
+    private int jobID;
 
-    public Invitation(String invitationText, String jobTitle)
+    public Invitation(int senderID, int recieverID, boolean hasRecieved, String invitationText, int jobID)
     {
+        super(senderID, recieverID, hasRecieved);
         this.invitationText = invitationText;
-        this.jobTitle = jobTitle;
+        this.jobID = jobID;
     }
 }
