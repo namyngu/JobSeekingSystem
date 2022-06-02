@@ -6,6 +6,9 @@ public class Jobseeker extends User
     private ArrayList<Application> applications;
     private ArrayList<Invitation> invitations;
     private ArrayList<String> skills;
+    private int totalApplied;
+    private int totalOffers;
+    private int totalInvites;
 
     public Jobseeker(int userID, String name, String userName, String password, boolean loggedIn, boolean active)
     {
@@ -13,5 +16,8 @@ public class Jobseeker extends User
         this.applications = new ArrayList<Application>();
         this.invitations = new ArrayList<Invitation>();
         this.skills = new ArrayList<String>();
+        this.totalApplied = 0;
+        this.totalOffers =0;
+        this.totalInvites = 0;
     }
 }

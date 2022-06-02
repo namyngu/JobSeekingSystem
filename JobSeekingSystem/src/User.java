@@ -8,10 +8,7 @@ public abstract class User
     private boolean active;
 
 
-    //we need to think about how userID is issued
-    //defult constructor needed because of code conventions
-    //but we can't have it defaulting to the same number
-    //static variable that increments on calling constructor?
+
 
     public User(int userID, String name, String userName, String password, boolean loggedIn, boolean active)
     {

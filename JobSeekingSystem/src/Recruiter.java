@@ -4,6 +4,8 @@ public class Recruiter extends User
 {
     private ArrayList<Job> jobs;
     private ArrayList<Invitation> invitations;
+    private int totalAdverts;
+    private int totalApplications;
 
     public Recruiter(int userID, String name, String userName, String password, boolean loggedIn, boolean active, ArrayList<Job> jobs, ArrayList<Invitation> invitations)
     {
