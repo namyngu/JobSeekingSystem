@@ -29,6 +29,7 @@ public class File_Control {
             returnString += scan.nextLine();
             returnString += ";";
         }
+
         file.close();
         return returnString;
     }
