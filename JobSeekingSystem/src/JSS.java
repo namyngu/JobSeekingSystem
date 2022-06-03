@@ -65,6 +65,13 @@ public class JSS
          */
     }
 
+    public void createJobseeker(String firstName, String lastName, String username, char[] password)
+    {
+        String name = firstName + " " + lastName;
+        Jobseeker newJobseeker = new Jobseeker(this.currentUserID,name,username,password);
+        currentUserID +=1;
+    }
+
 //    public static void main(String[] args)
 //    {
 //        JSS obj = new JSS();

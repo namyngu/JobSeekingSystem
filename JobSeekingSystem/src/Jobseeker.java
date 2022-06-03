@@ -10,9 +10,9 @@ public class Jobseeker extends User
     private int totalOffers;
     private int totalInvites;
 
-    public Jobseeker(int userID, String name, String userName, String password, boolean loggedIn, boolean active)
+    public Jobseeker(int userID, String name, String userName, char [] password)
     {
-        super(userID, name, userName, password, loggedIn, active);
+        super(userID, name, userName, password);
         this.applications = new ArrayList<Application>();
         this.invitations = new ArrayList<Invitation>();
         this.skills = new ArrayList<String>();
