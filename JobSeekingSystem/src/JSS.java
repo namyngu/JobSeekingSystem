@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -21,11 +22,42 @@ public class JSS
         readUserList();
     }
 
-    public void login(String username, char[] password)
+    public void login(String username, char[] password) throws Exception
     {
+        // 1. Verify username
+        boolean Exists = false;
+        int userIndex = 0;
+        for (String[] user: userList) {
+            if (username.equals(user[1])) {
+                //Match on username
+                Exists = true;
+                break;
+            }
+            userIndex++;
+        }
 
-       //TODO verify username here
-        //TODO verify password here
+        if (!Exists) {
+            //We did not find a username matching the entered name
+            throw new Exception("could not find a user with this username!");
+        }
+
+        // 2. Verify password
+        boolean passwordMatch = false;
+        for (String[] user: userList) {
+            char[] pwd = userList.get(userIndex)[2].toCharArray();
+            if (Arrays.equals(password, pwd)) {
+                //Match on password
+                passwordMatch = true;
+                break;
+            }
+        }
+
+        if (!passwordMatch) {
+            //This user's password did not match their stored password
+            throw new Exception("passwords do not match!");
+        }
+
+
         //TODO check account type (use instanceof to check subclass)
         //TODO call relevant control class
     }
