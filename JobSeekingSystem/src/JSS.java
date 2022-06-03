@@ -1,3 +1,10 @@
+/*
+Controller class for initial login, account registration and IO
+methods create account types (not admin as yet)
+TODO upon login transfer control to relevant subclass controller
+
+ */
+
 import javax.swing.*;
 import java.io.IOException;
 import java.lang.reflect.Array;

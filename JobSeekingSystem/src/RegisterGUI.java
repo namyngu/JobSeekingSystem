@@ -1,3 +1,12 @@
+
+/*
+Registration GUI called by selecting register on the LoginGUI
+Does not create users directly but calls method in JSS controller to do so
+TODO validation
+TODO fix radio buttons, both can be selected
+TODO after registration return to login screen
+ */
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
