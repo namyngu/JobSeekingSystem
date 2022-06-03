@@ -10,7 +10,7 @@ public class JSS
     private static int currentUserID;
     private static int nextJobID;
     private final File_Control fileControl = new File_Control();
-    private ArrayList<String[]> userList = new ArrayList<String[]>();
+    private ArrayList<String[]> userList = new ArrayList<>();
 
     public JSS()
     {
@@ -43,13 +43,10 @@ public class JSS
 
         // 2. Verify password
         boolean passwordMatch = false;
-        for (String[] user: userList) {
-            char[] pwd = userList.get(userIndex)[2].toCharArray();
-            if (Arrays.equals(password, pwd)) {
-                //Match on password
-                passwordMatch = true;
-                break;
-            }
+        char[] pwd = userList.get(userIndex)[2].toCharArray();
+        if (Arrays.equals(password, pwd)) {
+            //Match on password
+            passwordMatch = true;
         }
 
         if (!passwordMatch) {
@@ -103,7 +100,7 @@ public class JSS
 
         /* Result: JSS_Control's userList ArrayList is now a list of String[]s,
          * with each one representing a user. Can be indexed into to retrieve specific
-         * info (index 0 = userID, index 1 = username, index 2 = password.
+         * info (index 0 = userID, index 1 = username, index 2 = password).
          * index 3 up to index n are skills.
          * This method seems a bit messy, but works. Might need to be refactored later.
          */
