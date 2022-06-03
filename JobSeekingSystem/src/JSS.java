@@ -87,7 +87,7 @@ public class JSS
 
         //Grab the users from the csv file as a String
         try {
-            users = fileControl.readFile("JobSeekingSystem/src/users.csv");
+            users = fileControl.readFile("users.csv");
         }
         catch (IOException e) {
             System.out.println("No users.csv file exists!");
