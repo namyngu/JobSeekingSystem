@@ -62,7 +62,8 @@ public class LoginGUI {
 
                 try
                 {
-                   Register registration = new Register(program);
+//                    TestGUI test = new TestGUI();
+                   RegisterGUI register = new RegisterGUI(program);
                 }
                 catch (Exception x)
                 {

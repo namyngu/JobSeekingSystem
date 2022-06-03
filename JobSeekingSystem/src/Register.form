@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Register">
-  <grid id="27dc6" layout-manager="FormLayout">
+  <grid id="27dc6" binding="registerPanel" layout-manager="FormLayout">
     <rowspec value="center:50dlu:noGrow"/>
     <rowspec value="top:3dlu:noGrow"/>
     <rowspec value="center:d:grow"/>
