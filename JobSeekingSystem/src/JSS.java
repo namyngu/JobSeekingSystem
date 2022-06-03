@@ -17,6 +17,15 @@ public class JSS
 
     }
 
+    public void login(String username, char[] password)
+    {
+
+       //TODO verify username here
+        //TODO verify password here
+        //TODO check account type (use instanceof to check subclass)
+        //TODO call relevant control class
+    }
+
 //    public static void main(String[] args)
 //    {
 //        JSS obj = new JSS();
