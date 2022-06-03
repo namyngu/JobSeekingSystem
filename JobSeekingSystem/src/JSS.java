@@ -122,7 +122,7 @@ public class JSS
         Jobseeker newJobseeker = new Jobseeker(this.currentUserID,name,username,password);
         currentUserID +=1;
 
-        System.out.println("new jobseeker created: " + newJobseeker.getName());
+        System.out.println("new jobseeker created: " + newJobseeker.toString());
     }
 
     public void createRecruiter(String firstName, String lastName, String username, char[] password)
@@ -131,14 +131,10 @@ public class JSS
         Recruiter newRecruiter = new Recruiter(this.currentUserID,name,username,password);
         currentUserID +=1;
 
-        System.out.println("new recruiter created: " + newRecruiter.getName());
+        System.out.println("new recruiter created: " + newRecruiter.toString());
     }
 
-//    public static void main(String[] args)
-//    {
-//        JSS obj = new JSS();
-//
-//    }
+
 
 
 }
