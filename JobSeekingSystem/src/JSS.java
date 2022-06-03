@@ -70,6 +70,8 @@ public class JSS
         String name = firstName + " " + lastName;
         Jobseeker newJobseeker = new Jobseeker(this.currentUserID,name,username,password);
         currentUserID +=1;
+
+        System.out.println("new jobseeker created" + newJobseeker.toString());
     }
 
 //    public static void main(String[] args)
