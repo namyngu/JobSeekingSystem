@@ -45,6 +45,7 @@ public class RegisterGUI
             public void actionPerformed(ActionEvent e)
             {
                 try{
+                    ErrorGUI error = new ErrorGUI();
                     String firstName = firstNameText.getText();
                     String lastName = lastNameText.getText();
                     String userName = usernameTextField.getText();
