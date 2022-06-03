@@ -9,18 +9,19 @@ public class JSS
 
     public JSS()
     {
-        JFrame frame = new JFrame("LoginGUI");
-        frame.setContentPane(new LoginGUI().loginPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+//                JFrame frame = new JFrame("LoginGUI");
+//        frame.setContentPane(new LoginGUI().loginPanel);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.pack();
+//        frame.setVisible(true);
 
     }
 
-    public static void main(String[] args)
-    {
-        JSS obj = new JSS();
+//    public static void main(String[] args)
+//    {
+//        JSS obj = new JSS();
+//
+//    }
 
-    }
 
 }

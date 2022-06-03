@@ -7,7 +7,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class LoginGUI {
+public class altLoginGUI
+{
     private JLabel loginTitle;
     public JPanel loginPanel;
     private JLabel loginUsername;
@@ -19,7 +20,7 @@ public class LoginGUI {
     private JLabel outputLabel;
     private ArrayList<Users> userList = new ArrayList<Users>();
 
-    public LoginGUI() {
+    public altLoginGUI() {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

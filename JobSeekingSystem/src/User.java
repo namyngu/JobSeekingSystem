@@ -8,7 +8,11 @@ public abstract class User
     private boolean active;
 
 
-
+    public User(String userName, String password)
+    {
+        this.userName = userName;
+        this.password = password;
+    }
 
     public User(int userID, String name, String userName, String password, boolean loggedIn, boolean active)
     {

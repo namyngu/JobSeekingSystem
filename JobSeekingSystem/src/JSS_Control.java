@@ -27,7 +27,7 @@ public class JSS_Control {
         //TODO: Do stuff with the users String
         //Call login screen
         JFrame frame = new JFrame("LoginGUI");
-        frame.setContentPane(new LoginGUI().loginPanel);
+        frame.setContentPane(new altLoginGUI().loginPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
