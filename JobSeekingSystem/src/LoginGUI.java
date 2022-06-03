@@ -80,6 +80,12 @@ public class LoginGUI {
         });
     }
 
+    // Method to clear the password box
+    // Having trouble calling this from a static context at the moment...
+    public void clearPassword() {
+        welcomeToJSSPasswordField.setText("");
+    }
+
     /*public static void main(String[] args) {
         JFrame frame = new JFrame("LoginGUI");
         frame.setContentPane(new LoginGUI().loginPanel);
