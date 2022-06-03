@@ -13,7 +13,7 @@ public class RegisterGUI
     private JLabel passwordLabel;
     private JLabel accountTypeLabel;
     private JPasswordField passwordField;
-    private JTextField usernameTextTextField;
+    private JTextField usernameTextField;
     private JButton registerButton;
     private JRadioButton radioButtonJobseeker;
     private JRadioButton radioButtonRecruiter;
@@ -35,13 +35,17 @@ public class RegisterGUI
             public void actionPerformed(ActionEvent e)
             {
                 try{
-                    if (radioButtonJobseeker.isContentAreaFilled())
+                    String firstName = firstNameText.getText();
+                    String lastName = lastNameText.getText();
+                    String userName = usernameTextField.getText();
+                    char[] password = passwordField.getPassword();
+                    if (radioButtonJobseeker.isSelected())
                     {
-                        program.createJobseeker(firstNameText.getText(),lastNameText.getText(),usernameTextTextField.getText(),passwordField.getPassword());
+                        program.createJobseeker(firstName,lastName,userName,password);
                     }
-                    else if (radioButtonRecruiter.isContentAreaFilled())
+                    else if (radioButtonRecruiter.isSelected())
                     {
-//                        User newRecruiter = new Recruiter();
+                        program.createRecruiter(firstName,lastName,userName,password);
                     }
                 }
                 catch (Exception x)

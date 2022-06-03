@@ -71,7 +71,16 @@ public class JSS
         Jobseeker newJobseeker = new Jobseeker(this.currentUserID,name,username,password);
         currentUserID +=1;
 
-        System.out.println("new jobseeker created" + newJobseeker.toString());
+        System.out.println("new jobseeker created: " + newJobseeker.getName());
+    }
+
+    public void createRecruiter(String firstName, String lastName, String username, char[] password)
+    {
+        String name = firstName + " " + lastName;
+        Recruiter newRecruiter = new Recruiter(this.currentUserID,name,username,password);
+        currentUserID +=1;
+
+        System.out.println("new recruiter created: " + newRecruiter.getName());
     }
 
 //    public static void main(String[] args)

@@ -12,7 +12,9 @@ public class Jobseeker extends User
 
     public Jobseeker(int userID, String name, String userName, char [] password)
     {
+
         super(userID, name, userName, password);
+
         this.applications = new ArrayList<Application>();
         this.invitations = new ArrayList<Invitation>();
         this.skills = new ArrayList<String>();
