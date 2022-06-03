@@ -64,9 +64,21 @@ public class JSS
             throw new Exception("passwords do not match!");
         }
 
-
-        //TODO check account type (use instanceof to check subclass)
-        //TODO call relevant control class
+        // 3. Let's check what kind of account this user should have
+        String accountType = userList.get(userIndex)[3];
+        switch (accountType) {
+            case "Admin":
+                //Do something
+                throw new Exception("Success! Logging you in as " + accountType + "...");
+            case "Job-Seeker":
+                //Do something else
+                throw new Exception("Success! Logging you in as " + accountType + "...");
+            case "Recruiter":
+                //Do something else
+                throw new Exception("Success! Logging you in as " + accountType + "...");
+            default:
+                throw new Exception("error logging user in!");
+        }
     }
 
     //Method to read in the user list into memory
