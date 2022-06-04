@@ -1,16 +1,6 @@
-
-/*
-Registration GUI called by selecting register on the LoginGUI
-Does not create users directly but calls method in JSS controller to do so
-TODO validation
-TODO fix radio buttons, both can be selected
-TODO after registration return to login screen
- */
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
 
 public class RegisterGUI
 {
@@ -23,21 +13,26 @@ public class RegisterGUI
     private JLabel passwordLabel;
     private JLabel accountTypeLabel;
     private JPasswordField passwordField;
-    private JTextField usernameTextField;
+    private JTextField usernameTextTextField;
     private JButton registerButton;
     private JRadioButton radioButtonJobseeker;
     private JRadioButton radioButtonRecruiter;
+    private JButton loginButton;
     private JSS program;
 
 
     public RegisterGUI(JSS program)
     {
+
         this.program = program;
         JFrame frame = new JFrame("RegisterGUI");
         frame.setContentPane(this.registerPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+
+        frame.setResizable(false);
         frame.setVisible(true);
+
 
         registerButton.addActionListener(new ActionListener()
         {
@@ -45,17 +40,13 @@ public class RegisterGUI
             public void actionPerformed(ActionEvent e)
             {
                 try{
-                    String firstName = firstNameText.getText();
-                    String lastName = lastNameText.getText();
-                    String userName = usernameTextField.getText();
-                    char[] password = passwordField.getPassword();
-                    if (radioButtonJobseeker.isSelected())
+                    if (radioButtonJobseeker.isContentAreaFilled())
                     {
-                        program.createJobseeker(firstName,lastName,userName,password);
+                        program.createJobseeker(firstNameText.getText(),lastNameText.getText(),usernameTextTextField.getText(),passwordField.getPassword());
                     }
-                    else if (radioButtonRecruiter.isSelected())
+                    else if (radioButtonRecruiter.isContentAreaFilled())
                     {
-                        program.createRecruiter(firstName,lastName,userName,password);
+//                        User newRecruiter = new Recruiter();
                     }
                 }
                 catch (Exception x)
@@ -65,25 +56,11 @@ public class RegisterGUI
                 }
             }
         });
-        radioButtonJobseeker.addComponentListener(new ComponentAdapter()
-        {
-        });
-        radioButtonJobseeker.addActionListener(new ActionListener()
-        {
+        loginButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                radioButtonRecruiter.setSelected(false);
-            }
-        });
-
-
-        radioButtonRecruiter.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                radioButtonJobseeker.setSelected(false);
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                LoginGUI loginGUI = new LoginGUI(program);
             }
         });
     }

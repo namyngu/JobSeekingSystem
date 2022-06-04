@@ -18,9 +18,10 @@ public class JSS
     private static int nextJobID;
     private final File_Control fileControl = new File_Control();
     private ArrayList<String[]> userList = new ArrayList<>();
+    private static Start StartControl;
 
-    public JSS()
-    {
+    public JSS(Start myParent) {
+        StartControl = myParent;
     //  JFrame frame = new JFrame("LoginGUI");
     //  frame.setContentPane(new LoginGUI().loginPanel);
     //  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
