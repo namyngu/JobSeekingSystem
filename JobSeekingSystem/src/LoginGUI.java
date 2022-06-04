@@ -39,9 +39,6 @@ public class LoginGUI {
                 String username = usernameField.getText();
                 char[] password = welcomeToJSSPasswordField.getPassword();
 
-                //Clear the old system message, if any exists
-                outputLabel.setVisible(false);
-
                 try
                 {
                     program.login(username, password);
@@ -53,8 +50,8 @@ public class LoginGUI {
                     x.printStackTrace();
                 }
 
-//
-
+                //Clear the password box
+                clearPassword();
             }
         });
 
@@ -64,16 +61,15 @@ public class LoginGUI {
 
                 try
                 {
-//                    TestGUI test = new TestGUI();
+//                 TestGUI test = new TestGUI();
                    RegisterGUI register = new RegisterGUI(program);
                 }
                 catch (Exception x)
                 {
                     outputLabel.setText("System Error contact Admin with message " + x.toString());
-                outputLabel.setVisible(true);
+                    outputLabel.setVisible(true);
                     x.printStackTrace();
                 }
-
             }
         });
     }
