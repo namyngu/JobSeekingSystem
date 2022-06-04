@@ -21,6 +21,12 @@ public abstract class User
 
     public User(int userID, String name, String userName, char [] password)
     {
+        this.userID = userID;
+        this.name = name;
+        this.userName = userName;
+        this.password = password;
+        loggedIn = false;
+        active = true;
     }
 
     public int getUserID()
