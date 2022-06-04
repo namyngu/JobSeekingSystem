@@ -1,3 +1,10 @@
+/*
+Controller class for initial login, account registration and IO
+methods create account types (not admin as yet)
+TODO upon login transfer control to relevant subclass controller
+
+ */
+
 import javax.swing.*;
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -78,7 +85,7 @@ public class JSS
 
         //Grab the users from the csv file as a String
         try {
-            users = fileControl.readFile("JobSeekingSystem/src/users.csv");
+            users = fileControl.readFile("users.csv");
         }
         catch (IOException e) {
             System.out.println("No users.csv file exists!");
@@ -113,14 +120,19 @@ public class JSS
         Jobseeker newJobseeker = new Jobseeker(this.currentUserID,name,username,password);
         currentUserID +=1;
 
-        System.out.println("new jobseeker created" + newJobseeker.toString());
+        System.out.println("new jobseeker created: " + newJobseeker.toString());
     }
 
-//    public static void main(String[] args)
-//    {
-//        JSS obj = new JSS();
-//
-//    }
+    public void createRecruiter(String firstName, String lastName, String username, char[] password)
+    {
+        String name = firstName + " " + lastName;
+        Recruiter newRecruiter = new Recruiter(this.currentUserID,name,username,password);
+        currentUserID +=1;
+
+        System.out.println("new recruiter created: " + newRecruiter.toString());
+    }
+
+
 
 
 }
