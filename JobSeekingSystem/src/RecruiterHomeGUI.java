@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class HomeGUI {
+public class RecruiterHomeGUI {
     private JLabel yourJobLabel;
     private JButton messagesButton;
     private JButton createJobButton;
@@ -27,16 +27,16 @@ public class HomeGUI {
     private JButton viewButton2;
     private JLabel welcomeMSG;
 
-    public HomeGUI()
+    public RecruiterHomeGUI()
     {
 
     }
-    public HomeGUI(User recruiter)
+    public RecruiterHomeGUI(User recruiter)
     {
-        JFrame homeFrame = new JFrame("HomeGUI");
+        JFrame homeFrame = new JFrame("RecruiterHomeGUI");
         homeFrame.setContentPane(this.recruiterHome);
         homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        homeFrame.setBounds(600,50,1000,800);
+        homeFrame.setBounds(600,40,100,100);
         homeFrame.pack();
 
         homeFrame.setResizable(true);
