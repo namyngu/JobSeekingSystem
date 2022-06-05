@@ -10,11 +10,19 @@ public class JobSeekerHomeGUI {
     private JButton searchJobsButton;
     private JButton myApplicationsButton;
     private JButton messagesButton;
-    private JButton jobSearchButton;
-    private JButton applicationsButton;
     private JTable jobsTable;
     private JPanel JSHomePanel;
     private JTable jobTable;
+    private JTextField textField1;
+    private JCheckBox fullTimeCheckBox;
+    private JCheckBox casualCheckBox;
+    private JButton searchButton;
+    private JPanel searchPanel;
+    private JComboBox comboBox1;
+    private JComboBox comboBox2;
+    private JTable searchResults;
+    private JComboBox comboBox3;
+    private JTextField textField2;
 
     public JobSeekerHomeGUI() {
 
@@ -55,6 +63,8 @@ public class JobSeekerHomeGUI {
         });
     }
 
+
+    //create table
     private void createTable(){
 
         jobTable.setModel(new DefaultTableModel(
