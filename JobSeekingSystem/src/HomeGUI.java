@@ -1,5 +1,3 @@
-package RecruiterGUI;
-
 import javax.swing.*;
 
 public class HomeGUI {
@@ -28,7 +26,19 @@ public class HomeGUI {
     private JLabel jobStatusLabel2;
     private JButton viewButton2;
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
+    public HomeGUI()
+    {
+
+    }
+    public HomeGUI(User recruiter)
+    {
+        JFrame homeFrame = new JFrame("HomeGUI");
+        homeFrame.setContentPane(this.recruiterHome);
+        homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        homeFrame.setBounds(600,50,1000,800);
+        homeFrame.pack();
+
+        homeFrame.setResizable(true);
+        homeFrame.setVisible(true);
     }
 }

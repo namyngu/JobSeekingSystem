@@ -1,5 +1,3 @@
-import RecruiterGUI.*;
-
 public class RecruiterControl
 {
     public RecruiterControl()
@@ -7,6 +5,11 @@ public class RecruiterControl
     }
 
     public RecruiterControl(User recruiter)
+    {
+        HomeGUI homeGUI = new HomeGUI(recruiter);
+    }
+
+    public void homePage()
     {
 
     }

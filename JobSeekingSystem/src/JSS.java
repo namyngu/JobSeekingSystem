@@ -64,12 +64,16 @@ public class JSS
             case "Admin":
                 //Do something
                 throw new Exception("Success! Logging you in as " + accountType + "...");
+
+
             case "Jobseeker":
                 //Do something else
                 throw new Exception("Success! Logging you in as " + accountType + "...");
+
             case "Recruiter":
                 //Launch Recruiter Control
                 RecruiterControl recruiterControl = new RecruiterControl (userList.get(userIndex));
+                break;
 
             default:
                 throw new Exception("error logging user in!");
