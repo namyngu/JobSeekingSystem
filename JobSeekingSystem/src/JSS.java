@@ -26,7 +26,7 @@ public class JSS
     }
 
     //Verifies username/password & logs the user in.
-    //TODO: can split this method into two one for validation, one for logging in.
+    //TODO: can split this method into two. One for validation, one for logging in.
     public void login(String username, char[] password) throws Exception
     {
         // 1. Verify username
@@ -136,7 +136,6 @@ public class JSS
                         importUser(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3],password, userDetails[5]);
                     }
 
-                    //if userType is an Admin - TODO: create and import as admin user.
                     else if (userDetails[5].trim().equalsIgnoreCase("admin"))
                     {
                         //store password as char[]
@@ -150,11 +149,9 @@ public class JSS
                         importUser(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3],password, userDetails[5]);
                     }
 
-
-                    //TODO: might need to handle this error better.
                     else
                     {
-                        System.out.println("Error invalid userType");
+                        System.out.println("Error invalid userType, failed to import user. Check line: " + i);
                     }
                 }
             }
@@ -189,8 +186,7 @@ public class JSS
         return count;
     }
 
-    //TODO: combine these methods to one importUser and one createUser
-    //import existing jobseeker
+    //import existing user from .csv file
     public void importUser(int userID, String firstName, String lastName, String userName, char[] password, String userType)
     {
         if (userType.trim().equalsIgnoreCase("jobseeker"))
@@ -226,46 +222,67 @@ public class JSS
             }
             catch (Exception e)
             {
+                System.out.println("Error failed to create admin, check your parameters!");
+            }
+        }
+        else
+            System.out.println("Error failed to import user, invalid userType");
+    }
+
+    //Create User
+    public void createUser(String firstName, String lastName, String userName, char[] password, String userType)
+    {
+        //create jobseeker
+        if (userType.trim().equalsIgnoreCase("jobseeker"))
+        {
+            try
+            {
+                int userID = countUsers() + 1;
+                Jobseeker newJobseeker = new Jobseeker(userID, firstName, lastName, userName, password);
+                userList.add(newJobseeker);
+
+                //write new user to users.csv
+                newJobseeker.saveUser("JobSeekingSystem/users.csv");
+
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error failed to create Jobseeker, check your parameters!");
+            }
+        }
+        //create Recruiter
+        else if (userType.trim().equalsIgnoreCase("recruiter"))
+        {
+            try
+            {
+                int userID = countUsers() + 1;
+                Recruiter newRecruiter = new Recruiter(userID,firstName, lastName, userName, password);
+                userList.add(newRecruiter);
+
+                //write new recruiter to users.csv
+                newRecruiter.saveUser("JobSeekingSystem/users.csv");
+            }
+            catch (Exception e)
+            {
                 System.out.println("Error failed to create Recruiter, check your parameters!");
             }
         }
-    }
-
-    //create new jobseeker
-    public void createJobseeker(String firstName, String lastName, String userName, char[] password)
-    {
-        try
+        //create admin
+        else if (userType.trim().equalsIgnoreCase("admin"))
         {
-            int userID = countUsers() + 1;
-            Jobseeker newJobseeker = new Jobseeker(userID, firstName, lastName, userName, password);
-            userList.add(newJobseeker);
+            try
+            {
+                int userID = countUsers() + 1;
+                Administrator admin = new Administrator(userID,firstName, lastName, userName, password);
+                userList.add(admin);
 
-            //write new user to users.csv
-            newJobseeker.saveUser("JobSeekingSystem/users.csv");
-
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error failed to create Jobseeker, check your parameters!");
-        }
-    }
-
-    //create new recruiter
-    public void createRecruiter(String firstName, String lastName, String username, char[] password)
-    {
-        try
-        {
-            int userID = countUsers() + 1;
-            Recruiter newRecruiter = new Recruiter(userID,firstName, lastName, username, password);
-            userList.add(newRecruiter);
-
-            //write new recruiter to users.csv
-            newRecruiter.saveUser("JobSeekingSystem/users.csv");
-
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error failed to create Recruiter, check your parameters!");
+                //write new recruiter to users.csv
+                admin.saveUser("JobSeekingSystem/users.csv");
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error failed to create Recruiter, check your parameters!");
+            }
         }
     }
 }
