@@ -25,6 +25,7 @@ public class HomeGUI {
     private JLabel newApplicantsLabel2;
     private JLabel jobStatusLabel2;
     private JButton viewButton2;
+    private JLabel welcomeMSG;
 
     public HomeGUI()
     {

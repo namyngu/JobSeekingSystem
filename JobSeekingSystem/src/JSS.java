@@ -65,7 +65,6 @@ public class JSS
                 //Do something
                 throw new Exception("Success! Logging you in as " + accountType + "...");
 
-
             case "Jobseeker":
                 //Do something else
                 throw new Exception("Success! Logging you in as " + accountType + "...");
@@ -215,7 +214,6 @@ public class JSS
         {
             System.out.println("Error failed to create Recruiter, check your parameters!");
         }
-
     }
 
     //create new jobseeker
@@ -254,8 +252,5 @@ public class JSS
         {
             System.out.println("Error failed to create Recruiter, check your parameters!");
         }
-
     }
-
-
 }

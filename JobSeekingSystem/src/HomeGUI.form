@@ -93,11 +93,6 @@
           </component>
         </children>
       </grid>
-      <hspacer id="1ee49">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </hspacer>
       <component id="99a17" class="javax.swing.JLabel" binding="yourJobLabel">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
@@ -284,9 +279,19 @@
       </grid>
       <hspacer id="a797d">
         <constraints>
-          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="102" height="11"/>
+          </grid>
         </constraints>
       </hspacer>
+      <component id="b69eb" class="javax.swing.JLabel" binding="welcomeMSG">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Welcome User!"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>
