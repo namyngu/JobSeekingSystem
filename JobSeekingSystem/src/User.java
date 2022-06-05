@@ -3,11 +3,13 @@ import java.util.Arrays;
 public abstract class User
 {
     private int userID;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String userName;
     private char[] password;
     private boolean loggedIn;
     private boolean active;
+    private String userType;
 
 
     public User(String userName, char[] password)
@@ -16,18 +18,48 @@ public abstract class User
         this.password = password;
         loggedIn = false;
         active = true;
+        userType = "Guest";
     }
 
 
-    public User(int userID, String name, String userName, char [] password)
+    public User(int userID, String firstName, String lastName, String userName, char[] password, String userType)
     {
         this.userID = userID;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.userName = userName;
         this.password = password;
         loggedIn = false;
         active = true;
+        this.userType = userType;
     }
+
+    public void display()
+    {
+        System.out.println("UserID: " + userID);
+        System.out.println("Name: " + firstName + " " + lastName);
+        System.out.println("Username: " + userName);
+        System.out.println("UserType: " + userType);
+    }
+
+    //Method to save user to users.csv
+    public void saveUser(String fileName)
+    {
+        try
+        {
+            String userData = userID + "," + firstName + "," + lastName + "," + userName + "," + String.valueOf(password) + "," + userType;
+            File_Control io = new File_Control();
+            io.writeFile("users.csv", userData);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to save user into csv.");
+        }
+
+    }
+
+
+    //Setters & Getters
 
     public int getUserID()
     {
@@ -39,14 +71,24 @@ public abstract class User
         this.userID = userID;
     }
 
-    public String getName()
+    public String getFirstName()
     {
-        return name;
+        return firstName;
     }
 
-    public void setName(String name)
+    public String getLastName()
     {
-        this.name = name;
+        return lastName;
+    }
+
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName)
+    {
+        this.lastName = lastName;
     }
 
     public String getUserName()
@@ -89,12 +131,23 @@ public abstract class User
         this.active = active;
     }
 
+    public String getUserType()
+    {
+        return userType;
+    }
+
+    //possible security concern - can set a user to Admin.
+    public String setUserType(String userType)
+    {
+        return (this.userType = userType);
+    }
+
     @Override
     public String toString()
     {
         return "User{" +
                 "userID=" + userID +
-                ", name='" + name + '\'' +
+                ", name='" + firstName + " " + lastName + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password=" + Arrays.toString(password) +
                 ", loggedIn=" + loggedIn +

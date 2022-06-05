@@ -4,6 +4,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 
 public class File_Control {
+    public File_Control()
+    {
+    }
 
     /* Things we want the class to do:
      * 1. Read the list of users and their passwords and types and keywords from the user file
@@ -14,7 +17,7 @@ public class File_Control {
      *
      */
 
-    /* Method to read data in from a File. Returns a String with users separated by ";"
+    /* Method to read data in from a File. Returns a String with users separated by "\n"
      * User the .split method to separate these out into arrays or whatever
      * Then, use another .split to separate by "," to break each user into individual chunks
      */
@@ -26,8 +29,7 @@ public class File_Control {
 
         while (scan.hasNextLine())
         {
-            returnString += scan.nextLine();
-            returnString += ";";
+            returnString += scan.nextLine() + "\n";
         }
 
         file.close();
