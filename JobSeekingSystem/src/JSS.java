@@ -17,15 +17,16 @@ public class JSS
 
     public JSS(Start myParent) {
         StartControl = myParent;
-    //  JFrame frame = new JFrame("LoginGUI");
-    //  frame.setContentPane(new LoginGUI().loginPanel);
-    //  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    //  frame.pack();
-    //  frame.setVisible(true);
+        //  JFrame frame = new JFrame("LoginGUI");
+        //  frame.setContentPane(new LoginGUI().loginPanel);
+        //  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //  frame.pack();
+        //  frame.setVisible(true);
         importUserList("JobSeekingSystem/users.csv");
     }
 
-    //Verifies username
+    //Verifies username/password & logs the user in.
+    //TODO: can split this method into two one for validation, one for logging in.
     public void login(String username, char[] password) throws Exception
     {
         // 1. Verify username
@@ -79,6 +80,7 @@ public class JSS
         }
     }
 
+
     //Method to read in the user list into memory
     public void importUserList(String fileName)
     {
@@ -116,8 +118,8 @@ public class JSS
                             password[j] = userDetails[4].charAt(j);
                         }
 
-                        //each array: userID,firstName,LastName,username,password,userType
-                        importJobseeker(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3],password, userDetails[5]);
+                        //each userDetail array: userID,firstName,LastName,username,password,userType
+                        importUser(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3],password, userDetails[5]);
                     }
 
                     //if userType is a Recruiter
@@ -130,13 +132,12 @@ public class JSS
                             password[j] = userDetails[4].charAt(j);
                         }
 
-                        //each array: userID,firstName,LastName,username,password,userType
-                        importRecruiter(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3],password, userDetails[5]);
+                        //each userDetail array: userID,firstName,LastName,username,password,userType
+                        importUser(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3],password, userDetails[5]);
                     }
 
                     //if userType is an Admin - TODO: create and import as admin user.
-                    /*
-                    else if (userDetails[5].trim().toLowerCase().equals("admin"))
+                    else if (userDetails[5].trim().equalsIgnoreCase("admin"))
                     {
                         //store password as char[]
                         char[] password = new char[userDetails[4].length()];
@@ -146,9 +147,9 @@ public class JSS
                         }
 
                         //each array: userID,firstName,LastName,username,password,userType
-                        importAdmin(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3],password, userDetails[5]);
+                        importUser(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3],password, userDetails[5]);
                     }
-                     */
+
 
                     //TODO: might need to handle this error better.
                     else
@@ -178,7 +179,7 @@ public class JSS
             System.out.println("Error filename cannot be empty");
     }
 
-    public int countUsers(ArrayList<User> userList)
+    public int countUsers()
     {
         int count = 0;
         for (User tmpUser: userList)
@@ -188,41 +189,55 @@ public class JSS
         return count;
     }
 
+    //TODO: combine these methods to one importUser and one createUser
     //import existing jobseeker
-    public void importJobseeker(int userID, String firstName, String lastName, String userName, char[] password, String userType)
+    public void importUser(int userID, String firstName, String lastName, String userName, char[] password, String userType)
     {
-        try
+        if (userType.trim().equalsIgnoreCase("jobseeker"))
         {
-            Jobseeker jobseeker = new Jobseeker(userID, firstName, lastName, userName, password, userType);
-            userList.add(jobseeker);
+            try
+            {
+                Jobseeker jobseeker = new Jobseeker(userID, firstName, lastName, userName, password);
+                userList.add(jobseeker);
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error failed to create Jobseeker, check your parameters!");
+            }
         }
-        catch (Exception e)
+        else if (userType.trim().equalsIgnoreCase("recruiter"))
         {
-            System.out.println("Error failed to create Jobseeker, check your parameters!");
+            try
+            {
+                Recruiter recruiter = new Recruiter(userID,firstName, lastName, userName, password);
+                userList.add(recruiter);
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error failed to create Recruiter, check your parameters!");
+            }
         }
-    }
-
-    //import existing recruiter
-    public void importRecruiter(int userID, String firstName, String lastName, String username, char[] password, String userType)
-    {
-        try
+        else if (userType.trim().equalsIgnoreCase("admin"))
         {
-            Recruiter recruiter = new Recruiter(userID,firstName, lastName, username, password, userType);
-            userList.add(recruiter);
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error failed to create Recruiter, check your parameters!");
+            try
+            {
+                Administrator admin = new Administrator(userID,firstName, lastName, userName, password);
+                userList.add(admin);
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error failed to create Recruiter, check your parameters!");
+            }
         }
     }
 
     //create new jobseeker
-    public void createJobseeker(String firstName, String lastName, String userName, char[] password, String userType)
+    public void createJobseeker(String firstName, String lastName, String userName, char[] password)
     {
         try
         {
-            int userID = countUsers(userList) + 1;
-            Jobseeker newJobseeker = new Jobseeker(userID, firstName, lastName, userName, password, userType);
+            int userID = countUsers() + 1;
+            Jobseeker newJobseeker = new Jobseeker(userID, firstName, lastName, userName, password);
             userList.add(newJobseeker);
 
             //write new user to users.csv
@@ -236,12 +251,12 @@ public class JSS
     }
 
     //create new recruiter
-    public void createRecruiter(String firstName, String lastName, String username, char[] password, String userType)
+    public void createRecruiter(String firstName, String lastName, String username, char[] password)
     {
         try
         {
-            int userID = countUsers(userList) + 1;
-            Recruiter newRecruiter = new Recruiter(userID,firstName, lastName, username, password, userType);
+            int userID = countUsers() + 1;
+            Recruiter newRecruiter = new Recruiter(userID,firstName, lastName, username, password);
             userList.add(newRecruiter);
 
             //write new recruiter to users.csv

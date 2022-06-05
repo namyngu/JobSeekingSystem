@@ -42,7 +42,9 @@ public class RegisterGUI
                 try{
                     if (radioButtonJobseeker.isContentAreaFilled())
                     {
-                        program.createJobseeker(firstNameText.getText(),lastNameText.getText(),usernameTextTextField.getText(),passwordField.getPassword(), "Jobseeker");
+                        //TODO: need to check if username already exists.
+                        program.createJobseeker(firstNameText.getText(),lastNameText.getText(),usernameTextTextField.getText(),passwordField.getPassword());
+
                     }
                     else if (radioButtonRecruiter.isContentAreaFilled())
                     {
