@@ -3,9 +3,9 @@ public class Administrator extends User
 
     private boolean isPrimaryAdmin;
 
-
-    public Administrator(int userID, String name, String userName, String password, boolean loggedIn, boolean active)
+    public Administrator(String userName, char[] password, boolean isPrimaryAdmin)
     {
-        super(userID, name, userName, password, loggedIn, active);
+        super(userName, password);
+        this.isPrimaryAdmin = isPrimaryAdmin;
     }
 }
