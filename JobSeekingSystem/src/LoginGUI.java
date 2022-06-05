@@ -42,6 +42,7 @@ public class LoginGUI {
                 try
                 {
                     program.login(username, password);
+                    frame.dispose();
                 }
                 catch (Exception x)
                 {

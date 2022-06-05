@@ -4,20 +4,15 @@ methods create account types (not admin as yet)
 TODO upon login transfer control to relevant subclass controller
 
  */
-
-import javax.swing.*;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class JSS
 {
     private static ArrayList<String> categories;
-    private static int currentUserID;
     private static int nextJobID;
     private final File_Control fileControl = new File_Control();
-    private ArrayList<String[]> userList = new ArrayList<>();
+    private ArrayList<User> userList = new ArrayList<>();
     private static Start StartControl;
 
     public JSS(Start myParent) {
@@ -27,16 +22,17 @@ public class JSS
     //  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     //  frame.pack();
     //  frame.setVisible(true);
-        readUserList();
+        importUserList("JobSeekingSystem/users.csv");
     }
 
+    //Verifies username
     public void login(String username, char[] password) throws Exception
     {
         // 1. Verify username
         boolean Exists = false;
         int userIndex = 0;
-        for (String[] user: userList) {
-            if (username.equals(user[1])) {
+        for (User tmpUser: userList) {
+            if (tmpUser.getUserName().equals(username)) {
                 //Match on username
                 Exists = true;
                 break;
@@ -51,7 +47,7 @@ public class JSS
 
         // 2. Verify password
         boolean passwordMatch = false;
-        char[] pwd = userList.get(userIndex)[2].toCharArray();
+        char[] pwd = userList.get(userIndex).getPassword();
         if (Arrays.equals(password, pwd)) {
             //Match on password
             passwordMatch = true;
@@ -63,76 +59,198 @@ public class JSS
         }
 
         // 3. Let's check what kind of account this user should have
-        String accountType = userList.get(userIndex)[3];
+        String accountType = userList.get(userIndex).getUserType();
         switch (accountType) {
             case "Admin":
                 //Do something
                 throw new Exception("Success! Logging you in as " + accountType + "...");
-            case "Job-Seeker":
+
+            case "Jobseeker":
                 //Do something else
                 throw new Exception("Success! Logging you in as " + accountType + "...");
+
             case "Recruiter":
-                //Do something else
-                throw new Exception("Success! Logging you in as " + accountType + "...");
+                //Launch Recruiter Control
+                RecruiterControl recruiterControl = new RecruiterControl (userList.get(userIndex));
+                break;
+
             default:
                 throw new Exception("error logging user in!");
         }
     }
 
     //Method to read in the user list into memory
-    public void readUserList() {
-        String users = "";
+    public void importUserList(String fileName)
+    {
+        File_Control io = new File_Control();
+        String userContent = "";
+        try
+        {
+            userContent = io.readFile(fileName);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to read file.");
+        }
 
         //Grab the users from the csv file as a String
-        try {
-            users = fileControl.readFile("JobSeekingSystem/data/users.csv");
-        }
-        catch (IOException e) {
-            System.out.println("No users.csv file exists!");
-            //TODO: Need to fancy this up a bit - what error should present to the user?
-        }
+        if (userContent.trim().length() > 0)
+        {
+            //split each user into a string array
+            String[] user = userContent.split("\n");
 
-        //Split our string into individual users
-        String[] allUsers = users.split(";");
+            try
+            {
+                for (int i = 0; i < user.length; i++)
+                {
+                    //split each user into another array of userDetails
+                    String[] userDetails = user[i].split(",");
 
-        //For each user in allUsers, add relevant info to ArrayList
-        for (String temp: allUsers) {
-            String[] tempUser = temp.split(",");
-            userList.add(tempUser);
+                    //if userType is Jobseeker
+                    if (userDetails[5].trim().equalsIgnoreCase("jobseeker"))
+                    {
+                        //store password as char[]
+                        char[] password = new char[userDetails[4].length()];
+                        for (int j = 0; j < password.length; j++)
+                        {
+                            password[j] = userDetails[4].charAt(j);
+                        }
+
+                        //each array: userID,firstName,LastName,username,password,userType
+                        importJobseeker(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3],password, userDetails[5]);
+                    }
+
+                    //if userType is a Recruiter
+                    else if (userDetails[5].trim().equalsIgnoreCase("recruiter"))
+                    {
+                        //store password as char[]
+                        char[] password = new char[userDetails[4].length()];
+                        for (int j = 0; j < password.length; j++)
+                        {
+                            password[j] = userDetails[4].charAt(j);
+                        }
+
+                        //each array: userID,firstName,LastName,username,password,userType
+                        importRecruiter(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3],password, userDetails[5]);
+                    }
+
+                    //if userType is an Admin - TODO: create and import as admin user.
+                    /*
+                    else if (userDetails[5].trim().toLowerCase().equals("admin"))
+                    {
+                        //store password as char[]
+                        char[] password = new char[userDetails[4].length()];
+                        for (int j = 0; j < password.length; j++)
+                        {
+                            password[j] = userDetails[4].charAt(j);
+                        }
+
+                        //each array: userID,firstName,LastName,username,password,userType
+                        importAdmin(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3],password, userDetails[5]);
+                    }
+                     */
+
+                    //TODO: might need to handle this error better.
+                    else
+                    {
+                        System.out.println("Error invalid userType");
+                    }
+                }
+            }
+            catch (Exception e) {
+                System.out.println("Error unable to import users, check " + fileName + "format");
+            }
+
+
+            //DEBUG: Quick test to print the results to the terminal
+            for (User tmpUser: userList) {
+                tmpUser.display();
+            }
+
+            /* Result: JSS_Control's userList ArrayList is now a list of String[]s,
+             * with each one representing a user. Can be indexed into to retrieve specific
+             * info (index 0 = userID, index 1 = username, index 2 = password).
+             * index 3 up to index n are skills.
+             * This method seems a bit messy, but works. Might need to be refactored later.
+             */
         }
-
-        //DEBUG: Quick test to print the results to the terminal
-        for (String[] temp: userList) {
-            System.out.println(Arrays.toString(temp));
-        }
-
-        /* Result: JSS_Control's userList ArrayList is now a list of String[]s,
-         * with each one representing a user. Can be indexed into to retrieve specific
-         * info (index 0 = userID, index 1 = username, index 2 = password).
-         * index 3 up to index n are skills.
-         * This method seems a bit messy, but works. Might need to be refactored later.
-         */
+        else
+            System.out.println("Error filename cannot be empty");
     }
 
-    public void createJobseeker(String firstName, String lastName, String username, char[] password)
+    public int countUsers(ArrayList<User> userList)
     {
-        String name = firstName + " " + lastName;
-        Jobseeker newJobseeker = new Jobseeker(this.currentUserID,name,username,password);
-        currentUserID +=1;
-
-        System.out.println("new jobseeker created: " + newJobseeker.toString());
+        int count = 0;
+        for (User tmpUser: userList)
+        {
+            count++;
+        }
+        return count;
     }
 
-    public void createRecruiter(String firstName, String lastName, String username, char[] password)
+    //import existing jobseeker
+    public void importJobseeker(int userID, String firstName, String lastName, String userName, char[] password, String userType)
     {
-        String name = firstName + " " + lastName;
-        Recruiter newRecruiter = new Recruiter(this.currentUserID,name,username,password);
-        currentUserID +=1;
-
-        System.out.println("new recruiter created: " + newRecruiter.toString());
+        try
+        {
+            Jobseeker jobseeker = new Jobseeker(userID, firstName, lastName, userName, password, userType);
+            userList.add(jobseeker);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to create Jobseeker, check your parameters!");
+        }
     }
 
+    //import existing recruiter
+    public void importRecruiter(int userID, String firstName, String lastName, String username, char[] password, String userType)
+    {
+        try
+        {
+            Recruiter recruiter = new Recruiter(userID,firstName, lastName, username, password, userType);
+            userList.add(recruiter);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to create Recruiter, check your parameters!");
+        }
+    }
 
+    //create new jobseeker
+    public void createJobseeker(String firstName, String lastName, String userName, char[] password, String userType)
+    {
+        try
+        {
+            int userID = countUsers(userList) + 1;
+            Jobseeker newJobseeker = new Jobseeker(userID, firstName, lastName, userName, password, userType);
+            userList.add(newJobseeker);
 
+            //write new user to users.csv
+            newJobseeker.saveUser("JobSeekingSystem/users.csv");
 
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to create Jobseeker, check your parameters!");
+        }
+    }
+
+    //create new recruiter
+    public void createRecruiter(String firstName, String lastName, String username, char[] password, String userType)
+    {
+        try
+        {
+            int userID = countUsers(userList) + 1;
+            Recruiter newRecruiter = new Recruiter(userID,firstName, lastName, username, password, userType);
+            userList.add(newRecruiter);
+
+            //write new recruiter to users.csv
+            newRecruiter.saveUser("JobSeekingSystem/users.csv");
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to create Recruiter, check your parameters!");
+        }
+    }
 }
