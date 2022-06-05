@@ -22,7 +22,7 @@ public class JSS
     //  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     //  frame.pack();
     //  frame.setVisible(true);
-        importUserList("users.csv");
+        importUserList("JobSeekingSystem/users.csv");
     }
 
     //Verifies username
@@ -104,7 +104,7 @@ public class JSS
                     String[] userDetails = user[i].split(",");
 
                     //if userType is Jobseeker
-                    if (userDetails[3].trim().toLowerCase().equals("jobseeker"))
+                    if (userDetails[5].trim().equalsIgnoreCase("jobseeker"))
                     {
                         //store password as char[]
                         char[] password = new char[userDetails[4].length()];
@@ -118,7 +118,7 @@ public class JSS
                     }
 
                     //if userType is a Recruiter
-                    else if (userDetails[3].trim().toLowerCase().equals("recruiter"))
+                    else if (userDetails[5].trim().equalsIgnoreCase("recruiter"))
                     {
                         //store password as char[]
                         char[] password = new char[userDetails[4].length()];
@@ -133,7 +133,7 @@ public class JSS
 
                     //if userType is an Admin - TODO: create and import as admin user.
                     /*
-                    else if (userDetails[3].trim().toLowerCase().equals("recruiter"))
+                    else if (userDetails[5].trim().toLowerCase().equals("admin"))
                     {
                         //store password as char[]
                         char[] password = new char[userDetails[4].length()];
@@ -224,7 +224,7 @@ public class JSS
             userList.add(newJobseeker);
 
             //write new user to users.csv
-            newJobseeker.saveUser("users.csv");
+            newJobseeker.saveUser("JobSeekingSystem/users.csv");
 
         }
         catch (Exception e)
@@ -243,7 +243,7 @@ public class JSS
             userList.add(newRecruiter);
 
             //write new recruiter to users.csv
-            newRecruiter.saveUser("users.csv");
+            newRecruiter.saveUser("JobSeekingSystem/users.csv");
 
         }
         catch (Exception e)
