@@ -20,7 +20,7 @@ public class JSS
         //  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //  frame.pack();
         //  frame.setVisible(true);
-        importUserList("JobSeekingSystem/users.csv");
+        importUserList("users.csv");
     }
 
     //Verifies username/password & logs the user in.
@@ -104,6 +104,13 @@ public class JSS
             {
                 for (int i = 0; i < user.length; i++)
                 {
+                    //If users.csv contains an empty line skip it.
+                    if (user[i].isEmpty())
+                    {
+                        System.out.println("Warning: empty line in users.csv at line: " + i + ", skipping...");
+                        continue;
+                    }
+
                     //split each user into another array of userDetails
                     String[] userDetails = user[i].split(",");
 
@@ -155,7 +162,7 @@ public class JSS
                 }
             }
             catch (Exception e) {
-                System.out.println("Error unable to import users, check " + fileName + "format");
+                System.out.println("Error unable to import users, check " + fileName + " format");
             }
 
 
@@ -241,7 +248,7 @@ public class JSS
                 userList.add(newJobseeker);
 
                 //write new user to users.csv
-                newJobseeker.saveUser("JobSeekingSystem/users.csv");
+                newJobseeker.saveUser("users.csv");
 
             }
             catch (Exception e)
@@ -259,7 +266,7 @@ public class JSS
                 userList.add(newRecruiter);
 
                 //write new recruiter to users.csv
-                newRecruiter.saveUser("JobSeekingSystem/users.csv");
+                newRecruiter.saveUser("users.csv");
             }
             catch (Exception e)
             {
@@ -276,11 +283,11 @@ public class JSS
                 userList.add(admin);
 
                 //write new recruiter to users.csv
-                admin.saveUser("JobSeekingSystem/users.csv");
+                admin.saveUser("users.csv");
             }
             catch (Exception e)
             {
-                System.out.println("Error failed to create Recruiter, check your parameters!");
+                System.out.println("Error failed to create admin, check your parameters!");
             }
         }
     }
