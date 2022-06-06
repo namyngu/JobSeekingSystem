@@ -23,22 +23,41 @@ public class JobSeekerHomeGUI {
     private JTable searchResults;
     private JComboBox comboBox3;
     private JTextField textField2;
+    private JTabbedPane navbar;
+    private JPanel home;
+    private JPanel search;
+    private JPanel applications;
+    private JPanel messages;
+    private JPanel profile;
 
     public JobSeekerHomeGUI() {
+
+        JFrame window = new JFrame("JSS: Job Seeker Home");
+        window.add(navbar);
+
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setBounds(600,40,100,100);
+        window.pack();
+        window.setResizable(true);
+        window.setVisible(true);
+
+        createTable();
 
     }
 
     public JobSeekerHomeGUI(User jobSeeker) {
 
-        JFrame homeframe = new JFrame("JSS: Job Seeker Home");
 
-        homeframe.setContentPane(this.JSHomePanel);
-        homeframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        homeframe.setBounds(600,40,100,100);
-        homeframe.pack();
+        JFrame window = new JFrame("JSS: Job Seeker Home");
 
-        homeframe.setResizable(true);
-        homeframe.setVisible(true);
+
+        window.setContentPane(this.JSHomePanel);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setBounds(600,40,100,100);
+        window.pack();
+
+        window.setResizable(true);
+        window.setVisible(true);
         createTable();
 
 
