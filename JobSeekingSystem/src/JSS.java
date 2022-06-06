@@ -107,10 +107,10 @@ public class JSS
 
                     //split each user into another array of userDetails
                     String[] userDetails = user[i].split(",");
-                    String userType = userDetails[5].trim();
+                    String userType = userDetails[5].trim().toLowerCase();
 
                     //if userType is Jobseeker, recruiter or admin
-                    if (userType.equalsIgnoreCase("jobseeker") || userType.equalsIgnoreCase("recruiter") || userType.equalsIgnoreCase("admin"))
+                    if (userType.equals("jobseeker") || userType.equals("recruiter") || userType.equals("admin"))
                         importUser(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3],userDetails[4], userDetails[5]);
                     else
                         System.out.println("Error invalid userType, failed to import user. Check line: " + i);
@@ -120,18 +120,12 @@ public class JSS
                 System.out.println("Error unable to import users, check " + fileName + " format");
             }
 
-
+            /*
             //DEBUG: Quick test to print the results to the terminal
             for (User tmpUser: userList) {
                 tmpUser.display();
             }
-
-            /* Result: JSS_Control's userList ArrayList is now a list of String[]s,
-             * with each one representing a user. Can be indexed into to retrieve specific
-             * info (index 0 = userID, index 1 = username, index 2 = password).
-             * index 3 up to index n are skills.
-             * This method seems a bit messy, but works. Might need to be refactored later.
-             */
+            */
         }
         else
             System.out.println("Error filename cannot be empty");
