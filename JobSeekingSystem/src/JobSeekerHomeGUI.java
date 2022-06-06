@@ -47,19 +47,16 @@ public class JobSeekerHomeGUI {
 
     public JobSeekerHomeGUI(User jobSeeker) {
 
-
         JFrame window = new JFrame("JSS: Job Seeker Home");
+        window.add(navbar);
 
-
-        window.setContentPane(this.JSHomePanel);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setBounds(600,40,100,100);
         window.pack();
-
         window.setResizable(true);
         window.setVisible(true);
-        createTable();
 
+        createTable();
 
         /*Add these methods back in once the actual components exist on the GUI
 
