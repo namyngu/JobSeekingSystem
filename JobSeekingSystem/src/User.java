@@ -6,13 +6,13 @@ public abstract class User
     private String firstName;
     private String lastName;
     private String userName;
-    private char[] password;
+    private String password;
     private boolean loggedIn;
     private boolean active;
     private String userType;
 
 
-    public User(String userName, char[] password)
+    public User(String userName, String password)
     {
         this.userName = userName;
         this.password = password;
@@ -22,7 +22,7 @@ public abstract class User
     }
 
 
-    public User(int userID, String firstName, String lastName, String userName, char[] password, String userType)
+    public User(int userID, String firstName, String lastName, String userName, String password, String userType)
     {
         this.userID = userID;
         this.firstName = firstName;
@@ -101,12 +101,12 @@ public abstract class User
         this.userName = userName;
     }
 
-    public char[] getPassword()
+    public String getPassword()
     {
         return password;
     }
 
-    public void setPassword(char[] password)
+    public void setPassword(String password)
     {
         this.password = password;
     }
@@ -149,7 +149,7 @@ public abstract class User
                 "userID=" + userID +
                 ", name='" + firstName + " " + lastName + '\'' +
                 ", userName='" + userName + '\'' +
-                ", password=" + Arrays.toString(password) +
+                ", password=" + password +
                 ", loggedIn=" + loggedIn +
                 ", active=" + active +
                 '}';
