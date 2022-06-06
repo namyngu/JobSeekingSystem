@@ -14,11 +14,6 @@ public class JSS
     private ArrayList<User> userList = new ArrayList<>();
 
     public JSS() {
-        //  JFrame frame = new JFrame("LoginGUI");
-        //  frame.setContentPane(new LoginGUI().loginPanel);
-        //  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //  frame.pack();
-        //  frame.setVisible(true);
         importUserList("users.csv");
     }
 
