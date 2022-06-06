@@ -26,41 +26,51 @@ public class JobSeekerHomeGUI {
 
     public JobSeekerHomeGUI() {
 
-        JFrame frame = new JFrame("JSS: Job Seeker Home");
+    }
 
-        frame.setContentPane(this.JSHomePanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
+    public JobSeekerHomeGUI(User jobSeeker) {
 
-        frame.setVisible(true);
+        JFrame homeframe = new JFrame("JSS: Job Seeker Home");
+
+        homeframe.setContentPane(this.JSHomePanel);
+        homeframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        homeframe.setBounds(600,40,100,100);
+        homeframe.pack();
+
+        homeframe.setResizable(true);
+        homeframe.setVisible(true);
         createTable();
 
 
-        //navbar
-        searchJobsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        /*Add these methods back in once the actual components exist on the GUI
 
-            }
-        });
-        myApplicationsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+            //navbar
+            searchJobsButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
 
-            }
-        });
-        messagesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+                }
+            });
+            myApplicationsButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
 
-            }
-        });
-        profileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+                }
+            });
+            messagesButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
 
-            }
-        });
+                }
+            });
+            profileButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+
+        */
     }
 
 
@@ -72,7 +82,5 @@ public class JobSeekerHomeGUI {
                 new String[]{"JobID", "Title", "Employer", "Location", "Salary", "Type"}
         ));
     }
-
-
 
 }

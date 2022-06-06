@@ -68,7 +68,8 @@ public class JSS
 
             case "Jobseeker":
                 //Do something else
-                throw new Exception("Success! Logging you in as " + accountType + "...");
+                JobseekerControl jobSeekerControl = new JobseekerControl (userList.get(userIndex));
+                break;
 
             case "Recruiter":
                 //Launch Recruiter Control
