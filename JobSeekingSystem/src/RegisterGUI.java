@@ -27,7 +27,7 @@ public class RegisterGUI
         this.program = program;
         JFrame frame = new JFrame("RegisterGUI");
         frame.setContentPane(this.registerPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
 
         frame.setResizable(false);
@@ -39,31 +39,80 @@ public class RegisterGUI
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                try{
-                    if (radioButtonJobseeker.isContentAreaFilled())
+                boolean allowRegistration = true;
+
+                try
+                {
+
+                    if (this.checkBlanks() == true)
                     {
-                        //TODO: need to check if username already exists.
-                        program.createUser(firstNameText.getText(),lastNameText.getText(),usernameTextTextField.getText(),passwordField.getPassword(),"Jobseeker");
-
-
+                    PromptGUI error = new PromptGUI("All fields must be complete and either JOBSEEKER or RECRUITER selected");
+                    allowRegistration = false;
                     }
-                    else if (radioButtonRecruiter.isContentAreaFilled())
+                    if (this.checkPassword() == false)
                     {
-//                        User newRecruiter = new Recruiter();
+                        PromptGUI error = new PromptGUI("Password must be at least 8 characters long");
+                        allowRegistration = false;
                     }
                 }
                 catch (Exception x)
                 {
-                    System.out.println("Error - contact Admin with message: \n");
-                    x.printStackTrace();
+                    PromptGUI error = new PromptGUI("Couldn't validate", x.toString());
+                    allowRegistration = false;
                 }
+                if (allowRegistration == true)
+                {
+                    try
+                    {
+                        if (radioButtonJobseeker.isContentAreaFilled())
+                        {
+                            //TODO: need to check if username already exists.
+                            program.createUser(firstNameText.getText(), lastNameText.getText(), usernameTextTextField.getText(), passwordField.getPassword(), "Jobseeker");
+                            PromptGUI confirm = new PromptGUI("Account created! Log in to continue");
+                            frame.dispose();
+
+                        } else if (radioButtonRecruiter.isContentAreaFilled())
+                        {
+//                        User newRecruiter = new Recruiter();
+                        }
+                    } catch (Exception x)
+                    {
+                        PromptGUI error = new PromptGUI("Error", x.toString());
+                    }
+                }
+            }
+
+            private boolean checkPassword()
+            {
+                boolean valid = true;
+                if (passwordField.getPassword().length<8)
+                {
+                    valid = false;
+                }
+                return valid;
+            }
+
+            private Boolean checkBlanks()
+            {
+                boolean blank = false;
+
+                if (firstNameText.getText().isEmpty()||lastNameText.getText().isEmpty()||usernameTextTextField.getText().isEmpty())
+                {
+                    blank = true;
+                }
+                else if (!radioButtonJobseeker.isSelected()&&!radioButtonRecruiter.isSelected())
+                {
+                    blank = true;
+                }
+               return blank;
             }
         });
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                LoginGUI loginGUI = new LoginGUI(program);
+
+//            frame.dispose();
+//                LoginGUI loginGUI = new LoginGUI(program);
             }
         });
     }

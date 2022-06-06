@@ -1,7 +1,5 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class JobSeekerHomeGUI {
 
@@ -23,44 +21,73 @@ public class JobSeekerHomeGUI {
     private JTable searchResults;
     private JComboBox comboBox3;
     private JTextField textField2;
+    private JTabbedPane navbar;
+    private JPanel home;
+    private JPanel search;
+    private JPanel applicationsPanel;
+    private JPanel profile;
+    private JLabel phoneText;
+    private JList list1;
+    private JPanel inboxPanel;
+    private JPanel profilePanel;
 
     public JobSeekerHomeGUI() {
 
-        JFrame frame = new JFrame("JSS: Job Seeker Home");
+        JFrame window = new JFrame("JSS: Job Seeker Home");
+        window.add(navbar);
 
-        frame.setContentPane(this.JSHomePanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setBounds(600,40,100,100);
+        window.pack();
+        window.setResizable(true);
+        window.setVisible(true);
 
-        frame.setVisible(true);
         createTable();
 
+    }
 
-        //navbar
-        searchJobsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+    public JobSeekerHomeGUI(User jobSeeker) {
 
-            }
-        });
-        myApplicationsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        JFrame window = new JFrame("JSS: Job Seeker Home");
+        window.add(navbar);
 
-            }
-        });
-        messagesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setBounds(600,40,100,100);
+        window.pack();
+        window.setResizable(true);
+        window.setVisible(true);
 
-            }
-        });
-        profileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        createTable();
 
-            }
-        });
+        /*Add these methods back in once the actual components exist on the GUI
+
+            //navbar
+            searchJobsButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+            myApplicationsButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+            messagesButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+            profileButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+
+        */
     }
 
 
@@ -72,7 +99,5 @@ public class JobSeekerHomeGUI {
                 new String[]{"JobID", "Title", "Employer", "Location", "Salary", "Type"}
         ));
     }
-
-
 
 }

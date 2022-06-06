@@ -3,6 +3,12 @@ import java.util.ArrayList;
 public class JobseekerControl
 {
 
+    public JobseekerControl() {
+    }
+    public JobseekerControl(User jobseeker) {
+        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(jobseeker);
+    }
+
     public void apply()
     {
 
