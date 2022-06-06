@@ -27,8 +27,9 @@ public class JobSeekerHomeGUI {
     private JPanel home;
     private JPanel search;
     private JPanel applications;
-    private JPanel messages;
     private JPanel profile;
+    private JLabel phoneText;
+    private JList list1;
 
     public JobSeekerHomeGUI() {
 
