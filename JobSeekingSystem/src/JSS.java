@@ -15,15 +15,15 @@ public class JSS
     private ArrayList<User> userList = new ArrayList<>();
     private static Start StartControl;
 
-    public JSS(Start myParent) {
-        StartControl = myParent;
-        //  JFrame frame = new JFrame("LoginGUI");
-        //  frame.setContentPane(new LoginGUI().loginPanel);
-        //  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //  frame.pack();
-        //  frame.setVisible(true);
-        importUserList("JobSeekingSystem/users.csv");
-    }
+//    public JSS(Start myParent) {
+//        StartControl = myParent;
+//        //  JFrame frame = new JFrame("LoginGUI");
+//        //  frame.setContentPane(new LoginGUI().loginPanel);
+//        //  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        //  frame.pack();
+//        //  frame.setVisible(true);
+//        importUserList("JobSeekingSystem/users.csv");
+//    }
 
     //Verifies username/password & logs the user in.
     //TODO: can split this method into two. One for validation, one for logging in.

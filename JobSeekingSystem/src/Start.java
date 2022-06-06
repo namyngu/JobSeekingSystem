@@ -5,7 +5,7 @@ public class Start
 
     public Start()
     {
-        this.program = new JSS(this);
+        this.program = new JSS();
         this.startGUI = new LoginGUI(this.program);
     }
 

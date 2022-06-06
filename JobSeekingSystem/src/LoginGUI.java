@@ -62,7 +62,7 @@ public class LoginGUI {
 
                 try
                 {
-                    frame.dispose();
+//                    frame.dispose();
 //                 TestGUI test = new TestGUI();
                    RegisterGUI register = new RegisterGUI(program);
                 }
