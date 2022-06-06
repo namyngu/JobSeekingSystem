@@ -73,7 +73,10 @@ public class RegisterGUI
 
                         } else if (radioButtonRecruiter.isContentAreaFilled())
                         {
-//                        User newRecruiter = new Recruiter();
+                            //TODO: need to check if username already exists.
+                            program.createUser(firstNameText.getText(), lastNameText.getText(), usernameTextTextField.getText(), String.valueOf(passwordField.getPassword()), "Recruiter");
+                            PromptGUI confirm = new PromptGUI("Account created! Log in to continue");
+                            frame.dispose();
                         }
                     } catch (Exception x)
                     {

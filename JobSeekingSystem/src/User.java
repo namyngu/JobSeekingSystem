@@ -47,7 +47,7 @@ public abstract class User
     {
         try
         {
-            String userData = userID + "," + firstName + "," + lastName + "," + userName + "," + String.valueOf(password) + "," + userType;
+            String userData = userID + "," + firstName + "," + lastName + "," + userName + "," + password + "," + userType;
             File_Control io = new File_Control();
             io.writeFile("users.csv", userData);
         }
