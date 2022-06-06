@@ -49,7 +49,7 @@ public abstract class User
         {
             String userData = userID + "," + firstName + "," + lastName + "," + userName + "," + String.valueOf(password) + "," + userType;
             File_Control io = new File_Control();
-            io.writeFile("JobSeekingSystem/users.csv", userData);
+            io.writeFile("users.csv", userData);
         }
         catch (Exception e)
         {
