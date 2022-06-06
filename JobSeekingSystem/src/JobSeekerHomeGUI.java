@@ -1,7 +1,5 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class JobSeekerHomeGUI {
 
@@ -26,10 +24,12 @@ public class JobSeekerHomeGUI {
     private JTabbedPane navbar;
     private JPanel home;
     private JPanel search;
-    private JPanel applications;
+    private JPanel applicationsPanel;
     private JPanel profile;
     private JLabel phoneText;
     private JList list1;
+    private JPanel inboxPanel;
+    private JPanel profilePanel;
 
     public JobSeekerHomeGUI() {
 
