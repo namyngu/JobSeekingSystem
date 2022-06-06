@@ -1,7 +1,9 @@
 /* Class taken from Geeks For Geeks website:
-https://www.geeksforgeeks.org/sha-1-hash-in-java/
+https://www.geeksforgeeks.org/sha-1-hash-in-java/?ref=lbp
+https://www.geeksforgeeks.org/sha-256-hash-in-java/?ref=lbp
  */
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -12,7 +14,7 @@ public class EncryptMe {
         input = "salt" + input + "bae";
 
         try {
-            // getInstance() method is called with algorithm SHA-1
+            // getInstance() method is called with algorithm SHA-256
             MessageDigest md = MessageDigest.getInstance("SHA-256");
 
             // digest() method is called
@@ -26,8 +28,8 @@ public class EncryptMe {
             // Convert message digest into hex value
             String hashtext = no.toString(16);
 
-            // Add preceding 0s to make it 32 bit
-            while (hashtext.length() < 32) {
+            // Add preceding 0s to make it 64 bit
+            while (hashtext.length() < 64) {
                 hashtext = "0" + hashtext;
             }
 
