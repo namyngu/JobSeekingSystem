@@ -12,7 +12,7 @@ public class Start
 
     public static void main(String[] args)
     {
-
+        JobSeekerUpdateGUI jsu = new JobSeekerUpdateGUI();
         Start obj = new Start();
 
     }
