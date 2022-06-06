@@ -8,6 +8,9 @@ import java.security.NoSuchAlgorithmException;
 public class EncryptMe {
     public static String encryptThisString(String input)
     {
+        //Salting - Add some padding
+        input = "salt" + input + "bae";
+
         try {
             // getInstance() method is called with algorithm SHA-1
             MessageDigest md = MessageDigest.getInstance("SHA-1");
