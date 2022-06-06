@@ -10,7 +10,7 @@ public class Jobseeker extends User
     private int totalOffers;
     private int totalInvites;
 
-    public Jobseeker(int userID, String firstName, String lastName, String userName, char [] password)
+    public Jobseeker(int userID, String firstName, String lastName, String userName, String password)
     {
 
         super(userID, firstName, lastName, userName, password, "Jobseeker");
