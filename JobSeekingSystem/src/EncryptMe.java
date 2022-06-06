@@ -13,7 +13,7 @@ public class EncryptMe {
 
         try {
             // getInstance() method is called with algorithm SHA-1
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
 
             // digest() method is called
             // to calculate message digest of the input string
