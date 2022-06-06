@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ErrorGUI">
-  <grid id="27dc6" binding="errorPanel" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="PromptGUI">
+  <grid id="27dc6" binding="promptPanel" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="100" left="100" bottom="150" right="150"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="29" y="20" width="563" height="376"/>
     </constraints>
     <properties/>
-    <border type="none" title="ERROR"/>
+    <border type="none" title="ALERT"/>
     <children>
       <component id="59340" class="javax.swing.JLabel" binding="messageLabel">
         <constraints>
