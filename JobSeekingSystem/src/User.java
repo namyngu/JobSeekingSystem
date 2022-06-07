@@ -136,11 +136,13 @@ public abstract class User
         return userType;
     }
 
+
     //possible security concern - can set a user to Admin.
     public String setUserType(String userType)
     {
         return (this.userType = userType);
     }
+
 
     @Override
     public String toString()

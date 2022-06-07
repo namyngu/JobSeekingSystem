@@ -63,7 +63,7 @@ public class JSS
             case "Admin":
                 try
                 {
-                    AdminControl adminControl = new AdminControl((Administrator) userList.get(userIndex));
+                    AdminControl adminControl = new AdminControl((Administrator) userList.get(userIndex), this);
                     AdminGUI adminGUI = new AdminGUI(adminControl, this);
 //                    throw new Exception("Success! Logging you in as " + accountType + "...");
                     break;
@@ -271,5 +271,48 @@ public class JSS
         }
 
     }
+//method to return relevant User details to AdminGUI for review
+    public String retrieveUserDetails(int userNumber)
+    {
+        User userSelected = userList.get(userNumber);
+        String userDetails = "";
+        userDetails += "Username: " + userSelected.getUserName() + "\n";
+        userDetails += "Account type: " + userSelected.getUserType() + "\n";
+        userDetails += "First name: " + userSelected.getFirstName() + "\n";
+        userDetails += "Surname: " + userSelected.getLastName() + "\n";
+
+
+
+
+        return userDetails;
+    }
+//method to lock account comes via admin controller.
+    //TODO this should come from admin control I think but there must be a neater way of doing this
+
+    public void alterActive(int index)
+    {
+        boolean success = false;
+
+        User temp = userList.get(index);
+        temp.setActive(false);
+    }
+
+    public boolean checkLocked(int userNumber)
+    {
+        boolean locked = false;
+        User temp = this.userList.get(userNumber);
+        if (temp.isActive()==false)
+        {
+            locked = true;
+        }
+        return locked;
+    }
+//temp method to check lock mechanism
+//    public void checkLock(int userIndex)
+//    {
+//        User temp = userList.get(userIndex);
+//        System.out.println("Username " + temp.getUserName());
+//        System.out.println("Is active: " + temp.isActive());
+//    }
 }
 

@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class AdminGUI
@@ -9,6 +11,11 @@ public class AdminGUI
     private JPanel adminHomePanel;
     private JLabel labelWelcome;
     private JList userList;
+    private JTextArea userDetailsText;
+    private JLabel jobsLabel;
+    private JList list1;
+    private JTextArea jobDetailsText;
+    private JButton lockUserButton;
 
     private AdminControl adminControl;
     private JSS program;
@@ -62,6 +69,36 @@ public class AdminGUI
             public void valueChanged(ListSelectionEvent e)
             {
 
+                int userNumber = userList.getSelectedIndex();
+                try
+                {
+//                    userDetailsText.setText("User ID is: " + userNumber);
+                    String selected = program.retrieveUserDetails(userNumber);
+                    boolean locked = program.checkLocked(userNumber);
+                    if (locked == true)
+                    {
+                        selected += "\n THIS USER IS LOCKED!";
+                    }
+                    userDetailsText.setText(selected);
+
+
+                }
+                catch (Exception x)
+                {
+                    x.printStackTrace();
+                    PromptGUI error = new PromptGUI("Error, contact developer", x.toString());
+                }
+            }
+        });
+
+        lockUserButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                int userIndex = userList.getSelectedIndex();
+                adminControl.switchLock(userIndex);
+//                program.checkLock(userIndex);
             }
         });
     }
@@ -71,7 +108,7 @@ public class AdminGUI
         userList.setVisible(true);
 //        System.out.println("removing elements");
 //        list.removeAllElements();
-        System.out.println("adding name to list:" + name);
+//        System.out.println("adding name to list:" + name);
         list.addElement(name);
 //        for (String each: userNames)
 //        {
