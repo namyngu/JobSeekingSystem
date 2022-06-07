@@ -8,19 +8,42 @@ public class Job
     private String employer;
     private String jobType;
     private Boolean isAdvertised;
-    private int salary;
+    private String salary;
     private ArrayList<String> skills;
     private ArrayList<Application> applications;
     private ArrayList<String> keywords;
     private String locationState;
     private String postCode;
     private String jobDescription;
-    private String jobCategory;
+    private String jobCategoryPrimary;
+    private String jobCategorySecondary;
     private String workingHours;
     private boolean advertised;
     private boolean archived;
 
-    public Job(int jobID, String jobTitle, int recruiterID, String employer, String jobType, Boolean isAdvertised, int salary, ArrayList<String> skills, ArrayList<Application> applications, ArrayList<String> keywords, String locationState, String postCode, String jobDescription, String jobCategory, String workingHours, boolean advertised, boolean archived) {
+
+    public Job() {
+        jobID = 0;
+        jobTitle = "jobTitle";
+        recruiterID = 0;
+        employer = "employer";
+        jobType = "jobType";
+        isAdvertised = false;
+        salary = "$0 p/h";
+        skills = new ArrayList<>();
+        applications = new ArrayList<>();
+        keywords = new ArrayList<>();
+        locationState = "locationState";
+        postCode = "postCode";
+        jobDescription = "jobDescription";
+        jobCategoryPrimary = "jobCategoryPrimary";
+        jobCategorySecondary = "jobCategorySecondary";
+        workingHours = "workingHours";
+        advertised = false;
+        archived = false;
+
+    }
+    public Job(int jobID, String jobTitle, int recruiterID, String employer, String jobType, Boolean isAdvertised, String salary, ArrayList<String> skills, ArrayList<Application> applications, ArrayList<String> keywords, String locationState, String postCode, String jobDescription, String jobCategoryPrimary, String jobCategorySecondary, String workingHours, boolean advertised, boolean archived) {
         this.jobID = jobID;
         this.jobTitle = jobTitle;
         this.recruiterID = recruiterID;
@@ -34,7 +57,8 @@ public class Job
         this.locationState = locationState;
         this.postCode = postCode;
         this.jobDescription = jobDescription;
-        this.jobCategory = jobCategory;
+        this.jobCategoryPrimary = jobCategoryPrimary;
+        this.jobCategorySecondary = jobCategorySecondary;
         this.workingHours = workingHours;
         this.advertised = advertised;
         this.archived = archived;
@@ -88,11 +112,11 @@ public class Job
         isAdvertised = advertised;
     }
 
-    public int getSalary() {
+    public String getSalary() {
         return salary;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(String salary) {
         this.salary = salary;
     }
 
@@ -144,12 +168,20 @@ public class Job
         this.jobDescription = jobDescription;
     }
 
-    public String getJobCategory() {
-        return jobCategory;
+    public String getJobCategoryPrimary() {
+        return jobCategoryPrimary;
     }
 
-    public void setJobCategory(String jobCategory) {
-        this.jobCategory = jobCategory;
+    public void setJobCategoryPrimary(String jobCategoryPrimary) {
+        this.jobCategoryPrimary = jobCategoryPrimary;
+    }
+
+    public String getJobCategorySecondary() {
+        return jobCategorySecondary;
+    }
+
+    public void setJobCategorySecondary(String jobCategorySecondary) {
+        this.jobCategorySecondary = jobCategorySecondary;
     }
 
     public String getWorkingHours() {
@@ -192,7 +224,8 @@ public class Job
                 ", locationState='" + locationState + '\'' +
                 ", postCode='" + postCode + '\'' +
                 ", jobDescription='" + jobDescription + '\'' +
-                ", jobCategory='" + jobCategory + '\'' +
+                ", jobCategoryPrimary='" + jobCategoryPrimary + '\'' +
+                ", jobCategorySecondary='" + jobCategorySecondary + '\'' +
                 ", workingHours='" + workingHours + '\'' +
                 ", advertised=" + advertised +
                 ", archived=" + archived +

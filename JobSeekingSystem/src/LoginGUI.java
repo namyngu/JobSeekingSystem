@@ -41,7 +41,7 @@ public class LoginGUI {
 
                 try
                 {
-                    program.login(username, password);
+                    program.login(username, String.valueOf(password));
                     frame.dispose();
                 }
                 catch (Exception x)
