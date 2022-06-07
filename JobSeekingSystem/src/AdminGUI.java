@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -47,14 +48,10 @@ public class AdminGUI
                 String name = this.program.retrieveUsername(i);
                 this.userNames.add(name);
                 this.refreshList(name);
-//                System.out.println("name added to list " + name);
+
             }
 
-//            this.userList.setVisible(true);
 
-
-
-//            userList.setModel(list);
 
 
         }
@@ -72,12 +69,19 @@ public class AdminGUI
                 int userNumber = userList.getSelectedIndex();
                 try
                 {
+
 //                    userDetailsText.setText("User ID is: " + userNumber);
                     String selected = program.retrieveUserDetails(userNumber);
                     boolean locked = program.checkLocked(userNumber);
                     if (locked == true)
                     {
-                        selected += "\n THIS USER IS LOCKED!";
+                        userDetailsText.setBackground(Color.red);
+                        lockUserButton.setText("UNLOCK ACCOUNT");
+                    }
+                    else
+                    {
+                        userDetailsText.setBackground(Color.white);
+                        lockUserButton.setText("LOCK ACCOUNT");
                     }
                     userDetailsText.setText(selected);
 
@@ -98,7 +102,16 @@ public class AdminGUI
             {
                 int userIndex = userList.getSelectedIndex();
                 adminControl.switchLock(userIndex);
-//                program.checkLock(userIndex);
+                if(program.checkLocked(userIndex))
+                {
+                    userDetailsText.setBackground(Color.red);
+                    lockUserButton.setText("UNLOCK ACCOUNT");
+                }
+                else
+                {
+                    userDetailsText.setBackground(Color.white);
+                    lockUserButton.setText("LOCK ACCOUNT");
+                }
             }
         });
     }
@@ -106,6 +119,7 @@ public class AdminGUI
     private void refreshList(String name)
     {
         userList.setVisible(true);
+        userDetailsText.setBackground(Color.white);
 //        System.out.println("removing elements");
 //        list.removeAllElements();
 //        System.out.println("adding name to list:" + name);

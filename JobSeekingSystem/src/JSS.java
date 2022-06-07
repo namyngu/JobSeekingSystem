@@ -286,15 +286,20 @@ public class JSS
 
         return userDetails;
     }
-//method to lock account comes via admin controller.
+//method to lock/unlock account comes via admin controller.
     //TODO this should come from admin control I think but there must be a neater way of doing this
 
     public void alterActive(int index)
     {
-        boolean success = false;
-
         User temp = userList.get(index);
-        temp.setActive(false);
+        if(temp.isActive() == true)
+        {
+            temp.setActive(false);
+        }
+        else
+        {
+            temp.setActive(true);
+        }
     }
 
     public boolean checkLocked(int userNumber)
@@ -307,12 +312,6 @@ public class JSS
         }
         return locked;
     }
-//temp method to check lock mechanism
-//    public void checkLock(int userIndex)
-//    {
-//        User temp = userList.get(userIndex);
-//        System.out.println("Username " + temp.getUserName());
-//        System.out.println("Is active: " + temp.isActive());
-//    }
+
 }
 
