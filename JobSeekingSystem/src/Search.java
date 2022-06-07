@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class Search
 {
@@ -16,12 +17,13 @@ public class Search
     }
 
     // Method 1. Search for a list of matching jobs
-    public ArrayList<Job> jobSearch(String jobDesc, String category,
-        String location, boolean fullTime, boolean partTime, boolean casual, float salMin,
-        float salMax, ArrayList<String> seekerSkills) throws Exception {
+    public ArrayList<Job> jobSearch(String jobDesc, String categoryPrimary,
+        String categorySecondary, String location, boolean fullTime, boolean partTime,
+        boolean casual, float salMin, float salMax, ArrayList<String> seekerSkills) throws Exception {
 
         //Setup a few variables
         ArrayList<Job> results = new ArrayList<Job>();
+        TreeMap<Integer, Job> scoredResults = new TreeMap<Integer, Job>();
 
         //Let's make a few sample Jobs just for testing purposes
         Job jobOne = new Job(1, "Software Developer", 1, "Monash University",
@@ -128,7 +130,7 @@ public class Search
             // For each word in the searched Job Description, check if it matches a word
             // in the job Description. If yes, increment the number of matches.
             for (String word : searchDescArray) {
-                    String lWord = word.toLowerCase();
+                String lWord = word.toLowerCase();
                 for (String check : jobDescArray) {
                     String lCheck = check.toLowerCase();
                     if (lWord.equals(lCheck)) {
@@ -139,9 +141,41 @@ public class Search
             }
 
             // 2. Skills
-            // 3. Category
+            // For each of the skills listed against the Job, check to see if they
+            // match any of the skills listed against the Job Seeker.
+            int skillMatch = 0;
+            for (String skill : seekerSkills) {
+                String lSkill = skill.toLowerCase();
+                for (String check : tmp.getSkills()) {
+                    String lJobSkill = check.toLowerCase();
+                    if (lSkill.equals(lJobSkill)) {
+                        //Direct match on the skill
+                        skillMatch++;
+                    }
+                }
+            }
 
+            // 3. Category
+            // Check to see if we match on the job category - Primary and Secondary
+            int primaryCatMatch = 0;
+            int secondaryCatMatch = 0;
+            if (categoryPrimary.equals(tmp.getJobCategoryPrimary())) {
+                // Match on Primary Category.
+                primaryCatMatch = 1;
+            }
+            if (categorySecondary.equals(tmp.getJobCategorySecondary())) {
+                secondaryCatMatch = 1;
+            }
+
+            // 4. Score this Job for the search
+            //TODO: Figure out how to calculate the score
+            int score = descMatch + skillMatch + primaryCatMatch * 10 + secondaryCatMatch * 5;
+
+            // 5. Add this job and its score into a TreeMap for sorting
+            scoredResults.put(score,tmp);
         }
+
+        // Sort the TreeMap and put the sorted list back into results.
 
         return results;
     }
