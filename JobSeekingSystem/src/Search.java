@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.function.ToDoubleBiFunction;
 
 public class Search
 {
@@ -26,21 +25,26 @@ public class Search
 
         //Let's make a few sample Jobs just for testing purposes
         Job jobOne = new Job(1, "Software Developer", 1, "Monash University",
-                "Full-Time", true, 100000, new ArrayList<String>(),
+                "Full-Time", true, "$100,000", new ArrayList<String>(),
                 new ArrayList<Application>(), new ArrayList<String>(), "Queensland", "4101",
                 "Some description about being a software developer goes here, blah blah blah",
-                "Engineering - Software", "9-5", true, false);
+                "Engineering - Software", "Another category", "9-5",
+                true, false);
         jobList.add(jobOne);
         //Job jobTwo = new Job();
         //Job jobThree = new Job();
 
-
+        //public Job(int jobID, String jobTitle, int recruiterID, String employer, String jobType,
+        // Boolean isAdvertised, String salary, ArrayList<String> skills, ArrayList<Application> applications,
+        // ArrayList<String> keywords, String locationState, String postCode, String jobDescription, String jobCategoryPrimary,
+        // String jobCategorySecondary, String workingHours, boolean advertised, boolean archived)
 
         // First let's apply filter data to filter out unmatching jobs
         // For every job, check the filters and exclude that job if it
         // does not match the filters.
         for (Job tmp : jobList) {
             boolean valid = true;
+            float newSal = Float.parseFloat(tmp.getSalary());
 
             // Job must be currently advertised (just in case we accidentally
             // pulled some in that are not.)
@@ -79,7 +83,7 @@ public class Search
             }
 
             // 2. Job must match salary range
-            if (tmp.getSalary() >= salMin && tmp.getSalary() <= salMax) {
+            if (Float.compare(newSal, salMin) >=0  && Float.compare(newSal, salMax) <=0) {
                 //Job is within salary range specified
             }
             else {
