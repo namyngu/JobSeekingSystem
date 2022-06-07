@@ -64,13 +64,15 @@ public class JSS
                 try
                 {
                     AdminControl adminControl = new AdminControl((Administrator) userList.get(userIndex));
-                    AdminHome adminGUI = new AdminHome(adminControl);
+                    AdminGUI adminGUI = new AdminGUI(adminControl, this);
 //                    throw new Exception("Success! Logging you in as " + accountType + "...");
                     break;
                 }
                 catch (Exception e)
                 {
+
                     PromptGUI error = new PromptGUI("Contact Administrator", e.toString());
+
                 }
 
             case "Jobseeker":
@@ -88,6 +90,12 @@ public class JSS
         }
     }
 
+    public String retrieveUsername(int userID)
+    {
+        User temp = userList.get(userID);
+        String username = temp.getUserName();
+        return username;
+    }
 
     //Method to read in the user list into memory
     public void importUserList(String fileName)
