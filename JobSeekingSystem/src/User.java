@@ -43,20 +43,20 @@ public abstract class User
     }
 
     //Method to save user to users.csv
-    public void saveUser(String fileName)
-    {
-        try
-        {
-            String userData = userID + "," + firstName + "," + lastName + "," + userName + "," + password + "," + userType;
-            File_Control io = new File_Control();
-            io.writeFile("users.csv", userData);
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error failed to save user into csv.");
-        }
-
-    }
+//    public void saveUser(String fileName)
+//    {
+//        try
+//        {
+//            String userData = userID + "," + firstName + "," + lastName + "," + userName + "," + password + "," + userType;
+//            File_Control io = new File_Control();
+//            io.writeFile("users.csv", userData);
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println("Error failed to save user into csv.");
+//        }
+//
+//    }
 
 
     //Setters & Getters
