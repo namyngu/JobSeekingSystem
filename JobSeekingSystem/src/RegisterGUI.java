@@ -18,6 +18,7 @@ public class RegisterGUI
     private JRadioButton radioButtonJobseeker;
     private JRadioButton radioButtonRecruiter;
     private JButton loginButton;
+    private JRadioButton radioButtonAdmin;
     private JSS program;
 
 
@@ -64,17 +65,24 @@ public class RegisterGUI
                 {
                     try
                     {
-                        if (radioButtonJobseeker.isContentAreaFilled())
+                        if (radioButtonJobseeker.isSelected())
                         {
                             //TODO: need to check if username already exists.
                             program.createUser(firstNameText.getText(), lastNameText.getText(), usernameTextTextField.getText(), String.valueOf(passwordField.getPassword()), "Jobseeker");
                             PromptGUI confirm = new PromptGUI("Account created! Log in to continue");
                             frame.dispose();
 
-                        } else if (radioButtonRecruiter.isContentAreaFilled())
+                        } else if (radioButtonRecruiter.isSelected())
                         {
                             //TODO: need to check if username already exists.
                             program.createUser(firstNameText.getText(), lastNameText.getText(), usernameTextTextField.getText(), String.valueOf(passwordField.getPassword()), "Recruiter");
+                            PromptGUI confirm = new PromptGUI("Account created! Log in to continue");
+                            frame.dispose();
+                        }
+                        else if (radioButtonAdmin.isSelected())
+                        {
+                            //TODO: need to check if username already exists.
+                            program.createUser(firstNameText.getText(), lastNameText.getText(), usernameTextTextField.getText(), String.valueOf(passwordField.getPassword()), "Admin");
                             PromptGUI confirm = new PromptGUI("Account created! Log in to continue");
                             frame.dispose();
                         }
@@ -103,7 +111,7 @@ public class RegisterGUI
                 {
                     blank = true;
                 }
-                else if (!radioButtonJobseeker.isSelected()&&!radioButtonRecruiter.isSelected())
+                else if (!radioButtonJobseeker.isSelected()&&!radioButtonRecruiter.isSelected()&&!radioButtonAdmin.isSelected())
                 {
                     blank = true;
                 }

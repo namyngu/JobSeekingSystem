@@ -61,8 +61,17 @@ public class JSS
         switch (accountType)
         {
             case "Admin":
-                //Do something
-                throw new Exception("Success! Logging you in as " + accountType + "...");
+                try
+                {
+                    AdminControl adminControl = new AdminControl((Administrator) userList.get(userIndex));
+                    AdminHome adminGUI = new AdminHome(adminControl);
+//                    throw new Exception("Success! Logging you in as " + accountType + "...");
+                    break;
+                }
+                catch (Exception e)
+                {
+                    PromptGUI error = new PromptGUI("Contact Administrator", e.toString());
+                }
 
             case "Jobseeker":
                 //Do something else
@@ -229,7 +238,6 @@ public class JSS
             {
                 int userID = countUsers() + 1;
                 Administrator admin = new Administrator(userID, firstName, lastName, userName, encryptPW);
-                this.saveUser(userID, firstName, lastName, userName, encryptPW,userType);
 
                 //write new recruiter to users.csv
                 this.saveUser(userID, firstName, lastName, userName, encryptPW,userType);
