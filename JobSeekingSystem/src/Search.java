@@ -118,15 +118,30 @@ public class Search
         // Jobs outside the category will still return in results, but at lower relevancy
         // Jobs not exactly matching skill specification will still return, but at lower relevancy
 
-        // 1. Description
-        // Break the description into an array of Strings to work with
-        int descMatch = 0;
-        String[] descArray = jobDesc.split(" ");
-        for (String word : descArray) {
-        }
+        for (Job tmp : results) {
 
-        // 2. Skills
-        // 3. Category
+            // 1. Description
+            // Break the descriptions into arrays of Strings to work with.
+            int descMatch = 0;
+            String[] searchDescArray = jobDesc.split("\\W+");
+            String[] jobDescArray = tmp.getJobDescription().split("\\W+");
+            // For each word in the searched Job Description, check if it matches a word
+            // in the job Description. If yes, increment the number of matches.
+            for (String word : searchDescArray) {
+                    String lWord = word.toLowerCase();
+                for (String check : jobDescArray) {
+                    String lCheck = check.toLowerCase();
+                    if (lWord.equals(lCheck)) {
+                        //Direct match on the word
+                        descMatch++;
+                    }
+                }
+            }
+
+            // 2. Skills
+            // 3. Category
+
+        }
 
         return results;
     }
