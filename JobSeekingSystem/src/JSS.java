@@ -56,6 +56,14 @@ public class JSS
             throw new Exception("passwords do not match!");
         }
 
+        //2.1 check if the account is locked
+
+        if (userList.get(userIndex).isActive() == false)
+        {
+            PromptGUI locked = new PromptGUI("This account has been locked.  Contact Administrator");
+            throw new Exception("Account Locked!");
+        }
+
         // 3. Let's check what kind of account this user should have
         String accountType = userList.get(userIndex).getUserType();
         switch (accountType)
