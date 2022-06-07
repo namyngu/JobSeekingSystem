@@ -13,7 +13,8 @@ public class JSS
     private final File_Control fileControl = new File_Control();
     private ArrayList<User> userList = new ArrayList<>();
 
-    public JSS() {
+    public JSS()
+    {
         importUserList("users.csv");
     }
 
@@ -24,8 +25,10 @@ public class JSS
         // 1. Verify username
         boolean Exists = false;
         int userIndex = 0;
-        for (User tmpUser: userList) {
-            if (tmpUser.getUserName().equals(username)) {
+        for (User tmpUser : userList)
+        {
+            if (tmpUser.getUserName().equals(username))
+            {
                 //Match on username
                 Exists = true;
                 break;
@@ -33,7 +36,8 @@ public class JSS
             userIndex++;
         }
 
-        if (!Exists) {
+        if (!Exists)
+        {
             //We did not find a username matching the entered name
             throw new Exception("could not find a user with this username!");
         }
@@ -46,26 +50,28 @@ public class JSS
         if (encryptedPW.equals(userList.get(userIndex).getPassword()))
             passwordMatch = true;
 
-        if (!passwordMatch) {
+        if (!passwordMatch)
+        {
             //This user's password did not match their stored password
             throw new Exception("passwords do not match!");
         }
 
         // 3. Let's check what kind of account this user should have
         String accountType = userList.get(userIndex).getUserType();
-        switch (accountType) {
+        switch (accountType)
+        {
             case "Admin":
                 //Do something
                 throw new Exception("Success! Logging you in as " + accountType + "...");
 
             case "Jobseeker":
                 //Do something else
-                JobseekerControl jobSeekerControl = new JobseekerControl (userList.get(userIndex));
+                JobseekerControl jobSeekerControl = new JobseekerControl(userList.get(userIndex));
                 break;
 
             case "Recruiter":
                 //Launch Recruiter Control
-                RecruiterControl recruiterControl = new RecruiterControl (userList.get(userIndex));
+                RecruiterControl recruiterControl = new RecruiterControl(userList.get(userIndex));
                 break;
 
             default:
@@ -82,8 +88,7 @@ public class JSS
         try
         {
             userContent = io.readFile(fileName);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             System.out.println("Error failed to read file.");
         }
@@ -111,12 +116,12 @@ public class JSS
 
                     //if userType is Jobseeker, recruiter or admin
                     if (userType.equals("jobseeker") || userType.equals("recruiter") || userType.equals("admin"))
-                        importUser(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3],userDetails[4], userDetails[5]);
+                        importUser(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3], userDetails[4], userDetails[5]);
                     else
                         System.out.println("Error invalid userType, failed to import user. Check line: " + i);
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e)
+            {
                 System.out.println("Error unable to import users, check " + fileName + " format");
             }
 
@@ -126,15 +131,14 @@ public class JSS
                 tmpUser.display();
             }
             */
-        }
-        else
+        } else
             System.out.println("Error filename cannot be empty");
     }
 
     public int countUsers()
     {
         int count = 0;
-        for (User tmpUser: userList)
+        for (User tmpUser : userList)
         {
             count++;
         }
@@ -150,37 +154,31 @@ public class JSS
             {
                 Jobseeker jobseeker = new Jobseeker(userID, firstName, lastName, userName, password);
                 userList.add(jobseeker);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 System.out.println("Error failed to create Jobseeker, check your parameters!");
             }
-        }
-        else if (userType.trim().equalsIgnoreCase("recruiter"))
+        } else if (userType.trim().equalsIgnoreCase("recruiter"))
         {
             try
             {
-                Recruiter recruiter = new Recruiter(userID,firstName, lastName, userName, password);
+                Recruiter recruiter = new Recruiter(userID, firstName, lastName, userName, password);
                 userList.add(recruiter);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 System.out.println("Error failed to create Recruiter, check your parameters!");
             }
-        }
-        else if (userType.trim().equalsIgnoreCase("admin"))
+        } else if (userType.trim().equalsIgnoreCase("admin"))
         {
             try
             {
-                Administrator admin = new Administrator(userID,firstName, lastName, userName, password);
+                Administrator admin = new Administrator(userID, firstName, lastName, userName, password);
                 userList.add(admin);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 System.out.println("Error failed to create admin, check your parameters!");
             }
-        }
-        else
+        } else
             System.out.println("Error failed to import user, invalid userType");
     }
 
@@ -199,27 +197,27 @@ public class JSS
                 userList.add(newJobseeker);
 
                 //write new user to users.csv
-                newJobseeker.saveUser("users.csv");
+                this.saveUser(userID, firstName, lastName, userName, encryptPW,userType);
 
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 System.out.println("Error failed to create Jobseeker, check your parameters!");
             }
         }
+
+
         //create Recruiter
         else if (userType.trim().equalsIgnoreCase("recruiter"))
         {
             try
             {
                 int userID = countUsers() + 1;
-                Recruiter newRecruiter = new Recruiter(userID,firstName, lastName, userName, encryptPW);
+                Recruiter newRecruiter = new Recruiter(userID, firstName, lastName, userName, encryptPW);
                 userList.add(newRecruiter);
 
                 //write new recruiter to users.csv
-                newRecruiter.saveUser("users.csv");
-            }
-            catch (Exception e)
+                this.saveUser(userID, firstName, lastName, userName, encryptPW,userType);
+            } catch (Exception e)
             {
                 System.out.println("Error failed to create Recruiter, check your parameters!");
             }
@@ -230,16 +228,32 @@ public class JSS
             try
             {
                 int userID = countUsers() + 1;
-                Administrator admin = new Administrator(userID,firstName, lastName, userName, encryptPW);
-                userList.add(admin);
+                Administrator admin = new Administrator(userID, firstName, lastName, userName, encryptPW);
+                this.saveUser(userID, firstName, lastName, userName, encryptPW,userType);
 
                 //write new recruiter to users.csv
-                admin.saveUser("users.csv");
-            }
-            catch (Exception e)
+                this.saveUser(userID, firstName, lastName, userName, encryptPW,userType);
+            } catch (Exception e)
             {
                 System.out.println("Error failed to create admin, check your parameters!");
             }
         }
     }
+
+
+    //Method to save user to users.csv
+    public void saveUser(int userID, String firstName, String lastName, String userName, String password, String userType)
+    {
+        try
+        {
+            String userData = userID + "," + firstName + "," + lastName + "," + userName + "," + password + "," + userType;
+            File_Control io = new File_Control();
+            io.writeFile("users.csv", userData);
+        } catch (Exception e)
+        {
+            System.out.println("Error failed to save user into csv.");
+        }
+
+    }
 }
+
