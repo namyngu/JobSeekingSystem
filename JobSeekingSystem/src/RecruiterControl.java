@@ -6,7 +6,7 @@ public class RecruiterControl
 
     public RecruiterControl(User recruiter)
     {
-        RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiter);
+        RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI();
     }
 
     public void homePage()

@@ -88,7 +88,7 @@ public class JobSeekerHomeGUI {
         window.setResizable(true);
         window.setVisible(true);
 
-        createTable();
+
 
         searchButton.addActionListener(new ActionListener() {
             @Override
@@ -154,13 +154,5 @@ public class JobSeekerHomeGUI {
     }
 
 
-    //create table
-    private void createTable(){
-
-        jobTable.setModel(new DefaultTableModel(
-                null,
-                new String[]{"JobID", "Title", "Employer", "Location", "Salary", "Type"}
-        ));
-    }
 
 }

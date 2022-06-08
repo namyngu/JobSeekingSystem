@@ -14,5 +14,6 @@ public class Start
     {
         Start obj = new Start();
         JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI();
+        RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI();
     }
 }
