@@ -57,14 +57,12 @@ public class JSS
         }
 
         //2.1 check if the account is locked
-        System.out.println("user " + userList.get(userIndex).getUserName());
-        System.out.println("active status " +userList.get(userIndex).isActive());
-//TODO work on this:
-//        if (userList.get(userIndex).isActive() == false)
-//        {
-//            PromptGUI locked = new PromptGUI("This account has been locked.  Contact Administrator");
-//            throw new Exception("Account Locked!");
-//        }
+
+        if (!userList.get(userIndex).isActive())
+        {
+            PromptGUI locked = new PromptGUI("This account has been locked.  Contact Administrator");
+            throw new Exception("Account Locked!");
+        }
 
         // 3. Let's check what kind of account this user should have
         String accountType = userList.get(userIndex).getUserType();
