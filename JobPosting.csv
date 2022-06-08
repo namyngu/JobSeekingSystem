@@ -1,0 +1,30 @@
+jobID,jobTitle,employer,recruiterID,WeeklyWorkHours,status,salary,locationID,jobDescription,archived
+1,Software Developer,Walmart,2,40,Advertised,50000,1,,FALSE
+2,Influencer,State Grid,2,20,Advertised,50000,2,,FALSE
+3,Tester,Amazon,2,60,Withdrawn,50000,2,,FALSE
+4,Main Test Analyst,Apple,3,20,Withdrawn,50000,10,,FALSE
+5,Payroll Officer,CVS Group,3,40,Draft,50000,5,,FALSE
+6,Communications Officer,McKesson,3,40,Draft,50000,6,,FALSE
+7,Plumber,BP,3,40,Advertised,20000,7,,FALSE
+8,Senior Test Analyst,Shell,3,40,Advertised,20000,8,,FALSE
+9,Graphic Designer,ICBC,4,20,Withdrawn,20000,10,,FALSE
+10,Junior Business Analyst,Volkswagen,4,20,Withdrawn,100000,22,,FALSE
+11,Lead Designer,UnitedHealth,4,20,Draft,100000,15,,FALSE
+12,Accounts Payable Officer,Ping An Insurance,4,20,Draft,100000,12,,FALSE
+13,Chief Operating Officer,Exor,4,10-25,Advertised,100000,13,,FALSE
+14,Transformation Lead,Allianz,5,10-25,Advertised,100000,14,,FALSE
+15,Customer Service Officer,Kroger,5,10-25,Withdrawn,150000,15,,FALSE
+16,Videographer,Bank of China,5,40,Withdrawn,150000,16,,FALSE
+17,Radiologist,Foxconn,5,40,Draft,150000,17,,FALSE
+18,Store Owner,Samsung Electronics,6,20,Draft,150000,6,,FALSE
+19,Product Analyst,BP,6,60,Advertised,180000,7,,FALSE
+20,Team Leader,Shell,6,20,Advertised,180000,20,,FALSE
+21,Electrician,Anthem,6,40,Withdrawn,180000,15,,FALSE
+22,Painter,General Motors,7,40,Withdrawn,180000,22,,FALSE
+23,Payroll Officer,Home Depot,7,40,Draft,180000,23,,FALSE
+24,Graphic Designer,Kroger,7,40,Draft,75000,24,,FALSE
+25,Social Media Producer,Bank of China,7,20,Advertised,75000,15,,FALSE
+26,Barista,Verizon,8,20,Advertised,75000,26,,FALSE
+27,Web Developer,General Motors,8,20,Withdrawn,75000,18,,FALSE
+28,Leader Designer,Anthem,8,20,Withdrawn,20000,28,,FALSE
+29,Plumber,BP,8,10-25,Draft,20000,29,,FALSE
