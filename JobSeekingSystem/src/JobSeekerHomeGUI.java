@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class JobSeekerHomeGUI {
 
-
     private JobseekerControl myParent;
     private JButton profileButton;
     private JButton searchJobsButton;
@@ -35,10 +34,10 @@ public class JobSeekerHomeGUI {
     private JPanel inboxPanel;
     private JPanel profilePanel;
     private JCheckBox partTimeCheckBox;
+    private JButton editProfileButton;
 
     public JobSeekerHomeGUI() {
 
-        myParent = parent;
         JFrame window = new JFrame("JSS: Job Seeker Home");
         window.add(navbar);
 
@@ -50,6 +49,14 @@ public class JobSeekerHomeGUI {
 
         createTable();
 
+        //Edit profile button to open edit profile Gui
+        editProfileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                JobSeekerUpdateGUI updateGUI = new JobSeekerUpdateGUI();
+            }
+        });
     }
 
     public JobSeekerHomeGUI(User jobSeeker, JobseekerControl parent) {
