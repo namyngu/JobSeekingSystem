@@ -337,12 +337,7 @@ public class JSS
 
         if (temp.isActive()==false)
         {
-            System.out.println("account is locked");
             locked = true;
-        }
-        else
-        {
-            System.out.println("account active");
         }
         return locked;
     }
