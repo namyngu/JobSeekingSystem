@@ -36,20 +36,37 @@ public class JobSeekerHomeGUI {
     private JCheckBox partTimeCheckBox;
     private JButton editProfileButton;
 
+    private Jobseeker jobseeker;
+
+
+
     public JobSeekerHomeGUI() {
 
         JFrame window = new JFrame("JSS: Job Seeker Home");
         window.add(navbar);
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setBounds(600,40,100,100);
+//        window.setBounds(600,40,100,100);
         window.pack();
         window.setResizable(true);
         window.setVisible(true);
 
-        createTable();
 
-        //Edit profile button to open edit profile Gui
+        //test build table will condense into reusable method
+        String[] jobListColumns = {"JobID", "Title", "Employer", "Location", "Salary", "Type"};
+        String[][] jobListRows = {
+                {"001", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
+                {"002", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
+                {"003", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
+                {"004", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
+                {"005", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"}
+        };
+        DefaultTableModel jobModel = new DefaultTableModel(jobListRows, jobListColumns);
+        jobTable.setModel(jobModel);
+
+
+
+        //Edit profile button to open edit profile GUI
         editProfileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
