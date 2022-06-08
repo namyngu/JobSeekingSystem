@@ -35,4 +35,10 @@ public class Jobseeker extends User
         this.totalOffers =0;
         this.totalInvites = 0;
     }
+
+    // Method to hand skill Array off to Search class
+    public ArrayList<String> getSkills() {
+        return skills;
+    }
+
 }
