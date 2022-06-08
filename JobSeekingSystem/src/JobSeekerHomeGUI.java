@@ -1,5 +1,7 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class JobSeekerHomeGUI {
 
@@ -30,6 +32,7 @@ public class JobSeekerHomeGUI {
     private JList list1;
     private JPanel inboxPanel;
     private JPanel profilePanel;
+    private JButton editProfileButton;
 
     public JobSeekerHomeGUI() {
 
@@ -44,6 +47,14 @@ public class JobSeekerHomeGUI {
 
         createTable();
 
+        //Edit profile button to open edit profile Gui
+        editProfileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                JobSeekerUpdateGUI updateGUI = new JobSeekerUpdateGUI();
+            }
+        });
     }
 
     public JobSeekerHomeGUI(User jobSeeker) {
