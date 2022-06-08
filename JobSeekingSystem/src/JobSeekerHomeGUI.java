@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class JobSeekerHomeGUI {
 
@@ -34,20 +35,37 @@ public class JobSeekerHomeGUI {
     private JPanel profilePanel;
     private JButton editProfileButton;
 
+    private Jobseeker jobseeker;
+
+
+
     public JobSeekerHomeGUI() {
 
         JFrame window = new JFrame("JSS: Job Seeker Home");
         window.add(navbar);
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setBounds(600,40,100,100);
+//        window.setBounds(600,40,100,100);
         window.pack();
         window.setResizable(true);
         window.setVisible(true);
 
-        createTable();
 
-        //Edit profile button to open edit profile Gui
+        //test build table will condense into reusable method
+        String[] jobListColumns = {"JobID", "Title", "Employer", "Location", "Salary", "Type"};
+        String[][] jobListRows = {
+                {"001", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
+                {"002", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
+                {"003", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
+                {"004", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
+                {"005", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"}
+        };
+        DefaultTableModel jobModel = new DefaultTableModel(jobListRows, jobListColumns);
+        jobTable.setModel(jobModel);
+
+
+
+        //Edit profile button to open edit profile GUI
         editProfileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,58 +75,6 @@ public class JobSeekerHomeGUI {
         });
     }
 
-    public JobSeekerHomeGUI(User jobSeeker) {
 
-        JFrame window = new JFrame("JSS: Job Seeker Home");
-        window.add(navbar);
-
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setBounds(600,40,100,100);
-        window.pack();
-        window.setResizable(true);
-        window.setVisible(true);
-
-        createTable();
-
-        /*Add these methods back in once the actual components exist on the GUI
-
-            //navbar
-            searchJobsButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-            myApplicationsButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-            messagesButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-            profileButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-
-        */
-    }
-
-
-    //create table
-    private void createTable(){
-
-        jobTable.setModel(new DefaultTableModel(
-                null,
-                new String[]{"JobID", "Title", "Employer", "Location", "Salary", "Type"}
-        ));
-    }
 
 }

@@ -6,7 +6,8 @@ public class JobseekerControl
     public JobseekerControl() {
     }
     public JobseekerControl(User jobseeker) {
-        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(jobseeker);
+
+        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI();
     }
 
     public void apply()
