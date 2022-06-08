@@ -58,7 +58,7 @@ public class JSS
 
         //2.1 check if the account is locked
 
-        if (userList.get(userIndex).isActive() == false)
+        if (!userList.get(userIndex).isActive())
         {
             PromptGUI locked = new PromptGUI("This account has been locked.  Contact Administrator");
             throw new Exception("Account Locked!");
@@ -141,7 +141,7 @@ public class JSS
 
                     //if userType is Jobseeker, recruiter or admin
                     if (userType.equals("jobseeker") || userType.equals("recruiter") || userType.equals("admin"))
-                        importUser(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3], userDetails[4], userDetails[5]);
+                        importUser(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3], userDetails[4], userDetails[5], Boolean.parseBoolean(userDetails[6]));
                     else
                         System.out.println("Error invalid userType, failed to import user. Check line: " + i);
                 }
@@ -171,13 +171,13 @@ public class JSS
     }
 
     //import existing user from .csv file
-    public void importUser(int userID, String firstName, String lastName, String userName, String password, String userType)
+    public void importUser(int userID, String firstName, String lastName, String userName, String password, String userType, boolean active)
     {
         if (userType.trim().equalsIgnoreCase("jobseeker"))
         {
             try
             {
-                Jobseeker jobseeker = new Jobseeker(userID, firstName, lastName, userName, password);
+                Jobseeker jobseeker = new Jobseeker(userID, firstName, lastName, userName, password,active);
                 userList.add(jobseeker);
             } catch (Exception e)
             {
@@ -187,7 +187,7 @@ public class JSS
         {
             try
             {
-                Recruiter recruiter = new Recruiter(userID, firstName, lastName, userName, password);
+                Recruiter recruiter = new Recruiter(userID, firstName, lastName, userName, password,active);
                 userList.add(recruiter);
             } catch (Exception e)
             {
@@ -197,7 +197,7 @@ public class JSS
         {
             try
             {
-                Administrator admin = new Administrator(userID, firstName, lastName, userName, password);
+                Administrator admin = new Administrator(userID, firstName, lastName, userName, password,active);
                 userList.add(admin);
             } catch (Exception e)
             {
@@ -222,7 +222,7 @@ public class JSS
                 userList.add(newJobseeker);
 
                 //write new user to users.csv
-                this.saveUser(userID, firstName, lastName, userName, encryptPW,userType);
+                this.saveUser(userID, firstName, lastName, userName, encryptPW,userType,true);
 
             } catch (Exception e)
             {
@@ -241,7 +241,7 @@ public class JSS
                 userList.add(newRecruiter);
 
                 //write new recruiter to users.csv
-                this.saveUser(userID, firstName, lastName, userName, encryptPW,userType);
+                this.saveUser(userID, firstName, lastName, userName, encryptPW,userType,true);
             } catch (Exception e)
             {
                 System.out.println("Error failed to create Recruiter, check your parameters!");
@@ -253,10 +253,10 @@ public class JSS
             try
             {
                 int userID = countUsers() + 1;
-                Administrator admin = new Administrator(userID, firstName, lastName, userName, encryptPW);
+                Administrator admin = new Administrator(userID, firstName, lastName, userName, encryptPW,true);
 
                 //write new recruiter to users.csv
-                this.saveUser(userID, firstName, lastName, userName, encryptPW,userType);
+                this.saveUser(userID, firstName, lastName, userName, encryptPW,userType,true);
             } catch (Exception e)
             {
                 System.out.println("Error failed to create admin, check your parameters!");
@@ -266,11 +266,12 @@ public class JSS
 
 
     //Method to save user to users.csv
-    public void saveUser(int userID, String firstName, String lastName, String userName, String password, String userType)
+    //TODO adapt to include active status
+    public void saveUser(int userID, String firstName, String lastName, String userName, String password, String userType, boolean active)
     {
         try
         {
-            String userData = userID + "," + firstName + "," + lastName + "," + userName + "," + password + "," + userType;
+            String userData = userID + "," + firstName + "," + lastName + "," + userName + "," + password + "," + userType + "," + active;
             File_Control io = new File_Control();
             io.writeFile("users.csv", userData);
         } catch (Exception e)
@@ -308,15 +309,40 @@ public class JSS
         {
             temp.setActive(true);
         }
+   this.refreshUserSavedList();
+    }
+    //method updates saved user list
+    private void refreshUserSavedList()
+    {
+        try
+        {
+            fileControl.clearFile("users.csv");
+            for (User temp: userList)
+            {
+                this.saveUser(temp.getUserID(), temp.getFirstName(), temp.getLastName(), temp.getUserName(), temp.getPassword(),temp.getUserType(),temp.isActive());
+            }
+        } catch (Exception e)
+        {
+            System.out.println("Error failed REFRESH save user into csv.");
+        }
+
+
     }
 
     public boolean checkLocked(int userNumber)
     {
+        System.out.println("usernumber " + userNumber);
         boolean locked = false;
         User temp = this.userList.get(userNumber);
+        System.out.println("active status: " + temp.isActive());
         if (temp.isActive()==false)
         {
+            System.out.println("account is locked");
             locked = true;
+        }
+        else
+        {
+            System.out.println("account active");
         }
         return locked;
     }

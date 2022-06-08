@@ -22,4 +22,17 @@ public class Jobseeker extends User
         this.totalOffers =0;
         this.totalInvites = 0;
     }
+
+    public Jobseeker(int userID, String firstName, String lastName, String userName, String password, boolean active)
+    {
+
+        super(userID, firstName, lastName, userName, password, "Jobseeker", active);
+
+        this.applications = new ArrayList<Application>();
+        this.invitations = new ArrayList<Invitation>();
+        this.skills = new ArrayList<String>();
+        this.totalApplied = 0;
+        this.totalOffers =0;
+        this.totalInvites = 0;
+    }
 }
