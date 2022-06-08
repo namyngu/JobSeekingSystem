@@ -57,7 +57,7 @@ public class CreateJobGUI {
 
         Job job = new Job();
         populateSkills("JobSeekingSystem/src/Skills.csv");
-        populateKeywords("JobSeekingSystem/src/Keywords.csv");
+        populateKeywords("JobSeekingSystem/src/KeywordList.csv");
         //populateCategories("JobSeekingSystem/src/Categories.csv");
 
         DefaultListModel skillsListGUI = new DefaultListModel();
