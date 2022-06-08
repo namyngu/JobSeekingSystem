@@ -23,4 +23,26 @@ public class AdminControl
         }
 
     }
+
+    public void blockedMessage(int senderID, int receiverID)
+    {
+        boolean sent = false;
+        try
+        {
+            String text = "Your account will be blocked by Administrator " + this.admin.getUserName();
+            text += "\nplease contact them immediately to discuss";
+            Message notification = new AdminAlert(senderID, receiverID, text);
+            sent = true;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            sent = false;
+        }
+    }
+
+    public int adminID()
+    {
+        return this.admin.getUserID();
+    }
 }

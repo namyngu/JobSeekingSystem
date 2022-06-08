@@ -1,20 +1,20 @@
 public abstract class Message
 {
     private int senderID;
-    private int recieverID;
-    private boolean hasRecieved;
+    private int receiverID;
+    private boolean hasReceived;
 
     public Message()
     {
         this.senderID = 0;
-        this.recieverID = 0;
-        this.hasRecieved = false;
+        this.receiverID = 0;
+        this.hasReceived = false;
     }
 
-    public Message(int senderID, int recieverID, boolean hasRecieved)
+    public Message(int senderID, int receiverID)
     {
         this.senderID = senderID;
-        this.recieverID = recieverID;
-        this.hasRecieved = false;
+        this.receiverID = receiverID;
+        this.hasReceived = false;
     }
 }

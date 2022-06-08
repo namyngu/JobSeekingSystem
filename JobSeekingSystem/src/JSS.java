@@ -331,10 +331,10 @@ public class JSS
 
     public boolean checkLocked(int userNumber)
     {
-        System.out.println("usernumber " + userNumber);
+
         boolean locked = false;
         User temp = this.userList.get(userNumber);
-        System.out.println("active status: " + temp.isActive());
+
         if (temp.isActive()==false)
         {
             System.out.println("account is locked");
@@ -345,6 +345,23 @@ public class JSS
             System.out.println("account active");
         }
         return locked;
+    }
+
+    //message sorter??
+
+//    public void messageSend(int senderID, int receiverID)
+//    {
+//        User sender = userList.get(senderID);
+//
+//        if (sender instanceof Administrator)
+//        {
+//            Message alert = new AdminAlert(senderID, receiverID);
+//        }
+//    }
+    public User getUserByID(int userID)
+    {
+        User inQuestion = userList.get(userID);
+        return inQuestion;
     }
 
 }
