@@ -6,6 +6,10 @@ public class Application extends Message
     private String jobID;
 
     //default constructor
+    public Application(){
+
+    }
+
 
 //    public Application(int senderID, int recieverID, boolean hasRecieved, String coverLetter, String skills, String jobID)
 //    {

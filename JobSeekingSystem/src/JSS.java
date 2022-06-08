@@ -12,10 +12,129 @@ public class JSS
     private static int nextJobID;
     private final File_Control fileControl = new File_Control();
     private ArrayList<User> userList = new ArrayList<>();
+    private ArrayList<Job> jobList = new ArrayList<>();
 
     public JSS()
     {
         importUserList("users.csv");
+        importJobs("JobSeekingSystem/Jobs.csv");
+    }
+
+    // TODO: Method for reading in all the jobs and creating the ArrayList<Job>
+    public void importJobs(String fileName) {
+
+        // Read the Jobs.csv file.
+        String jobContent = "";
+        try {
+            jobContent = fileControl.readFile(fileName);
+        } catch (Exception e) {
+            System.out.println("Error failed to read jobs!");
+        }
+
+        // Split the read String into many Jobs to be created.
+        if (jobContent.trim().length() > 0) {
+            // Split each Job into a string array.
+            String[] jobs = jobContent.split("\n");
+
+            try {
+                for (int i = 0; i < jobs.length; i++) {
+                    // If Jobs.csv contains an empty line, then skip it.
+                    if (jobs[i].isEmpty()) {
+                        System.out.println("Warning: empty line in Jobs.csv at line: " + i + ", skipping...");
+                        continue;
+                    }
+
+                    // Split each Job into another array of jobDetails
+                    // Since each Job can have a variable number of skills, applications and
+                    // keywords, we need to check each index of the jobDetails to make sure
+                    // we construct the Jobs appropriately.
+
+                    // Let's store all this job's data in an Arraylist.
+                    ArrayList<String> jobDetails = new ArrayList<>();
+                    String[] job = jobs[i].split(",");
+                    for (String jobElement : job) {
+                        jobDetails.add(jobElement);
+                    }
+
+                    // Let's setup some Arraylists to store only skills,
+                    // applications and keywords.
+                    ArrayList<String> jobSkills = new ArrayList<>();
+                    ArrayList<String> jobApps = new ArrayList<>();
+                    ArrayList<String> jobKeywords = new ArrayList<>();
+
+                    // Check all the job Elements, and if it is a skill,
+                    // put it in the skill list, and so on. Remove that
+                    // element from the general list so we know that list
+                    // has been sanitised.
+                    for (String jobElement : jobDetails) {
+                        if (jobElement.startsWith("skill:")) {
+                            // This element is a skill.
+                            jobSkills.add(jobElement);
+                            jobDetails.remove(jobElement);
+                        } else if (jobElement.startsWith("app:")) {
+                            // This element is an application ID.
+                            jobApps.add(jobElement);
+                            jobDetails.remove(jobElement);
+                        } else if (jobElement.startsWith("keyword:")) {
+                            // This element is a keyword.
+                            jobKeywords.add(jobElement);
+                            jobDetails.remove(jobElement);
+                        }
+                    }
+
+                    // Result: jobDetails contains all job elements which are NOT
+                    // skills, keywords or Applications (and it is ordered).
+                    // jobSkills contains all skills.
+                    // jobApps contains all Application IDs.
+                    // jobKeywords contains all keywords.
+
+                    // PROBLEM! jobDetails contains all Strings! These need to be cast
+                    // as the appropriate type so that the Job constructor can be called.
+                    // To solve, let's check each element in jobDetails and cast it back
+                    // as the appropriate type.
+                    ArrayList<Object> castJobDetails = new ArrayList<>();
+                    for (int x = 0; x < jobDetails.size(); x++) {
+                        if (jobDetails.get(x).equals("true")) {
+                            // This element is a true bool.
+                            boolean castMe = true;
+                            castJobDetails.add(castMe);
+                        } else if (jobDetails.get(x).equals("false")) {
+                            // This element is a false bool.
+                            boolean castMe = false;
+                            castJobDetails.add(castMe);
+                        } else if (jobDetails.get(x).matches("-?\\d+")) {
+                            // This element is a number.
+                            int castMe = Integer.parseInt(jobDetails.get(x));
+                            castJobDetails.add(castMe);
+                        } else {
+                            // This element is a String and can be added straight from the can.
+                            castJobDetails.add(jobDetails.get(x));
+                        }
+                    }
+
+                    // Get all of the Applications which related to this job.
+                    // Convert our ArrayList of Application IDs to an ArrayList
+                    // of actual Applications.
+                    // TODO: This needs fixing, it is just mocked for now.
+                    ArrayList<Application> jobCreatedApps = new ArrayList<>();
+                    for (String appID : jobApps) {
+                        // TODO: Create a real application goes here.
+                        jobCreatedApps.add(new Application());
+                    }
+
+                    // Construct a job.
+                    Job newJob = new Job((int)castJobDetails.get(0), (String)castJobDetails.get(1), (int)castJobDetails.get(2), (String)castJobDetails.get(3),
+                            (String)castJobDetails.get(4), (boolean)castJobDetails.get(5), (String)castJobDetails.get(6), jobSkills,
+                            jobCreatedApps, jobKeywords, (String)castJobDetails.get(7),
+                            (String)castJobDetails.get(8), (String)castJobDetails.get(9), (String)castJobDetails.get(10), (String)castJobDetails.get(11),
+                            (String)castJobDetails.get(12), (boolean)castJobDetails.get(13), (boolean)castJobDetails.get(14));
+
+                }
+            } catch (Exception e) {
+                System.out.println("Error unable to import Jobs, check " + fileName + " format!");
+            }
+
+        }
     }
 
     //Verifies username/password & logs the user in.
