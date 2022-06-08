@@ -122,10 +122,11 @@ public class RegisterGUI
             @Override
             public void actionPerformed(ActionEvent e) {
 
-//            frame.dispose();
-//                LoginGUI loginGUI = new LoginGUI(program);
+            frame.dispose();
+                LoginGUI loginGUI = new LoginGUI(program);
             }
         });
+
     }
 
 
