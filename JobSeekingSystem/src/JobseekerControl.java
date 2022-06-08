@@ -6,7 +6,7 @@ public class JobseekerControl
     public JobseekerControl() {
     }
     public JobseekerControl(User jobseeker) {
-        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(jobseeker);
+        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(jobseeker, this);
     }
 
     public void apply()
@@ -19,9 +19,11 @@ public class JobseekerControl
 
     }
 
-    public void jobSearch()
+    public void jobSearch(String jobDesc, String categoryPrimary,
+                          String categorySecondary, String location, boolean fullTime, boolean partTime,
+                          boolean casual, float salMin, float salMax, ArrayList<String> seekerSkills)
     {
-
+        System.out.println("Searching...");
     }
 
 
@@ -33,7 +35,7 @@ public class JobseekerControl
 
     public void modifySkill()
     {
-
+        System.out.println("Searching...");
     }
 
 

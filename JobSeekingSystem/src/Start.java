@@ -13,6 +13,6 @@ public class Start
     public static void main(String[] args)
     {
         Start obj = new Start();
-
+        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI();
     }
 }
