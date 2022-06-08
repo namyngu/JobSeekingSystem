@@ -34,6 +34,18 @@ public abstract class User
         this.userType = userType;
     }
 
+    public User(int userID, String firstName, String lastName, String userName, String password, String userType, boolean active)
+    {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.password = password;
+        loggedIn = false;
+        this.active = active;
+        this.userType = userType;
+    }
+
     public void display()
     {
         System.out.println("UserID: " + userID);
