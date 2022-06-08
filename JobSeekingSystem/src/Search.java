@@ -127,14 +127,24 @@ public class Search
             int descMatch = 0;
             String[] searchDescArray = jobDesc.split("\\W+");
             String[] jobDescArray = tmp.getJobDescription().split("\\W+");
+            String[] jobTitle = tmp.getJobTitle().split("\\W+");
             // For each word in the searched Job Description, check if it matches a word
             // in the job Description. If yes, increment the number of matches.
+            // TODO: Threw Job Title in here to get it matching as well.
+            // TODO: Might be more appropriate to do different matching on the title.
             for (String word : searchDescArray) {
                 String lWord = word.toLowerCase();
                 for (String check : jobDescArray) {
                     String lCheck = check.toLowerCase();
                     if (lWord.equals(lCheck)) {
-                        //Direct match on the word
+                        // Direct match on the word
+                        descMatch++;
+                    }
+                }
+                for (String check : jobTitle) {
+                    String lCheck = check.toLowerCase();
+                    if (lWord.equals(lCheck)) {
+                        // Direct match on word in Job Title
                         descMatch++;
                     }
                 }
