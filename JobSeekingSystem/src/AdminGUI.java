@@ -122,6 +122,9 @@ public class AdminGUI
             {
                 int userIndex = userList.getSelectedIndex();
                 adminControl.blockedMessage(adminControl.adminID(),userIndex);
+
+                //check messages are working bugfix:
+             //program.checkMessages(1);
             }
         });
     }

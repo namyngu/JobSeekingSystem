@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public abstract class User
@@ -10,6 +11,7 @@ public abstract class User
     private boolean loggedIn;
     private boolean active;
     private String userType;
+    private ArrayList<Message> messages;
 
 
     public User(String userName, String password)
@@ -19,6 +21,7 @@ public abstract class User
         loggedIn = false;
         active = true;
         userType = "Guest";
+        messages = new ArrayList<Message>();
     }
 
 
@@ -32,6 +35,7 @@ public abstract class User
         loggedIn = false;
         active = true;
         this.userType = userType;
+        messages = new ArrayList<Message>();
     }
 
     public User(int userID, String firstName, String lastName, String userName, String password, String userType, boolean active)
@@ -44,6 +48,7 @@ public abstract class User
         loggedIn = false;
         this.active = active;
         this.userType = userType;
+        messages = new ArrayList<Message>();
     }
 
     public void display()
@@ -53,6 +58,41 @@ public abstract class User
         System.out.println("Username: " + userName);
         System.out.println("UserType: " + userType);
     }
+
+
+    //TODO look at putting this into control class?
+
+    public boolean addMessage(Message message)
+    {
+        boolean delivered = false;
+        try
+        {
+            this.messages.add(message);
+            delivered = true;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return delivered;
+    }
+    /*
+    Method below is just to check messages are getting though, probably delete later, Gerard
+     */
+    public String messagesToString()
+    {
+        String mail = "";
+        for (Message list: this.messages
+             )
+        {
+            if (list instanceof AdminAlert)
+            {
+                mail += ((AdminAlert) list).getAlertText();
+            }
+        }
+        return mail;
+    }
+
 
     //Method to save user to users.csv
 //    public void saveUser(String fileName)

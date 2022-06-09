@@ -183,6 +183,10 @@ public class JSS
             throw new Exception("Account Locked!");
         }
 
+        // 2.2 check if user has any messages?
+
+//        this.checkMessages(userIndex);
+
         // 3. Let's check what kind of account this user should have
         String accountType = userList.get(userIndex).getUserType();
         switch (accountType)
@@ -216,6 +220,8 @@ public class JSS
                 throw new Exception("error logging user in!");
         }
     }
+
+
 
     public String retrieveUsername(int userID)
     {
@@ -489,6 +495,66 @@ public class JSS
         {
             System.out.println("Error failed to save user into csv.");
         }
+    }
+
+    public boolean checkMessages(int userIndex)
+    {
+        boolean hasMail = false;
+
+        ArrayList<Message> messages = new ArrayList<>();
+
+        String rawInput = "";
+        try {
+            rawInput = fileControl.readFile("messages.csv");
+        } catch (Exception e) {
+            System.out.println("Error failed to read messages!");
+        }
+
+//        System.out.println("these are the messages: " + rawInput);
+        String[] messageString = rawInput.split("\n");
+
+        try
+        {
+            for (int i = 0; i < messageString.length; i++)
+            {
+                //If messages.csv contains an empty line skip it.
+                if (messageString[i].isEmpty())
+                {
+                    System.out.println("Warning: empty line in messages.csv at line: " + i + ", skipping...");
+                    continue;
+                }
+
+                //split each user into another array of userDetails
+                String[] messageDetails = messageString[i].split(",");
+
+                //find out who the message is for
+
+                int messageTo = Integer.parseInt(messageDetails[2]);
+
+                //if it is for the user checking, add it to their list
+                if (messageTo == userIndex)
+                {
+                    Message message = new AdminAlert(Integer.parseInt(messageDetails[1]),Integer.parseInt(messageDetails[2]),messageDetails[3]);
+                   this.userList.get(userIndex).addMessage(message);
+                   //TODO alter messages arraylist so this is received if true
+                }
+                //TODO check user type and determine message type accordingly
+                //TODO deal with \n -- try replace with String methods? -- do this at point of writing
+                //TODO refresh message.csv list when done
+
+                //checking message is getting there....
+                User one = userList.get(userIndex);
+
+                System.out.println(one.messagesToString());
+                //this isn't arriving
+
+            }
+        } catch (Exception e)
+        {
+            System.out.println("message read error" + e.toString());
+        }
+
+        return hasMail;
     }
 }
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Jobseeker extends User
 {
     private ArrayList<Application> applications;
-    private ArrayList<Invitation> invitations;
+    private ArrayList<Invitation> invitations; // I don't think we need this anymore, going to put list of messages in User class
     private ArrayList<String> skills;
     private int totalApplied;
     private int totalOffers;
