@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Job
@@ -14,7 +15,7 @@ public class Job
     private ArrayList<String> keywords;
     private String locationState;
     private String postCode;
-    private String jobDescription;
+    private ArrayList<String> jobDescription;
     private String jobCategoryPrimary;
     private String jobCategorySecondary;
     private String workingHours;
@@ -35,7 +36,7 @@ public class Job
         keywords = new ArrayList<>();
         locationState = "locationState";
         postCode = "postCode";
-        jobDescription = "jobDescription";
+        jobDescription = new ArrayList<>();
         jobCategoryPrimary = "jobCategoryPrimary";
         jobCategorySecondary = "jobCategorySecondary";
         workingHours = "workingHours";
@@ -43,7 +44,7 @@ public class Job
         archived = false;
 
     }
-    public Job(int jobID, String jobTitle, int recruiterID, String employer, String jobType, Boolean isAdvertised, String salary, ArrayList<String> skills, ArrayList<Application> applications, ArrayList<String> keywords, String locationState, String postCode, String jobDescription, String jobCategoryPrimary, String jobCategorySecondary, String workingHours, boolean advertised, boolean archived) {
+    public Job(int jobID, String jobTitle, int recruiterID, String employer, String jobType, Boolean isAdvertised, String salary, ArrayList<String> skills, ArrayList<Application> applications, ArrayList<String> keywords, String locationState, String postCode, ArrayList<String> jobDescription, String jobCategoryPrimary, String jobCategorySecondary, String workingHours, boolean advertised, boolean archived) {
         this.jobID = jobID;
         this.jobTitle = jobTitle;
         this.recruiterID = recruiterID;
@@ -160,11 +161,11 @@ public class Job
         this.postCode = postCode;
     }
 
-    public String getJobDescription() {
+    public ArrayList<String> getJobDescription() {
         return jobDescription;
     }
 
-    public void setJobDescription(String jobDescription) {
+    public void setJobDescription(ArrayList<String> jobDescription) {
         this.jobDescription = jobDescription;
     }
 

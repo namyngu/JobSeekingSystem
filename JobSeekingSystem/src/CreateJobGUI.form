@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="CreateJobGUI">
-  <grid id="27dc6" binding="createJobPanel" layout-manager="GridLayoutManager" row-count="30" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="createJobPanel" layout-manager="GridLayoutManager" row-count="27" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="20" left="100" bottom="20" right="100"/>
     <constraints>
-      <xy x="20" y="20" width="627" height="1211"/>
+      <xy x="20" y="20" width="604" height="1211"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -44,14 +44,6 @@
           <font style="1"/>
           <text value="Job Title"/>
         </properties>
-      </component>
-      <component id="1cd32" class="javax.swing.JTextField" binding="jobTitleText">
-        <constraints>
-          <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
       </component>
       <component id="151e6" class="javax.swing.JLabel" binding="recruiterIDLabel">
         <constraints>
@@ -98,7 +90,7 @@
       </component>
       <component id="2ee95" class="javax.swing.JComboBox" binding="jobTypeMenu">
         <constraints>
-          <grid row="10" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+          <grid row="10" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="200" height="-1"/>
           </grid>
         </constraints>
@@ -122,8 +114,8 @@
       </component>
       <component id="66155" class="javax.swing.JTextField" binding="salaryText">
         <constraints>
-          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="0" indent="0" use-parent-layout="false">
-            <preferred-size width="225" height="30"/>
+          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="30"/>
           </grid>
         </constraints>
         <properties/>
@@ -185,54 +177,9 @@
           <text value="Remove Skill"/>
         </properties>
       </component>
-      <component id="10cec" class="javax.swing.JLabel" binding="keywordsLabel">
-        <constraints>
-          <grid row="16" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font style="1"/>
-          <text value="Keywords"/>
-        </properties>
-      </component>
-      <component id="e371f" class="javax.swing.JComboBox" binding="keywordsMenu">
-        <constraints>
-          <grid row="17" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties>
-          <model/>
-        </properties>
-      </component>
-      <component id="a21ba" class="javax.swing.JList" binding="keywordsList">
-        <constraints>
-          <grid row="17" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="50"/>
-          </grid>
-        </constraints>
-        <properties>
-          <model/>
-        </properties>
-      </component>
-      <component id="4437c" class="javax.swing.JButton" binding="addKeywordsButton">
-        <constraints>
-          <grid row="18" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Add Keyword"/>
-        </properties>
-      </component>
-      <component id="edebb" class="javax.swing.JButton" binding="removeKeywordsButton">
-        <constraints>
-          <grid row="18" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Remove"/>
-        </properties>
-      </component>
       <component id="7030e" class="javax.swing.JLabel" binding="locationLabel">
         <constraints>
-          <grid row="19" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="16" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font style="1"/>
@@ -241,12 +188,13 @@
       </component>
       <component id="109c" class="javax.swing.JComboBox" binding="locationStateMenu">
         <constraints>
-          <grid row="20" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+          <grid row="17" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
         <properties>
           <model>
+            <item value=""/>
             <item value="WA"/>
             <item value="SA"/>
             <item value="VIC"/>
@@ -259,43 +207,27 @@
       </component>
       <component id="ba33" class="javax.swing.JLabel" binding="postcodeLabel">
         <constraints>
-          <grid row="19" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="16" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font style="1"/>
           <text value="Postcode"/>
         </properties>
       </component>
-      <component id="b2f40" class="javax.swing.JTextField" binding="postcodeText">
-        <constraints>
-          <grid row="20" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties>
-          <text value="/add validation"/>
-        </properties>
-      </component>
       <component id="bebf" class="javax.swing.JLabel" binding="descriptionLabel">
         <constraints>
-          <grid row="21" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="18" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="86" height="55"/>
+          </grid>
         </constraints>
         <properties>
           <font style="1"/>
           <text value="Job Description"/>
         </properties>
       </component>
-      <component id="d4e9d" class="javax.swing.JFormattedTextField" binding="descriptionText">
-        <constraints>
-          <grid row="22" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="100"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
       <component id="a2836" class="javax.swing.JLabel" binding="categoryLabelPrimary">
         <constraints>
-          <grid row="23" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="20" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font style="1"/>
@@ -304,7 +236,7 @@
       </component>
       <component id="de40" class="javax.swing.JLabel" binding="categoryLabelSecondary">
         <constraints>
-          <grid row="23" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="20" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font style="1"/>
@@ -313,35 +245,27 @@
       </component>
       <component id="c74e9" class="javax.swing.JComboBox" binding="categoryMenuPrimary">
         <constraints>
-          <grid row="24" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="21" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="-1"/>
+          </grid>
         </constraints>
         <properties>
-          <model>
-            <item value="grab"/>
-            <item value="from"/>
-            <item value="categories"/>
-            <item value="text"/>
-            <item value="file"/>
-          </model>
+          <model/>
         </properties>
       </component>
       <component id="68f06" class="javax.swing.JComboBox" binding="categoryMenuSecondary">
         <constraints>
-          <grid row="24" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="21" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="-1"/>
+          </grid>
         </constraints>
         <properties>
-          <model>
-            <item value="grab"/>
-            <item value="from"/>
-            <item value="categories"/>
-            <item value="text"/>
-            <item value="file"/>
-          </model>
+          <model/>
         </properties>
       </component>
       <component id="f749b" class="javax.swing.JLabel" binding="hoursLabel">
         <constraints>
-          <grid row="25" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="22" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font style="1"/>
@@ -350,7 +274,7 @@
       </component>
       <component id="61b02" class="javax.swing.JTextField" binding="hoursText">
         <constraints>
-          <grid row="26" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="0" indent="0" use-parent-layout="false">
+          <grid row="23" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="100" height="-1"/>
           </grid>
         </constraints>
@@ -358,7 +282,7 @@
       </component>
       <component id="b3c3a" class="javax.swing.JComboBox" binding="hoursMenu">
         <constraints>
-          <grid row="26" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="23" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <model>
@@ -369,7 +293,7 @@
       </component>
       <component id="b8ad8" class="javax.swing.JLabel" binding="statusLabel">
         <constraints>
-          <grid row="27" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="24" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font style="1"/>
@@ -378,7 +302,9 @@
       </component>
       <component id="4bff" class="javax.swing.JComboBox" binding="statusMenu">
         <constraints>
-          <grid row="28" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="25" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="-1"/>
+          </grid>
         </constraints>
         <properties>
           <model>
@@ -390,7 +316,7 @@
       </component>
       <component id="8a027" class="javax.swing.JLabel" binding="statusMessageLabel">
         <constraints>
-          <grid row="28" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="25" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="/error if &gt;0 apps (changing to draft)"/>
@@ -398,12 +324,50 @@
       </component>
       <component id="589" class="javax.swing.JButton" binding="submitButton">
         <constraints>
-          <grid row="29" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="26" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Submit"/>
         </properties>
       </component>
+      <scrollpane id="f5272" binding="descriptionScroll">
+        <constraints>
+          <grid row="19" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="1" anchor="1" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="400" height="100"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="ed01b" class="javax.swing.JTextArea" binding="descriptionText">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+      <component id="2b440" class="javax.swing.JComboBox" binding="postcodeMenu">
+        <constraints>
+          <grid row="17" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <scrollpane id="62a48" binding="jobTitleScroll">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="9" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="36"/>
+          </grid>
+        </constraints>
+        <properties>
+          <verticalScrollBarPolicy value="21"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="1cd32" class="javax.swing.JTextField" binding="jobTitleText">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
     </children>
   </grid>
 </form>

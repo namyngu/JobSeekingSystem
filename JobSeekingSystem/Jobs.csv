@@ -1,1 +1,26 @@
 1,Test Job Title,2,Test Employer,Test Job Type,false,50000,skill 1,skill 2,skill 3,app 1,app 2,app 3,keyword 1,keyword 2,keyword 3,SA,5000,Test Job Description,Test Job Category,Test Working Hours,false,true
+2,this is my job title,0,employer,Part-Time,false,$50,000 p/a,[Word, Excel, Java],[],[software development, engineering],SA,5000,this is the job description,jobCategoryPrimary,jobCategorySecondary,40,false,true,
+3,new job again,0,employer,Contract,false,$25 p/h,[A + Certified, ABI],[],[account management, annual budget],WA,6000,job desc new,jobCategoryPrimary,jobCategorySecondary,20,false,true,
+4,new job title,0,employer,Contract,false,$60,000 p/a,[Java],[],[software development],SA,5000,job description in here,jobCategoryPrimary,jobCategorySecondary,15,false,true
+5,job titlejbgjbasgfjajfngajnfgafgjanfgjnaafgjanfgjnafg,   ingjnafg,  akfjgbafdg.,0,employer,Casual,false,$ p/h,[],[],[],WA,,jnfgjsndfgsdfjgnsdfjnsdfgjnsdfgjnssdfgjnsdfjgnssdfgjnsdfgjsdnfbgsdfkjgsndfgjksn,jobCategoryPrimary,jobCategorySecondary,,false,true
+6,asdfa,0,employer,Casual,false,$asd p/h,[],[],[],WA,,asdfasdfasdfas,jobCategoryPrimary,jobCategorySecondary,,false,true
+7,sdfgsdfg,0,employer,Casual,false,$sdfgsdf p/h,[],[],[],WA,,"sdfgsdfg,sdfgdsfgds,sdg   sdfgsdfg  , sdfgsdfg",jobCategoryPrimary,jobCategorySecondary,sdfg,false,true
+8,thsgh,0,employer,Contract,false,$sgfdh p/h,[A&R Administration],[],[],SA,5000,"sghsgh",jobCategoryPrimary,jobCategorySecondary,sgh,false,true
+9,khjvkhjv,0,employer,Contract,false,$sdfsd p/h,[A + Certified],[],[],VIC,3000,"sdgfhsdghs",Advertising/Arts/Media,Agency Account Management,sdgh,false,true
+10,another job title,0,employer,Contract,false,$40,000 p/a,[A-frames],[],[],SA,5000,"[]",Accounting,Accounts Officers/Clerks,4,false,true
+11,job title 11,0,employer,Part-Time,false,$adgf p/h,[A&D],[],[],SA,5000,"[job description line 1
+, blah
+, 
+, job desciption another line
+, lalalala
+, blah
+, 
+, j
+, o
+, b
+, d
+, e
+, s
+]",Accounting,Accounts Officers/Clerks,,false,true
+25,,0,employer,Casual,false,$ p/h,[],[],[],,null,"[line 1, dob descr, blah, lalala, , j, o, b, d, e, s]",Accounting,Accounts Officers/Clerks,,false,true
+26,,0,employer,Casual,false,$ p/h,[],[],[],,null,"[line 1, line 2, blah, , lalala, lala, , j, o, b, d, e, s, c]",Accounting,Accounts Officers/Clerks,,false,true
