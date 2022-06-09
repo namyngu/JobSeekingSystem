@@ -41,8 +41,6 @@ public class AdminAlert extends Message
     {
         super(senderID, receiverID);
         this.alertText = alertText;
-        System.out.println("this is the alert:");
-        System.out.println(this.alertText);
     }
 
     public String getAlertText()

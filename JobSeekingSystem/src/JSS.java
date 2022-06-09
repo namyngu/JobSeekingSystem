@@ -480,7 +480,15 @@ public class JSS
 
     public void storeMessage(int senderID, int receiverID, String text)
     {
-
+        String message = "pending" + "," + senderID + "," + receiverID + "," + text;
+        try
+        {
+            File_Control io = new File_Control();
+            io.writeFile("messages.csv", message);
+        } catch (Exception e)
+        {
+            System.out.println("Error failed to save user into csv.");
+        }
     }
 }
 
