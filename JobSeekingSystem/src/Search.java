@@ -270,7 +270,7 @@ public class Search
     }
 
     // Method 2. Search for a list of matching JobSeekers
-    public ArrayList<Jobseeker> seekerSearch() {
+    public ArrayList<Jobseeker> seekerSearch(String location, ArrayList<String> requiredSkills) {
         //TODO
         ArrayList<Jobseeker> results = new ArrayList<Jobseeker>();
         return results;
