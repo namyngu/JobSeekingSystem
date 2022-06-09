@@ -31,10 +31,18 @@ public class JobseekerControl
         {
             ArrayList<Job> someList = mainSearch.jobSearch(jobDesc, categoryPrimary, categorySecondary, location, fullTime, partTime,
             casual, salMin, salMax, seekerSkills);
+
+            // Debug search results:
+            System.out.println("Results: \n");
+            for (Job job : someList) {
+                System.out.println(job.toString());
+            }
+
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 

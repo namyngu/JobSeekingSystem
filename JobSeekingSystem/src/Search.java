@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class Search
@@ -38,6 +39,14 @@ public class Search
         ArrayList<Job> results = new ArrayList<Job>();
         TreeMap<Integer, Job> scoredResults = new TreeMap<Integer, Job>();
 
+        // TODO: For testing purposes, setup the seekerSkills.
+        // TODO: Not needed for actual method when real skills
+        // TODO: will be provided.
+
+        seekerSkills.add("skill1");
+        seekerSkills.add("skill2");
+        seekerSkills.add("skill3");
+
         // Change search algorithm weightings here, if needed.
         int titleWeight = 35;
         int descWeight = 20;
@@ -45,6 +54,7 @@ public class Search
         int primaryCatWeight = 15;
         int secondaryCatWeight = 10;
 
+        jobList = new ArrayList<Job>();
         //Let's make a few sample Jobs just for testing purposes
         Job jobOne = new Job(1, "Software Developer", 1, "Monash University",
                 "Full-Time", true, "$100,000", new ArrayList<String>(),
@@ -56,17 +66,24 @@ public class Search
         //Job jobTwo = new Job();
         //Job jobThree = new Job();
 
-        //public Job(int jobID, String jobTitle, int recruiterID, String employer, String jobType,
-        // Boolean isAdvertised, String salary, ArrayList<String> skills, ArrayList<Application> applications,
-        // ArrayList<String> keywords, String locationState, String postCode, String jobDescription, String jobCategoryPrimary,
-        // String jobCategorySecondary, String workingHours, boolean advertised, boolean archived)
-
         // First let's apply filter data to filter out unmatching jobs
         // For every job, check the filters and exclude that job if it
         // does not match the filters.
         for (Job tmp : jobList) {
             boolean valid = true;
-            float newSal = Float.parseFloat(tmp.getSalary());
+            char[] salary = tmp.getSalary().toCharArray();
+            StringBuilder salBuilder = new StringBuilder();
+            for (char single : salary) {
+                if (!Character.isDigit(single)) {
+                    // Strip out character.
+                } else {
+                    // Character is ok to add to StringBuilder.
+                    salBuilder.append(single);
+                }
+            }
+
+            String convertedSal = salBuilder.toString();
+            int newSal = Integer.parseInt(convertedSal);
 
             // Job must be currently advertised (just in case we accidentally
             // pulled some in that are not.)
@@ -127,7 +144,7 @@ public class Search
 
             // Last step: If the Job has passed all the filter criteria, then
             // add it to the list of search results.
-            if (!valid) {
+            if (valid) {
                 results.add(tmp);
             }
         }
@@ -218,7 +235,12 @@ public class Search
             }
 
             // Weight the skills match.
-            int skillResult = (skillMatch / seekerSkills.size()) * skillWeight;
+            int skillResult = 0;
+            if (seekerSkills.size() == 0) {
+                // Jobseeker has not added any skills yet. Skill match can't be calculated.
+            } else {
+                skillResult = (skillMatch / seekerSkills.size()) * skillWeight;
+            }
 
             // 4. Category
             // Check to see if we match on the job category - Primary and Secondary
@@ -249,11 +271,6 @@ public class Search
         // sorted by the score.
         results.clear();
         results = new ArrayList<Job>(scoredResults.values());
-
-        // Quick debug: Print to terminal.
-        for (Job job : results) {
-            System.out.println(job.toString());
-        }
 
         return results;
     }
