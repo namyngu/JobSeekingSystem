@@ -73,7 +73,7 @@ public class CreateJobGUI {
                 System.out.println("jobTitle has been set to: " + job.getJobTitle());
                 job.setJobType(String.valueOf(jobTypeMenu.getSelectedItem()));
                 System.out.println("JobType has been set to: " + job.getJobType());
-                job.setSalary("$" + salaryText.getText() + " " + String.valueOf(salaryMenu.getSelectedItem()));
+                job.setSalary(Integer.parseInt(salaryText.getText()));
                 System.out.println("Salary has been set to: " + job.getSalary());
 
                 for (int i = 0; i < skillsList.getModel().getSize(); i++) {
@@ -126,6 +126,7 @@ public class CreateJobGUI {
         // TODO: place custom component creation code here
     }
 
+    /*
     public static void main(String[] args) throws IOException {
         CreateJobGUI objCreateJob = new CreateJobGUI();
 
@@ -142,6 +143,7 @@ public class CreateJobGUI {
         objCreateJob.empNameLabel.setText(objJob.getEmployer());                        //will come from recruiter account details
 
     }
+    */
 
     public int generateJobID(String fileName) throws IOException {
         FileReader file = new FileReader(fileName);

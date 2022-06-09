@@ -4,6 +4,7 @@ methods create account types (not admin as yet)
 TODO upon login transfer control to relevant subclass controller
 
  */
+
 import java.util.ArrayList;
 
 public class JSS
@@ -12,10 +13,234 @@ public class JSS
     private static int nextJobID;
     private final File_Control fileControl = new File_Control();
     private ArrayList<User> userList = new ArrayList<>();
+    private ArrayList<Job> jobList = new ArrayList<>();
+    private ArrayList<Location> locationList = new ArrayList<>();
+    private ArrayList<JobCategory> jobCategoryList = new ArrayList<>();
 
     public JSS()
     {
-        importUserList("users.csv");
+        try
+        {
+            importUserList("users.csv");
+
+        } catch (Exception e)
+        {
+            System.out.println("FATAL ERROR!! Failed to import users!!");
+        }
+
+        try
+        {
+            importJobList("JobList.csv");
+
+        } catch (Exception e)
+        {
+            System.out.println("FATAL ERROR!! Failed to import JobList!!");
+        }
+        try
+        {
+            importLocationList("Location.csv");
+
+        } catch (Exception e)
+        {
+            System.out.println("FATAL ERROR!! Failed to import Location!!");
+        }
+        try
+        {
+            importJobCategoryList("JobCategories.csv");
+
+        } catch (Exception e)
+        {
+            System.out.println("FATAL ERROR!! Failed to import JobCategories!!");
+        }
+        try
+        {
+            updateJobs("JobKeywords.csv", "JobSkills.csv");
+
+        } catch (Exception e)
+        {
+            System.out.println("FATAL ERROR!! Failed to updateJobs!!");
+        }
+
+        display();
+    }
+
+    //Method to read in the user list into memory
+    public void importUserList(String fileName)
+    {
+        File_Control io = new File_Control();
+        String userContent = "";
+        try
+        {
+            userContent = io.readFile(fileName);
+        } catch (Exception e)
+        {
+            System.out.println("Error failed to read file.");
+        }
+
+        //Grab the users from the csv file as a String
+        if (userContent.trim().length() > 0)
+        {
+            //split each user into a string array
+            String[] user = userContent.split("\n");
+
+            try
+            {
+                for (int i = 0; i < user.length; i++)
+                {
+                    //If users.csv contains an empty line skip it.
+                    if (user[i].isEmpty())
+                    {
+                        System.out.println("Warning: empty line in users.csv at line: " + i + ", skipping...");
+                        continue;
+                    }
+
+                    //split each user into another array of userDetails
+                    String[] userDetails = user[i].split(",");
+                    String userType = userDetails[5].trim().toLowerCase();
+
+                    //if userType is Jobseeker, recruiter or admin
+                    if (userType.equals("jobseeker") || userType.equals("recruiter") || userType.equals("admin"))
+                        importUser(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3], userDetails[4], userDetails[5], Boolean.parseBoolean(userDetails[6]));
+                    else
+                        System.out.println("Error invalid userType, failed to import user. Check line: " + i);
+                }
+            } catch (Exception e)
+            {
+                System.out.println("Error unable to import users, check " + fileName + " format");
+            }
+
+            /*
+            //DEBUG: Quick test to print the results to the terminal
+            for (User tmpUser: userList) {
+                tmpUser.display();
+            }
+            */
+        }
+        else
+            System.out.println("Error filename cannot be empty");
+    }
+
+    //Method to read job from csv's into memory
+    public void importJobList(String jobListFile) throws Exception
+    {
+        File_Control io = new File_Control();
+        String jobPostingContent = "";
+        try
+        {
+            jobPostingContent = io.readFile(jobListFile);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to read files");
+        }
+        if (jobPostingContent.trim().isEmpty())
+                throw new Exception("File cannot be empty");
+
+        //Split each job into an array
+        String[] job = jobPostingContent.split("\n");
+
+        //iterate through each job, ignore first line!!
+        for (int i = 1; i < job.length; i++)
+        {
+            //if line is empty, skip it.
+            if (job[i].isEmpty())
+            {
+                System.out.println("Warning: empty line in " + jobListFile + " at line: " + i + ", skipping...");
+                continue;
+            }
+
+            //split each job into jobDetails
+            //jobID, jobTitle, employer, recruiterID, jobType, jobStatus, salary, locationID, jobDescription
+            String[] jobDetails = job[i].split(",");
+            importJob(Integer.parseInt(jobDetails[0]), jobDetails[1], jobDetails[2], Integer.parseInt(jobDetails[3]), jobDetails[4],
+                    jobDetails[5], Integer.parseInt(jobDetails[6]), Integer.parseInt(jobDetails[7]), jobDetails[8]);
+        }
+    }
+
+    //Method to import job category from csv into memory
+    public void importJobCategory(String jobTitle, String jobCategoryPrimary, String jobCategorySecondary, String jobCategoryTertiary)
+    {
+        try
+        {
+            JobCategory category = new JobCategory(jobTitle, jobCategoryPrimary, jobCategorySecondary, jobCategoryTertiary);
+            jobCategoryList.add(category);
+
+        } catch (Exception e)
+        {
+            System.out.println("Error failed to import a category, check your parameters!");
+        }
+    }
+
+    //Method to import job category list from csv into memory.
+    public void importJobCategoryList(String jobCategoriesFile) throws Exception
+    {
+        File_Control io = new File_Control();
+        String jobCategoriesContent = "";
+        try
+        {
+            jobCategoriesContent = io.readFile(jobCategoriesFile);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to read JobCategory.csv");
+        }
+        if (jobCategoriesContent.trim().isEmpty())
+            throw new Exception("Error File cannot be empty");
+
+        //Split each jobcategory into an array
+        String[] jobCategory = jobCategoriesContent.split("\n");
+
+        //iterate through each array, ignore first line!!
+        for (int i = 1; i < jobCategory.length; i++)
+        {
+            //if line is empty, skip it.
+            if (jobCategory[i].isEmpty())
+            {
+                System.out.println("Warning: empty line in " + jobCategoriesFile + ".csv at line: " + i + ", skipping...");
+                continue;
+            }
+
+            //split each category into jobCategoryDetails
+            //jobTitle, jobCategory 1, jobCategory 2, jobCategory 3
+            String[] jobCategoryDetails = jobCategory[i].split(",");
+            importJobCategory(jobCategoryDetails[0], jobCategoryDetails[1], jobCategoryDetails[2], jobCategoryDetails[3]);
+        }
+    }
+
+    //importing location from .csv file
+    public void importLocationList(String locationFile) throws Exception
+    {
+        File_Control io = new File_Control();
+        String locationContent = "";
+        try
+        {
+            locationContent = io.readFile(locationFile);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to read files");
+        }
+        if (locationContent.trim().isEmpty())
+            throw new Exception("File cannot be empty");
+
+        //split each location into an array
+        String[] location = locationContent.split("\n");
+
+        //iteration through each location array
+        for (int i = 1; i < location.length; i++)
+        {
+            //if line is empty, skip it.
+            if (location[i].isEmpty())
+            {
+                System.out.println("Warning: empty line in Location.csv at line: " + i + ", skipping...");
+                continue;
+            }
+
+            //split each location into locationDetails
+            //locationID, locationState, PostCode
+            String[] locationDetails = location[i].split(",");
+            importLocation(Integer.parseInt(locationDetails[0]), locationDetails[1], Integer.parseInt(locationDetails[2]));
+        }
     }
 
     //Verifies username/password & logs the user in.
@@ -105,61 +330,6 @@ public class JSS
         return username;
     }
 
-    //Method to read in the user list into memory
-    public void importUserList(String fileName)
-    {
-        File_Control io = new File_Control();
-        String userContent = "";
-        try
-        {
-            userContent = io.readFile(fileName);
-        } catch (Exception e)
-        {
-            System.out.println("Error failed to read file.");
-        }
-
-        //Grab the users from the csv file as a String
-        if (userContent.trim().length() > 0)
-        {
-            //split each user into a string array
-            String[] user = userContent.split("\n");
-
-            try
-            {
-                for (int i = 0; i < user.length; i++)
-                {
-                    //If users.csv contains an empty line skip it.
-                    if (user[i].isEmpty())
-                    {
-                        System.out.println("Warning: empty line in users.csv at line: " + i + ", skipping...");
-                        continue;
-                    }
-
-                    //split each user into another array of userDetails
-                    String[] userDetails = user[i].split(",");
-                    String userType = userDetails[5].trim().toLowerCase();
-
-                    //if userType is Jobseeker, recruiter or admin
-                    if (userType.equals("jobseeker") || userType.equals("recruiter") || userType.equals("admin"))
-                        importUser(Integer.parseInt(userDetails[0]), userDetails[1], userDetails[2], userDetails[3], userDetails[4], userDetails[5], Boolean.parseBoolean(userDetails[6]));
-                    else
-                        System.out.println("Error invalid userType, failed to import user. Check line: " + i);
-                }
-            } catch (Exception e)
-            {
-                System.out.println("Error unable to import users, check " + fileName + " format");
-            }
-
-            /*
-            //DEBUG: Quick test to print the results to the terminal
-            for (User tmpUser: userList) {
-                tmpUser.display();
-            }
-            */
-        } else
-            System.out.println("Error filename cannot be empty");
-    }
-
     public int countUsers()
     {
         int count = 0;
@@ -169,6 +339,36 @@ public class JSS
         }
         return count;
     }
+
+    //Method to import location from csv file
+    public void importLocation(int locationID, String locationState, int postCode)
+    {
+        try
+        {
+            Location location = new Location(locationID, locationState, postCode);
+            locationList.add(location);
+        } catch (Exception e)
+        {
+            System.out.println("Error failed to import a location, check your parameters!");
+        }
+    }
+
+
+    //import existing job in .csv file
+    public void importJob(int jobID, String jobTitle, String employer, int recruiterID, String jobType, String jobStatus, int salary, int locationID, String jobDescription)
+    {
+        try
+        {
+            //create job skeleton
+            Job job = new Job(jobID, jobTitle, employer, recruiterID, jobType, jobStatus, salary, locationID, jobDescription);
+            jobList.add(job);
+        } catch (Exception e)
+        {
+            System.out.println("Error failed to create Job, check your parameters!");
+        }
+    }
+
+    //create new job and write to .csv
 
     //import existing user from .csv file
     public void importUser(int userID, String firstName, String lastName, String userName, String password, String userType, boolean active)
@@ -264,6 +464,72 @@ public class JSS
         }
     }
 
+    //Method to link all the job databases together
+    public void updateJobs(String jobKeywordFile, String jobSkillsFile) throws Exception
+    {
+        File_Control reader = new File_Control();
+
+        //update job keywords
+        String jobKeywordsContent = "";
+        try
+        {
+            jobKeywordsContent = reader.readFile(jobKeywordFile);
+        } catch (Exception e)
+        {
+            System.out.println("Failed to read JobKeywords.csv");
+        }
+
+        String[] jobKeyword = jobKeywordsContent.split("\n");
+
+        //ignore first line!!
+        for (int i = 1; i < jobKeyword.length; i++)
+        {
+            String[] jobKeywordDetails = jobKeyword[i].split(",");
+
+            //Search through the jobList for the job then append keywords to that job
+            //TODO can optimize search by first sorting out the database - not required extra functionality.
+            int index = 0;
+            for (Job tmpJob : jobList)
+            {
+                if (tmpJob.getJobTitle().equalsIgnoreCase(jobKeywordDetails[0]))
+                {
+
+                    jobList.get(index).appendKeyword(jobKeywordDetails[1]);
+                }
+                index++;
+            }
+        }
+
+        //update job skills
+        String jobSkillsContent = "";
+        try
+        {
+            jobSkillsContent = reader.readFile(jobSkillsFile);
+        } catch (Exception e)
+        {
+            System.out.println("Failed to read JobSkills.csv");
+        }
+
+        String[] jobSkill = jobSkillsContent.split("\n");
+
+        //ignore first line!!
+        for (int i = 1; i < jobSkill.length; i++)
+        {
+            String[] jobSkillDetails = jobSkill[i].split(",");
+
+            //Search through the jobList for the job then append skills to that job
+            int index = 0;
+            for (Job tmpJob : jobList)
+            {
+                if (tmpJob.getJobID() == Integer.parseInt(jobSkillDetails[0]))
+                {
+
+                    jobList.get(index).appendSkill(jobSkillDetails[1]);
+                }
+                index++;
+            }
+        }
+    }
 
     //Method to save user to users.csv
     //TODO adapt to include active status
@@ -357,6 +623,15 @@ public class JSS
     {
         User inQuestion = userList.get(userID);
         return inQuestion;
+    }
+
+    //DEBUG: Test to see if jobs have been imported
+    public void display()
+    {
+        for (Job tmpJob : jobList)
+        {
+            System.out.println(tmpJob.toString());
+        }
     }
 
 }

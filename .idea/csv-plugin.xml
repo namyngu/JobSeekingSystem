@@ -10,7 +10,21 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Application.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\FirstJobCategory.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\JobCategories.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
