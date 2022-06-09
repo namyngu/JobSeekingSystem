@@ -21,7 +21,7 @@ public class JobSeekerHomeGUI {
     private JPanel searchPanel;
     private JComboBox comboBox1;
     private JComboBox comboBox2;
-    private JTable searchResults;
+    private JTable jobSearchTable;
     private JComboBox comboBox3;
     private JTextField textField2;
     private JTabbedPane navbar;
@@ -30,11 +30,14 @@ public class JobSeekerHomeGUI {
     private JPanel applicationsPanel;
     private JPanel profile;
     private JLabel phoneText;
-    private JList list1;
+    private JList jobSeekerSkillsTable;
     private JPanel inboxPanel;
     private JPanel profilePanel;
     private JCheckBox partTimeCheckBox;
     private JButton editProfileButton;
+    private JScrollPane jobseekerApplicationsTable;
+    private JScrollPane recommendedJobsTable;
+    private JScrollPane jobSeekerInboxTable;
 
     private Jobseeker jobseeker;
 

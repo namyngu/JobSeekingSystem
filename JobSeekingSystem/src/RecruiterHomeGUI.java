@@ -1,11 +1,13 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class RecruiterHomeGUI {
     private JTabbedPane recruiterNav;
     private JPanel jobsContainer;
     private JTable jobsTable;
     private JPanel searchPanel;
-    private JPanel applicationsPanel;
     private JPanel inboxPanel;
     private JPanel jobsPanel;
     private JPanel inboxContainer;
@@ -17,8 +19,11 @@ public class RecruiterHomeGUI {
     private JButton searchButton;
     private JList allSkillList;
     private JList candidateSkillList;
-    private JTable applicationsTable;
     private JTable inboxTable;
+    private JTable searchResults;
+    private JButton createJobButton;
+    private JScrollPane recruiterInboxTable;
+    private JScrollPane recruiterJobsTable;
 
     public RecruiterHomeGUI(){
         JFrame window = new JFrame("JSS: Recruiter Home");
@@ -30,6 +35,14 @@ public class RecruiterHomeGUI {
         window.setResizable(true);
         window.setVisible(true);
 
+
+        //launch create job screen
+//        createJobButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                CreateJobGUI createJobGUI = new CreateJobGUI();
+//            }
+//        } );
     }
 
 
