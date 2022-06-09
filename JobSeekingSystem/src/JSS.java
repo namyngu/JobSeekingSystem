@@ -478,5 +478,9 @@ public class JSS
         return inQuestion;
     }
 
+    public void storeMessage(int senderID, int receiverID, String text)
+    {
+
+    }
 }
 

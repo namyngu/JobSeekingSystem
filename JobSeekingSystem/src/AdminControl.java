@@ -32,6 +32,7 @@ public class AdminControl
             String text = "Your account will be blocked by Administrator " + this.admin.getUserName();
             text += "\nplease contact them immediately to discuss";
             Message notification = new AdminAlert(senderID, receiverID, text);
+            program.storeMessage(senderID,receiverID,text);
             sent = true;
         }
         catch (Exception e)
