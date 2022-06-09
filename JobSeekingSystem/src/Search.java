@@ -49,7 +49,7 @@ public class Search
         Job jobOne = new Job(1, "Software Developer", 1, "Monash University",
                 "Full-Time", true, "$100,000", new ArrayList<String>(),
                 new ArrayList<Application>(), new ArrayList<String>(), "Queensland", "4101",
-                "Some description about being a software developer goes here, blah blah blah",
+                new ArrayList<String>(), //"Some description about being a software developer goes here, blah blah blah",
                 "Engineering - Software", "Another category", "9-5",
                 true, false);
         jobList.add(jobOne);
@@ -168,6 +168,22 @@ public class Search
             // 2. Description
             // Break the descriptions into arrays of Strings to work with.
             int descMatch = 0;
+            int descResult = 0;
+            ArrayList<String> jobDescAL = tmp.getJobDescription();
+            for (int i = 0; i < jobDescAL.size(); i++) {
+                String[] jobDescArray = jobDescAL.get(i).split("\\W+");
+                for (String word : searchDescArray) {
+                    String lWord = word.toLowerCase();
+                    for (String check : jobDescArray) {
+                        String lCheck = check.toLowerCase();
+                        if (lWord.equals(lCheck)) {
+                            descMatch++;
+                        }
+                    }
+                }
+                descResult += (descMatch / jobDescArray.length) * descWeight;
+            }
+            /*
             String[] jobDescArray = tmp.getJobDescription().split("\\W+");
             // For each word in the searched Job Description, check if it matches a word
             // in the job Description. If yes, increment the number of matches.
@@ -181,9 +197,10 @@ public class Search
                     }
                 }
             }
+            */
 
             // Weight the description match.
-            int descResult = (descMatch / jobDescArray.length) * descWeight;
+            //int descResult = (descMatch / jobDescArray.length) * descWeight;
 
             // 3. Skills
             // For each of the skills listed against the Job, check to see if they

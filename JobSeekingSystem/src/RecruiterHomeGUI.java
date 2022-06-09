@@ -43,6 +43,16 @@ public class RecruiterHomeGUI {
 //                CreateJobGUI createJobGUI = new CreateJobGUI();
 //            }
 //        } );
+        createJobButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    CreateJobGUI createJob = new CreateJobGUI();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
     }
 
 

@@ -62,6 +62,9 @@ public class JSS
                     ArrayList<String> jobApps = new ArrayList<>();
                     ArrayList<String> jobKeywords = new ArrayList<>();
 
+                    // CHANGES FOR ARRAYLIST<STRING> JOB DESCRIPTION
+                    ArrayList<String> jobDescription = new ArrayList<>();
+
                     // Check all the job Elements, and if it is a skill,
                     // put it in the skill list, and so on. Remove that
                     // element from the general list so we know that list
@@ -126,8 +129,10 @@ public class JSS
                     Job newJob = new Job((int)castJobDetails.get(0), (String)castJobDetails.get(1), (int)castJobDetails.get(2), (String)castJobDetails.get(3),
                             (String)castJobDetails.get(4), (boolean)castJobDetails.get(5), (String)castJobDetails.get(6), jobSkills,
                             jobCreatedApps, jobKeywords, (String)castJobDetails.get(7),
-                            (String)castJobDetails.get(8), (String)castJobDetails.get(9), (String)castJobDetails.get(10), (String)castJobDetails.get(11),
+                            (String)castJobDetails.get(8), jobDescription, (String)castJobDetails.get(10), (String)castJobDetails.get(11),
                             (String)castJobDetails.get(12), (boolean)castJobDetails.get(13), (boolean)castJobDetails.get(14));
+
+                            //(String)castJobDetails.get(9)
 
                 }
             } catch (Exception e) {

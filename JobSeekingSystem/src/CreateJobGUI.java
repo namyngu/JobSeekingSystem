@@ -58,12 +58,8 @@ public class CreateJobGUI {
         intRecIDLabel.setText(Integer.toString(job.getRecruiterID()));  //will come from recruiter account details
         empNameLabel.setText(job.getEmployer());                        //will come from recruiter account details
 
-
-
-
         populateSkills("JobSeekingSystem/Skills.csv");
         populateCategories("JobSeekingSystem/Categories.csv");
-
 
         DefaultListModel skillsListGUI = new DefaultListModel();
         ArrayList<String> skills = job.getSkills();
@@ -71,27 +67,28 @@ public class CreateJobGUI {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Submit button has been clicked");
+                //System.out.println("Submit button has been clicked");
+                frame.setVisible(false);
                 try {
                     job.setJobID(generateJobID("JobSeekingSystem/Jobs.csv"));
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 job.setJobTitle(jobTitleText.getText());
-                System.out.println("jobTitle has been set to: " + job.getJobTitle());
+                //System.out.println("jobTitle has been set to: " + job.getJobTitle());
                 job.setJobType(String.valueOf(jobTypeMenu.getSelectedItem()));
-                System.out.println("JobType has been set to: " + job.getJobType());
+                //System.out.println("JobType has been set to: " + job.getJobType());
                 job.setSalary("$" + salaryText.getText() + " " + String.valueOf(salaryMenu.getSelectedItem()));
-                System.out.println("Salary has been set to: " + job.getSalary());
+                //System.out.println("Salary has been set to: " + job.getSalary());
 
                 for (int i = 0; i < skillsList.getModel().getSize(); i++) {
                     skills.add(String.valueOf(skillsList.getModel().getElementAt(i)));
                 }
                 job.setSkills(skills);
-                System.out.println("Skills have been set to: " + job.getSkills());
+                //System.out.println("Skills have been set to: " + job.getSkills());
 
                 job.setLocationState(String.valueOf(locationStateMenu.getSelectedItem()));
-                System.out.println("locationState has been set to: " + job.getLocationState());
+                //System.out.println("locationState has been set to: " + job.getLocationState());
 
                 String selectedPostcode = String.valueOf(postcodeMenu.getSelectedItem());
                 String postcode = "";
@@ -99,19 +96,19 @@ public class CreateJobGUI {
                     postcode += selectedPostcode.charAt(i);
                 }
                 job.setPostCode(postcode);
-                System.out.println("postCode has been set to: " + job.getPostCode());
+                //System.out.println("postCode has been set to: " + job.getPostCode());
 
                 job.setJobDescription(updateJobDescription(job.getJobDescription(), String.valueOf(descriptionText.getText())));
-                System.out.println("jobDescription has been set to: " + job.getJobDescription());
+                //System.out.println("jobDescription has been set to: " + job.getJobDescription());
 
                 job.setJobCategoryPrimary(String.valueOf(categoryMenuPrimary.getSelectedItem()));
-                System.out.println("categoryPrimary has been set to: " + job.getJobCategoryPrimary());
+                //System.out.println("categoryPrimary has been set to: " + job.getJobCategoryPrimary());
 
                 job.setJobCategorySecondary(String.valueOf(categoryMenuSecondary.getSelectedItem()));
-                System.out.println("categorySecondary has been set to: " + job.getJobCategorySecondary());
+                //System.out.println("categorySecondary has been set to: " + job.getJobCategorySecondary());
 
                 job.setWorkingHours(hoursText.getText());
-                System.out.println("workingHours has been set to: " + job.getWorkingHours() + " " + String.valueOf(hoursMenu.getSelectedItem()));
+                //System.out.println("workingHours has been set to: " + job.getWorkingHours() + " " + String.valueOf(hoursMenu.getSelectedItem()));
 
                 String status = String.valueOf(statusMenu.getSelectedItem());
                 if (status.equals("Draft")) {
@@ -179,33 +176,21 @@ public class CreateJobGUI {
         // TODO: place custom component creation code here
     }
 
+    /*
     public static void main(String[] args) throws IOException {
         CreateJobGUI objCreateJob = new CreateJobGUI();
-
-        /*
-        JFrame frame = new JFrame("Create Job");
-        frame.setContentPane(objCreateJob.createJobPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-
-        Job objJob = new Job();
-        objJob.setJobID(objCreateJob.generateJobID("JobSeekingSystem/Jobs.csv"));
-        objCreateJob.intJobIDLabel.setText(Integer.toString(objJob.getJobID()));
-        objCreateJob.intRecIDLabel.setText(Integer.toString(objJob.getRecruiterID()));  //will come from recruiter account details
-        objCreateJob.empNameLabel.setText(objJob.getEmployer());                        //will come from recruiter account details
-        */
-
-
     }
+    */
 
     public int generateJobID(String fileName) throws IOException {
         FileReader file = new FileReader(fileName);
         Scanner scan = new Scanner(file);
+        String returnString = "";
         int numJobs = 1;
 
         while (scan.hasNextLine()) {
-            System.out.println(scan.nextLine());
+            returnString = scan.nextLine();
+            //System.out.println(scan.nextLine());
             numJobs++;
         }
 
@@ -254,7 +239,6 @@ public class CreateJobGUI {
             returnString = scan.nextLine();
             //System.out.println("returnString is: " + returnString);
 
-
             for (int i = 0; i < returnString.length(); i++) {
                 if (returnString.charAt(i) != ',') {
                     stateCheck += returnString.charAt(i);
@@ -263,7 +247,7 @@ public class CreateJobGUI {
                 else {
                     i++;
                     if (state.equals(stateCheck)) {
-                        System.out.println("they are equal");
+                        //System.out.println("they are equal");
                         while (i < returnString.length()) {
                             postcode += returnString.charAt(i);
                             //System.out.println("postcode is: " + postcode);
@@ -277,19 +261,14 @@ public class CreateJobGUI {
                         break;
                     }
                     else {
-
                         postcode = "";
-
                         //System.out.println("didnt work, state is: " + state + "\n" + "stateCheck is: " + stateCheck);
                         stateCheck = "";
                         break;
                     }
-
-
                 }
             }
         }
-
     }
 
     public void populateSecondaryCategories(String fileName) throws FileNotFoundException {
@@ -316,7 +295,6 @@ public class CreateJobGUI {
                 secondCategory = "";
             }
         }
-
         categoryMenuSecondary.removeItemAt(0);
     }
 
@@ -330,7 +308,6 @@ public class CreateJobGUI {
             skillsMenu.addItem(returnString);
             //System.out.println(returnString + " added to skills menu");
         }
-
         file.close();
     }
 
@@ -360,29 +337,26 @@ public class CreateJobGUI {
         file.append(String.valueOf(job.isArchived()));
         //file.append("\n");
         file.close();
-
     }
 
     public ArrayList<String> updateJobDescription(ArrayList<String> jobDescAL, String input) {
-        System.out.println("jobDescAL is: " + jobDescAL);
-        System.out.println("input is: " + input);
+        //System.out.println("jobDescAL is: " + jobDescAL);
+        //System.out.println("input is: " + input);
         String line = "";
 
         for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) == '\n') {
                 jobDescAL.add(line);
                 line = "";
-                System.out.println("jobDescAL is: " + jobDescAL);
+                //System.out.println("jobDescAL is: " + jobDescAL);
             }
             else {
                 line += input.charAt(i);
-                System.out.println("line is: " + line);
+                //System.out.println("line is: " + line);
             }
         }
         jobDescAL.add(line);
-        System.out.println("Finished, jobDescAL is: " + jobDescAL);
+        //System.out.println("Finished, jobDescAL is: " + jobDescAL);
         return jobDescAL;
-
     }
-
 }
