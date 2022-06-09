@@ -3,8 +3,9 @@ import java.util.TreeMap;
 
 public class Search
 {
-    private static ArrayList<Job> jobList;
+    private ArrayList<Job> jobList;
     private int matchScore;
+    private JobseekerControl myParent;
 
     /* Some thoughts about this class. This needs to:
      * 1. Method for searching for Jobs that match search criteria
@@ -13,7 +14,19 @@ public class Search
 
     //Method for retrieving a list of all active jobs
     public void getJobList() {
-        //TODO: Populate jobList with a list of all active (advertised) jobs in the system
+        //TODO: Populate jobList with a list of all active (advertised) jobs in the system.
+        //TODO: To do this, set jobList = import list of all Jobs from somewhere.
+    }
+
+    // Default constructor.
+    public void Search() {
+        jobList = new ArrayList<Job>();
+    }
+
+    // Non-default constructor.
+    public void Search(JobseekerControl parent) {
+        myParent = parent;
+        jobList = new ArrayList<Job>();
     }
 
     // Method 1. Search for a list of matching jobs
@@ -21,9 +34,16 @@ public class Search
         String categorySecondary, String location, boolean fullTime, boolean partTime,
         boolean casual, float salMin, float salMax, ArrayList<String> seekerSkills) throws Exception {
 
-        //Setup a few variables
+        // Setup a few variables.
         ArrayList<Job> results = new ArrayList<Job>();
         TreeMap<Integer, Job> scoredResults = new TreeMap<Integer, Job>();
+
+        // Change search algorithm weightings here, if needed.
+        int titleWeight = 35;
+        int descWeight = 20;
+        int skillWeight = 20;
+        int primaryCatWeight = 15;
+        int secondaryCatWeight = 10;
 
         //Let's make a few sample Jobs just for testing purposes
         Job jobOne = new Job(1, "Software Developer", 1, "Monash University",
@@ -116,22 +136,41 @@ public class Search
         // the search filters. Now to do some matching and scoring on search
         // criteria. TODO: score remaining jobs in jobList for relevancy,
         // TODO: and add them to the results list in order.
-        // Remaining search criteria: Description, Skills, Category
+        // Remaining search criteria: Title, Description, Skills, Category1 and Category2.
         // Jobs outside the category will still return in results, but at lower relevancy
         // Jobs not exactly matching skill specification will still return, but at lower relevancy
 
         for (Job tmp : results) {
 
-            // 1. Description
+            // 1. Title
+            // This should have a high weighting - if the title matches more
+            // or less the search description, then this job should return in
+            // the results fairly high.
+            int titleMatch = 0;
+            String[] searchDescArray = jobDesc.split("\\W+");
+            String[] jobTitle = tmp.getJobTitle().split("\\W");
+            // Check each word in the search description against each word
+            // in the job title.
+            for (String word : jobTitle) {
+                String lWord = word.toLowerCase();
+                for (String check : searchDescArray) {
+                    String lCheck = check.toLowerCase();
+                    if (lWord.equals(lCheck)) {
+                        // Direct match on this word.
+                        titleMatch++;
+                    }
+                }
+            }
+
+            // Weight the title match parameter.
+            int titleResult = (titleMatch / jobTitle.length) * titleWeight;
+
+            // 2. Description
             // Break the descriptions into arrays of Strings to work with.
             int descMatch = 0;
-            String[] searchDescArray = jobDesc.split("\\W+");
             String[] jobDescArray = tmp.getJobDescription().split("\\W+");
-            String[] jobTitle = tmp.getJobTitle().split("\\W+");
             // For each word in the searched Job Description, check if it matches a word
             // in the job Description. If yes, increment the number of matches.
-            // TODO: Threw Job Title in here to get it matching as well.
-            // TODO: Might be more appropriate to do different matching on the title.
             for (String word : searchDescArray) {
                 String lWord = word.toLowerCase();
                 for (String check : jobDescArray) {
@@ -141,16 +180,12 @@ public class Search
                         descMatch++;
                     }
                 }
-                for (String check : jobTitle) {
-                    String lCheck = check.toLowerCase();
-                    if (lWord.equals(lCheck)) {
-                        // Direct match on word in Job Title
-                        descMatch++;
-                    }
-                }
             }
 
-            // 2. Skills
+            // Weight the description match.
+            int descResult = (descMatch / jobDescArray.length) * descWeight;
+
+            // 3. Skills
             // For each of the skills listed against the Job, check to see if they
             // match any of the skills listed against the Job Seeker.
             int skillMatch = 0;
@@ -165,7 +200,10 @@ public class Search
                 }
             }
 
-            // 3. Category
+            // Weight the skills match.
+            int skillResult = (skillMatch / seekerSkills.size()) * skillWeight;
+
+            // 4. Category
             // Check to see if we match on the job category - Primary and Secondary
             int primaryCatMatch = 0;
             int secondaryCatMatch = 0;
@@ -177,15 +215,28 @@ public class Search
                 secondaryCatMatch = 1;
             }
 
+            // Weight the category matches.
+            int primaryCatResult = primaryCatMatch * primaryCatWeight;
+            int secondaryCatResult = secondaryCatMatch * secondaryCatWeight;
+
             // 4. Score this Job for the search
             //TODO: Figure out how to calculate the score
-            int score = descMatch + skillMatch + primaryCatMatch * 10 + secondaryCatMatch * 5;
+            int totalResult = titleResult + descResult + skillResult + primaryCatResult + secondaryCatResult;
 
             // 5. Add this job and its score into a TreeMap for sorting
-            scoredResults.put(score,tmp);
+            scoredResults.put(totalResult,tmp);
         }
 
         // Sort the TreeMap and put the sorted list back into results.
+        // Note the .values() method should return the list already
+        // sorted by the score.
+        results.clear();
+        results = new ArrayList<Job>(scoredResults.values());
+
+        // Quick debug: Print to terminal.
+        for (Job job : results) {
+            System.out.println(job.toString());
+        }
 
         return results;
     }

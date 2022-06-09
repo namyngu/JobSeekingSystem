@@ -3,10 +3,13 @@ import java.util.ArrayList;
 public class JobseekerControl
 {
 
+    private Search mainSearch;
+
     public JobseekerControl() {
     }
     public JobseekerControl(User jobseeker) {
         JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(jobseeker, this);
+        mainSearch = new Search();
     }
 
     public void apply()
@@ -20,10 +23,19 @@ public class JobseekerControl
     }
 
     public void jobSearch(String jobDesc, String categoryPrimary,
-                          String categorySecondary, String location, boolean fullTime, boolean partTime,
-                          boolean casual, float salMin, float salMax, ArrayList<String> seekerSkills)
+                        String categorySecondary, String location, boolean fullTime, boolean partTime,
+                        boolean casual, float salMin, float salMax, ArrayList<String> seekerSkills)
     {
         System.out.println("Searching...");
+        try
+        {
+            ArrayList<Job> someList = mainSearch.jobSearch(jobDesc, categoryPrimary, categorySecondary, location, fullTime, partTime,
+            casual, salMin, salMax, seekerSkills);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
 
