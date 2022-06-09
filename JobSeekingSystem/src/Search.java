@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.TreeMap;
 
 public class Search
@@ -20,14 +19,14 @@ public class Search
     }
 
     // Default constructor.
-    public void Search() {
-        jobList = new ArrayList<Job>();
+    public Search() {
+        jobList = new ArrayList<>();
     }
 
     // Non-default constructor.
-    public void Search(JobseekerControl parent) {
+    public Search(JobseekerControl parent) {
         myParent = parent;
-        jobList = new ArrayList<Job>();
+        jobList = new ArrayList<>();
     }
 
     // Method 1. Search for a list of matching jobs
@@ -36,8 +35,8 @@ public class Search
         boolean casual, float salMin, float salMax, ArrayList<String> seekerSkills) throws Exception {
 
         // Setup a few variables.
-        ArrayList<Job> results = new ArrayList<Job>();
-        TreeMap<Integer, Job> scoredResults = new TreeMap<Integer, Job>();
+        ArrayList<Job> results = new ArrayList<>();
+        TreeMap<Integer, Job> scoredResults = new TreeMap<>();
 
         // TODO: For testing purposes, setup the seekerSkills.
         // TODO: Not needed for actual method when real skills
@@ -54,12 +53,11 @@ public class Search
         int primaryCatWeight = 15;
         int secondaryCatWeight = 10;
 
-        jobList = new ArrayList<Job>();
         //Let's make a few sample Jobs just for testing purposes
         Job jobOne = new Job(1, "Software Developer", 1, "Monash University",
-                "Full-Time", true, "$100,000", new ArrayList<String>(),
-                new ArrayList<Application>(), new ArrayList<String>(), "Queensland", "4101",
-                new ArrayList<String>(), //"Some description about being a software developer goes here, blah blah blah",
+                "Full-Time", true, "$100,000", new ArrayList<>(),
+                new ArrayList<>(), new ArrayList<>(), "Queensland", "4101",
+                new ArrayList<>(), //"Some description about being a software developer goes here, blah blah blah",
                 "Engineering - Software", "Another category", "9-5",
                 true, false);
         jobList.add(jobOne);
@@ -74,10 +72,8 @@ public class Search
             char[] salary = tmp.getSalary().toCharArray();
             StringBuilder salBuilder = new StringBuilder();
             for (char single : salary) {
-                if (!Character.isDigit(single)) {
-                    // Strip out character.
-                } else {
-                    // Character is ok to add to StringBuilder.
+                if (Character.isDigit(single)) {
+                    // Character is a digit and is therefore ok to add to StringBuilder.
                     salBuilder.append(single);
                 }
             }
@@ -236,9 +232,8 @@ public class Search
 
             // Weight the skills match.
             int skillResult = 0;
-            if (seekerSkills.size() == 0) {
-                // Jobseeker has not added any skills yet. Skill match can't be calculated.
-            } else {
+            if (seekerSkills.size() != 0) {
+                // Jobseeker has some skills, and skill match can be calculated.
                 skillResult = (skillMatch / seekerSkills.size()) * skillWeight;
             }
 
@@ -259,7 +254,6 @@ public class Search
             int secondaryCatResult = secondaryCatMatch * secondaryCatWeight;
 
             // 4. Score this Job for the search
-            //TODO: Figure out how to calculate the score
             int totalResult = titleResult + descResult + skillResult + primaryCatResult + secondaryCatResult;
 
             // 5. Add this job and its score into a TreeMap for sorting
@@ -270,7 +264,7 @@ public class Search
         // Note the .values() method should return the list already
         // sorted by the score.
         results.clear();
-        results = new ArrayList<Job>(scoredResults.values());
+        results = new ArrayList<>(scoredResults.values());
 
         return results;
     }
