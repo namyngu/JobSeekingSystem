@@ -1,7 +1,7 @@
 import javax.swing.*;
 
-public class JobGUI {
-    private JPanel jobPanel;
+public class JobSeekerJobGUI {
+    private JPanel jobContainer;
     private JLabel jobTitle;
     private JLabel jobEmployer;
     private JLabel jobLocation;
@@ -9,12 +9,13 @@ public class JobGUI {
     private JLabel jobType;
     private JLabel jobDescription;
     private JTextArea coverLetter;
+    private JPanel jobPanel;
 
-    public JobGUI() {
+    public JobSeekerJobGUI() {
 
         JFrame frame = new JFrame("Job Title");
 
-        frame.setContentPane(jobPanel);
+        frame.setContentPane(jobContainer);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setResizable(true);

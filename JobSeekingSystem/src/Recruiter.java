@@ -15,4 +15,13 @@ public class Recruiter extends User
         this.totalAdverts = 0;
         this.totalApplications = 0;
     }
+
+    public Recruiter(int userID, String firstName, String lastName, String userName, String password, boolean active)
+    {
+        super(userID, firstName, lastName, userName, password, "Recruiter",active);
+        this.jobs = new ArrayList<Job>();
+        this.invitations = new ArrayList<Invitation>();
+        this.totalAdverts = 0;
+        this.totalApplications = 0;
+    }
 }

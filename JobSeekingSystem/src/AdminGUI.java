@@ -17,6 +17,7 @@ public class AdminGUI
     private JList list1;
     private JTextArea jobDetailsText;
     private JButton lockUserButton;
+    private JButton sendWarningButton;
 
     private AdminControl adminControl;
     private JSS program;
@@ -112,6 +113,18 @@ public class AdminGUI
                     userDetailsText.setBackground(Color.white);
                     lockUserButton.setText("LOCK ACCOUNT");
                 }
+            }
+        });
+        sendWarningButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                int userIndex = userList.getSelectedIndex();
+                adminControl.blockedMessage(adminControl.adminID(),userIndex);
+
+                //check messages are working bugfix:
+             //program.checkMessages(1);
             }
         });
     }

@@ -1,45 +1,51 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class RecruiterHomeGUI {
-    private JLabel yourJobLabel;
-    private JButton messagesButton;
+    private JTabbedPane recruiterNav;
+    private JPanel jobsContainer;
+    private JTable jobsTable;
+    private JPanel searchPanel;
+    private JPanel inboxPanel;
+    private JPanel jobsPanel;
+    private JPanel inboxContainer;
+    private JPanel updateSkillsPanel;
+    private JLabel candidateLocationLabel;
+    private JTextField textField1;
+    private JButton addSkillButton;
+    private JButton removeSkillButton;
+    private JButton searchButton;
+    private JList allSkillList;
+    private JList candidateSkillList;
+    private JTable inboxTable;
+    private JTable searchResults;
     private JButton createJobButton;
-    private JPanel recruiterHome;
-    private JButton homeButton;
-    private JButton searchCandidatesButton;
-    private JButton logoutButton;
-    private JPanel headerPanel;
-    private JButton viewButton;
-    private JPanel jobPanel1;
-    private JLabel jobStatus;
-    private JPanel jobPanel2;
-    private JLabel jobTitle;
-    private JLabel employerLabel;
-    private JLabel postedLabel;
-    private JLabel applicantsLabel;
-    private JLabel newApplicantsLabel;
-    private JLabel jobTitle2;
-    private JLabel employerLabel2;
-    private JLabel postedLabel2;
-    private JLabel applicantsLabel2;
-    private JLabel newApplicantsLabel2;
-    private JLabel jobStatusLabel2;
-    private JButton viewButton2;
-    private JLabel welcomeMSG;
+    private JScrollPane recruiterInboxTable;
+    private JScrollPane recruiterJobsTable;
 
-    public RecruiterHomeGUI()
-    {
+    public RecruiterHomeGUI(){
+        JFrame window = new JFrame("JSS: Recruiter Home");
+        window.add(recruiterNav);
 
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setBounds(600,40,100,100);
+        window.pack();
+        window.setResizable(true);
+        window.setVisible(true);
+
+
+        //launch create job screen
+//        createJobButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                CreateJobGUI createJobGUI = new CreateJobGUI();
+//            }
+//        } );
     }
-    public RecruiterHomeGUI(User recruiter)
-    {
-        JFrame homeFrame = new JFrame("RecruiterHomeGUI");
-        homeFrame.setContentPane(this.recruiterHome);
-        homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        homeFrame.setBounds(600,40,100,100);
-        homeFrame.pack();
 
-        homeFrame.setResizable(true);
-        homeFrame.setVisible(true);
-    }
+
 }
+
+

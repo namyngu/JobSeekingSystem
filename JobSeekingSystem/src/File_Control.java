@@ -45,4 +45,12 @@ public class File_Control {
         file.close();
     }
 
+    public void clearFile(String fileName) throws IOException
+    {
+        FileWriter file = new FileWriter(fileName);
+//        file.append(data);
+//        file.append("\n");
+        file.close();
+    }
+
 }
