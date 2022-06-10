@@ -46,4 +46,16 @@ public class Jobseeker extends User
         skills = newSkills;
     }
 
+    // Method to print this Jobseeker out as a String
+    public String toString() {
+
+        return "Jobseeker{" +
+                "applications=" + applications + "\'" +
+                ", invitations=" + invitations + "\'" +
+                ", skills=" + skills + "\'" +
+                ", totalApplied=" + totalApplied + "\'" +
+                ", totalOffers=" + totalOffers + "\'" +
+                ", totalInvites=" + totalInvites + "\'" +
+                "}";
+    }
 }
