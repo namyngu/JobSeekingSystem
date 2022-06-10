@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class AdminControl
 {
     private Administrator admin;
@@ -41,6 +43,14 @@ public class AdminControl
             e.printStackTrace();
             sent = false;
         }
+    }
+
+    public ArrayList<Message> relayMessages()
+    {
+        ArrayList<Message> toRelay = this.admin.getMessages();
+
+        return toRelay;
+
     }
 
     public int adminID()

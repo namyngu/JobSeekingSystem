@@ -504,6 +504,9 @@ public class JSS
 
     public boolean checkMessages(int userIndex)
     {
+        //decreasing userIndex!!!
+//        userIndex -=1;
+
         boolean hasMail = false;
 
         ArrayList<Message> messages = new ArrayList<>();
@@ -539,12 +542,14 @@ public class JSS
                 //if it is for the user checking, add it to their list
                 if (messageTo == userIndex)
                 {
+                    hasMail =true;
              int sender = Integer.parseInt(messageDetails[1]);
                     //TODO fix this to reflect changes to message class
                     Message message = new Message(sender,messageTo,messageDetails[3],messageDetails[4]);
 
 
                    User temp = this.userList.get(userIndex);
+
                            temp.addMessage(message);
                    //TODO alter messages arraylist so this is received if true
                 }

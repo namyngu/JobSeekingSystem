@@ -22,27 +22,60 @@ public class AdminGUI
     private JButton replyButton;
     private JButton deleteButton;
     private JLabel inboxLabel;
+    private JButton newMessageButton;
 
     private AdminControl adminControl;
     private JSS program;
 
-    private DefaultListModel list;
+    private DefaultListModel userListModel;
     private ArrayList<String> userNames;
+
+    private DefaultListModel mailListModel;
+//    private  ArrayList<Message> userMessages;
 
 
     public AdminGUI(AdminControl adminControl, JSS program)
     {
         this.adminControl = adminControl;
         this.program = program;
+
         this.userNames = new ArrayList<String>();
-        this.list = new DefaultListModel();
-        this.userList.setModel(this.list);
+        this.userListModel = new DefaultListModel();
+        this.userList.setModel(this.userListModel);
+
+//        this.userMessages = new ArrayList<Message>();
+        this.mailListModel = new DefaultListModel();
+        this.inboxList.setModel(this.mailListModel);
 
         JFrame frame = new JFrame("AdminHome");
         frame.setContentPane(this.adminHomePanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
+        //retrieve messages for inbox
+        int userID = this.adminControl.adminID()-1;
+
+        if (this.program.checkMessages(userID) == false)
+        {
+            refreshList("Clear inbox...",inboxList,mailListModel);
+
+
+        }
+        else
+        {
+            ArrayList<Message> userMessages = adminControl.relayMessages();
+
+            String toDisplay = "";
+            for (Message each: userMessages)
+            {
+
+              int senderID = each.getSenderID();
+               String senderName = program.retrieveUsername(senderID);
+                toDisplay += senderName + " Re: " + each.getHeader();
+                refreshList(toDisplay,inboxList,mailListModel);
+            }
+        }
 
         //requests num users from JSS and populates list that size of usernames only
 
@@ -53,12 +86,7 @@ public class AdminGUI
                 String name = this.program.retrieveUsername(i);
                 this.userNames.add(name);
                 this.refreshList(name);
-
             }
-
-
-
-
         }
         catch (Exception e)
         {
@@ -124,14 +152,58 @@ public class AdminGUI
             @Override
             public void actionPerformed(ActionEvent e)
             {
+
                 int userIndex = userList.getSelectedIndex();
+                System.out.println("warning user line 154" + userIndex);
+
                 adminControl.blockedMessage(adminControl.adminID(),userIndex);
 
                 //check messages are working bugfix:
              program.checkMessages(userList.getSelectedIndex());
             }
         });
+        inboxList.addListSelectionListener(new ListSelectionListener()
+        {
+            @Override
+            public void valueChanged(ListSelectionEvent e)
+            {
+                int selected = inboxList.getSelectedIndex();
+                Message toDisplay = adminControl.relayMessages().get(selected);
+                String title = toDisplay.getHeader().toUpperCase();
+                String content = toDisplay.getBody();
+                String display = title + "\n\n" + content;
+                mailTextArea.setText(display);
+            }
+        });
+        newMessageButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+//                MessageGUI sendMessage = new MessageGUI();
+            }
+        });
+        replyButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                int sender = adminControl.adminID();
+                int destination = inboxList.getSelectedIndex();
+                MessageGUI reply = new MessageGUI(sender,destination);
+                Message toSend = reply.getMessage(sender,destination);
+            }
+        });
     }
+
+    //generic refreshList option to be used by most lists
+private void refreshList(String content, JList list, DefaultListModel listModel)
+{
+    list.setVisible(true);
+    listModel.addElement(content);
+}
+
+//customised for locking list
 
     private void refreshList(String name)
     {
@@ -140,7 +212,7 @@ public class AdminGUI
 //        System.out.println("removing elements");
 //        list.removeAllElements();
 //        System.out.println("adding name to list:" + name);
-        list.addElement(name);
+        userListModel.addElement(name);
 //        for (String each: userNames)
 //        {
 //

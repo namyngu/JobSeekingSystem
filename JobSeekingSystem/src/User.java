@@ -95,8 +95,18 @@ public abstract class User
         return mail;
     }
 
+    public ArrayList<Message> getMessages()
+    {
 
-    //Method to save user to users.csv
+        return messages;
+    }
+
+    public void setMessages(ArrayList<Message> messages)
+    {
+        this.messages = messages;
+    }
+
+//Method to save user to users.csv
 //    public void saveUser(String fileName)
 //    {
 //        try
