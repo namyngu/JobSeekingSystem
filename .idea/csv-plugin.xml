@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="JobPosting.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Applicant.csv">
           <value>
             <Attribute>
@@ -66,6 +73,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\JobSeekingSystem\KeywordList.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\JobSeekingSystem\Keywords.csv">
           <value>
             <Attribute>
@@ -74,6 +88,13 @@
           </value>
         </entry>
         <entry key="\JobSeekingSystem\Skills.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\JobSeekingSystem\src\JobsDescriptions.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
