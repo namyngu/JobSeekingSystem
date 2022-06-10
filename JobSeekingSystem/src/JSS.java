@@ -489,9 +489,9 @@ public class JSS
         return inQuestion;
     }
 
-    public void storeMessage(int senderID, int receiverID, String text)
+    public void storeMessage(int senderID, int receiverID, String header, String body)
     {
-        String message = "pending" + "," + senderID + "," + receiverID + "," + text;
+        String message = "pending" + "," + senderID + "," + receiverID + "," + header+"," + body;
         try
         {
             File_Control io = new File_Control();
@@ -539,8 +539,13 @@ public class JSS
                 //if it is for the user checking, add it to their list
                 if (messageTo == userIndex)
                 {
-                    Message message = new AdminAlert(Integer.parseInt(messageDetails[1]),Integer.parseInt(messageDetails[2]),messageDetails[3]);
-                   this.userList.get(userIndex).addMessage(message);
+             int sender = Integer.parseInt(messageDetails[1]);
+                    //TODO fix this to reflect changes to message class
+                    Message message = new Message(sender,messageTo,messageDetails[3],messageDetails[4]);
+
+
+                   User temp = this.userList.get(userIndex);
+                           temp.addMessage(message);
                    //TODO alter messages arraylist so this is received if true
                 }
                 //TODO check user type and determine message type accordingly
@@ -550,8 +555,8 @@ public class JSS
                 //checking message is getting there....
                 User one = userList.get(userIndex);
 
-                System.out.println(one.messagesToString());
-                //this isn't arriving
+//                System.out.println("here's teh message" + one.messagesToString());
+
 
             }
         } catch (Exception e)

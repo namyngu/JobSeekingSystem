@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 public abstract class User
 {
@@ -85,10 +86,11 @@ public abstract class User
         for (Message list: this.messages
              )
         {
-            if (list instanceof AdminAlert)
-            {
-                mail += ((AdminAlert) list).getAlertText();
-            }
+
+           String header = list.getHeader().toUpperCase();
+           String body = list.getBody().toLowerCase();
+           mail += header + ": " + body;
+
         }
         return mail;
     }

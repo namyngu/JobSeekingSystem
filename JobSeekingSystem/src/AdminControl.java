@@ -29,10 +29,11 @@ public class AdminControl
         boolean sent = false;
         try
         {
+            String header = "ACCOUNT LOCK WARNING";
             String text = "Your account will be blocked by Administrator " + this.admin.getUserName();
             text += ". Please contact them immediately to discuss";
-            Message notification = new AdminAlert(senderID, receiverID, text);
-            program.storeMessage(senderID,receiverID,text);
+            Message notification = new Message(senderID, receiverID,header,text);
+            program.storeMessage(senderID,receiverID,header,text);
             sent = true;
         }
         catch (Exception e)

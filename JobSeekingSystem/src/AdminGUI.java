@@ -124,7 +124,7 @@ public class AdminGUI
                 adminControl.blockedMessage(adminControl.adminID(),userIndex);
 
                 //check messages are working bugfix:
-             //program.checkMessages(1);
+             program.checkMessages(userList.getSelectedIndex());
             }
         });
     }
