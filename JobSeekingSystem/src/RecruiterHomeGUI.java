@@ -40,6 +40,10 @@ public class RecruiterHomeGUI {
         window.setResizable(true);
         window.setVisible(true);
 
+
+        DefaultListModel candidateListGUI = new DefaultListModel();
+        DefaultListModel skillsListGUI = new DefaultListModel();
+
         try {
             populateSkills("JobSeekingSystem/Skills.csv");
         }
@@ -47,6 +51,12 @@ public class RecruiterHomeGUI {
             System.out.println(e.toString());
             e.printStackTrace();
         }
+
+        for (int x = 0; x < allSkillList.getModel().getSize(); x++) {
+            Object element = allSkillList.getModel().getElementAt(x);
+            skillsListGUI.addElement(element);
+        }
+
         //launch create job screen
 //        createJobButton.addActionListener(new ActionListener() {
 //            @Override
@@ -54,6 +64,33 @@ public class RecruiterHomeGUI {
 //                CreateJobGUI createJobGUI = new CreateJobGUI();
 //            }
 //        } );
+
+        addSkillButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // This method adds the new skill out of alphabetical order,
+                // ideally we should sort this but that is TODO.
+                Object element = allSkillList.getSelectedValue();
+                candidateListGUI.addElement(element);
+                candidateSkillList.setModel(candidateListGUI);
+                skillsListGUI.removeElement(element);
+                allSkillList.setModel(skillsListGUI);
+            }
+        });
+
+        removeSkillButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // This method adds the new skill out of alphabetical order,
+                // ideally we should sort this but that is TODO.
+                Object element = candidateSkillList.getSelectedValue();
+                candidateListGUI.removeElement(element);
+                candidateSkillList.setModel(candidateListGUI);
+                skillsListGUI.addElement(element);
+                allSkillList.setModel(skillsListGUI);
+            }
+        });
+
         createJobButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
