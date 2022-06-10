@@ -553,9 +553,10 @@ public class JSS
                 //TODO refresh message.csv list when done
 
                 //checking message is getting there....
-                User one = userList.get(userIndex);
+//                User one = userList.get(userIndex);
+//                System.out.println("Nessafe: " + one.messagesToString());
 
-//                System.out.println("here's teh message" + one.messagesToString());
+
 
 
             }

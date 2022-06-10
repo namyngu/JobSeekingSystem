@@ -10,7 +10,6 @@ public class AdminGUI
 {
     private JPanel panel1;
     private JPanel adminHomePanel;
-    private JLabel labelWelcome;
     private JList userList;
     private JTextArea userDetailsText;
     private JLabel jobsLabel;
@@ -18,6 +17,11 @@ public class AdminGUI
     private JTextArea jobDetailsText;
     private JButton lockUserButton;
     private JButton sendWarningButton;
+    private JList inboxList;
+    private JTextArea mailTextArea;
+    private JButton replyButton;
+    private JButton deleteButton;
+    private JLabel inboxLabel;
 
     private AdminControl adminControl;
     private JSS program;
