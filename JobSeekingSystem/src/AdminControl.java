@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class AdminControl
+public class AdminControl extends BaseController
 {
     private Administrator admin;
     JSS program;

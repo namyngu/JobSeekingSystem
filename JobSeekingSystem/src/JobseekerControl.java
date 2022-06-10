@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class JobseekerControl
+public class JobseekerControl extends BaseController
 {
 
     private Search mainSearch;
