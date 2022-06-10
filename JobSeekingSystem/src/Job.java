@@ -189,4 +189,6 @@ public class Job
     public void setKeywords(ArrayList<String> keywords) {
         this.keywords = keywords;
     }
+
+    public void setJobID(int jobID) {this.jobID = jobID;}
 }

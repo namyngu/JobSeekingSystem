@@ -4,14 +4,11 @@ import java.util.TreeMap;
 public class Search
 {
     private ArrayList<Job> jobList;
+    private ArrayList<Location> locationList;
+    private ArrayList<JobCategory> jobCategoryList;
     private ArrayList<Jobseeker> jobseekerList;
     private int matchScore;
     private JobseekerControl myParent;
-
-    /* Some thoughts about this class. This needs to:
-     * 1. Method for searching for Jobs that match search criteria
-     * 2. Method for searching for JobSeekers that match search criteria
-     */
 
     //Method for retrieving a list of all active jobs
     public void setJobList() {
@@ -26,14 +23,20 @@ public class Search
 
     // Default constructor.
     public Search() {
+        myParent = null;
         jobList = new ArrayList<>();
+        locationList = new ArrayList<>();
+        jobCategoryList = new ArrayList<>();
         jobseekerList = new ArrayList<>();
     }
 
     // Non-default constructor.
-    public Search(JobseekerControl parent) {
+    public Search(JobseekerControl parent, ArrayList<Job> jobs,
+                  ArrayList<Location> locations, ArrayList<JobCategory> categories) {
         myParent = parent;
-        jobList = new ArrayList<>();
+        jobList = jobs;
+        locationList = locations;
+        jobCategoryList = categories;
         jobseekerList = new ArrayList<>();
     }
 

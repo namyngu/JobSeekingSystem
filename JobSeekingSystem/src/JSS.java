@@ -310,7 +310,7 @@ public class JSS
 
             case "Jobseeker":
                 //Do something else
-                JobseekerControl jobSeekerControl = new JobseekerControl(userList.get(userIndex));
+                JobseekerControl jobSeekerControl = new JobseekerControl(userList.get(userIndex), jobList, locationList, jobCategoryList);
                 break;
 
             case "Recruiter":
@@ -561,6 +561,87 @@ public class JSS
 
         return userDetails;
     }
+
+    // Check Messages method provided by Gerard.
+    public boolean checkMessages(int userIndex)
+    {
+        //decreasing userIndex!!!
+//        userIndex -=1;
+        boolean hasMail = false;
+
+        ArrayList<Message> messages = new ArrayList<>();
+
+        String rawInput = "";
+        try {
+            rawInput = fileControl.readFile("messages.csv");
+        } catch (Exception e) {
+            System.out.println("Error failed to read messages!");
+        }
+
+//        System.out.println("these are the messages: " + rawInput);
+        String[] messageString = rawInput.split("\n");
+
+        try
+        {
+            for (int i = 0; i < messageString.length; i++)
+            {
+                //If messages.csv contains an empty line skip it.
+                if (messageString[i].isEmpty())
+                {
+                    System.out.println("Warning: empty line in messages.csv at line: " + i + ", skipping...");
+                    continue;
+                }
+
+                //split each user into another array of userDetails
+                String[] messageDetails = messageString[i].split(",");
+
+                //find out who the message is for
+                int messageTo = Integer.parseInt(messageDetails[2]);
+
+                //if it is for the user checking, add it to their list
+                if (messageTo == userIndex)
+                {
+                    hasMail =true;
+                    int sender = Integer.parseInt(messageDetails[1]);
+                    //TODO fix this to reflect changes to message class
+                    Message message = new Message(sender,messageTo,messageDetails[3],messageDetails[4]);
+
+
+                    User temp = this.userList.get(userIndex);
+
+                    temp.addMessage(message);
+                    //TODO alter messages arraylist so this is received if true
+                }
+                //TODO check user type and determine message type accordingly
+                //TODO deal with \n -- try replace with String methods? -- do this at point of writing
+                //TODO refresh message.csv list when done
+                //checking message is getting there....
+//                User one = userList.get(userIndex);
+//                System.out.println("Nessafe: " + one.messagesToString());
+            }
+        } catch (Exception e)
+        {
+            System.out.println("message read error" + e.toString());
+        }
+
+        return hasMail;
+    }
+
+    // Store message method as copied from Gerard's branch.
+    public void storeMessage(int senderID, int receiverID, String header, String body)
+    {
+        String message = "pending" + "," + senderID + "," + receiverID + "," + header+"," + body;
+        try
+        {
+            File_Control io = new File_Control();
+            io.writeFile("messages.csv", message);
+        } catch (Exception e)
+        {
+            System.out.println("Error failed to save user into csv.");
+        }
+    }
+
+
 //method to lock/unlock account comes via admin controller.
     //TODO this should come from admin control I think but there must be a neater way of doing this
 
