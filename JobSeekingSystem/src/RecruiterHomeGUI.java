@@ -2,8 +2,10 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class RecruiterHomeGUI {
+    private RecruiterControl myParent;
     private JTabbedPane recruiterNav;
     private JPanel jobsContainer;
     private JTable jobsTable;
@@ -25,7 +27,8 @@ public class RecruiterHomeGUI {
     private JScrollPane recruiterInboxTable;
     private JScrollPane recruiterJobsTable;
 
-    public RecruiterHomeGUI(){
+    public RecruiterHomeGUI(RecruiterControl parent){
+        myParent = parent;
         JFrame window = new JFrame("JSS: Recruiter Home");
         window.add(recruiterNav);
 
@@ -53,6 +56,24 @@ public class RecruiterHomeGUI {
                 }
             }
         });
+
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String location = textField1.getText();
+                ListModel searchModel = candidateSkillList.getModel();
+                ArrayList<String> searchSkills = new ArrayList<>();
+                for (int x = 0; x < searchModel.getSize(); x ++) {
+                    String skill = searchModel.getElementAt(x).toString();
+                    searchSkills.add(skill);
+                }
+
+                // This method should return a list of jobSeekers and then
+                // we need to display them somehow.
+                myParent.seekerSearch(location, searchSkills);
+            }
+        });
+
     }
 
 

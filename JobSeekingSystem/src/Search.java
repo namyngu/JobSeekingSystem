@@ -287,15 +287,15 @@ public class Search
         jobseekerList.add(new Jobseeker(3,"Sam","Smith","ss123","secureStrong",false));
 
         ArrayList<String> skills = new ArrayList<String>();
+        ArrayList<String> skills2 = new ArrayList<String>();
         skills.add("Incident Command");
         skills.add("Incineration");
         skills.add("Project Control");
         jobseekerList.get(0).setSkills(skills);
-        skills.clear();
-        skills.add("Incident Command");
-        skills.add("Project Direction");
-        skills.add("Project Engineering");
-        jobseekerList.get(1).setSkills(skills);
+        skills2.add("Incident Command");
+        skills2.add("Project Direction");
+        skills2.add("Project Engineering");
+        jobseekerList.get(1).setSkills(skills2);
 
         // Quick debug:
         for (Jobseeker seeker : jobseekerList) {
