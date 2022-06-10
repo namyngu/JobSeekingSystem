@@ -107,11 +107,8 @@ public class JobSeekerHomeGUI {
                 boolean fullTime = fullTimeCheckBox.isSelected();
                 boolean partTime = partTimeCheckBox.isSelected();
                 boolean casual = casualCheckBox.isSelected();
-                // TODO: Combo boxes need to be fixed up
-                //float salMin = comboBox1.getDropTarget();
-                //float salMax = comboBox2.getDropTarget();
-                float salMin = 0.00F;
-                float salMax = 100000.00F;
+                int salMin = Integer.parseInt(comboBox1.getSelectedItem().toString());
+                int salMax = Integer.parseInt(comboBox2.getSelectedItem().toString());
                 // TODO: This class gets passed a USER, not a JOBSEEKER
                 // TODO: How do we get the list of skills for the JOBSEEKER
                 // TODO: if we only have access to the USER??

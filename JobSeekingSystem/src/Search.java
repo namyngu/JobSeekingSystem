@@ -10,17 +10,6 @@ public class Search
     private int matchScore;
     private JobseekerControl myParent;
 
-    //Method for retrieving a list of all active jobs
-    public void setJobList() {
-        //TODO: Populate jobList with a list of all active (advertised) jobs in the system.
-        //TODO: To do this, set jobList = import list of all Jobs from somewhere.
-    }
-
-    public void setJobseekerList() {
-        //TODO: Populate jobseekerList with a list of all active Job Seekers in the system.
-        //TODO: To do this, set jobseekerList =  import list of all seeker from somewhere.
-    }
-
     // Default constructor.
     public Search() {
         myParent = null;
@@ -58,101 +47,112 @@ public class Search
         seekerSkills.add("skill3");
 
         // Change search algorithm weightings here, if needed.
+        // TODO: Description analysis should be changed to keywords
         int titleWeight = 35;
         int descWeight = 20;
         int skillWeight = 20;
         int primaryCatWeight = 15;
         int secondaryCatWeight = 10;
 
-        //Let's make a few sample Jobs just for testing purposes
-        Job jobOne = new Job(1, "Software Developer", 1, "Monash University",
-                "Full-Time", true, "$100,000", new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), "Queensland", "4101",
-                new ArrayList<>(), //"Some description about being a software developer goes here, blah blah blah",
-                "Engineering - Software", "Another category", "9-5",
-                true, false);
-        jobList.add(jobOne);
-        //Job jobTwo = new Job();
-        //Job jobThree = new Job();
-
         // First let's apply filter data to filter out unmatching jobs
+        // TODO: Cut out and put into separate filterJobs method
+
         // For every job, check the filters and exclude that job if it
         // does not match the filters.
         for (Job tmp : jobList) {
+            // Setup a boolean to track if the job should be filtered out.
             boolean valid = true;
-            char[] salary = tmp.getSalary().toCharArray();
-            StringBuilder salBuilder = new StringBuilder();
-            for (char single : salary) {
-                if (Character.isDigit(single)) {
-                    // Character is a digit and is therefore ok to add to StringBuilder.
-                    salBuilder.append(single);
+
+            // As soon as the job is filtered out, we will end checking.
+            // If we reach the end of the check and the job is still valid,
+            // we can add it to the list of Jobs to be considered for Search results.
+            while (valid) {
+                // Retrieve the job Salary.
+                int salary = tmp.getSalary();
+
+                // Precheck: Job Type specification must be supplied for
+                // search to execute properly.
+                if (!fullTime && !partTime && !casual) {
+                    // Search has not specified any job type, search cannot be executed
+                    throw new Exception("You must specify a Job Type!");
                 }
-            }
 
-            String convertedSal = salBuilder.toString();
-            int newSal = Integer.parseInt(convertedSal);
+                // Filter 1. Job must be currently advertised.
+                if (!tmp.getJobStatus().equals("Advertised")) {
+                    valid = false;
+                }
 
-            // Job must be currently advertised (just in case we accidentally
-            // pulled some in that are not.)
-            if (!tmp.getAdvertised()) {
-                valid = false;
-            }
+                // Filter 2. Job must match Job Type search specification
+                switch (tmp.getJobType()) {
+                    case "Full-Time":
+                        if (!fullTime) {
+                            // Job does not match criteria
+                            valid = false;
+                        }
+                        break;
+                    case "Part-Time":
+                        if (!partTime) {
+                            // Job does not match criteria
+                            valid = false;
+                        }
+                        break;
+                    case "Casual":
+                        if (!casual) {
+                            // Job does not match criteria
+                            valid = false;
+                        }
+                        break;
+                    default:
+                        break;
+                }
 
-            // Job Type specification must be supplied
-            if (!fullTime && !partTime && !casual) {
-                // Search has not specified any job type, search cannot be executed
-                throw new Exception ("You must specify a Job Type!");
-            }
+                // 3. Job must match salary range
+                if (Float.compare(salary, salMin) >= 0 && Float.compare(salary, salMax) <= 0) {
+                    //Job is within salary range specified
+                } else {
+                    // Job is outside desired salary range
+                    valid = false;
+                }
 
-            // 1. Job must match Job Type search specification
-            switch (tmp.getJobType()) {
-                case "Full-Time":
-                    if (!fullTime) {
-                        // Job does not match criteria
-                        valid = false;
+                // 4. Job must include some part of location
+                // If the Job postcode or Job State name appears in the searched
+                // location text entry then I have considered this filter to be satisfied.
+
+                int thisJobPostCode = locationList.get(tmp.getLocationID()-1).getPostcode();
+                String thisJobState = locationList.get(tmp.getLocationID()-1).getState();
+                String thisJobCity = locationList.get(tmp.getLocationID()-1).get
+
+                // a. Has the user entered a postcode to be searched?
+                // Check the location entered and see if it contains
+                // a valid postcode.
+                char[] chars = location.toCharArray();
+                StringBuilder postCodeCheck = new StringBuilder();
+                for (char c : chars) {
+                    if (Character.isDigit(c)) {
+                        postCodeCheck.append(c);
                     }
-                    break;
-                case "Part-Time":
-                    if (!partTime) {
-                        // Job does not match criteria
-                        valid = false;
-                    }
-                    break;
-                case "Casual":
-                    if (!casual) {
-                        // Job does not match criteria
-                        valid = false;
-                    }
-                    break;
-                default:
-                    break;
-            }
+                }
+                int searchPostCode = Integer.parseInt(postCodeCheck.toString());
 
-            // 2. Job must match salary range
-            if (Float.compare(newSal, salMin) >=0  && Float.compare(newSal, salMax) <=0) {
-                //Job is within salary range specified
-            }
-            else {
-                // Job is outside desired salary range
-                valid = false;
-            }
 
-            // 3. Job must include some part of location
-            // If the Job postcode or Job State name appears in the searched
-            // location text entry then I have considered this filter to be satisfied.
-            if (location.contains(tmp.getPostCode()) ||
-                location.contains(tmp.getLocationState().toLowerCase())) {
-                // Match
-            }
-            else {
-                // No match
-                valid = false;
-            }
 
-            // Last step: If the Job has passed all the filter criteria, then
-            // add it to the list of search results.
-            if (valid) {
-                results.add(tmp);
+                tmp.getLocationID()
+
+
+                if (location.contains(tmp.getPostCode()) ||
+                        location.contains(tmp.getLocationState().toLowerCase())) {
+                    // Match
+                } else {
+                    // No match
+                    valid = false;
+                }
+
+
+                // Last step: If the Job has passed all the filter criteria, then
+                // add it to the list of search results.
+                if (valid) {
+                    results.add(tmp);
+                }
             }
         }
 

@@ -3,6 +3,7 @@ public class Location {
     private int locationID;
     private String state;
     private int postcode;
+    private String city;
 
    public Location()
    {
@@ -15,11 +16,12 @@ public class Location {
        this.state = state;
    }
 
-   public Location(int locationID, String state, int postcode)
+   public Location(int locationID, String state, int postcode, String city)
    {
        this.locationID = locationID;
        this.state = state;
        this.postcode = postcode;
+       this.city = city;
    }
 
     public int getLocationID() {
@@ -33,6 +35,7 @@ public class Location {
     public int getPostcode() {
         return postcode;
     }
+    public String getCity() {return city;}
 
     public void setLocationID(int locationID) {
         this.locationID = locationID;
@@ -45,4 +48,5 @@ public class Location {
     public void setPostcode(int postcode) {
         this.postcode = postcode;
     }
+    public void setCity(String city) {this.city = city;}
 }
