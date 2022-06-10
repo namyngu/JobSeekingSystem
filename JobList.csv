@@ -1,30 +1,30 @@
-jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescription,archived
-1,Software Developer,Walmart,2,FullTime,Advertised,50000,1,,FALSE
-2,Influencer,State Grid,2,FullTime,Advertised,50000,2,,FALSE
-3,Tester,Amazon,2,FullTime,Withdrawn,50000,2,,FALSE
-4,Main Test Analyst,Apple,3,FullTime,Withdrawn,50000,10,,FALSE
-5,Payroll Officer,CVS Group,3,PartTime,Draft,50000,5,,FALSE
-6,Communications Officer,McKesson,3,Casual,Draft,50000,6,,FALSE
-7,Plumber,BP,3,Casual,Advertised,20000,7,,FALSE
-8,Senior Test Analyst,Shell,3,Casual,Advertised,20000,8,,FALSE
-9,Graphic Designer,ICBC,4,PartTime,Withdrawn,20000,10,,FALSE
-10,Junior Business Analyst,Volkswagen,4,PartTime,Withdrawn,100000,22,,FALSE
-11,Lead Designer,UnitedHealth,4,PartTime,Draft,100000,15,,FALSE
-12,Accounts Payable Officer,Ping An Insurance,4,PartTime,Draft,100000,12,,FALSE
-13,Chief Operating Officer,Exor,4,Casual,Advertised,100000,13,,FALSE
-14,Transformation Lead,Allianz,5,Casual,Advertised,100000,14,,FALSE
-15,Customer Service Officer,Kroger,5,PartTime,Withdrawn,150000,15,,FALSE
-16,Videographer,Bank of China,5,Casual,Withdrawn,150000,16,,FALSE
-17,Radiologist,Foxconn,5,Casual,Draft,150000,17,,FALSE
-18,Store Owner,Samsung Electronics,6,Casual,Draft,150000,6,,FALSE
-19,Product Analyst,BP,6,Casual,Advertised,180000,7,,FALSE
-20,Team Leader,Shell,6,FullTime,Advertised,180000,20,,FALSE
-21,Electrician,Anthem,6,FullTime,Withdrawn,180000,15,,FALSE
-22,Painter,General Motors,7,FullTime,Withdrawn,180000,22,,FALSE
-23,Payroll Officer,Home Depot,7,FullTime,Draft,180000,23,,FALSE
-24,Graphic Designer,Kroger,7,Casual,Draft,75000,24,,FALSE
-25,Social Media Producer,Bank of China,7,PartTime,Advertised,75000,15,,FALSE
-26,Barista,Verizon,8,PartTime,Advertised,75000,26,,FALSE
-27,Web Developer,General Motors,8,PartTime,Withdrawn,75000,18,,FALSE
-28,Leader Designer,Anthem,8,Casual,Withdrawn,20000,28,,FALSE
-29,Plumber,BP,8,Casual,Draft,20000,29,,FALSE
+jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescription
+1,Software Developer,Walmart,2,FullTime,Advertised,50000,1,
+2,Influencer,State Grid,2,FullTime,Advertised,50000,2,
+3,Tester,Amazon,2,FullTime,Archived,50000,2,
+4,Main Test Analyst,Apple,3,FullTime,Withdrawn,50000,10,
+5,Payroll Officer,CVS Group,3,PartTime,Draft,50000,5,
+6,Communications Officer,McKesson,3,Casual,Archived,50000,6,
+7,Plumber,BP,3,Casual,Advertised,20000,7,
+8,Senior Test Analyst,Shell,3,Casual,Advertised,20000,8,
+9,Graphic Designer,ICBC,4,PartTime,Archived,20000,10,
+10,Junior Business Analyst,Volkswagen,4,PartTime,Withdrawn,100000,22,
+11,Lead Designer,UnitedHealth,4,PartTime,Draft,100000,15,
+12,Accounts Payable Officer,Ping An Insurance,4,PartTime,Archived,100000,12,
+13,Chief Operating Officer,Exor,4,Casual,Archived,100000,13,
+14,Transformation Lead,Allianz,5,Casual,Advertised,100000,14,
+15,Customer Service Officer,Kroger,5,PartTime,Withdrawn,150000,15,
+16,Videographer,Bank of China,5,Casual,Withdrawn,150000,16,
+17,Radiologist,Foxconn,5,Casual,Draft,150000,17,
+18,Store Owner,Samsung Electronics,6,Casual,Draft,150000,6,
+19,Product Analyst,BP,6,Casual,Advertised,180000,7,
+20,Team Leader,Shell,6,FullTime,Advertised,180000,20,
+21,Electrician,Anthem,6,FullTime,Withdrawn,180000,15,
+22,Painter,General Motors,7,FullTime,Withdrawn,180000,22,
+23,Payroll Officer,Home Depot,7,FullTime,Draft,180000,23,
+24,Graphic Designer,Kroger,7,Casual,Draft,75000,24,
+25,Social Media Producer,Bank of China,7,PartTime,Advertised,75000,15,
+26,Barista,Verizon,8,PartTime,Archived,75000,26,
+27,Web Developer,General Motors,8,PartTime,Withdrawn,75000,18,
+28,Leader Designer,Anthem,8,Casual,Withdrawn,20000,28,
+29,Plumber,BP,8,Casual,Archived,20000,29,
