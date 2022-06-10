@@ -1,8 +1,10 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class RecruiterHomeGUI {
     private RecruiterControl myParent;
@@ -38,7 +40,13 @@ public class RecruiterHomeGUI {
         window.setResizable(true);
         window.setVisible(true);
 
-
+        try {
+            populateSkills("JobSeekingSystem/Skills.csv");
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+            e.printStackTrace();
+        }
         //launch create job screen
 //        createJobButton.addActionListener(new ActionListener() {
 //            @Override
@@ -76,6 +84,18 @@ public class RecruiterHomeGUI {
 
     }
 
+    public void populateSkills(String fileName) throws IOException {
+        FileReader file = new FileReader(fileName);
+        Scanner scan = new Scanner(file);
+        ArrayList<String> returnModel = new ArrayList<>();
+
+        while (scan.hasNextLine()) {
+            String addString = scan.nextLine();
+            returnModel.add(addString);
+        }
+        allSkillList.setListData(returnModel.toArray());
+        file.close();
+    }
 
 }
 
