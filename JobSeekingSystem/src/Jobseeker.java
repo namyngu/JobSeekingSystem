@@ -41,4 +41,9 @@ public class Jobseeker extends User
         return skills;
     }
 
+    // Method to set list of Skills (needed at the moment for search testing)
+    public void setSkills(ArrayList<String> newSkills) {
+        skills = newSkills;
+    }
+
 }
