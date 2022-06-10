@@ -1,21 +1,42 @@
 public class Application extends Message
 {
-
+    private int applicationID;
     private String coverLetter;
-    private String skills;
-    private String jobID;
 
-    //default constructor
-    public Application(){
+    public Application()
+    {
 
     }
 
+    public Application(int applicationID, String coverLetter)
+    {
+        this.applicationID = applicationID;
+        this.coverLetter = coverLetter;
+    }
 
-//    public Application(int senderID, int recieverID, boolean hasRecieved, String coverLetter, String skills, String jobID)
-//    {
-//        super(senderID, recieverID, hasRecieved);
-//        this.coverLetter = coverLetter;
-//        this.skills = skills;
-//        this.jobID = jobID;
-//    }
+    public void display()
+    {
+        System.out.println("Application no: " + applicationID);
+        System.out.println("Message: " + coverLetter);
+    }
+//
+    public int getApplicationID()
+    {
+        return applicationID;
+    }
+
+    public String getCoverLetter()
+    {
+        return coverLetter;
+    }
+
+    public void setApplicationID(int applicationID)
+    {
+        this.applicationID = applicationID;
+    }
+
+    public void setCoverLetter(String coverLetter)
+    {
+        this.coverLetter = coverLetter;
+    }
 }

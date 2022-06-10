@@ -1,212 +1,82 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Job
 {
     private int jobID;
     private String jobTitle;
-    private int recruiterID;
     private String employer;
+    private int recruiterID;
     private String jobType;
-    private Boolean isAdvertised;
-    private String salary;
+    private String jobStatus;
+    private int salary;
+    private int locationID;
+    private String jobDescription;
     private ArrayList<String> skills;
     private ArrayList<Application> applications;
     private ArrayList<String> keywords;
-    private String locationState;
-    private String postCode;
-    private ArrayList<String> jobDescription;
-    private String jobCategoryPrimary;
-    private String jobCategorySecondary;
-    private String workingHours;
-    private boolean advertised;
-    private boolean archived;
 
 
-    public Job() {
-        jobID = 0;
+    public Job()
+    {
+        jobID = -1;
         jobTitle = "jobTitle";
-        recruiterID = 0;
         employer = "employer";
+        recruiterID = -1;
         jobType = "jobType";
-        isAdvertised = false;
-        salary = "$0 p/h";
+        jobStatus = "Draft";
+        salary = 0;
+        locationID = -1;
+        jobDescription = "jobDescription";
         skills = new ArrayList<>();
         applications = new ArrayList<>();
         keywords = new ArrayList<>();
-        locationState = "locationState";
-        postCode = "postCode";
-        jobDescription = new ArrayList<>();
-        jobCategoryPrimary = "jobCategoryPrimary";
-        jobCategorySecondary = "jobCategorySecondary";
-        workingHours = "workingHours";
-        advertised = false;
-        archived = false;
-
     }
-    public Job(int jobID, String jobTitle, int recruiterID, String employer, String jobType, Boolean isAdvertised, String salary, ArrayList<String> skills, ArrayList<Application> applications, ArrayList<String> keywords, String locationState, String postCode, ArrayList<String> jobDescription, String jobCategoryPrimary, String jobCategorySecondary, String workingHours, boolean advertised, boolean archived) {
+
+    public Job(int jobID, String jobTitle, String employer, int recruiterID, String jobType, String jobStatus, int salary, int locationID, String jobDescription) {
         this.jobID = jobID;
         this.jobTitle = jobTitle;
-        this.recruiterID = recruiterID;
         this.employer = employer;
+        this.recruiterID = recruiterID;
         this.jobType = jobType;
-        this.isAdvertised = isAdvertised;
+        this.jobStatus = jobStatus;
         this.salary = salary;
+        this.locationID = locationID;
+        this.jobDescription = jobDescription;
+        skills = new ArrayList<>();
+        applications = new ArrayList<>();
+        keywords = new ArrayList<>();
+    }
+
+    public Job(int jobID, String jobTitle, String employer, int recruiterID, String jobType, String jobStatus, int salary,
+               int locationID, String jobDescription, ArrayList<String> skills, ArrayList<Application> applications, ArrayList<String> keywords)
+    {
+        this.jobID = jobID;
+        this.jobTitle = jobTitle;
+        this.employer = employer;
+        this.recruiterID = recruiterID;
+        this.jobType = jobType;
+        this.jobStatus = jobStatus;
+        this.salary = salary;
+        this.locationID = locationID;
+        this.jobDescription = jobDescription;
         this.skills = skills;
         this.applications = applications;
         this.keywords = keywords;
-        this.locationState = locationState;
-        this.postCode = postCode;
-        this.jobDescription = jobDescription;
-        this.jobCategoryPrimary = jobCategoryPrimary;
-        this.jobCategorySecondary = jobCategorySecondary;
-        this.workingHours = workingHours;
-        this.advertised = advertised;
-        this.archived = archived;
     }
 
-    public int getJobID() {
-        return jobID;
+    public void appendApplication(Application application)
+    {
+        this.applications.add(application);
     }
 
-    public void setJobID(int jobID) {
-        this.jobID = jobID;
+    public void appendKeyword(String keyword)
+    {
+        this.keywords.add(keyword);
     }
 
-    public String getJobTitle() {
-        return jobTitle;
-    }
-
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
-
-    public int getRecruiterID() {
-        return recruiterID;
-    }
-
-    public void setRecruiterID(int recruiterID) {
-        this.recruiterID = recruiterID;
-    }
-
-    public String getEmployer() {
-        return employer;
-    }
-
-    public void setEmployer(String employer) {
-        this.employer = employer;
-    }
-
-    public String getJobType() {
-        return jobType;
-    }
-
-    public void setJobType(String jobType) {
-        this.jobType = jobType;
-    }
-
-    public Boolean getAdvertised() {
-        return isAdvertised;
-    }
-
-    public void setAdvertised(Boolean advertised) {
-        isAdvertised = advertised;
-    }
-
-    public String getSalary() {
-        return salary;
-    }
-
-    public void setSalary(String salary) {
-        this.salary = salary;
-    }
-
-    public ArrayList<String> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(ArrayList<String> skills) {
-        this.skills = skills;
-    }
-
-    public ArrayList<Application> getApplications() {
-        return applications;
-    }
-
-    public void setApplications(ArrayList<Application> applications) {
-        this.applications = applications;
-    }
-
-    public ArrayList<String> getKeywords() {
-        return keywords;
-    }
-
-    public void setKeywords(ArrayList<String> keywords) {
-        this.keywords = keywords;
-    }
-
-    public String getLocationState() {
-        return locationState;
-    }
-
-    public void setLocationState(String locationState) {
-        this.locationState = locationState;
-    }
-
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
-
-    public ArrayList<String> getJobDescription() {
-        return jobDescription;
-    }
-
-    public void setJobDescription(ArrayList<String> jobDescription) {
-        this.jobDescription = jobDescription;
-    }
-
-    public String getJobCategoryPrimary() {
-        return jobCategoryPrimary;
-    }
-
-    public void setJobCategoryPrimary(String jobCategoryPrimary) {
-        this.jobCategoryPrimary = jobCategoryPrimary;
-    }
-
-    public String getJobCategorySecondary() {
-        return jobCategorySecondary;
-    }
-
-    public void setJobCategorySecondary(String jobCategorySecondary) {
-        this.jobCategorySecondary = jobCategorySecondary;
-    }
-
-    public String getWorkingHours() {
-        return workingHours;
-    }
-
-    public void setWorkingHours(String workingHours) {
-        this.workingHours = workingHours;
-    }
-
-    public boolean isAdvertised() {
-        return advertised;
-    }
-
-    public void setAdvertised(boolean advertised) {
-        this.advertised = advertised;
-    }
-
-    public boolean isArchived() {
-        return archived;
-    }
-
-    public void setArchived(boolean archived) {
-        this.archived = archived;
+    public void appendSkill(String skill)
+    {
+        this.skills.add(skill);
     }
 
     @Override
@@ -214,22 +84,109 @@ public class Job
         return "Job{" +
                 "jobID=" + jobID +
                 ", jobTitle='" + jobTitle + '\'' +
-                ", recruiterID=" + recruiterID +
                 ", employer='" + employer + '\'' +
+                ", recruiterID=" + recruiterID +
                 ", jobType='" + jobType + '\'' +
-                ", isAdvertised=" + isAdvertised +
+                ", jobStatus='" + jobStatus + '\'' +
                 ", salary=" + salary +
+                ", locationID=" + locationID +
+                ", jobDescription='" + jobDescription + '\'' +
                 ", skills=" + skills +
                 ", applications=" + applications +
                 ", keywords=" + keywords +
-                ", locationState='" + locationState + '\'' +
-                ", postCode='" + postCode + '\'' +
-                ", jobDescription='" + jobDescription + '\'' +
-                ", jobCategoryPrimary='" + jobCategoryPrimary + '\'' +
-                ", jobCategorySecondary='" + jobCategorySecondary + '\'' +
-                ", workingHours='" + workingHours + '\'' +
-                ", advertised=" + advertised +
-                ", archived=" + archived +
                 '}';
+    }
+
+    //getters and setters
+    public int getJobID() {
+        return jobID;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public String getEmployer() {
+        return employer;
+    }
+
+    public int getRecruiterID() {
+        return recruiterID;
+    }
+
+    public String getJobType() {
+        return jobType;
+    }
+
+    public String getJobStatus() {
+        return jobStatus;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public int getLocationID() {
+        return locationID;
+    }
+
+    public String getJobDescription() {
+        return jobDescription;
+    }
+
+    public ArrayList<String> getSkills() {
+        return skills;
+    }
+
+    public ArrayList<Application> getApplications() {
+        return applications;
+    }
+
+    public ArrayList<String> getKeywords() {
+        return keywords;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public void setEmployer(String employer) {
+        this.employer = employer;
+    }
+
+    public void setRecruiterID(int recruiterID) {
+        this.recruiterID = recruiterID;
+    }
+
+    public void setJobType(String jobType) {
+        this.jobType = jobType;
+    }
+
+    public void setJobStatus(String jobStatus) {
+        this.jobStatus = jobStatus;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public void setLocationID(int locationID) {
+        this.locationID = locationID;
+    }
+
+    public void setJobDescription(String jobDescription) {
+        this.jobDescription = jobDescription;
+    }
+
+    public void setSkills(ArrayList<String> skills) {
+        this.skills = skills;
+    }
+
+    public void setApplications(ArrayList<Application> applications) {
+        this.applications = applications;
+    }
+
+    public void setKeywords(ArrayList<String> keywords) {
+        this.keywords = keywords;
     }
 }
