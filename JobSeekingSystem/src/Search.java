@@ -4,6 +4,7 @@ import java.util.TreeMap;
 public class Search
 {
     private ArrayList<Job> jobList;
+    private ArrayList<Jobseeker> jobseekerList;
     private int matchScore;
     private JobseekerControl myParent;
 
@@ -13,20 +14,27 @@ public class Search
      */
 
     //Method for retrieving a list of all active jobs
-    public void getJobList() {
+    public void setJobList() {
         //TODO: Populate jobList with a list of all active (advertised) jobs in the system.
         //TODO: To do this, set jobList = import list of all Jobs from somewhere.
+    }
+
+    public void setJobseekerList() {
+        //TODO: Populate jobseekerList with a list of all active Job Seekers in the system.
+        //TODO: To do this, set jobseekerList =  import list of all seeker from somewhere.
     }
 
     // Default constructor.
     public Search() {
         jobList = new ArrayList<>();
+        jobseekerList = new ArrayList<>();
     }
 
     // Non-default constructor.
     public Search(JobseekerControl parent) {
         myParent = parent;
         jobList = new ArrayList<>();
+        jobseekerList = new ArrayList<>();
     }
 
     // Method 1. Search for a list of matching jobs
@@ -270,9 +278,31 @@ public class Search
     }
 
     // Method 2. Search for a list of matching JobSeekers
-    public ArrayList<Jobseeker> seekerSearch(String location, ArrayList<String> requiredSkills) {
-        //TODO
+    public ArrayList<Jobseeker> seekerSearch(String location, ArrayList<String> requiredSkills) throws Exception {
         ArrayList<Jobseeker> results = new ArrayList<Jobseeker>();
+        //TODO: Get an ArrayList of all jobSeekers from somewhere. Mocked in for now.
+        jobseekerList = new ArrayList<Jobseeker>();
+        jobseekerList.add(new Jobseeker(1,"Tom","Barker","tBarker","password",true));
+        jobseekerList.add(new Jobseeker(2,"Jakeob","Clarke-Kennedy","jClarke","mypass22",true));
+        jobseekerList.add(new Jobseeker(3,"Sam","Smith","ss123","secureStrong",false));
+
+        ArrayList<String> skills = new ArrayList<String>();
+        skills.add("Incident Command");
+        skills.add("Incineration");
+        skills.add("Project Control");
+        jobseekerList.get(0).setSkills(skills);
+        skills.clear();
+        skills.add("Incident Command");
+        skills.add("Project Direction");
+        skills.add("Project Engineering");
+        jobseekerList.get(1).setSkills(skills);
+
+        // Quick debug:
+        for (Jobseeker seeker : jobseekerList) {
+            System.out.println(seeker);
+            System.out.println(seeker.getSkills());
+        }
+
         return results;
     }
 
