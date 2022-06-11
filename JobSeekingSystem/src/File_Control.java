@@ -58,6 +58,7 @@ public class File_Control {
                         String jobStatus, int salary, int locationID, String jobDescription, ArrayList<String> skills, JobCategory category)
     {
         String data = jobID + "," + jobTitle + "," + employer + "," + recruiterID + "," + jobType + "," + jobStatus + "," + salary + "," + locationID + "," + "\"" + jobDescription + "\"";
+        System.out.println("data is: " + data);
         String data2 = "";
 
         for (String tmpSkill : skills)

@@ -342,7 +342,10 @@
         <children>
           <component id="ed01b" class="javax.swing.JTextArea" binding="descriptionText">
             <constraints/>
-            <properties/>
+            <properties>
+              <lineWrap value="true"/>
+              <wrapStyleWord value="true"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
