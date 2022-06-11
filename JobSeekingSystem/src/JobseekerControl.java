@@ -8,26 +8,21 @@ public class JobseekerControl
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
 
+    private Jobseeker jobseeker;
     public JobseekerControl() {
     }
-    public JobseekerControl(User jobseeker, ArrayList<Job> jobs, ArrayList<Location> locations,
+    public JobseekerControl(User user, ArrayList<Job> jobs, ArrayList<Location> locations,
                             ArrayList<JobCategory> categories) {
-        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(jobseeker, this);
+
+        jobseeker = new Jobseeker(user.getUserID(), user.getFirstName(), user.getLastName(), user.getUserName(), user.getPassword(),user.isActive());
+        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(this);
+
         jobList = jobs;
         locationList = locations;
         jobCategoryList = categories;
         mainSearch = new Search(this, jobList, locationList, jobCategoryList);
     }
 
-    public void apply()
-    {
-
-    }
-
-    public void createSkill()
-    {
-
-    }
 
     public void jobSearch(String jobDesc, String categoryPrimary,
                           String categorySecondary, String location, boolean fullTime, boolean partTime,
@@ -80,6 +75,19 @@ public class JobseekerControl
     {
 
     }
+
+    public String getFullName()
+    {
+        return jobseeker.getFullName();
+    }
+
+    public ArrayList getSkills()
+    {
+        ArrayList<String> skills = jobseeker.getSkills();
+        System.out.println("in controller");
+        return skills;
+    }
+
 
 
 

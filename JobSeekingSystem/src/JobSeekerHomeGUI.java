@@ -2,7 +2,11 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class JobSeekerHomeGUI {
 
@@ -30,7 +34,7 @@ public class JobSeekerHomeGUI {
     private JPanel applicationsPanel;
     private JPanel profile;
     private JLabel phoneText;
-    private JList jobSeekerSkillsTable;
+
     private JPanel inboxPanel;
     private JPanel profilePanel;
     private JCheckBox partTimeCheckBox;
@@ -38,10 +42,12 @@ public class JobSeekerHomeGUI {
     private JScrollPane jobseekerApplicationsTable;
     private JScrollPane recommendedJobsTable;
     private JScrollPane jobSeekerInboxTable;
+    private JLabel jobSeekerFullname;
 
     private Jobseeker jobseeker;
 
-
+    private JList jsSkillsTable;
+    private DefaultListModel jsSkillsModel;
 
     public JobSeekerHomeGUI() {
 
@@ -79,7 +85,7 @@ public class JobSeekerHomeGUI {
         });
     }
 
-    public JobSeekerHomeGUI(User jobSeeker, JobseekerControl parent) {
+    public JobSeekerHomeGUI(JobseekerControl parent) {
 
         myParent = parent;
         JFrame window = new JFrame("JSS: Job Seeker Home");
@@ -90,6 +96,38 @@ public class JobSeekerHomeGUI {
         window.pack();
         window.setResizable(true);
         window.setVisible(true);
+
+
+        //display name in profile
+        jobSeekerFullname.setText(parent.getFullName());
+
+        //display skills in profile
+        buildSkillList();
+//        ArrayList skills = jobSeeker.getSkills();
+
+        //test build table will condense into reusable method
+        String[] jobListColumns = {"JobID", "Title", "Employer", "Location", "Salary", "Type"};
+        String[][] jobListRows = {
+                {"001", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
+                {"002", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
+                {"003", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
+                {"004", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
+                {"005", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"}
+        };
+
+        String[][] newJobs= {
+                {"test", "test", "Google", "San Francisco","$300,000", "Full Time"},
+        };
+
+        ArrayList<String> test = new ArrayList();
+        test.add("001,Software Developer,Google,San Francisco,$300,000,Full Time");
+        test.add("001,Software Developer,Google,San Francisco,$300,000,Full Time");
+
+
+        DefaultTableModel jobModel = new DefaultTableModel(jobListRows, jobListColumns);
+
+
+        jobTable.setModel(jobModel);
 
 
 
@@ -119,8 +157,17 @@ public class JobSeekerHomeGUI {
                 // TODO: them somehow
                 myParent.jobSearch(searchDesc, catPrimary, catSecondary, location, fullTime,
                         partTime, casual, salMin, salMax, skills);
+
+
+            jobModel.setNumRows(1);
+            DefaultTableModel freshmodel = new DefaultTableModel(newJobs, jobListColumns);
+            jobTable.setModel(freshmodel);
             }
+
+
         });
+
+
 
         /*Add these methods back in once the actual components exist on the GUI
 
@@ -151,6 +198,23 @@ public class JobSeekerHomeGUI {
             });
 
         */
+    }
+
+
+    private void buildSkillList(){
+        jsSkillsModel = new DefaultListModel<>();
+        ArrayList<String> skills = myParent.getSkills();
+        System.out.println("In JS Home GUI");
+        System.out.println(skills);
+
+        for (int i = 0; i < skills.size(); i++)
+        {
+            jsSkillsModel.addElement(skills.get(i));
+        }
+
+        System.out.println();
+
+        jsSkillsTable.setModel(jsSkillsModel);
     }
 
 

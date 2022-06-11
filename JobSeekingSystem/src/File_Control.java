@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.File;
 
 public class File_Control {
     public File_Control()
@@ -92,6 +93,34 @@ public class File_Control {
         {
             System.out.println("Error failed to save category.");
         }
+    }
+
+    public ArrayList<String> fileSearchId(int id, String filename)
+    {
+        String searchId = Integer.toString(id);
+        ArrayList list = new ArrayList();
+
+        try {
+            Scanner scanner = new Scanner(new File(filename));
+            scanner.useDelimiter("[,\n]");
+            String fileId = "";
+
+            while(scanner.hasNext())
+            {
+                fileId = scanner.next();
+
+                if(searchId.equals(fileId))
+                {
+                    list.add(scanner.next());
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Something went wrong");
+        }
+
+        return list;
     }
 
 }

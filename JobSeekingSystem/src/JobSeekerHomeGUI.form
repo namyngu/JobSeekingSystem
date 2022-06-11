@@ -526,13 +526,13 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="40558" class="javax.swing.JLabel">
+              <component id="40558" class="javax.swing.JLabel" binding="jobSeekerFullname">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font size="20"/>
-                  <text value="Brad Meyn"/>
+                  <text value="User Name"/>
                 </properties>
               </component>
               <component id="f6a34" class="javax.swing.JLabel">
@@ -677,13 +677,15 @@
                   </grid>
                 </constraints>
               </hspacer>
-              <component id="2ee16" class="javax.swing.JList" binding="jobSeekerSkillsTable">
+              <component id="2ee16" class="javax.swing.JList" binding="jsSkillsTable">
                 <constraints>
                   <grid row="11" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="-1" height="50"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <model/>
+                </properties>
               </component>
             </children>
           </grid>
