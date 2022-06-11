@@ -120,7 +120,7 @@ public class Search
 
                 int thisJobPostCode = locationList.get(tmp.getLocationID()-1).getPostcode();
                 String thisJobState = locationList.get(tmp.getLocationID()-1).getState();
-                String thisJobCity = locationList.get(tmp.getLocationID()-1).get
+                String thisJobCity = locationList.get(tmp.getLocationID()-1).getCity();
 
                 // a. Has the user entered a postcode to be searched?
                 // Check the location entered and see if it contains
