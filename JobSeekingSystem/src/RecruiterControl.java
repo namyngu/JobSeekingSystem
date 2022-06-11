@@ -1,18 +1,26 @@
 import java.util.ArrayList;
 
-public class RecruiterControl
-{
+public class RecruiterControl {
     private Search mainSearch;
+    private ArrayList<Job> jobList;
+    private ArrayList<Location> locationList;
+    private ArrayList<JobCategory> jobCategoryList;
 
-    public RecruiterControl()
-    {
+    public RecruiterControl() {
         mainSearch = new Search();
     }
 
-    public RecruiterControl(User recruiter)
-    {
+    public RecruiterControl(User recruiter) {
         RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(this);
         mainSearch = new Search();
+    }
+
+    public RecruiterControl(User recruiter, ArrayList<Job> jobs, ArrayList<Location> locations,
+                            ArrayList<JobCategory> categories) {
+        jobList = jobs;
+        locationList = locations;
+        jobCategoryList = categories;
+        mainSearch = new Search(this, jobList, locationList, jobCategoryList);
     }
 
     public void homePage()

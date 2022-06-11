@@ -8,18 +8,7 @@ public class Search
     private ArrayList<JobCategory> jobCategoryList;
     private ArrayList<Jobseeker> jobseekerList;
     private int matchScore;
-    private JobseekerControl myParent;
-
-    //Method for retrieving a list of all active jobs
-    public void setJobList() {
-        //TODO: Populate jobList with a list of all active (advertised) jobs in the system.
-        //TODO: To do this, set jobList = import list of all Jobs from somewhere.
-    }
-
-    public void setJobseekerList() {
-        //TODO: Populate jobseekerList with a list of all active Job Seekers in the system.
-        //TODO: To do this, set jobseekerList =  import list of all seeker from somewhere.
-    }
+    private Object myParent;
 
     // Default constructor.
     public Search() {
@@ -32,6 +21,15 @@ public class Search
 
     // Non-default constructor.
     public Search(JobseekerControl parent, ArrayList<Job> jobs,
+                  ArrayList<Location> locations, ArrayList<JobCategory> categories) {
+        myParent = parent;
+        jobList = jobs;
+        locationList = locations;
+        jobCategoryList = categories;
+        jobseekerList = new ArrayList<>();
+    }
+
+    public Search(RecruiterControl parent, ArrayList<Job> jobs,
                   ArrayList<Location> locations, ArrayList<JobCategory> categories) {
         myParent = parent;
         jobList = jobs;
@@ -58,111 +56,135 @@ public class Search
         seekerSkills.add("skill3");
 
         // Change search algorithm weightings here, if needed.
+        // TODO: Description analysis should be changed to keywords
         int titleWeight = 35;
-        int descWeight = 20;
+        int keywordWeight = 20;
         int skillWeight = 20;
         int primaryCatWeight = 15;
         int secondaryCatWeight = 10;
 
-        //Let's make a few sample Jobs just for testing purposes
-        Job jobOne = new Job(1, "Software Developer", 1, "Monash University",
-                "Full-Time", true, "$100,000", new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), "Queensland", "4101",
-                new ArrayList<>(), //"Some description about being a software developer goes here, blah blah blah",
-                "Engineering - Software", "Another category", "9-5",
-                true, false);
-        jobList.add(jobOne);
-        //Job jobTwo = new Job();
-        //Job jobThree = new Job();
-
         // First let's apply filter data to filter out unmatching jobs
+        // TODO: Cut out and put into separate filterJobs method
+
         // For every job, check the filters and exclude that job if it
         // does not match the filters.
         for (Job tmp : jobList) {
+            // Setup a boolean to track if the job should be filtered out.
             boolean valid = true;
-            char[] salary = tmp.getSalary().toCharArray();
-            StringBuilder salBuilder = new StringBuilder();
-            for (char single : salary) {
-                if (Character.isDigit(single)) {
-                    // Character is a digit and is therefore ok to add to StringBuilder.
-                    salBuilder.append(single);
+
+            // As soon as the job is filtered out, we will end checking.
+            // If we reach the end of the check and the job is still valid,
+            // we can add it to the list of Jobs to be considered for Search results.
+            while (valid) {
+                // Retrieve the job Salary.
+                int salary = tmp.getSalary();
+
+                // Precheck: Job Type specification must be supplied for
+                // search to execute properly.
+                if (!fullTime && !partTime && !casual) {
+                    // Search has not specified any job type, search cannot be executed
+                    throw new Exception("You must specify a Job Type!");
                 }
-            }
 
-            String convertedSal = salBuilder.toString();
-            int newSal = Integer.parseInt(convertedSal);
+                // Filter 1. Job must be currently advertised.
+                if (!tmp.getJobStatus().equals("Advertised")) {
+                    valid = false;
+                }
 
-            // Job must be currently advertised (just in case we accidentally
-            // pulled some in that are not.)
-            if (!tmp.getAdvertised()) {
-                valid = false;
-            }
+                // Filter 2. Job must match Job Type search specification
+                switch (tmp.getJobType()) {
+                    case "Full-Time":
+                        if (!fullTime) {
+                            // Job does not match criteria
+                            valid = false;
+                        }
+                        break;
+                    case "Part-Time":
+                        if (!partTime) {
+                            // Job does not match criteria
+                            valid = false;
+                        }
+                        break;
+                    case "Casual":
+                        if (!casual) {
+                            // Job does not match criteria
+                            valid = false;
+                        }
+                        break;
+                    default:
+                        break;
+                }
 
-            // Job Type specification must be supplied
-            if (!fullTime && !partTime && !casual) {
-                // Search has not specified any job type, search cannot be executed
-                throw new Exception ("You must specify a Job Type!");
-            }
+                // 3. Job must match salary range
+                if (Float.compare(salary, salMin) >= 0 && Float.compare(salary, salMax) <= 0) {
+                    //Job is within salary range specified
+                } else {
+                    // Job is outside desired salary range
+                    valid = false;
+                }
 
-            // 1. Job must match Job Type search specification
-            switch (tmp.getJobType()) {
-                case "Full-Time":
-                    if (!fullTime) {
-                        // Job does not match criteria
-                        valid = false;
+                // 4. Job must include some part of location
+                // If the Job postcode or Job State name appears in the searched
+                // location text entry then I have considered this filter to be satisfied.
+
+                int thisJobPostCode = locationList.get(tmp.getLocationID()-1).getPostcode();
+                String thisJobState = locationList.get(tmp.getLocationID()-1).getState().toLowerCase();
+                String thisJobCity = locationList.get(tmp.getLocationID()-1).getCity().toLowerCase();
+
+                // a. Has the user entered a postcode to be searched?
+                // Check the location entered and see if it contains
+                // a valid postcode.
+                char[] chars = location.toCharArray();
+                StringBuilder postCodeCheck = new StringBuilder();
+                for (char c : chars) {
+                    if (Character.isDigit(c)) {
+                        postCodeCheck.append(c);
                     }
-                    break;
-                case "Part-Time":
-                    if (!partTime) {
-                        // Job does not match criteria
-                        valid = false;
+                }
+
+                int searchPostCode = 0;
+
+                try {
+                    searchPostCode = Integer.parseInt(postCodeCheck.toString());
+                }
+                catch (Exception e) {
+                    // Don't assign any value to searchPostCode
+                }
+
+                // b. Has the user entered a State or City to be searched?
+                // Check the location entered and see if it contains any
+                // relevant data.
+                int locationMatch = 0;
+                String[] locationsSearched = location.split("\\W+");
+                for (String searchString : locationsSearched) {
+                    String lSearchString = searchString.toLowerCase();
+                    if (lSearchString.equals(thisJobState) || lSearchString.equals(thisJobCity)) {
+                        // This location search term matches this Job's location
+                        // and this Job is therefore relevant.
+                        locationMatch++;
                     }
-                    break;
-                case "Casual":
-                    if (!casual) {
-                        // Job does not match criteria
-                        valid = false;
-                    }
-                    break;
-                default:
-                    break;
-            }
+                }
 
-            // 2. Job must match salary range
-            if (Float.compare(newSal, salMin) >=0  && Float.compare(newSal, salMax) <=0) {
-                //Job is within salary range specified
-            }
-            else {
-                // Job is outside desired salary range
-                valid = false;
-            }
+                // c. Pull all the locations check parameters together
+                if (locationMatch == 0 || searchPostCode == 0 || searchPostCode != thisJobPostCode) {
+                    // This job's location does not match any of the location search data
+                    valid = false;
+                }
 
-            // 3. Job must include some part of location
-            // If the Job postcode or Job State name appears in the searched
-            // location text entry then I have considered this filter to be satisfied.
-            if (location.contains(tmp.getPostCode()) ||
-                location.contains(tmp.getLocationState().toLowerCase())) {
-                // Match
-            }
-            else {
-                // No match
-                valid = false;
-            }
-
-            // Last step: If the Job has passed all the filter criteria, then
-            // add it to the list of search results.
-            if (valid) {
-                results.add(tmp);
+                // Last step: If the Job has passed all the filter criteria, then
+                // add it to the list of search results.
+                if (valid) {
+                    results.add(tmp);
+                }
             }
         }
 
-        // Now the result list has been populated with Jobs which have passed
-        // the search filters. Now to do some matching and scoring on search
-        // criteria. TODO: score remaining jobs in jobList for relevancy,
-        // TODO: and add them to the results list in order.
-        // Remaining search criteria: Title, Description, Skills, Category1 and Category2.
-        // Jobs outside the category will still return in results, but at lower relevancy
-        // Jobs not exactly matching skill specification will still return, but at lower relevancy
+        /* Now the result list has been populated with Jobs which have passed
+         * the search filters. Now to do some matching and scoring on search
+         * criteria.
+         * Remaining search criteria: Title, Keywords, Skills, Category1 and Category2.
+         * Jobs outside the category will still return in results, but at lower relevancy
+         * Jobs not exactly matching skill specification will still return, but at lower relevancy*/
 
         for (Job tmp : results) {
 
@@ -189,42 +211,23 @@ public class Search
             // Weight the title match parameter.
             int titleResult = (titleMatch / jobTitle.length) * titleWeight;
 
-            // 2. Description
-            // Break the descriptions into arrays of Strings to work with.
-            int descMatch = 0;
-            int descResult = 0;
-            ArrayList<String> jobDescAL = tmp.getJobDescription();
-            for (int i = 0; i < jobDescAL.size(); i++) {
-                String[] jobDescArray = jobDescAL.get(i).split("\\W+");
-                for (String word : searchDescArray) {
-                    String lWord = word.toLowerCase();
-                    for (String check : jobDescArray) {
-                        String lCheck = check.toLowerCase();
-                        if (lWord.equals(lCheck)) {
-                            descMatch++;
-                        }
-                    }
-                }
-                descResult += (descMatch / jobDescArray.length) * descWeight;
-            }
-            /*
-            String[] jobDescArray = tmp.getJobDescription().split("\\W+");
-            // For each word in the searched Job Description, check if it matches a word
-            // in the job Description. If yes, increment the number of matches.
-            for (String word : searchDescArray) {
-                String lWord = word.toLowerCase();
-                for (String check : jobDescArray) {
-                    String lCheck = check.toLowerCase();
-                    if (lWord.equals(lCheck)) {
-                        // Direct match on the word
-                        descMatch++;
-                    }
-                }
-            }
-            */
+            // 2. Keywords
+            // Check each search term to see if it matches a keyword.
+            int keywordMatch = 0;
 
-            // Weight the description match.
-            //int descResult = (descMatch / jobDescArray.length) * descWeight;
+            for (String keyword : tmp.getKeywords()) {
+                String lKeyword = keyword.toLowerCase();
+                for (String check : searchDescArray) {
+                    String lCheck = check.toLowerCase();
+                    if (lKeyword.equals(lCheck)) {
+                        // Direct match on this word.
+                        keywordMatch++;
+                    }
+                }
+            }
+
+            // Weight the keyword match parameter.
+            int keywordResult = (keywordMatch / tmp.getKeywords().size()) * keywordWeight;
 
             // 3. Skills
             // For each of the skills listed against the Job, check to see if they
@@ -265,7 +268,7 @@ public class Search
             int secondaryCatResult = secondaryCatMatch * secondaryCatWeight;
 
             // 4. Score this Job for the search
-            int totalResult = titleResult + descResult + skillResult + primaryCatResult + secondaryCatResult;
+            int totalResult = titleResult + keywordResult + skillResult + primaryCatResult + secondaryCatResult;
 
             // 5. Add this job and its score into a TreeMap for sorting
             scoredResults.put(totalResult,tmp);
@@ -283,28 +286,9 @@ public class Search
     // Method 2. Search for a list of matching JobSeekers
     public ArrayList<Jobseeker> seekerSearch(String location, ArrayList<String> requiredSkills) throws Exception {
         ArrayList<Jobseeker> results = new ArrayList<Jobseeker>();
-        //TODO: Get an ArrayList of all jobSeekers from somewhere. Mocked in for now.
-        jobseekerList = new ArrayList<Jobseeker>();
-        jobseekerList.add(new Jobseeker(1,"Tom","Barker","tBarker","password",true));
-        jobseekerList.add(new Jobseeker(2,"Jakeob","Clarke-Kennedy","jClarke","mypass22",true));
-        jobseekerList.add(new Jobseeker(3,"Sam","Smith","ss123","secureStrong",false));
 
-        ArrayList<String> skills = new ArrayList<String>();
-        ArrayList<String> skills2 = new ArrayList<String>();
-        skills.add("Incident Command");
-        skills.add("Incineration");
-        skills.add("Project Control");
-        jobseekerList.get(0).setSkills(skills);
-        skills2.add("Incident Command");
-        skills2.add("Project Direction");
-        skills2.add("Project Engineering");
-        jobseekerList.get(1).setSkills(skills2);
 
-        // Quick debug:
-        for (Jobseeker seeker : jobseekerList) {
-            System.out.println(seeker);
-            System.out.println(seeker.getSkills());
-        }
+
 
         return results;
     }

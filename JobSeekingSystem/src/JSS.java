@@ -273,7 +273,7 @@ public class JSS
             //split each location into locationDetails
             //locationID, locationState, PostCode
             String[] locationDetails = location[i].split(",");
-            importLocation(Integer.parseInt(locationDetails[0]), locationDetails[1], Integer.parseInt(locationDetails[2]));
+            importLocation(Integer.parseInt(locationDetails[0]), locationDetails[1], Integer.parseInt(locationDetails[2]), locationDetails[3]);
         }
     }
 
@@ -375,11 +375,11 @@ public class JSS
     }
 
     //Method to import location from csv file
-    public void importLocation(int locationID, String locationState, int postCode)
+    public void importLocation(int locationID, String locationState, int postCode, String city)
     {
         try
         {
-            Location location = new Location(locationID, locationState, postCode);
+            Location location = new Location(locationID, locationState, postCode, city);
             locationList.add(location);
         } catch (Exception e)
         {
