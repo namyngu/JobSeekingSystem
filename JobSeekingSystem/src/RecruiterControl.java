@@ -29,11 +29,6 @@ public class RecruiterControl {
         RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(this);
     }
 
-    public void homePage()
-    {
-
-    }
-
     public void seekerSearch(String location, ArrayList<String> requiredSkills)
     {
         System.out.println("Searching...");

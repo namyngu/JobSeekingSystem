@@ -152,16 +152,9 @@ public class JSS
             //split each job into jobDetails
             //jobID, jobTitle, employer, recruiterID, jobType, jobStatus, salary, locationID, jobDescription
             String[] jobDetails = job[i].split(",");
-            if (jobDetails[8].isEmpty())
-            {
-                importJob(Integer.parseInt(jobDetails[0]), jobDetails[1], jobDetails[2], Integer.parseInt(jobDetails[3]), jobDetails[4],
-                        jobDetails[5], Integer.parseInt(jobDetails[6]), Integer.parseInt(jobDetails[7]), "");
-            }
-            else
-            {
-                importJob(Integer.parseInt(jobDetails[0]), jobDetails[1], jobDetails[2], Integer.parseInt(jobDetails[3]), jobDetails[4],
+            importJob(Integer.parseInt(jobDetails[0]), jobDetails[1], jobDetails[2], Integer.parseInt(jobDetails[3]), jobDetails[4],
                         jobDetails[5], Integer.parseInt(jobDetails[6]), Integer.parseInt(jobDetails[7]), jobDetails[8]);
-            }
+
         }
     }
 
