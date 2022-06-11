@@ -45,7 +45,7 @@ public class RecruiterHomeGUI {
         DefaultListModel skillsListGUI = new DefaultListModel();
 
         try {
-            populateSkills("JobSeekingSystem/Skills.csv");
+            populateSkills("SkillList.csv");
         }
         catch (Exception e) {
             System.out.println(e.toString());
