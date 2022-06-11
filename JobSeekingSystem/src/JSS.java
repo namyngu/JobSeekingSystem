@@ -540,10 +540,6 @@ public class JSS
 
                     jobList.get(index).appendKeyword(jobKeywordDetails[1]);
                 }
-                else
-                {
-                    System.out.println("Error: cannot find job title for that keyword. Skipping...");
-                }
                 index++;
             }
         }
@@ -573,10 +569,6 @@ public class JSS
                 {
 
                     jobList.get(index).appendSkill(jobSkillDetails[1]);
-                }
-                else
-                {
-                    System.out.println("Error: cannot find job title for that skill. Skipping...");
                 }
                 index++;
             }
