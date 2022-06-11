@@ -13,10 +13,10 @@ public class JobseekerControl
     public JobseekerControl(User jobseeker, ArrayList<Job> jobs, ArrayList<Location> locations,
                             ArrayList<JobCategory> categories) {
         JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(jobseeker, this);
-        mainSearch = new Search(this, jobList, locationList, jobCategoryList);
         jobList = jobs;
         locationList = locations;
         jobCategoryList = categories;
+        mainSearch = new Search(this, jobList, locationList, jobCategoryList);
     }
 
     public void apply()

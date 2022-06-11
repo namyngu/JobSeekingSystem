@@ -8,7 +8,7 @@ public class Search
     private ArrayList<JobCategory> jobCategoryList;
     private ArrayList<Jobseeker> jobseekerList;
     private int matchScore;
-    private JobseekerControl myParent;
+    private Object myParent;
 
     // Default constructor.
     public Search() {
@@ -21,6 +21,15 @@ public class Search
 
     // Non-default constructor.
     public Search(JobseekerControl parent, ArrayList<Job> jobs,
+                  ArrayList<Location> locations, ArrayList<JobCategory> categories) {
+        myParent = parent;
+        jobList = jobs;
+        locationList = locations;
+        jobCategoryList = categories;
+        jobseekerList = new ArrayList<>();
+    }
+
+    public Search(RecruiterControl parent, ArrayList<Job> jobs,
                   ArrayList<Location> locations, ArrayList<JobCategory> categories) {
         myParent = parent;
         jobList = jobs;
@@ -49,7 +58,7 @@ public class Search
         // Change search algorithm weightings here, if needed.
         // TODO: Description analysis should be changed to keywords
         int titleWeight = 35;
-        int descWeight = 20;
+        int keywordWeight = 20;
         int skillWeight = 20;
         int primaryCatWeight = 15;
         int secondaryCatWeight = 10;
@@ -119,8 +128,8 @@ public class Search
                 // location text entry then I have considered this filter to be satisfied.
 
                 int thisJobPostCode = locationList.get(tmp.getLocationID()-1).getPostcode();
-                String thisJobState = locationList.get(tmp.getLocationID()-1).getState();
-                String thisJobCity = locationList.get(tmp.getLocationID()-1).getCity();
+                String thisJobState = locationList.get(tmp.getLocationID()-1).getState().toLowerCase();
+                String thisJobCity = locationList.get(tmp.getLocationID()-1).getCity().toLowerCase();
 
                 // a. Has the user entered a postcode to be searched?
                 // Check the location entered and see if it contains
@@ -132,21 +141,35 @@ public class Search
                         postCodeCheck.append(c);
                     }
                 }
-                int searchPostCode = Integer.parseInt(postCodeCheck.toString());
 
+                int searchPostCode = 0;
 
-
-                tmp.getLocationID()
-
-
-                if (location.contains(tmp.getPostCode()) ||
-                        location.contains(tmp.getLocationState().toLowerCase())) {
-                    // Match
-                } else {
-                    // No match
-                    valid = false;
+                try {
+                    searchPostCode = Integer.parseInt(postCodeCheck.toString());
+                }
+                catch (Exception e) {
+                    // Don't assign any value to searchPostCode
                 }
 
+                // b. Has the user entered a State or City to be searched?
+                // Check the location entered and see if it contains any
+                // relevant data.
+                int locationMatch = 0;
+                String[] locationsSearched = location.split("\\W+");
+                for (String searchString : locationsSearched) {
+                    String lSearchString = searchString.toLowerCase();
+                    if (lSearchString.equals(thisJobState) || lSearchString.equals(thisJobCity)) {
+                        // This location search term matches this Job's location
+                        // and this Job is therefore relevant.
+                        locationMatch++;
+                    }
+                }
+
+                // c. Pull all the locations check parameters together
+                if (locationMatch == 0 || searchPostCode == 0 || searchPostCode != thisJobPostCode) {
+                    // This job's location does not match any of the location search data
+                    valid = false;
+                }
 
                 // Last step: If the Job has passed all the filter criteria, then
                 // add it to the list of search results.
@@ -156,13 +179,12 @@ public class Search
             }
         }
 
-        // Now the result list has been populated with Jobs which have passed
-        // the search filters. Now to do some matching and scoring on search
-        // criteria. TODO: score remaining jobs in jobList for relevancy,
-        // TODO: and add them to the results list in order.
-        // Remaining search criteria: Title, Description, Skills, Category1 and Category2.
-        // Jobs outside the category will still return in results, but at lower relevancy
-        // Jobs not exactly matching skill specification will still return, but at lower relevancy
+        /* Now the result list has been populated with Jobs which have passed
+         * the search filters. Now to do some matching and scoring on search
+         * criteria.
+         * Remaining search criteria: Title, Keywords, Skills, Category1 and Category2.
+         * Jobs outside the category will still return in results, but at lower relevancy
+         * Jobs not exactly matching skill specification will still return, but at lower relevancy*/
 
         for (Job tmp : results) {
 
@@ -189,42 +211,23 @@ public class Search
             // Weight the title match parameter.
             int titleResult = (titleMatch / jobTitle.length) * titleWeight;
 
-            // 2. Description
-            // Break the descriptions into arrays of Strings to work with.
-            int descMatch = 0;
-            int descResult = 0;
-            ArrayList<String> jobDescAL = tmp.getJobDescription();
-            for (int i = 0; i < jobDescAL.size(); i++) {
-                String[] jobDescArray = jobDescAL.get(i).split("\\W+");
-                for (String word : searchDescArray) {
-                    String lWord = word.toLowerCase();
-                    for (String check : jobDescArray) {
-                        String lCheck = check.toLowerCase();
-                        if (lWord.equals(lCheck)) {
-                            descMatch++;
-                        }
-                    }
-                }
-                descResult += (descMatch / jobDescArray.length) * descWeight;
-            }
-            /*
-            String[] jobDescArray = tmp.getJobDescription().split("\\W+");
-            // For each word in the searched Job Description, check if it matches a word
-            // in the job Description. If yes, increment the number of matches.
-            for (String word : searchDescArray) {
-                String lWord = word.toLowerCase();
-                for (String check : jobDescArray) {
-                    String lCheck = check.toLowerCase();
-                    if (lWord.equals(lCheck)) {
-                        // Direct match on the word
-                        descMatch++;
-                    }
-                }
-            }
-            */
+            // 2. Keywords
+            // Check each search term to see if it matches a keyword.
+            int keywordMatch = 0;
 
-            // Weight the description match.
-            //int descResult = (descMatch / jobDescArray.length) * descWeight;
+            for (String keyword : tmp.getKeywords()) {
+                String lKeyword = keyword.toLowerCase();
+                for (String check : searchDescArray) {
+                    String lCheck = check.toLowerCase();
+                    if (lKeyword.equals(lCheck)) {
+                        // Direct match on this word.
+                        keywordMatch++;
+                    }
+                }
+            }
+
+            // Weight the keyword match parameter.
+            int keywordResult = (keywordMatch / tmp.getKeywords().size()) * keywordWeight;
 
             // 3. Skills
             // For each of the skills listed against the Job, check to see if they
@@ -265,7 +268,7 @@ public class Search
             int secondaryCatResult = secondaryCatMatch * secondaryCatWeight;
 
             // 4. Score this Job for the search
-            int totalResult = titleResult + descResult + skillResult + primaryCatResult + secondaryCatResult;
+            int totalResult = titleResult + keywordResult + skillResult + primaryCatResult + secondaryCatResult;
 
             // 5. Add this job and its score into a TreeMap for sorting
             scoredResults.put(totalResult,tmp);
@@ -283,28 +286,9 @@ public class Search
     // Method 2. Search for a list of matching JobSeekers
     public ArrayList<Jobseeker> seekerSearch(String location, ArrayList<String> requiredSkills) throws Exception {
         ArrayList<Jobseeker> results = new ArrayList<Jobseeker>();
-        //TODO: Get an ArrayList of all jobSeekers from somewhere. Mocked in for now.
-        jobseekerList = new ArrayList<Jobseeker>();
-        jobseekerList.add(new Jobseeker(1,"Tom","Barker","tBarker","password",true));
-        jobseekerList.add(new Jobseeker(2,"Jakeob","Clarke-Kennedy","jClarke","mypass22",true));
-        jobseekerList.add(new Jobseeker(3,"Sam","Smith","ss123","secureStrong",false));
 
-        ArrayList<String> skills = new ArrayList<String>();
-        ArrayList<String> skills2 = new ArrayList<String>();
-        skills.add("Incident Command");
-        skills.add("Incineration");
-        skills.add("Project Control");
-        jobseekerList.get(0).setSkills(skills);
-        skills2.add("Incident Command");
-        skills2.add("Project Direction");
-        skills2.add("Project Engineering");
-        jobseekerList.get(1).setSkills(skills2);
 
-        // Quick debug:
-        for (Jobseeker seeker : jobseekerList) {
-            System.out.println(seeker);
-            System.out.println(seeker.getSkills());
-        }
+
 
         return results;
     }
