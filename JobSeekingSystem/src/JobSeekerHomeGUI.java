@@ -1,5 +1,5 @@
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -34,7 +34,7 @@ public class JobSeekerHomeGUI {
     private JPanel applicationsPanel;
     private JPanel profile;
     private JLabel phoneText;
-
+    private JList jobSeekerSkillsTable;
     private JPanel inboxPanel;
     private JPanel profilePanel;
     private JCheckBox partTimeCheckBox;
@@ -153,21 +153,33 @@ public class JobSeekerHomeGUI {
                 // ArrayList<String> skills = jobseeker.getSkills();
                 ArrayList<String> skills = new ArrayList<String>();
 
-                // TODO: This method should return the jobs and now we need to display
-                // TODO: them somehow
-                myParent.jobSearch(searchDesc, catPrimary, catSecondary, location, fullTime,
+                ArrayList<Job> searchResults = myParent.jobSearch(searchDesc, catPrimary, catSecondary, location, fullTime,
                         partTime, casual, salMin, salMax, skills);
 
+                String[] jobListColumns = {"JobID", "Title", "Employer", "Location", "Salary", "Type"};
+                ArrayList<String[]> jobListRows = new ArrayList<>();
+                for (Job job : searchResults) {
+                    int resultNum = 1;
+                    // TODO: Need location data!
+                    String[] thisJob = {Integer.toString(resultNum), job.getJobTitle(), job.getEmployer(),
+                            "Location goes here.", Integer.toString(job.getSalary()), job.getJobType()};
+                    jobListRows.add(thisJob);
+                }
 
-            jobModel.setNumRows(1);
-            DefaultTableModel freshmodel = new DefaultTableModel(newJobs, jobListColumns);
-            jobTable.setModel(freshmodel);
+                DefaultTableModel jobModel = new DefaultTableModel(jobListColumns,0);
+
+                for (String[] rowData : jobListRows) {
+                    jobModel.addRow(rowData);
+                }
+
+                jobSearchTable.setModel(jobModel);
+                jobSearchTable.setTableHeader(new JTableHeader());
+                jobModel.fireTableDataChanged();
+
             }
 
 
         });
-
-
 
         /*Add these methods back in once the actual components exist on the GUI
 

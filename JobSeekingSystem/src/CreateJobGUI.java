@@ -170,6 +170,7 @@ public class CreateJobGUI {
                 //close
             }
         });
+
         addSkillButton.addActionListener(new ActionListener() {
 
             @Override
@@ -178,6 +179,7 @@ public class CreateJobGUI {
                 skillsList.setModel(skillsListGUI);
             }
         });
+
         removeSkillButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -185,21 +187,23 @@ public class CreateJobGUI {
                 skillsList.setModel(skillsListGUI);
             }
         });
+
         categoryMenuPrimary.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    populateSecondaryCategories("JobSeekingSystem/CategoryList.csv");
+                    populateSecondaryCategories("CategoryList.csv");
                 } catch (FileNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
             }
         });
+
         locationStateMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    populatePostcode("JobSeekingSystem/src/Postcodes.csv");
+                    populatePostcode("Location.csv");
                 } catch (FileNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -210,12 +214,6 @@ public class CreateJobGUI {
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }
-
-    /*
-    public static void main(String[] args) throws IOException {
-        CreateJobGUI objCreateJob = new CreateJobGUI();
-    }
-    */
 
     public int generateJobID() throws IOException {
         int numJobs = jobList.size() + 1;
@@ -258,40 +256,22 @@ public class CreateJobGUI {
         String returnString = "";
         String postcode = "";
         String stateCheck = "";
+        String city = "";
 
         while (scan.hasNextLine()) {
             returnString = scan.nextLine();
             //System.out.println("returnString is: " + returnString);
+            String [] locationDetails = returnString.split(",");
+            stateCheck = locationDetails[1];
+            postcode = locationDetails[2];
+            city = locationDetails[3];
 
-            for (int i = 0; i < returnString.length(); i++) {
-                if (returnString.charAt(i) != ',') {
-                    stateCheck += returnString.charAt(i);
-                    //System.out.println("stateCheck is: " + stateCheck);
-                }
-                else {
-                    i++;
-                    if (state.equals(stateCheck)) {
-                        //System.out.println("they are equal");
-                        while (i < returnString.length()) {
-                            postcode += returnString.charAt(i);
-                            //System.out.println("postcode is: " + postcode);
-                            i++;
-                        }
-                        postcodeMenu.addItem(postcode);
-                        stateCheck = "";
-                        returnString = "";
-                        postcode = "";
-                        //System.out.println("added to menu");
-                        break;
-                    }
-                    else {
-                        postcode = "";
-                        //System.out.println("didnt work, state is: " + state + "\n" + "stateCheck is: " + stateCheck);
-                        stateCheck = "";
-                        break;
-                    }
-                }
+            if (state.equals(stateCheck)) {
+                postcodeMenu.addItem(postcode + ", " + city);
             }
+
+            stateCheck = "";
+            postcode = "";
         }
     }
 
