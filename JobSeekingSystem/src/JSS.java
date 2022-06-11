@@ -46,7 +46,7 @@ public class JSS
         }
         try
         {
-            importJobCategoryList("JobPrimaryCategory.csv");
+            importJobCategoryList("JobCategory.csv");
 
         } catch (Exception e)
         {
@@ -152,46 +152,54 @@ public class JSS
             //split each job into jobDetails
             //jobID, jobTitle, employer, recruiterID, jobType, jobStatus, salary, locationID, jobDescription
             String[] jobDetails = job[i].split(",");
-            importJob(Integer.parseInt(jobDetails[0]), jobDetails[1], jobDetails[2], Integer.parseInt(jobDetails[3]), jobDetails[4],
-                    jobDetails[5], Integer.parseInt(jobDetails[6]), Integer.parseInt(jobDetails[7]), jobDetails[8]);
+            if (jobDetails[8].isEmpty())
+            {
+                importJob(Integer.parseInt(jobDetails[0]), jobDetails[1], jobDetails[2], Integer.parseInt(jobDetails[3]), jobDetails[4],
+                        jobDetails[5], Integer.parseInt(jobDetails[6]), Integer.parseInt(jobDetails[7]), "");
+            }
+            else
+            {
+                importJob(Integer.parseInt(jobDetails[0]), jobDetails[1], jobDetails[2], Integer.parseInt(jobDetails[3]), jobDetails[4],
+                        jobDetails[5], Integer.parseInt(jobDetails[6]), Integer.parseInt(jobDetails[7]), jobDetails[8]);
+            }
         }
     }
 
     //Method to import job category list from csv into memory.
-    public void importJobCategoryList(String JobPrimaryCategoryFile) throws Exception
+    public void importJobCategoryList(String JobCategoryFile) throws Exception
     {
         File_Control io = new File_Control();
-        String jobPrimaryCategoryContent = "";
+        String jobCategoryContent = "";
         try
         {
-            jobPrimaryCategoryContent = io.readFile(JobPrimaryCategoryFile);
+            jobCategoryContent = io.readFile(JobCategoryFile);
         }
         catch (Exception e)
         {
             System.out.println("Error failed to read JobCategory.csv");
         }
-        if (jobPrimaryCategoryContent.trim().isEmpty())
+        if (jobCategoryContent.trim().isEmpty())
             throw new Exception("Error File cannot be empty");
 
         //Split each jobcategory into an array
-        String[] jobPrimaryCategory = jobPrimaryCategoryContent.split("\n");
+        String[] jobCategory = jobCategoryContent.split("\n");
 
         //iterate through each array, ignore first line!!
-        for (int i = 1; i < jobPrimaryCategory.length; i++)
+        for (int i = 1; i < jobCategory.length; i++)
         {
             //if line is empty, skip it.
-            if (jobPrimaryCategory[i].isEmpty())
+            if (jobCategory[i].isEmpty())
             {
-                System.out.println("Warning: empty line in " + JobPrimaryCategoryFile + ".csv at line: " + i + ", skipping...");
+                System.out.println("Warning: empty line in " + JobCategoryFile + ".csv at line: " + i + ", skipping...");
                 continue;
             }
 
             //split each category into jobCategoryDetails
             //jobTitle, jobCategory 1
-            String[] jobCategoryDetails = jobPrimaryCategory[i].split(",");
+            String[] jobCategoryDetails = jobCategory[i].split(",");
             try
             {
-                JobCategory category = new JobCategory(jobCategoryDetails[0], jobCategoryDetails[1]);
+                JobCategory category = new JobCategory(Integer.parseInt(jobCategoryDetails[0]), jobCategoryDetails[1], jobCategoryDetails[2]);
                 jobCategoryList.add(category);
 
             } catch (Exception e)
@@ -201,6 +209,7 @@ public class JSS
         }
     }
 
+    /* NO LONGER USED
     public void updateSubCategory(String JobSubCategoryFile) throws Exception
     {
         File_Control reader = new File_Control();
@@ -240,6 +249,7 @@ public class JSS
             }
         }
     }
+    */
 
     //importing location from .csv file
     public void importLocationList(String locationFile) throws Exception
@@ -349,7 +359,7 @@ public class JSS
 
             case "Recruiter":
                 //Launch Recruiter Control
-                RecruiterControl recruiterControl = new RecruiterControl(userList.get(userIndex));
+                RecruiterControl recruiterControl = new RecruiterControl(userList.get(userIndex), jobList, locationList, jobCategoryList);
                 break;
 
             default:

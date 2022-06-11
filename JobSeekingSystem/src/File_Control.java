@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileReader;
@@ -51,6 +52,46 @@ public class File_Control {
 //        file.append(data);
 //        file.append("\n");
         file.close();
+    }
+
+    public void saveJob(int jobID, String jobTitle, String employer, int recruiterID, String jobType,
+                        String jobStatus, int salary, int locationID, String jobDescription, ArrayList<String> skills, JobCategory category)
+    {
+        String data = jobID + "," + jobTitle + "," + employer + "," + recruiterID + "," + jobType + "," + jobStatus + "," + salary + "," + locationID + "," + "\"" + jobDescription + "\"";
+        String data2 = "";
+
+        for (String tmpSkill : skills)
+        {
+            data2 += jobID + "," + tmpSkill;
+            try
+            {
+                writeFile("JobSkills.csv", data2);
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error failed to save skills.");
+            }
+            data2 = "";
+        }
+
+        try
+        {
+            writeFile("jobList.csv", data);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to save Job.");
+        }
+
+        String categoryData = jobID + "," + category.getJobPrimaryCategory() + "," + category.getJobSubCategory();
+        try
+        {
+            writeFile("JobCategory.csv",categoryData);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to save category.");
+        }
     }
 
 }

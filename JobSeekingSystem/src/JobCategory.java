@@ -2,47 +2,42 @@ import java.util.ArrayList;
 
 public class JobCategory
 {
-    private String jobTitle;
+    private int jobID;
     private String jobPrimaryCategory;
-    private ArrayList<String> jobSubCategory;
+    private String jobSubCategory;
 
     public JobCategory()
     {
         System.out.println("Error: JobCategory class accepts two parameters at least.");
     }
 
-    public JobCategory(String title)
+    public JobCategory(int jobID)
     {
-        this.jobTitle = title;
-        jobSubCategory = new ArrayList<>();
+        this.jobID = jobID;
+        this.jobPrimaryCategory = "Other";
     }
 
-    public JobCategory(String title, String jobPrimaryCategory)
+    public JobCategory(int jobID, String jobPrimaryCategory)
     {
-        this.jobTitle = title;
+        this.jobID = jobID;
         this.jobPrimaryCategory = jobPrimaryCategory;
+        this.jobSubCategory = "Other";
     }
 
-    public JobCategory(String title, String jobPrimaryCategory, ArrayList<String> jobSubCategory)
+    public JobCategory(int jobID, String jobPrimaryCategory, String jobSubCategory)
     {
-        this.jobTitle = title;
+        this.jobID = jobID;
         this.jobPrimaryCategory = jobPrimaryCategory;
         this.jobSubCategory = jobSubCategory;
     }
 
-    public void appendSubCategory(String subCategory)
-    {
-        this.jobSubCategory.add(subCategory);
-    }
-
-
     //setters and getters
-    public String getJobTitle() {
-        return jobTitle;
+    public int getJobID() {
+        return jobID;
     }
 
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
+    public void setJobID(int jobID) {
+        this.jobID = jobID;
     }
 
     public String getJobPrimaryCategory() {
@@ -53,11 +48,11 @@ public class JobCategory
         this.jobPrimaryCategory = jobPrimaryCategory;
     }
 
-    public ArrayList<String> getJobSubCategory() {
+    public String getJobSubCategory() {
         return jobSubCategory;
     }
 
-    public void setJobSubCategory(ArrayList<String> jobSubCategory) {
+    public void setJobSubCategory(String jobSubCategory) {
         this.jobSubCategory = jobSubCategory;
     }
 }

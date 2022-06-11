@@ -95,7 +95,7 @@ public class RecruiterHomeGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    CreateJobGUI createJob = new CreateJobGUI();
+                    CreateJobGUI createJob = new CreateJobGUI(myParent.getRecruiter(), myParent.getJobList(), myParent.getLocationList());
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }

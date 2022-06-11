@@ -97,7 +97,6 @@
         <properties>
           <model>
             <item value="Casual"/>
-            <item value="Contract"/>
             <item value="Part-Time"/>
             <item value="Full-Time"/>
           </model>
@@ -311,7 +310,7 @@
         <properties>
           <model>
             <item value="Draft"/>
-            <item value="Published"/>
+            <item value="Advertised"/>
             <item value="Archived"/>
           </model>
         </properties>

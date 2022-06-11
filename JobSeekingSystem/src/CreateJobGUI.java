@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.util.*;
 
@@ -45,40 +47,60 @@ public class CreateJobGUI {
     private JScrollPane descriptionScroll;
     private JScrollPane jobTitleScroll;
 
-    public CreateJobGUI() throws IOException {
+    private User recruiter;
+    private ArrayList<Job> jobList;
+    private ArrayList<Location> locationList;
+
+    public CreateJobGUI(User recruiter, ArrayList<Job> jobList, ArrayList<Location> locationList) throws IOException {
         JFrame frame = new JFrame("Create Job");
         frame.setContentPane(this.createJobPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
 
-        Job job = new Job();
-        job.setJobID(generateJobID("JobSeekingSystem/Jobs.csv"));
-        intJobIDLabel.setText(Integer.toString(job.getJobID()));
-        intRecIDLabel.setText(Integer.toString(job.getRecruiterID()));  //will come from recruiter account details
-        empNameLabel.setText(job.getEmployer());                        //will come from recruiter account details
+        this.recruiter = recruiter;
+        this.jobList = jobList;
+        this.locationList = locationList;
 
-        populateSkills("JobSeekingSystem/Skills.csv");
-        populateCategories("JobSeekingSystem/Categories.csv");
+
+        Job job = new Job();
+        int numJobs = jobList.size() + 1;
+        job.setJobID(numJobs);
+        intJobIDLabel.setText(String.valueOf(numJobs));
+
+        job.setRecruiterID(recruiter.getUserID());
+
+        intRecIDLabel.setText(Integer.toString(recruiter.getUserID()));  //will come from recruiter account details
+        //empNameLabel.setText(job.getEmployer());                        //will come from recruiter account details
+
+        //TODO: Create a skilllist csv
+        populateSkills("SkillList.csv");
+        populateCategories("CategoryList.csv");
 
         DefaultListModel skillsListGUI = new DefaultListModel();
         ArrayList<String> skills = job.getSkills();
+
+        salaryText.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+                    e.consume();  // if it's not a number, ignore the event
+                }
+            }
+        });
 
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //System.out.println("Submit button has been clicked");
                 frame.setVisible(false);
-                try {
-                    job.setJobID(generateJobID("JobSeekingSystem/Jobs.csv"));
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+
                 job.setJobTitle(jobTitleText.getText());
                 //System.out.println("jobTitle has been set to: " + job.getJobTitle());
                 job.setJobType(String.valueOf(jobTypeMenu.getSelectedItem()));
                 //System.out.println("JobType has been set to: " + job.getJobType());
-                job.setSalary("$" + salaryText.getText() + " " + String.valueOf(salaryMenu.getSelectedItem()));
+
+                job.setSalary(Integer.parseInt(salaryText.getText()));
                 //System.out.println("Salary has been set to: " + job.getSalary());
 
                 for (int i = 0; i < skillsList.getModel().getSize(); i++) {
@@ -87,50 +109,63 @@ public class CreateJobGUI {
                 job.setSkills(skills);
                 //System.out.println("Skills have been set to: " + job.getSkills());
 
-                job.setLocationState(String.valueOf(locationStateMenu.getSelectedItem()));
-                //System.out.println("locationState has been set to: " + job.getLocationState());
+                String state = String.valueOf(locationStateMenu.getSelectedItem());
+
 
                 String selectedPostcode = String.valueOf(postcodeMenu.getSelectedItem());
                 String postcode = "";
                 for (int i = 0; i < 4; i++) {
                     postcode += selectedPostcode.charAt(i);
                 }
-                job.setPostCode(postcode);
-                //System.out.println("postCode has been set to: " + job.getPostCode());
 
-                job.setJobDescription(updateJobDescription(job.getJobDescription(), String.valueOf(descriptionText.getText())));
+                int postCode = Integer.parseInt(postcode);
+
+                String city = "";
+                for (int i = 5; i < selectedPostcode.length(); i++) {
+                    city += selectedPostcode.charAt(i);
+                }
+
+                for (Location tmpLocation : locationList)
+                {
+                    boolean check = true;
+                    //check state
+                    if (!tmpLocation.getState().equalsIgnoreCase(state))
+                    {
+                        check = false;
+                        continue;
+                    }
+                    if (tmpLocation.getPostcode() != postCode)
+                    {
+                        check = false;
+                        continue;
+                    }
+                    if (!tmpLocation.getCity().equalsIgnoreCase(city))
+                    {
+                        check = false;
+                        continue;
+                    }
+
+                    if (check)
+                    {
+                        job.setLocationID(tmpLocation.getLocationID());
+                        break;
+                    }
+                }
+
+                //Comment out for now.
+                //job.setJobDescription(updateJobDescription(job.getJobDescription(), String.valueOf(descriptionText.getText())));
                 //System.out.println("jobDescription has been set to: " + job.getJobDescription());
 
-                job.setJobCategoryPrimary(String.valueOf(categoryMenuPrimary.getSelectedItem()));
-                //System.out.println("categoryPrimary has been set to: " + job.getJobCategoryPrimary());
+                job.setJobDescription(String.valueOf(descriptionText.getText()));
 
-                job.setJobCategorySecondary(String.valueOf(categoryMenuSecondary.getSelectedItem()));
-                //System.out.println("categorySecondary has been set to: " + job.getJobCategorySecondary());
+                JobCategory category = new JobCategory(job.getJobID(), String.valueOf(categoryMenuPrimary.getSelectedItem()), String.valueOf(categoryMenuSecondary.getSelectedItem()));
 
-                job.setWorkingHours(hoursText.getText());
-                //System.out.println("workingHours has been set to: " + job.getWorkingHours() + " " + String.valueOf(hoursMenu.getSelectedItem()));
+                job.setJobStatus(String.valueOf(statusMenu.getSelectedItem()));
 
-                String status = String.valueOf(statusMenu.getSelectedItem());
-                if (status.equals("Draft")) {
-                    job.setAdvertised(false);
-                    job.setArchived(false);
-                }
-                if (status.equals("Published")) {
-                    job.setAdvertised(true);
-                    job.setArchived(false);
-                }
-                if (status.equals("Archived")) {
-                    job.setAdvertised(false);
-                    job.setArchived(true);
-                }
-
-                //write to file
-
-                try {
-                    updateFile("JobSeekingSystem/Jobs.csv", job);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                //write to JobList and JobCategory and JobSkill csv
+                File_Control io = new File_Control();
+                io.saveJob(job.getJobID(), job.getJobTitle(), job.getEmployer(), recruiter.getUserID(),
+                            job.getJobType(), job.getJobStatus(), job.getSalary(), job.getLocationID(), job.getJobDescription(), job.getSkills(), category);
 
                 //close
             }
@@ -154,7 +189,7 @@ public class CreateJobGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    populateSecondaryCategories("JobSeekingSystem/Categories.csv");
+                    populateSecondaryCategories("JobSeekingSystem/CategoryList.csv");
                 } catch (FileNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -182,19 +217,8 @@ public class CreateJobGUI {
     }
     */
 
-    public int generateJobID(String fileName) throws IOException {
-        FileReader file = new FileReader(fileName);
-        Scanner scan = new Scanner(file);
-        String returnString = "";
-        int numJobs = 1;
-
-        while (scan.hasNextLine()) {
-            returnString = scan.nextLine();
-            //System.out.println(scan.nextLine());
-            numJobs++;
-        }
-
-        file.close();
+    public int generateJobID() throws IOException {
+        int numJobs = jobList.size() + 1;
         return numJobs;
     }
 
@@ -311,33 +335,6 @@ public class CreateJobGUI {
         file.close();
     }
 
-
-
-    public void updateFile(String fileName, Job job) throws IOException {
-
-        FileWriter file = new FileWriter(fileName, true);
-        file.append("\n");
-        file.append(String.valueOf(job.getJobID()) + ",");
-        file.append(String.valueOf(job.getJobTitle()) + ",");
-        file.append(String.valueOf(job.getRecruiterID()) + ",");
-        file.append(String.valueOf(job.getEmployer()) + ",");
-        file.append(String.valueOf(job.getJobType()) + ",");
-        file.append(String.valueOf(job.getAdvertised()) + ",");
-        file.append(String.valueOf(job.getSalary()) + ",");
-        file.append(String.valueOf(job.getSkills()) + ",");
-        file.append(String.valueOf(job.getApplications()) + ",");
-        file.append(String.valueOf(job.getKeywords()) + ",");
-        file.append(String.valueOf(job.getLocationState()) + ",");
-        file.append(String.valueOf(job.getPostCode()) + ",");
-        file.append(String.valueOf("\"" + job.getJobDescription()) + "\"" + ",");
-        file.append(String.valueOf(job.getJobCategoryPrimary()) + ",");
-        file.append(String.valueOf(job.getJobCategorySecondary()) + ",");
-        file.append(String.valueOf(job.getWorkingHours()) + ",");
-        file.append(String.valueOf(job.getAdvertised()) + ",");
-        file.append(String.valueOf(job.isArchived()));
-        //file.append("\n");
-        file.close();
-    }
 
     public ArrayList<String> updateJobDescription(ArrayList<String> jobDescAL, String input) {
         //System.out.println("jobDescAL is: " + jobDescAL);
