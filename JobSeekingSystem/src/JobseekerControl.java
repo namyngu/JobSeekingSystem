@@ -31,7 +31,7 @@ public class JobseekerControl
 
     public void jobSearch(String jobDesc, String categoryPrimary,
                           String categorySecondary, String location, boolean fullTime, boolean partTime,
-                          boolean casual, float salMin, float salMax, ArrayList<String> seekerSkills)
+                          boolean casual, int salMin, int salMax, ArrayList<String> seekerSkills)
     {
         System.out.println("Searching...");
         try

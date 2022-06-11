@@ -38,36 +38,13 @@ public class Search
         jobseekerList = new ArrayList<>();
     }
 
-    // Method 1. Search for a list of matching jobs
-    public ArrayList<Job> jobSearch(String jobDesc, String categoryPrimary,
-        String categorySecondary, String location, boolean fullTime, boolean partTime,
-        boolean casual, float salMin, float salMax, ArrayList<String> seekerSkills) throws Exception {
-
+    // Method to filter out inappropriate search results based
+    // on user input.
+    public ArrayList<Job> filterResults(boolean fullTime, boolean partTime, boolean casual,
+                                        int salMin, int salMax, String location) throws Exception {
         // Setup a few variables.
         ArrayList<Job> results = new ArrayList<>();
-        TreeMap<Integer, Job> scoredResults = new TreeMap<>();
 
-        // TODO: For testing purposes, setup the seekerSkills.
-        // TODO: Not needed for actual method when real skills
-        // TODO: will be provided.
-
-        seekerSkills.add("skill1");
-        seekerSkills.add("skill2");
-        seekerSkills.add("skill3");
-
-        // Change search algorithm weightings here, if needed.
-        // TODO: Description analysis should be changed to keywords
-        int titleWeight = 35;
-        int keywordWeight = 20;
-        int skillWeight = 20;
-        int primaryCatWeight = 15;
-        int secondaryCatWeight = 10;
-
-        // First let's apply filter data to filter out unmatching jobs
-        // TODO: Cut out and put into separate filterJobs method
-
-        // For every job, check the filters and exclude that job if it
-        // does not match the filters.
         for (Job tmp : jobList) {
             // Setup a boolean to track if the job should be filtered out.
             boolean valid = true;
@@ -89,26 +66,30 @@ public class Search
                 // Filter 1. Job must be currently advertised.
                 if (!tmp.getJobStatus().equals("Advertised")) {
                     valid = false;
+                    break;
                 }
 
                 // Filter 2. Job must match Job Type search specification
                 switch (tmp.getJobType()) {
-                    case "Full-Time":
+                    case "FullTime":
                         if (!fullTime) {
                             // Job does not match criteria
                             valid = false;
+                            break;
                         }
                         break;
-                    case "Part-Time":
+                    case "PartTime":
                         if (!partTime) {
                             // Job does not match criteria
                             valid = false;
+                            break;
                         }
                         break;
                     case "Casual":
                         if (!casual) {
                             // Job does not match criteria
                             valid = false;
+                            break;
                         }
                         break;
                     default:
@@ -116,11 +97,12 @@ public class Search
                 }
 
                 // 3. Job must match salary range
-                if (Float.compare(salary, salMin) >= 0 && Float.compare(salary, salMax) <= 0) {
+                if (salary >= salMin && salary <= salMax) {
                     //Job is within salary range specified
                 } else {
                     // Job is outside desired salary range
                     valid = false;
+                    break;
                 }
 
                 // 4. Job must include some part of location
@@ -166,18 +148,50 @@ public class Search
                 }
 
                 // c. Pull all the locations check parameters together
-                if (locationMatch == 0 || searchPostCode == 0 || searchPostCode != thisJobPostCode) {
+                if (locationMatch == 0 && searchPostCode == 0 && searchPostCode != thisJobPostCode) {
                     // This job's location does not match any of the location search data
                     valid = false;
+                    break;
                 }
 
                 // Last step: If the Job has passed all the filter criteria, then
                 // add it to the list of search results.
                 if (valid) {
                     results.add(tmp);
+                    break;
                 }
             }
         }
+        // Return filtered jobs.
+        return results;
+    }
+
+    // Method 1. Search for a list of matching jobs
+    public ArrayList<Job> jobSearch(String jobDesc, String categoryPrimary,
+        String categorySecondary, String location, boolean fullTime, boolean partTime,
+        boolean casual, int salMin, int salMax, ArrayList<String> seekerSkills) throws Exception {
+
+        // Setup a few variables.
+        ArrayList<Job> results = new ArrayList<>();
+        TreeMap<Integer, Job> scoredResults = new TreeMap<>();
+
+        // TODO: For testing purposes, setup the seekerSkills.
+        // TODO: Not needed for actual method when real skills
+        // TODO: will be provided.
+
+        seekerSkills.add("skill1");
+        seekerSkills.add("skill2");
+        seekerSkills.add("skill3");
+
+        // Change search algorithm weightings here, if needed.
+        int titleWeight = 35;
+        int keywordWeight = 20;
+        int skillWeight = 20;
+        int primaryCatWeight = 15;
+        int secondaryCatWeight = 10;
+
+        // First let's apply filter data to filter out unmatching jobs
+        results = filterResults(fullTime, partTime, casual, salMin, salMax, location);
 
         /* Now the result list has been populated with Jobs which have passed
          * the search filters. Now to do some matching and scoring on search
@@ -286,8 +300,16 @@ public class Search
             // 4. Score this Job for the search
             int totalResult = titleResult + keywordResult + skillResult + primaryCatResult + secondaryCatResult;
 
-            // 5. Add this job and its score into a TreeMap for sorting
+            // 5. Jobs that score particularly low have made it through the
+            // filters, but are not very relevant and should not be included
+            // in search results.
+            if (totalResult < 10) {
+                break;
+            }
+
+            // 6. Add this job and its score into a TreeMap for sorting
             scoredResults.put(totalResult,tmp);
+            System.out.println(scoredResults);
         }
 
         // Sort the TreeMap and put the sorted list back into results.
