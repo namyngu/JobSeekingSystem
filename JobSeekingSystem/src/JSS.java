@@ -239,7 +239,7 @@ public class JSS
             //split each location into locationDetails
             //locationID, locationState, PostCode
             String[] locationDetails = location[i].split(",");
-            importLocation(Integer.parseInt(locationDetails[0]), locationDetails[1], Integer.parseInt(locationDetails[2], locationDetails[3]));
+            importLocation(Integer.parseInt(locationDetails[0]), locationDetails[1], Integer.parseInt(locationDetails[2]), locationDetails[3]);
         }
     }
 
