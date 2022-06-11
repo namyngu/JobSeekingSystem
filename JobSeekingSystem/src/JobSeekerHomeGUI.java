@@ -34,7 +34,7 @@ public class JobSeekerHomeGUI {
     private JPanel applicationsPanel;
     private JPanel profile;
     private JLabel phoneText;
-    private JList jobSeekerSkillsTable;
+
     private JPanel inboxPanel;
     private JPanel profilePanel;
     private JCheckBox partTimeCheckBox;
@@ -47,66 +47,33 @@ public class JobSeekerHomeGUI {
     private Jobseeker jobseeker;
 
     private JList jsSkillsTable;
+    private JLabel resultsHeading;
+    private JScrollPane searchResultsScroll;
     private DefaultListModel jsSkillsModel;
 
-    public JobSeekerHomeGUI() {
+    public int searchCount;
 
-        JFrame window = new JFrame("JSS: Job Seeker Home");
-        window.add(navbar);
-
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        window.setBounds(600,40,100,100);
-        window.pack();
-        window.setResizable(true);
-        window.setVisible(true);
-
-
-        //test build table will condense into reusable method
-        String[] jobListColumns = {"JobID", "Title", "Employer", "Location", "Salary", "Type"};
-        String[][] jobListRows = {
-                {"001", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
-                {"002", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
-                {"003", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
-                {"004", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
-                {"005", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"}
-        };
-        DefaultTableModel jobModel = new DefaultTableModel(jobListRows, jobListColumns);
-        jobTable.setModel(jobModel);
-
-
-
-        //Edit profile button to open edit profile GUI
-        editProfileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                JobSeekerUpdateGUI updateGUI = new JobSeekerUpdateGUI();
-            }
-        });
-    }
 
     public JobSeekerHomeGUI(JobseekerControl parent) {
 
         myParent = parent;
         JFrame window = new JFrame("JSS: Job Seeker Home");
         window.add(navbar);
-
+        searchCount = 0;
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setBounds(600,40,100,100);
         window.pack();
         window.setResizable(true);
         window.setVisible(true);
 
-
         //display name in profile
         jobSeekerFullname.setText(parent.getFullName());
 
         //display skills in profile
         buildSkillList();
-//        ArrayList skills = jobSeeker.getSkills();
 
         //test build table will condense into reusable method
-        String[] jobListColumns = {"JobID", "Title", "Employer", "Location", "Salary", "Type"};
+     String[] jobListColumns = {"JobID", "Title", "Employer", "Location", "Salary", "Type"};
         String[][] jobListRows = {
                 {"001", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
                 {"002", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
@@ -114,20 +81,13 @@ public class JobSeekerHomeGUI {
                 {"004", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
                 {"005", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"}
         };
+        DefaultTableModel jtest = new DefaultTableModel(jobListRows, jobListColumns);
+        jobTable.setModel(jtest);
 
-        String[][] newJobs= {
-                {"test", "test", "Google", "San Francisco","$300,000", "Full Time"},
-        };
-
-        ArrayList<String> test = new ArrayList();
-        test.add("001,Software Developer,Google,San Francisco,$300,000,Full Time");
-        test.add("001,Software Developer,Google,San Francisco,$300,000,Full Time");
-
-
-        DefaultTableModel jobModel = new DefaultTableModel(jobListRows, jobListColumns);
-
-
-        jobTable.setModel(jobModel);
+        searchResultsScroll.setVisible(false);
+        //initial search table
+        DefaultTableModel jobSearchModel = new DefaultTableModel(null, jobListColumns);
+        jobSearchTable.setModel(jobSearchModel);
 
 
 
@@ -157,28 +117,71 @@ public class JobSeekerHomeGUI {
                         partTime, casual, salMin, salMax, skills);
 
                 String[] jobListColumns = {"JobID", "Title", "Employer", "Location", "Salary", "Type"};
-                ArrayList<String[]> jobListRows = new ArrayList<>();
-                for (Job job : searchResults) {
-                    int resultNum = 1;
-                    // TODO: Need location data!
-                    String[] thisJob = {Integer.toString(resultNum), job.getJobTitle(), job.getEmployer(),
-                            "Location goes here.", Integer.toString(job.getSalary()), job.getJobType()};
-                    jobListRows.add(thisJob);
+////                ArrayList<String[]> jobListRows = new ArrayList<>();
+//                for (Job job : searchResults) {
+//                    int resultNum = 1;
+//                    // TODO: Need location data!
+//                    String[] thisJob = {Integer.toString(resultNum), job.getJobTitle(), job.getEmployer(),
+//                            "Location goes here.", Integer.toString(job.getSalary()), job.getJobType()};
+//                    jobListRows.add(thisJob);
+//                }
+
+//
+//                for (String[] rowData : jobListRows) {
+//                    jobModel.addRow(rowData);
+//                }
+
+
+
+
+
+                //test first search
+                if (searchCount == 0) {
+                    System.out.println(searchCount);
+                    resultsHeading.setText("Results");
+                    jobSearchTable.setVisible(true);
+
+
+                    String[][] rows = {
+                            {"001", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"}
+                    };
+
+                    DefaultTableModel freshModel = new DefaultTableModel(rows, jobListColumns);
+                    jobSearchTable.setModel(freshModel);
+                    searchResultsScroll.setVisible(true);
+
+                    searchCount++;
+                } else if (searchCount == 1) // new search after load
+                {
+                    System.out.println(searchCount);
+                    jobSearchModel.setNumRows(0);
+                    String[][] moreRows = {
+                            {"002", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
+                            {"003", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
+                    };
+
+                    DefaultTableModel freshModel = new DefaultTableModel(moreRows, jobListColumns);
+                    jobSearchTable.setModel(freshModel);
+                    searchCount++;
+                } else //one final time
+                {
+                    System.out.println(searchCount);
+                    jobSearchModel.setNumRows(0);
+                    String[][] evenMore = {
+
+                            {"004", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
+                            {"005", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
+                            {"004", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
+                            {"005", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
+                            {"004", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
+                            {"005", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"}
+                    };
+
+                    DefaultTableModel freshModel = new DefaultTableModel(evenMore, jobListColumns);
+                    jobSearchTable.setModel(freshModel);
+                    searchCount++;
                 }
-
-                DefaultTableModel jobModel = new DefaultTableModel(jobListColumns,0);
-
-                for (String[] rowData : jobListRows) {
-                    jobModel.addRow(rowData);
-                }
-
-                jobSearchTable.setModel(jobModel);
-                jobSearchTable.setTableHeader(new JTableHeader());
-                jobModel.fireTableDataChanged();
-
             }
-
-
         });
 
         /*Add these methods back in once the actual components exist on the GUI
