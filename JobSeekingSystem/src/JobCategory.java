@@ -1,69 +1,63 @@
+import java.util.ArrayList;
+
 public class JobCategory
 {
     private String jobTitle;
-    private String jobCategoryPrimary;
-    private String jobCategorySecondary;
-    private String jobCategoryTertiary;
+    private String jobPrimaryCategory;
+    private ArrayList<String> jobSubCategory;
 
     public JobCategory()
     {
+        System.out.println("Error: JobCategory class accepts two parameters at least.");
     }
 
-    public JobCategory(String title, String jobCategoryPrimary)
+    public JobCategory(String title)
     {
         this.jobTitle = title;
-        this.jobCategoryPrimary = jobCategoryPrimary;
+        jobSubCategory = new ArrayList<>();
     }
 
-    public JobCategory(String title, String jobCategoryPrimary, String jobCategorySecondary)
+    public JobCategory(String title, String jobPrimaryCategory)
     {
         this.jobTitle = title;
-        this. jobCategoryPrimary = jobCategoryPrimary;
-        this.jobCategorySecondary = jobCategorySecondary;
+        this.jobPrimaryCategory = jobPrimaryCategory;
     }
 
-    public JobCategory(String title, String jobCategoryPrimary, String jobCategorySecondary, String jobCategoryTertiary)
+    public JobCategory(String title, String jobPrimaryCategory, ArrayList<String> jobSubCategory)
     {
         this.jobTitle = title;
-        this.jobCategoryPrimary = jobCategoryPrimary;
-        this.jobCategorySecondary = jobCategorySecondary;
-        this.jobCategoryTertiary = jobCategoryTertiary;
+        this.jobPrimaryCategory = jobPrimaryCategory;
+        this.jobSubCategory = jobSubCategory;
     }
 
-    public String getJobTitle()
+    public void appendSubCategory(String subCategory)
     {
+        this.jobSubCategory.add(subCategory);
+    }
+
+
+    //setters and getters
+    public String getJobTitle() {
         return jobTitle;
     }
 
-    public String getJobCategoryPrimary()
-    {
-        return jobCategoryPrimary;
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
     }
 
-    public String getJobCategorySecondary()
-    {
-        return jobCategorySecondary;
+    public String getJobPrimaryCategory() {
+        return jobPrimaryCategory;
     }
 
-    public String getJobCategoryTertiary()
-    {
-        return jobCategoryTertiary;
+    public void setJobPrimaryCategory(String jobPrimaryCategory) {
+        this.jobPrimaryCategory = jobPrimaryCategory;
     }
 
-    public void setJobTitle(String title)
-    {
-        this.jobTitle = title;
+    public ArrayList<String> getJobSubCategory() {
+        return jobSubCategory;
     }
 
-    public void setJobCategoryPrimary(String jobCategoryPrimary) {
-        this.jobCategoryPrimary = jobCategoryPrimary;
-    }
-
-    public void setJobCategorySecondary(String jobCategorySecondary) {
-        this.jobCategorySecondary = jobCategorySecondary;
-    }
-
-    public void setJobCategoryTertiary(String jobCategoryTertiary) {
-        this.jobCategoryTertiary = jobCategoryTertiary;
+    public void setJobSubCategory(ArrayList<String> jobSubCategory) {
+        this.jobSubCategory = jobSubCategory;
     }
 }

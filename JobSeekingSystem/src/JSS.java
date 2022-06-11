@@ -46,7 +46,7 @@ public class JSS
         }
         try
         {
-            importJobCategoryList("JobCategories.csv");
+            importJobCategoryList("JobPrimaryCategory.csv");
 
         } catch (Exception e)
         {
@@ -157,53 +157,87 @@ public class JSS
         }
     }
 
-    //Method to import job category from csv into memory
-    public void importJobCategory(String jobTitle, String jobCategoryPrimary, String jobCategorySecondary, String jobCategoryTertiary)
-    {
-        try
-        {
-            JobCategory category = new JobCategory(jobTitle, jobCategoryPrimary, jobCategorySecondary, jobCategoryTertiary);
-            jobCategoryList.add(category);
-
-        } catch (Exception e)
-        {
-            System.out.println("Error failed to import a category, check your parameters!");
-        }
-    }
-
     //Method to import job category list from csv into memory.
-    public void importJobCategoryList(String jobCategoriesFile) throws Exception
+    public void importJobCategoryList(String JobPrimaryCategoryFile) throws Exception
     {
         File_Control io = new File_Control();
-        String jobCategoriesContent = "";
+        String jobPrimaryCategoryContent = "";
         try
         {
-            jobCategoriesContent = io.readFile(jobCategoriesFile);
+            jobPrimaryCategoryContent = io.readFile(JobPrimaryCategoryFile);
         }
         catch (Exception e)
         {
             System.out.println("Error failed to read JobCategory.csv");
         }
-        if (jobCategoriesContent.trim().isEmpty())
+        if (jobPrimaryCategoryContent.trim().isEmpty())
             throw new Exception("Error File cannot be empty");
 
         //Split each jobcategory into an array
-        String[] jobCategory = jobCategoriesContent.split("\n");
+        String[] jobPrimaryCategory = jobPrimaryCategoryContent.split("\n");
 
         //iterate through each array, ignore first line!!
-        for (int i = 1; i < jobCategory.length; i++)
+        for (int i = 1; i < jobPrimaryCategory.length; i++)
         {
             //if line is empty, skip it.
-            if (jobCategory[i].isEmpty())
+            if (jobPrimaryCategory[i].isEmpty())
             {
-                System.out.println("Warning: empty line in " + jobCategoriesFile + ".csv at line: " + i + ", skipping...");
+                System.out.println("Warning: empty line in " + JobPrimaryCategoryFile + ".csv at line: " + i + ", skipping...");
                 continue;
             }
 
             //split each category into jobCategoryDetails
-            //jobTitle, jobCategory 1, jobCategory 2, jobCategory 3
-            String[] jobCategoryDetails = jobCategory[i].split(",");
-            importJobCategory(jobCategoryDetails[0], jobCategoryDetails[1], jobCategoryDetails[2], jobCategoryDetails[3]);
+            //jobTitle, jobCategory 1
+            String[] jobCategoryDetails = jobPrimaryCategory[i].split(",");
+            try
+            {
+                JobCategory category = new JobCategory(jobCategoryDetails[0], jobCategoryDetails[1]);
+                jobCategoryList.add(category);
+
+            } catch (Exception e)
+            {
+                System.out.println("Error failed to import a category, check your parameters!");
+            }
+        }
+    }
+
+    public void updateSubCategory(String JobSubCategoryFile) throws Exception
+    {
+        File_Control reader = new File_Control();
+
+        //update sub categories
+        String subCategoryContent = "";
+        try
+        {
+            subCategoryContent = reader.readFile(JobSubCategoryFile);
+        } catch (Exception e)
+        {
+            System.out.println("Failed to read JobKeywords.csv");
+        }
+
+        String[] subCategory = subCategoryContent.split("\n");
+
+        //ignore first line!!
+        for (int i = 1; i < subCategory.length; i++)
+        {
+            String[] subCategoryDetails = subCategory[i].split(",");
+
+            //Search through the jobCategoryList for the jobTitle then append keywords to that category
+            //NOTE can optimize search by first sorting out the database - not required extra functionality.
+            int index = 0;
+            for (JobCategory tmpCategory : jobCategoryList)
+            {
+                if (tmpCategory.getJobTitle().equalsIgnoreCase(subCategoryDetails[0]))
+                {
+
+                    jobCategoryList.get(index).appendSubCategory(subCategoryDetails[1]);
+                }
+                else
+                {
+                    System.out.println("Error: cannot find job title for that sub category. Skipping...");
+                }
+                index++;
+            }
         }
     }
 
@@ -487,7 +521,7 @@ public class JSS
             String[] jobKeywordDetails = jobKeyword[i].split(",");
 
             //Search through the jobList for the job then append keywords to that job
-            //TODO can optimize search by first sorting out the database - not required extra functionality.
+            //NOTE can optimize search by first sorting out the database - not required extra functionality.
             int index = 0;
             for (Job tmpJob : jobList)
             {
@@ -495,6 +529,10 @@ public class JSS
                 {
 
                     jobList.get(index).appendKeyword(jobKeywordDetails[1]);
+                }
+                else
+                {
+                    System.out.println("Error: cannot find job title for that keyword. Skipping...");
                 }
                 index++;
             }
@@ -525,6 +563,10 @@ public class JSS
                 {
 
                     jobList.get(index).appendSkill(jobSkillDetails[1]);
+                }
+                else
+                {
+                    System.out.println("Error: cannot find job title for that skill. Skipping...");
                 }
                 index++;
             }
