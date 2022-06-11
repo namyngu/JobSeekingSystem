@@ -27,8 +27,3 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 26,Barista,Verizon,8,PartTime,Archived,75000,26,Job Descr1
 27,Web Developer,General Motors,8,PartTime,Withdrawn,75000,18,Job Descr1
 28,Leader Designer,Anthem,8,Casual,Withdrawn,20000,28,Testing
-29,Plumber,BP,8,Casual,Archived,20000,29,Job Descr130,title,employer,11,Part-Time,Draft,50000,-1,"this is job desc"
-30,job title,employer,11,Part-Time,Draft,50000,-1,"this is the job description"
-31,another job title,employer,11,Full-Time,Advertised,60000,-1,"this is a job description"
-32,job title again,employer,11,Part-Time,Draft,20000,-1,"line1description line 2line 3"
-33,sdfas,employer,11,Casual,Draft,45,-1,"l1l2l3;4"

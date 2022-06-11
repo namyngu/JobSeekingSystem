@@ -29,28 +29,23 @@ public class JobseekerControl
 
     }
 
-    public void jobSearch(String jobDesc, String categoryPrimary,
+    public ArrayList<Job> jobSearch(String jobDesc, String categoryPrimary,
                           String categorySecondary, String location, boolean fullTime, boolean partTime,
                           boolean casual, int salMin, int salMax, ArrayList<String> seekerSkills)
     {
         System.out.println("Searching...");
+        ArrayList<Job> searchResults = new ArrayList<>();
         try
         {
-            ArrayList<Job> someList = mainSearch.jobSearch(jobDesc, categoryPrimary, categorySecondary, location, fullTime, partTime,
+            searchResults = mainSearch.jobSearch(jobDesc, categoryPrimary, categorySecondary, location, fullTime, partTime,
             casual, salMin, salMax, seekerSkills);
-
-            // Debug search results:
-            System.out.println("Results: \n");
-            for (Job job : someList) {
-                System.out.println(job.toString());
-            }
-
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+        return searchResults;
     }
 
 
