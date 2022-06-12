@@ -154,6 +154,21 @@ public class File_Control {
        return list;
     }
 
+    protected static Job findJob(ArrayList<Job> jobList, int ID) throws Exception
+    {
+        Job myJob = null;
+        for (Job tmpJob : jobList)
+        {
+            if (tmpJob.getJobID() == ID)
+            {
+                myJob = tmpJob;
+                return myJob;
+            }
+        }
+        throw new Exception("Error job doesn't exist!");
+
+    }
+
     public void writeListToFile(ArrayList<String> list, String filename)
     {
         try {
