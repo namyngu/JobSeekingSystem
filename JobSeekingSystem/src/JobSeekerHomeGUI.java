@@ -125,6 +125,8 @@ public class JobSeekerHomeGUI {
                 ArrayList<String[]> jobListRows = new ArrayList<>();
                 for (Job job : searchResults) {
                     int resultNum = 1;
+                    String resultLocation = "";
+                    locationList.get(job.getLocationID());
                     // TODO: Need location data!
                     String[] thisJob = {Integer.toString(resultNum), job.getJobTitle(), job.getEmployer(),
                             "Location goes here.", Integer.toString(job.getSalary()), job.getJobType()};

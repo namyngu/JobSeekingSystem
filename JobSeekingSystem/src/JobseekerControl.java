@@ -15,11 +15,10 @@ public class JobseekerControl
                             ArrayList<JobCategory> categories) {
 
         jobseeker = new Jobseeker(user.getUserID(), user.getFirstName(), user.getLastName(), user.getUserName(), user.getPassword(),user.isActive());
-        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(this, jobCategoryList, locationList);
-
         jobList = jobs;
         locationList = locations;
         jobCategoryList = categories;
+        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(this, jobCategoryList, locationList);
         mainSearch = new Search(this, jobList, locationList, jobCategoryList);
     }
 
