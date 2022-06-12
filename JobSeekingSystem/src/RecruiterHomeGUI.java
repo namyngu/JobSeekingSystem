@@ -36,7 +36,7 @@ public class RecruiterHomeGUI {
         window.add(recruiterNav);
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setLocation(700,40);
+        window.setLocation(600,20);
         window.pack();
         window.setResizable(true);
         window.setVisible(true);
