@@ -61,7 +61,7 @@ public class JSS
             System.out.println("FATAL ERROR!! Failed to updateJobs!!");
         }
 
-        display();
+        //display();
     }
 
     //Method to read in the user list into memory

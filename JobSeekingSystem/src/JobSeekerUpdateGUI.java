@@ -26,7 +26,7 @@ public class JobSeekerUpdateGUI {
     private DefaultListModel allSkillsModel;
 
 
-    public JobSeekerUpdateGUI(JobseekerControl jsControl) {
+    public JobSeekerUpdateGUI(JobseekerControl jsControl, JobSeekerHomeGUI jshomescreen) {
         userSkillsModel = new DefaultListModel<>();
         allSkillsModel = buildModel("SkillList.csv");
         JFrame frame = new JFrame("Job Title");
@@ -69,6 +69,27 @@ public class JobSeekerUpdateGUI {
 
             }
         });
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                //get updated skills from user skills Jlist
+                ArrayList<String> newSkillList = listToArrayList(userSkillList);
+
+                //update jobseeker skills arraylist
+                jsControl.setSkills(newSkillList);
+
+                //update jobseeker home gui to display new skills
+                jshomescreen.buildSkillList();
+
+                //update jobseeker-skills file
+                jsControl.saveSkills();
+
+
+                frame.dispose();
+
+            }
+        });
     }
 
     //add data to JList using ListModel and ArrayList of data
@@ -81,7 +102,7 @@ public class JobSeekerUpdateGUI {
         listGUI.setModel(model);
     }
 
-    // take skills from csv file and return a model
+    // take skills from csv file and return a List Model
     public DefaultListModel buildModel(String fileName )  {
             DefaultListModel model = new DefaultListModel<>();
 
@@ -106,7 +127,7 @@ public class JobSeekerUpdateGUI {
         return model;
         }
 
-
+        //convert a Jlist into an ArrayList
         private ArrayList<String> listToArrayList(JList list)
         {
             ArrayList<String> arrList = new ArrayList<>();
@@ -115,7 +136,7 @@ public class JobSeekerUpdateGUI {
 
                 for (int i = 0; i < listSize; i++)
                 {
-                    String skill = list.getModel().getElementAt(i).toString();
+                    String skill = list.getModel().getElementAt(i).toString();;
                     arrList.add(skill);
                 }
 

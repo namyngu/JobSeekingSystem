@@ -15,11 +15,10 @@ public class JobseekerControl
                             ArrayList<JobCategory> categories) {
 
         jobseeker = new Jobseeker(user.getUserID(), user.getFirstName(), user.getLastName(), user.getUserName(), user.getPassword(),user.isActive());
-        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(this);
-
         jobList = jobs;
         locationList = locations;
         jobCategoryList = categories;
+        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(this, jobCategoryList, locationList);
         mainSearch = new Search(this, jobList, locationList, jobCategoryList);
     }
 
@@ -79,18 +78,62 @@ public class JobseekerControl
     public ArrayList getSkills()
     {
         ArrayList<String> skills = jobseeker.getSkills();
-        System.out.println("in controller");
         return skills;
     }
 
-    public void setSkills(ArrayList<String> newskills)
+    public void setSkills(ArrayList<String> skills)
     {
-        jobseeker.setSkills(newskills);
+        jobseeker.setSkills(skills);
+
     }
 
     public void saveSkills()
     {
-        ArrayList skills = jobseeker.getSkills();
+
+
+        String file = "jobseeker-skills.csv";
+        try {
+
+            ArrayList<String> newskills = getSkills();
+            newskills.add(0,Integer.toString(jobseeker.getUserID()));
+            String skillsString = "";
+            for (int i = 0; i <newskills.size(); i++) {
+
+                if(i != newskills.size()-1)
+                {
+                    skillsString = skillsString + newskills.get(i) +",";
+                }
+                else
+                {
+                    skillsString = skillsString + newskills.get(i);
+                }
+            }
+
+                //save all skills from skills csv
+                File_Control fc = new File_Control();
+
+                //get all skills except for current user
+                ArrayList<String> all = fc.removeById(jobseeker.getUserID(), file);
+
+                //add current users new skill set
+                all.add(skillsString);
+
+//                for(String line : all){
+//                    System.out.println(line);
+//                }
+//                clear skills csv
+                fc.clearFile(file);
+
+//                rewrite skill set to skills csv
+                fc.writeListToFile(all, file);
+
+//                jobseeker.loadSkills();
+
+        }
+        catch(Exception e)
+        {
+
+        }
 
 
     }

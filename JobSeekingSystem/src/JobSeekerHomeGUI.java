@@ -26,7 +26,7 @@ public class JobSeekerHomeGUI {
     private JComboBox comboBox1;
     private JComboBox comboBox2;
     private JTable jobSearchTable;
-    private JComboBox comboBox3;
+    private JComboBox primaryCategoryBox;
     private JTextField textField2;
     private JTabbedPane navbar;
     private JPanel home;
@@ -50,13 +50,43 @@ public class JobSeekerHomeGUI {
     private JLabel resultsHeading;
     private JScrollPane searchResultsScroll;
     private DefaultListModel jsSkillsModel;
+    private ArrayList<Location> locationList;
+    private ArrayList<JobCategory> jobCategoryList;
 
     public int searchCount;
 
+    public void populateCategories(String fileName) throws IOException {
+        FileReader file = new FileReader(fileName);
+        Scanner scan = new Scanner(file);
+        String returnString = "";
+        String firstCategory = "";
 
-    public JobSeekerHomeGUI(JobseekerControl parent) {
+        while (scan.hasNextLine()) {
+            returnString = scan.nextLine();
 
+            for (int i = 0; i < returnString.length(); i++) {
+                if (returnString.charAt(i) != ',') {
+                    firstCategory += returnString.charAt(i);
+                }
+                else {
+                    break;
+                }
+            }
+
+            primaryCategoryBox.addItem(firstCategory);
+            firstCategory = "";
+        }
+
+        file.close();
+        //populateSecondaryCategories(fileName);
+    }
+
+    public JobSeekerHomeGUI(JobseekerControl parent, ArrayList<JobCategory> categories,
+                            ArrayList<Location> locations) {
+        JobSeekerHomeGUI home = this;
         myParent = parent;
+        locationList = locations;
+        jobCategoryList = categories;
         JFrame window = new JFrame("JSS: Job Seeker Home");
         window.add(navbar);
         searchCount = 0;
@@ -65,6 +95,14 @@ public class JobSeekerHomeGUI {
         window.pack();
         window.setResizable(true);
         window.setVisible(true);
+
+        // Try populate categories to search in.
+        try {
+            populateCategories("CategoryList.csv");
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         //display name in profile
         jobSeekerFullname.setText(parent.getFullName());
@@ -95,9 +133,7 @@ public class JobSeekerHomeGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String searchDesc = textField1.getText();
-                // TODO: Combo boxes need to be fixed up
-                String catPrimary = "some category";
-                //String catPrimary = comboBox3.getDropTarget();
+                String catPrimary = String.valueOf(primaryCategoryBox.getSelectedItem());
                 // TODO: Will we need secondary category? Or not?
                 String catSecondary = "some other category";
                 //String catSecondary = comboBox3.getDropTarget();
@@ -117,70 +153,20 @@ public class JobSeekerHomeGUI {
                         partTime, casual, salMin, salMax, skills);
 
                 String[] jobListColumns = {"JobID", "Title", "Employer", "Location", "Salary", "Type"};
-////                ArrayList<String[]> jobListRows = new ArrayList<>();
-//                for (Job job : searchResults) {
-//                    int resultNum = 1;
-//                    // TODO: Need location data!
-//                    String[] thisJob = {Integer.toString(resultNum), job.getJobTitle(), job.getEmployer(),
-//                            "Location goes here.", Integer.toString(job.getSalary()), job.getJobType()};
-//                    jobListRows.add(thisJob);
-//                }
-
-//
-//                for (String[] rowData : jobListRows) {
-//                    jobModel.addRow(rowData);
-//                }
-
-
-
-
-
-                //test first search
-                if (searchCount == 0) {
-                    System.out.println(searchCount);
-                    resultsHeading.setText("Results");
-                    jobSearchTable.setVisible(true);
-
-
-                    String[][] rows = {
-                            {"001", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"}
-                    };
-
-                    DefaultTableModel freshModel = new DefaultTableModel(rows, jobListColumns);
-                    jobSearchTable.setModel(freshModel);
-                    searchResultsScroll.setVisible(true);
-
-                    searchCount++;
-                } else if (searchCount == 1) // new search after load
-                {
-                    System.out.println(searchCount);
-                    jobSearchModel.setNumRows(0);
-                    String[][] moreRows = {
-                            {"002", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
-                            {"003", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
-                    };
-
-                    DefaultTableModel freshModel = new DefaultTableModel(moreRows, jobListColumns);
-                    jobSearchTable.setModel(freshModel);
-                    searchCount++;
-                } else //one final time
-                {
-                    System.out.println(searchCount);
-                    jobSearchModel.setNumRows(0);
-                    String[][] evenMore = {
-
-                            {"004", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
-                            {"005", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
-                            {"004", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
-                            {"005", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
-                            {"004", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
-                            {"005", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"}
-                    };
-
-                    DefaultTableModel freshModel = new DefaultTableModel(evenMore, jobListColumns);
-                    jobSearchTable.setModel(freshModel);
-                    searchCount++;
+                ArrayList<String[]> jobListRows = new ArrayList<>();
+                for (Job job : searchResults) {
+                    int resultNum = 1;
+                    String resultLocation = locationList.get(job.getLocationID()-1).toString();
+                    String[] thisJob = {Integer.toString(resultNum), job.getJobTitle(), job.getEmployer(),
+                            resultLocation, Integer.toString(job.getSalary()), job.getJobType()};
+                    jobListRows.add(thisJob);
                 }
+
+                String[][] rows = jobListRows.toArray(new String[0][0]);
+
+                DefaultTableModel freshModel = new DefaultTableModel(rows, jobListColumns);
+                jobSearchTable.setModel(freshModel);
+                searchResultsScroll.setVisible(true);
             }
         });
 
@@ -188,27 +174,25 @@ public class JobSeekerHomeGUI {
         editProfileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JobSeekerUpdateGUI updateGUI = new JobSeekerUpdateGUI(myParent);
+                JobSeekerUpdateGUI updateGUI = new JobSeekerUpdateGUI(myParent, home );
             }
         });
     }
 
 
-    private void buildSkillList(){
+    public void buildSkillList(){
         jsSkillsModel = new DefaultListModel<>();
         ArrayList<String> skills = myParent.getSkills();
-        System.out.println("In JS Home GUI");
-        System.out.println(skills);
 
         for (int i = 0; i < skills.size(); i++)
         {
             jsSkillsModel.addElement("- "+skills.get(i));
         }
-
-        System.out.println();
-
         jsSkillsTable.setModel(jsSkillsModel);
     }
+
+
+
 
 
 

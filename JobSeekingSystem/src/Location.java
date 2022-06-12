@@ -49,4 +49,8 @@ public class Location {
         this.postcode = postcode;
     }
     public void setCity(String city) {this.city = city;}
+
+    public String toString(){
+       return getCity() + " " + getState() + " " + Integer.toString(getPostcode());
+    }
 }
