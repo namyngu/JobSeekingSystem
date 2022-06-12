@@ -15,7 +15,7 @@ public class JobseekerControl
                             ArrayList<JobCategory> categories) {
 
         jobseeker = new Jobseeker(user.getUserID(), user.getFirstName(), user.getLastName(), user.getUserName(), user.getPassword(),user.isActive());
-        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(this);
+        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(this, jobCategoryList, locationList);
 
         jobList = jobs;
         locationList = locations;

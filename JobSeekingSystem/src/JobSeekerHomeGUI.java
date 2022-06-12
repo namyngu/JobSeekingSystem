@@ -50,13 +50,18 @@ public class JobSeekerHomeGUI {
     private JLabel resultsHeading;
     private JScrollPane searchResultsScroll;
     private DefaultListModel jsSkillsModel;
+    private ArrayList<Location> locationList;
+    private ArrayList<JobCategory> jobCategoryList;
 
     public int searchCount;
 
 
-    public JobSeekerHomeGUI(JobseekerControl parent) {
+    public JobSeekerHomeGUI(JobseekerControl parent, ArrayList<JobCategory> categories,
+                            ArrayList<Location> locations) {
 
         myParent = parent;
+        locationList = locations;
+        jobCategoryList = categories;
         JFrame window = new JFrame("JSS: Job Seeker Home");
         window.add(navbar);
         searchCount = 0;
