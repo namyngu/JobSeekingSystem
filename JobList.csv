@@ -30,3 +30,7 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 29,jobTest,employer,14,PartTime,Draft,35000,0,"This is a job, description|line 2, word 2|line 3, word 3"
 30,new job,employer,11,PartTime,Draft,343242,9124,"line 1, word 2|line 2, word 2|line 3, word 2||line 5, word 2"
 31,new job,employer,11,PartTime,Draft,452,9124,"line1|line2,lalala|line 3||line 5"
+32,new job,employer,11,PartTime,Draft,34545,9124,"desc"
+33,new job,employer,11,Casual,Draft,23423,3864,"desc"
+34,new job,employer,11,PartTime,Draft,34234,3864,"desc"
+35,job title,Boeing,11,FullTime,Advertised,80000,9138,"line1|line2, word 2|line3||line 5"

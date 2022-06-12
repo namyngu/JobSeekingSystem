@@ -16,7 +16,6 @@ public class CreateJobGUI {
     private JLabel recruiterIDLabel;
     private JLabel intRecIDLabel;
     private JLabel employerLabel;
-    private JLabel empNameLabel;
     private JLabel jobTypeLabel;
     private JComboBox jobTypeMenu;
     private JLabel salaryLabel;
@@ -36,16 +35,13 @@ public class CreateJobGUI {
     private JLabel categoryLabelSecondary;
     private JComboBox categoryMenuPrimary;
     private JComboBox categoryMenuSecondary;
-    private JLabel hoursLabel;
-    private JTextField hoursText;
-    private JComboBox hoursMenu;
     private JLabel statusLabel;
     private JComboBox statusMenu;
-    private JLabel statusMessageLabel;
     private JButton submitButton;
     private JScrollPane descriptionScroll;
     private JScrollPane jobTitleScroll;
     private JLabel salaryTextLabel;
+    private JTextField employerText;
 
     private User recruiter;
     private ArrayList<Job> jobList;
@@ -70,10 +66,8 @@ public class CreateJobGUI {
 
         job.setRecruiterID(recruiter.getUserID());
 
-        intRecIDLabel.setText(Integer.toString(recruiter.getUserID()));  //will come from recruiter account details
-        //empNameLabel.setText(job.getEmployer());                        //will come from recruiter account details
+        intRecIDLabel.setText(Integer.toString(recruiter.getUserID()));
 
-        //TODO: Create a skilllist csv
         populateSkills("SkillList.csv");
         populateCategories("CategoryList.csv");
 
@@ -97,6 +91,7 @@ public class CreateJobGUI {
 
                 job.setJobTitle(jobTitleText.getText());
                 //System.out.println("jobTitle has been set to: " + job.getJobTitle());
+                job.setEmployer(employerText.getText());
                 job.setJobType(String.valueOf(jobTypeMenu.getSelectedItem()));
                 //System.out.println("JobType has been set to: " + job.getJobType());
 
@@ -116,6 +111,7 @@ public class CreateJobGUI {
                 String postcode = "";
                 for (int i = 0; i < 4; i++) {
                     postcode += selectedPostcode.charAt(i);
+                    //System.out.println("postcode is: " + postcode);
                 }
 
                 int postCode = Integer.parseInt(postcode);
