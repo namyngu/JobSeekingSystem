@@ -25,7 +25,7 @@ public class Job
         jobType = "jobType";
         jobStatus = "Draft";
         salary = 0;
-        locationID = -1;
+        locationID = 0;
         jobDescription = "jobDescription";
         skills = new ArrayList<>();
         applications = new ArrayList<>();

@@ -121,7 +121,7 @@ public class CreateJobGUI {
                 int postCode = Integer.parseInt(postcode);
 
                 String city = "";
-                for (int i = 5; i < selectedPostcode.length(); i++) {
+                for (int i = 6; i < selectedPostcode.length(); i++) {
                     city += selectedPostcode.charAt(i);
                 }
 

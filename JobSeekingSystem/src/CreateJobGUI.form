@@ -97,8 +97,8 @@
         <properties>
           <model>
             <item value="Casual"/>
-            <item value="Part-Time"/>
-            <item value="Full-Time"/>
+            <item value="PartTime"/>
+            <item value="FullTime"/>
           </model>
         </properties>
       </component>
