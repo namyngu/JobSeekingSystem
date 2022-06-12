@@ -117,70 +117,20 @@ public class JobSeekerHomeGUI {
                         partTime, casual, salMin, salMax, skills);
 
                 String[] jobListColumns = {"JobID", "Title", "Employer", "Location", "Salary", "Type"};
-////                ArrayList<String[]> jobListRows = new ArrayList<>();
-//                for (Job job : searchResults) {
-//                    int resultNum = 1;
-//                    // TODO: Need location data!
-//                    String[] thisJob = {Integer.toString(resultNum), job.getJobTitle(), job.getEmployer(),
-//                            "Location goes here.", Integer.toString(job.getSalary()), job.getJobType()};
-//                    jobListRows.add(thisJob);
-//                }
-
-//
-//                for (String[] rowData : jobListRows) {
-//                    jobModel.addRow(rowData);
-//                }
-
-
-
-
-
-                //test first search
-                if (searchCount == 0) {
-                    System.out.println(searchCount);
-                    resultsHeading.setText("Results");
-                    jobSearchTable.setVisible(true);
-
-
-                    String[][] rows = {
-                            {"001", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"}
-                    };
-
-                    DefaultTableModel freshModel = new DefaultTableModel(rows, jobListColumns);
-                    jobSearchTable.setModel(freshModel);
-                    searchResultsScroll.setVisible(true);
-
-                    searchCount++;
-                } else if (searchCount == 1) // new search after load
-                {
-                    System.out.println(searchCount);
-                    jobSearchModel.setNumRows(0);
-                    String[][] moreRows = {
-                            {"002", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
-                            {"003", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
-                    };
-
-                    DefaultTableModel freshModel = new DefaultTableModel(moreRows, jobListColumns);
-                    jobSearchTable.setModel(freshModel);
-                    searchCount++;
-                } else //one final time
-                {
-                    System.out.println(searchCount);
-                    jobSearchModel.setNumRows(0);
-                    String[][] evenMore = {
-
-                            {"004", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
-                            {"005", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
-                            {"004", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
-                            {"005", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
-                            {"004", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"},
-                            {"005", "Software Developer", "Google", "San Francisco", "$300,000", "Full Time"}
-                    };
-
-                    DefaultTableModel freshModel = new DefaultTableModel(evenMore, jobListColumns);
-                    jobSearchTable.setModel(freshModel);
-                    searchCount++;
+                ArrayList<String[]> jobListRows = new ArrayList<>();
+                for (Job job : searchResults) {
+                    int resultNum = 1;
+                    // TODO: Need location data!
+                    String[] thisJob = {Integer.toString(resultNum), job.getJobTitle(), job.getEmployer(),
+                            "Location goes here.", Integer.toString(job.getSalary()), job.getJobType()};
+                    jobListRows.add(thisJob);
                 }
+
+                String[][] rows = jobListRows.toArray(new String[0][0]);
+
+                DefaultTableModel freshModel = new DefaultTableModel(rows, jobListColumns);
+                jobSearchTable.setModel(freshModel);
+                searchResultsScroll.setVisible(true);
             }
         });
 
