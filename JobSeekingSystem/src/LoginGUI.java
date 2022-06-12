@@ -31,6 +31,7 @@ public class LoginGUI {
         frame.setContentPane(this.loginPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setLocation(700, 40);
         frame.setVisible(true);
 
         loginButton.addActionListener(new ActionListener() {

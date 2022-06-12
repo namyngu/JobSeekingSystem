@@ -47,16 +47,31 @@ public class CreateJobGUI {
     private ArrayList<Job> jobList;
     private ArrayList<Location> locationList;
 
-    public CreateJobGUI(User recruiter, ArrayList<Job> jobList, ArrayList<Location> locationList) throws IOException {
+    public CreateJobGUI(RecruiterControl recruiterControl) throws IOException {
         JFrame frame = new JFrame("Create Job");
         frame.setContentPane(this.createJobPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.pack();
+        frame.setBounds(550, 75, 850, 940);
         frame.setVisible(true);
 
-        this.recruiter = recruiter;
-        this.jobList = jobList;
-        this.locationList = locationList;
+        //Close button event
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if (JOptionPane.showConfirmDialog(frame,
+                        "Are you sure you want to close this window?", "Close Window?",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+                    RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl);
+                    frame.dispose();
+                }
+            }
+        });
+
+        this.recruiter = recruiterControl.getRecruiter();
+        this.jobList = recruiterControl.getJobList();
+        this.locationList = recruiterControl.getLocationList();
 
 
         Job job = new Job();
@@ -165,6 +180,8 @@ public class CreateJobGUI {
 
                 //update JobList
                 jobList.add(job);
+
+                RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl);
                 //close
             }
         });

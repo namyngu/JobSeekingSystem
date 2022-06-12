@@ -36,7 +36,7 @@ public class RecruiterHomeGUI {
         window.add(recruiterNav);
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setBounds(600,40,100,100);
+        window.setLocation(700,40);
         window.pack();
         window.setResizable(true);
         window.setVisible(true);
@@ -96,7 +96,8 @@ public class RecruiterHomeGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    CreateJobGUI createJob = new CreateJobGUI(myParent.getRecruiter(), myParent.getJobList(), myParent.getLocationList());
+                    CreateJobGUI createJob = new CreateJobGUI(parent);
+                    window.dispose();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -161,6 +162,14 @@ public class RecruiterHomeGUI {
                         data[i][j] = myJobs.get(i).getJobType();
                         break;
 
+                    case 6: {
+                        if (myJobs.get(i).getApplications().isEmpty())
+                            data[i][j] = 0;
+                        else
+                            data[i][j] = myJobs.get(i).getApplications().size();
+                        break;
+                    }
+
                     default:
                         System.out.println("Error");
                         break;
@@ -169,8 +178,7 @@ public class RecruiterHomeGUI {
             }
         }
 
-        jobsTable.setModel(new DefaultTableModel(data, new String[]{"JobID","Title","Employer","Location","Salary","Type"}));
-
+        jobsTable.setModel(new DefaultTableModel(data, new String[]{"JobID","Title","Employer","Location","Salary","Type", "Applicants"}));
     }
 
     public void populateSkills(String fileName) throws IOException {
