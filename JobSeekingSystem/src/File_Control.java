@@ -106,7 +106,7 @@ public class File_Control {
 
         try {
             Scanner scanner = new Scanner(new File(filename));
-            scanner.useDelimiter("[,\n]");
+            scanner.useDelimiter("[\n]");
             String fileId = "";
 
             while(scanner.hasNext())
@@ -123,8 +123,9 @@ public class File_Control {
         {
             System.out.println("Something went wrong");
         }
-
         return list;
     }
+
+
 
 }

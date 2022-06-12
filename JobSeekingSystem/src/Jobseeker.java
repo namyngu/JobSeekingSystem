@@ -41,7 +41,7 @@ public class Jobseeker extends User {
         File_Control fc = new File_Control();
 
         skills = fc.fileSearchId(super.getUserID(), "jobseeker-skills.csv");
-
+        fc.removeSkillsById(super.getUserID(), "jobseeker-skills.csv");
         System.out.println("skills loaded\n");
 
         System.out.println(skills);

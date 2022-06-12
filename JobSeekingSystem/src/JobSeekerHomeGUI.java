@@ -184,35 +184,13 @@ public class JobSeekerHomeGUI {
             }
         });
 
-        /*Add these methods back in once the actual components exist on the GUI
 
-            //navbar
-            searchJobsButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-            myApplicationsButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-            messagesButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-            profileButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-
-        */
+        editProfileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JobSeekerUpdateGUI updateGUI = new JobSeekerUpdateGUI(myParent);
+            }
+        });
     }
 
 
@@ -224,7 +202,7 @@ public class JobSeekerHomeGUI {
 
         for (int i = 0; i < skills.size(); i++)
         {
-            jsSkillsModel.addElement(skills.get(i));
+            jsSkillsModel.addElement("- "+skills.get(i));
         }
 
         System.out.println();

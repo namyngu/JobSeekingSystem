@@ -83,6 +83,19 @@ public class JobseekerControl
         return skills;
     }
 
+    public void setSkills(ArrayList<String> newskills)
+    {
+        jobseeker.setSkills(newskills);
+    }
+
+    public void saveSkills()
+    {
+        ArrayList skills = jobseeker.getSkills();
+
+
+    }
+
+
 
 
 
