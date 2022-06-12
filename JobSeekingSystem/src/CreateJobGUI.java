@@ -163,6 +163,8 @@ public class CreateJobGUI {
                 io.saveJob(job.getJobID(), job.getJobTitle(), job.getEmployer(), recruiter.getUserID(),
                             job.getJobType(), job.getJobStatus(), job.getSalary(), job.getLocationID(), job.getJobDescription(), job.getSkills(), category);
 
+                //update JobList
+                jobList.add(job);
                 //close
             }
         });

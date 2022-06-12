@@ -35,4 +35,5 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 34,new job,employer,11,PartTime,Draft,34234,3864,"desc"
 35,job title,Boeing,11,FullTime,Advertised,80000,9138,"line1|line2, word 2|line3||line 5"
 36,Software Developer,Apple,14,PartTime,Draft,85000,3868,"This job will help kickstart your career!|Welcome to Apple|"
-36,Coffee Boy,Kickstarter,14,FullTime,Advertised,100000,4055,"Your job is to get coffee for the executives.|Must be highly skilled at kissing ass.|"
+37,Coffee Boy,Kickstarter,14,FullTime,Draft,55000,3867,"WELCOME!|This job will help kickstart your career at Kickstarter!|"
+38,Sales,Coles,14,Casual,Advertised,33000,12172,"This is a great opportunity to work for a big company like Coles.|We welcome all talents, please apply."
