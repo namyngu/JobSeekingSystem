@@ -135,12 +135,11 @@ public class File_Control {
             if (tmpJob.getJobID() == ID)
             {
                 myJob = tmpJob;
+                return myJob;
             }
-            else
-                throw new Exception("Error job does not exist!");
-
         }
-        return myJob;
+        throw new Exception("Error job doesn't exist!");
+
     }
 
 }

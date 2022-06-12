@@ -134,7 +134,7 @@ public class RecruiterHomeGUI {
                 Point point = mouseEvent.getPoint();
                 int row = jobsTable.rowAtPoint(point);
                 if (mouseEvent.getClickCount() == 2 && jobsTable.getSelectedRow() != -1) {
-                    // your valueChanged overridden method
+                    // Action to take after double clicking.
                     int selectedRow = jobsTable.getSelectedRow();
                     int ID = Integer.parseInt(jobsTable.getValueAt(selectedRow, 0).toString());
                     RecruiterJobGUI recruiterJobGUI= new RecruiterJobGUI(parent, ID);
