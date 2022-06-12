@@ -26,7 +26,7 @@ public class JobSeekerHomeGUI {
     private JComboBox comboBox1;
     private JComboBox comboBox2;
     private JTable jobSearchTable;
-    private JComboBox comboBox3;
+    private JComboBox primaryCategoryBox;
     private JTextField textField2;
     private JTabbedPane navbar;
     private JPanel home;
@@ -55,6 +55,31 @@ public class JobSeekerHomeGUI {
 
     public int searchCount;
 
+    public void populateCategories(String fileName) throws IOException {
+        FileReader file = new FileReader(fileName);
+        Scanner scan = new Scanner(file);
+        String returnString = "";
+        String firstCategory = "";
+
+        while (scan.hasNextLine()) {
+            returnString = scan.nextLine();
+
+            for (int i = 0; i < returnString.length(); i++) {
+                if (returnString.charAt(i) != ',') {
+                    firstCategory += returnString.charAt(i);
+                }
+                else {
+                    break;
+                }
+            }
+
+            primaryCategoryBox.addItem(firstCategory);
+            firstCategory = "";
+        }
+
+        file.close();
+        //populateSecondaryCategories(fileName);
+    }
 
     public JobSeekerHomeGUI(JobseekerControl parent, ArrayList<JobCategory> categories,
                             ArrayList<Location> locations) {
@@ -70,6 +95,14 @@ public class JobSeekerHomeGUI {
         window.pack();
         window.setResizable(true);
         window.setVisible(true);
+
+        // Try populate categories to search in.
+        try {
+            populateCategories("CategoryList.csv");
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         //display name in profile
         jobSeekerFullname.setText(parent.getFullName());
@@ -100,9 +133,7 @@ public class JobSeekerHomeGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String searchDesc = textField1.getText();
-                // TODO: Combo boxes need to be fixed up
-                String catPrimary = "some category";
-                //String catPrimary = comboBox3.getDropTarget();
+                String catPrimary = String.valueOf(primaryCategoryBox.getSelectedItem());
                 // TODO: Will we need secondary category? Or not?
                 String catSecondary = "some other category";
                 //String catSecondary = comboBox3.getDropTarget();

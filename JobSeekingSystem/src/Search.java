@@ -267,31 +267,16 @@ public class Search
 
             // 4. Category
             // Check to see if we match on the job category - Primary and Secondary
-            /*
             int primaryCatMatch = 0;
             int secondaryCatMatch = 0;
-            if (categoryPrimary.equals(tmp.getJobCategoryPrimary())) {
+            if (categoryPrimary.equals(jobCategoryList.get(tmp.getJobID()-1).getJobPrimaryCategory())) {
                 // Match on Primary Category.
                 primaryCatMatch = 1;
             }
-            if (categorySecondary.equals(tmp.getJobCategorySecondary())) {
+            if (categorySecondary.equals(jobCategoryList.get(tmp.getJobID()-1).getJobSubCategory())) {
                 secondaryCatMatch = 1;
             }
-            */
-            int primaryCatMatch = 0;
-            int secondaryCatMatch = 0;
-            for (JobCategory tmpCategory: jobCategoryList)
-            {
-                if (categoryPrimary.equalsIgnoreCase(tmpCategory.getJobPrimaryCategory()))
-                {
-                    //Match on Primary Category.
-                    primaryCatMatch = 1;
-                }
-                if (categorySecondary.equalsIgnoreCase(tmpCategory.getJobSubCategory()))
-                {
-                    secondaryCatMatch = 1;
-                }
-            }
+
 
             // Weight the category matches.
             int primaryCatResult = primaryCatMatch * primaryCatWeight;
