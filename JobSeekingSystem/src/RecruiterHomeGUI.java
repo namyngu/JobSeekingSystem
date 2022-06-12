@@ -1,7 +1,11 @@
+import javax.print.attribute.IntegerSyntax;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -104,9 +108,11 @@ public class RecruiterHomeGUI {
             }
         });
 
-        searchButton.addActionListener(new ActionListener() {
+        searchButton.addActionListener(new ActionListener()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
                 String location = textField1.getText();
                 ListModel searchModel = candidateSkillList.getModel();
                 ArrayList<String> searchSkills = new ArrayList<>();
@@ -121,13 +127,28 @@ public class RecruiterHomeGUI {
             }
         });
 
+        //double click on jobs to bring up the jobs menu
+        jobsTable.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                jobsTable = (JTable) mouseEvent.getSource();
+                Point point = mouseEvent.getPoint();
+                int row = jobsTable.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && jobsTable.getSelectedRow() != -1) {
+                    // your valueChanged overridden method
+                    int selectedRow = jobsTable.getSelectedRow();
+                    int ID = Integer.parseInt(jobsTable.getValueAt(selectedRow, 0).toString());
+                    RecruiterJobGUI recruiterJobGUI= new RecruiterJobGUI(parent, ID);
+                }
+            }
+        });
+
         createTable();
     }
 
     private void createTable()
     {
         ArrayList<Job> myJobs = findRecruiterJob(myParent.getJobList());
-        Object[][] data = new String[myJobs.size()][6];
+        String[][] data = new String[myJobs.size()][6];
 
         for (int i = 0; i < myJobs.size(); i++)
         {
@@ -164,9 +185,9 @@ public class RecruiterHomeGUI {
 
                     case 6: {
                         if (myJobs.get(i).getApplications().isEmpty())
-                            data[i][j] = 0;
+                            data[i][j] = "0";
                         else
-                            data[i][j] = myJobs.get(i).getApplications().size();
+                            data[i][j] = String.valueOf(myJobs.get(i).getApplications().size());
                         break;
                     }
 
@@ -208,6 +229,7 @@ public class RecruiterHomeGUI {
         }
         return myJob;
     }
+
 }
 
 

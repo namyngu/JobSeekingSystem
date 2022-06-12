@@ -127,4 +127,20 @@ public class File_Control {
         return list;
     }
 
+    protected static Job findJob(ArrayList<Job> jobList, int ID) throws Exception
+    {
+        Job myJob = null;
+        for (Job tmpJob : jobList)
+        {
+            if (tmpJob.getJobID() == ID)
+            {
+                myJob = tmpJob;
+            }
+            else
+                throw new Exception("Error job does not exist!");
+
+        }
+        return myJob;
+    }
+
 }
