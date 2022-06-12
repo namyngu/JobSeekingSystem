@@ -21,7 +21,6 @@ public class CreateJobGUI {
     private JComboBox jobTypeMenu;
     private JLabel salaryLabel;
     private JTextField salaryText;
-    private JComboBox salaryMenu;
     private JLabel skillsLabel;
     private JComboBox skillsMenu;
     private JList skillsList;
@@ -46,6 +45,7 @@ public class CreateJobGUI {
     private JButton submitButton;
     private JScrollPane descriptionScroll;
     private JScrollPane jobTitleScroll;
+    private JLabel salaryTextLabel;
 
     private User recruiter;
     private ArrayList<Job> jobList;
