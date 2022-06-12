@@ -1,9 +1,7 @@
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
-import java.io.IOException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.File;
 
 public class File_Control {
     public File_Control()
@@ -104,27 +102,56 @@ public class File_Control {
         String searchId = Integer.toString(id);
         ArrayList list = new ArrayList();
 
+        boolean found = false;
         try {
             Scanner scanner = new Scanner(new File(filename));
-            scanner.useDelimiter("[,\n]");
-            String fileId = "";
 
-            while(scanner.hasNext())
+            while(scanner.hasNext() && !found)
             {
-                fileId = scanner.next();
-
-                if(searchId.equals(fileId))
+                String data = scanner.next();
+                String[] arr = data.split(",");
+                //if id is found
+                if(arr[0].equals(searchId))
                 {
-                    list.add(scanner.next());
+                    //convert array to arraylist
+                    list = new ArrayList<>(Arrays.asList(arr));
+                    //remove id
+                    list.remove(0);
+                    found = true;
+                }
+            }
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("something went wrong");
+        }
+        return list;
+    }
+
+    //look at passed in file and write to an array all but item passed in
+    public ArrayList<String> removeById(int id, String filename)
+    {
+        String searchId = Integer.toString(id);
+        ArrayList list = new ArrayList();
+
+        try {
+            Scanner scanner = new Scanner(new File(filename));
+            while(scanner.hasNextLine())
+            {
+                String data = scanner.nextLine();
+                String[] values = data.split(",");
+                if(!values[0].equals(searchId))
+                {
+                    list.add(data);
                 }
             }
         }
         catch (Exception e)
         {
-            System.out.println("Something went wrong");
-        }
 
-        return list;
+        }
+       return list;
     }
 
     protected static Job findJob(ArrayList<Job> jobList, int ID) throws Exception
@@ -142,4 +169,20 @@ public class File_Control {
 
     }
 
-}
+    public void writeListToFile(ArrayList<String> list, String filename)
+    {
+        try {
+            FileWriter file = new FileWriter(filename);
+            PrintWriter write = new PrintWriter(file);
+            for(String line: list){
+                write.println(line);
+            }
+            write.close();
+        }
+        catch(Exception e) {
+            System.out.println("Something went wrong");
+        }
+    }
+
+    }
+

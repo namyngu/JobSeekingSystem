@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -14,7 +15,7 @@ public class JobSeekerUpdateGUI {
     private JTextField textField3;
     private JList userSkillList;
     private JButton updateButton;
-    private JLabel clientName;
+    private JLabel jobSeekerFullname;
     private JLabel phoneLabel;
     private JLabel emailLabel;
     private JLabel addressLabel;
@@ -25,9 +26,9 @@ public class JobSeekerUpdateGUI {
     private DefaultListModel allSkillsModel;
 
 
-    public JobSeekerUpdateGUI() {
+    public JobSeekerUpdateGUI(JobseekerControl jsControl, JobSeekerHomeGUI jshomescreen) {
         userSkillsModel = new DefaultListModel<>();
-        allSkillsModel = buildModel("JobSeekingSystem/Skills.csv");
+        allSkillsModel = buildModel("SkillList.csv");
         JFrame frame = new JFrame("Job Title");
 
         frame.setContentPane(updateSkillsPanel);
@@ -37,8 +38,10 @@ public class JobSeekerUpdateGUI {
         frame.setVisible(true);
 
         ArrayList<String> allSkills = new ArrayList<String>();;
-        ArrayList<String> mySkills = new ArrayList<String>();
+        ArrayList<String> mySkills = jsControl.getSkills();
 
+        //display name in profile
+        jobSeekerFullname.setText(jsControl.getFullName());
 
 //        //build user skill list
         buildList(mySkills, userSkillsModel, userSkillList);
@@ -66,6 +69,27 @@ public class JobSeekerUpdateGUI {
 
             }
         });
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                //get updated skills from user skills Jlist
+                ArrayList<String> newSkillList = listToArrayList(userSkillList);
+
+                //update jobseeker skills arraylist
+                jsControl.setSkills(newSkillList);
+
+                //update jobseeker home gui to display new skills
+                jshomescreen.buildSkillList();
+
+                //update jobseeker-skills file
+                jsControl.saveSkills();
+
+
+                frame.dispose();
+
+            }
+        });
     }
 
     //add data to JList using ListModel and ArrayList of data
@@ -78,7 +102,7 @@ public class JobSeekerUpdateGUI {
         listGUI.setModel(model);
     }
 
-    // take skills from csv file and return a model
+    // take skills from csv file and return a List Model
     public DefaultListModel buildModel(String fileName )  {
             DefaultListModel model = new DefaultListModel<>();
 
@@ -102,6 +126,22 @@ public class JobSeekerUpdateGUI {
 
         return model;
         }
+
+        //convert a Jlist into an ArrayList
+        private ArrayList<String> listToArrayList(JList list)
+        {
+            ArrayList<String> arrList = new ArrayList<>();
+
+            int listSize = list.getModel().getSize();
+
+                for (int i = 0; i < listSize; i++)
+                {
+                    String skill = list.getModel().getElementAt(i).toString();;
+                    arrList.add(skill);
+                }
+
+            return arrList;
+        };
 
     }
 

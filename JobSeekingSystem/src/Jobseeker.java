@@ -55,16 +55,14 @@ public class Jobseeker extends User {
     }
 
 
-
-
     // Method to hand skill Array off to Search class
     public ArrayList<String> getSkills() {
         return skills;
     }
 
     // Method to set list of Skills (needed at the moment for search testing)
-    public void setSkills(ArrayList<String> newSkills) {
-        skills = newSkills;
+    public void setSkills(ArrayList<String> skills) {
+        this.skills = skills;
     }
 
     // Method to print this Jobseeker out as a String

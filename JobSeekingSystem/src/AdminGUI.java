@@ -56,7 +56,7 @@ public class AdminGUI
 
         //retrieve messages for inbox
         int userID = this.adminControl.adminID()-1;
-        System.out.println("userID without -1 is " + this.adminControl.adminID());
+        System.out.println("59 userID without -1 is " + this.adminControl.adminID());
 
         if (this.program.checkMessages(userID) == false)
         {

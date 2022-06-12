@@ -83,7 +83,7 @@ public class JobSeekerHomeGUI {
 
     public JobSeekerHomeGUI(JobseekerControl parent, ArrayList<JobCategory> categories,
                             ArrayList<Location> locations) {
-
+        JobSeekerHomeGUI home = this;
         myParent = parent;
         locationList = locations;
         jobCategoryList = categories;
@@ -170,53 +170,29 @@ public class JobSeekerHomeGUI {
             }
         });
 
-        /*Add these methods back in once the actual components exist on the GUI
 
-            //navbar
-            searchJobsButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-            myApplicationsButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-            messagesButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-            profileButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-
-        */
+        editProfileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JobSeekerUpdateGUI updateGUI = new JobSeekerUpdateGUI(myParent, home );
+            }
+        });
     }
 
 
-    private void buildSkillList(){
+    public void buildSkillList(){
         jsSkillsModel = new DefaultListModel<>();
         ArrayList<String> skills = myParent.getSkills();
-        System.out.println("In JS Home GUI");
-        System.out.println(skills);
 
         for (int i = 0; i < skills.size(); i++)
         {
-            jsSkillsModel.addElement(skills.get(i));
+            jsSkillsModel.addElement("- "+skills.get(i));
         }
-
-        System.out.println();
-
         jsSkillsTable.setModel(jsSkillsModel);
     }
+
+
+
 
 
 
