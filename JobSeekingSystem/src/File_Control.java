@@ -58,7 +58,10 @@ public class File_Control {
     public void saveJob(int jobID, String jobTitle, String employer, int recruiterID, String jobType,
                         String jobStatus, int salary, int locationID, String jobDescription, ArrayList<String> skills, JobCategory category)
     {
-        String data = jobID + "," + jobTitle + "," + employer + "," + recruiterID + "," + jobType + "," + jobStatus + "," + salary + "," + locationID + "," + "\"" + jobDescription + "\"";
+        //replaces all new line in the jobDescription with a "|"
+        String jobDescription2 = jobDescription.replaceAll("\n", "|");
+
+        String data = jobID + "," + jobTitle + "," + employer + "," + recruiterID + "," + jobType + "," + jobStatus + "," + salary + "," + locationID + "," + "\"" + jobDescription2 + "\"";
         System.out.println("data is: " + data);
         String data2 = "";
 

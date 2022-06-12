@@ -152,8 +152,11 @@ public class JSS
             //split each job into jobDetails
             //jobID, jobTitle, employer, recruiterID, jobType, jobStatus, salary, locationID, jobDescription
             String[] jobDetails = job[i].split(",");
+            //replaces all "|" in the jobDescription with a new line "\n"
+            String jobDescription = jobDetails[8].replaceAll("\\|","\n");
+
             importJob(Integer.parseInt(jobDetails[0]), jobDetails[1], jobDetails[2], Integer.parseInt(jobDetails[3]), jobDetails[4],
-                        jobDetails[5], Integer.parseInt(jobDetails[6]), Integer.parseInt(jobDetails[7]), jobDetails[8]);
+                        jobDetails[5], Integer.parseInt(jobDetails[6]), Integer.parseInt(jobDetails[7]), jobDescription);
 
         }
     }
