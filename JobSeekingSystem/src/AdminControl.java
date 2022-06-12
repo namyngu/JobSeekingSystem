@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class AdminControl
+public class AdminControl implements Communication
 {
     private Administrator admin;
     JSS program;
@@ -45,6 +45,8 @@ public class AdminControl
         }
     }
 
+
+
     public ArrayList<Message> relayMessages()
     {
         ArrayList<Message> toRelay = this.admin.getMessages();
@@ -56,5 +58,10 @@ public class AdminControl
     public int adminID()
     {
         return this.admin.getUserID();
+    }
+
+    public void createMessage(int sender, int destination, String header, String body)
+    {
+        this.sendMessage(this.program,sender,destination,header,body);
     }
 }

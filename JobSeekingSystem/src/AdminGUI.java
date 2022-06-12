@@ -22,7 +22,8 @@ public class AdminGUI
     private JButton replyButton;
     private JButton deleteButton;
     private JLabel inboxLabel;
-    private JButton newMessageButton;
+    private JTextField replyTextField;
+//    private JButton newMessageButton;
 
     private AdminControl adminControl;
     private JSS program;
@@ -55,6 +56,7 @@ public class AdminGUI
 
         //retrieve messages for inbox
         int userID = this.adminControl.adminID()-1;
+        System.out.println("userID without -1 is " + this.adminControl.adminID());
 
         if (this.program.checkMessages(userID) == false)
         {
@@ -154,6 +156,7 @@ public class AdminGUI
             {
 
                 int userIndex = userList.getSelectedIndex();
+                System.out.println("line 158 index selected is " + userList.getSelectedIndex() );
                 System.out.println("warning user line 154" + userIndex);
 
                 adminControl.blockedMessage(adminControl.adminID(),userIndex);
@@ -175,14 +178,24 @@ public class AdminGUI
                 mailTextArea.setText(display);
             }
         });
-        newMessageButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-//                MessageGUI sendMessage = new MessageGUI();
-            }
-        });
+//        newMessageButton.addActionListener(new ActionListener()
+//        {
+//            @Override
+//            public void actionPerformed(ActionEvent e)
+//            {
+////                MessageGUI sendMessage = new MessageGUI();
+//            }
+//        });
+//        replyButton.addActionListener(new ActionListener()
+//        {
+//            @Override
+//            public void actionPerformed(ActionEvent e)
+//            {
+//
+//                MessageGUI reply = new MessageGUI(sender,destination);
+//                Message toSend = reply.getMessage(sender,destination);
+//            }
+//        });
         replyButton.addActionListener(new ActionListener()
         {
             @Override
@@ -190,8 +203,10 @@ public class AdminGUI
             {
                 int sender = adminControl.adminID();
                 int destination = inboxList.getSelectedIndex();
-                MessageGUI reply = new MessageGUI(sender,destination);
-                Message toSend = reply.getMessage(sender,destination);
+                String header = "Admin Reply";
+                String body = replyTextField.getText();
+                adminControl.createMessage(sender,destination,header,body);
+
             }
         });
     }
