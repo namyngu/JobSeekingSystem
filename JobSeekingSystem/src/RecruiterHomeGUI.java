@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileReader;
@@ -119,6 +120,57 @@ public class RecruiterHomeGUI {
             }
         });
 
+        createTable();
+    }
+
+    private void createTable()
+    {
+        ArrayList<Job> myJobs = findRecruiterJob(myParent.getJobList());
+        Object[][] data = new String[myJobs.size()][6];
+
+        for (int i = 0; i < myJobs.size(); i++)
+        {
+            for (int j = 0; j < 6; j++)
+            {
+                switch (j)
+                {
+                    case 0:
+                        data[i][j] = String.valueOf(myJobs.get(i).getJobID());
+                        break;
+
+                    case 1:
+                        data[i][j] = myJobs.get(i).getJobTitle();
+                        break;
+
+                    case 2:
+                        data[i][j] = myJobs.get(i).getEmployer();
+                        break;
+
+                    case 3: {
+                        int locationID = myJobs.get(i).getLocationID();
+                        String city = myParent.getLocationList().get(locationID).getCity();
+                        data[i][j] = city;
+                        break;
+                    }
+
+                    case 4:
+                        data[i][j] = String.valueOf(myJobs.get(i).getSalary());
+                        break;
+
+                    case 5:
+                        data[i][j] = myJobs.get(i).getJobType();
+                        break;
+
+                    default:
+                        System.out.println("Error");
+                        break;
+                }
+
+            }
+        }
+
+        jobsTable.setModel(new DefaultTableModel(data, new String[]{"JobID","Title","Employer","Location","Salary","Type"}));
+
     }
 
     public void populateSkills(String fileName) throws IOException {
@@ -134,6 +186,20 @@ public class RecruiterHomeGUI {
         file.close();
     }
 
+    //Method to search through all jobs to find the recruiter's jobs.
+    private ArrayList<Job> findRecruiterJob(ArrayList<Job> jobList)
+    {
+        ArrayList<Job> myJob = new ArrayList<>();
+        //search through all jobs for the recruiter's job
+        for (Job tmpJob : jobList)
+        {
+            if (tmpJob.getRecruiterID() == myParent.getRecruiter().getUserID())
+            {
+                myJob.add(tmpJob);
+            }
+        }
+        return myJob;
+    }
 }
 
 
