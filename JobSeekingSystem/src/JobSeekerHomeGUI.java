@@ -2,6 +2,8 @@ import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,6 +29,7 @@ public class JobSeekerHomeGUI {
     private JComboBox comboBox2;
     private JTable jobSearchTable;
     private JComboBox primaryCategoryBox;
+    private JComboBox secondaryCategoryBox;
     private JTextField textField2;
     private JTabbedPane navbar;
     private JPanel home;
@@ -55,30 +58,31 @@ public class JobSeekerHomeGUI {
 
     public int searchCount;
 
-    public void populateCategories(String fileName) throws IOException {
-        FileReader file = new FileReader(fileName);
-        Scanner scan = new Scanner(file);
-        String returnString = "";
-        String firstCategory = "";
+    public void populateCategories() throws IOException {
+        File_Control IO = new File_Control();
+        String catList = IO.readFile("CategoryList.csv");
+        String[] categories = catList.split("\n");
 
-        while (scan.hasNextLine()) {
-            returnString = scan.nextLine();
+        for (String category : categories) {
+            String[] breakCategories = category.split(",");
+            primaryCategoryBox.addItem(breakCategories[0]);
+        }
+    }
 
-            for (int i = 0; i < returnString.length(); i++) {
-                if (returnString.charAt(i) != ',') {
-                    firstCategory += returnString.charAt(i);
-                }
-                else {
-                    break;
+    public void populateSecondaryCategories(String primaryCategory) throws IOException {
+        File_Control IO = new File_Control();
+        String catList = IO.readFile("CategoryList.csv");
+        String[] categories = catList.split("\n");
+
+        for (String category: categories) {
+
+            String[] breakCategories = category.split(",");
+                if (breakCategories[0].equals(primaryCategory)) {
+                for (int x = 1; x < breakCategories.length; x++) {
+                    secondaryCategoryBox.addItem(breakCategories[x]);
                 }
             }
-
-            primaryCategoryBox.addItem(firstCategory);
-            firstCategory = "";
         }
-
-        file.close();
-        //populateSecondaryCategories(fileName);
     }
 
     public JobSeekerHomeGUI(JobseekerControl parent, ArrayList<JobCategory> categories,
@@ -98,7 +102,7 @@ public class JobSeekerHomeGUI {
 
         // Try populate categories to search in.
         try {
-            populateCategories("CategoryList.csv");
+            populateCategories();
         }
         catch (Exception e) {
             throw new RuntimeException(e);
@@ -134,9 +138,7 @@ public class JobSeekerHomeGUI {
             public void actionPerformed(ActionEvent e) {
                 String searchDesc = textField1.getText();
                 String catPrimary = String.valueOf(primaryCategoryBox.getSelectedItem());
-                // TODO: Will we need secondary category? Or not?
-                String catSecondary = "some other category";
-                //String catSecondary = comboBox3.getDropTarget();
+                String catSecondary = String.valueOf(secondaryCategoryBox.getSelectedItem());
                 String location = textField2.getText();
                 boolean fullTime = fullTimeCheckBox.isSelected();
                 boolean partTime = partTimeCheckBox.isSelected();
@@ -167,6 +169,19 @@ public class JobSeekerHomeGUI {
                 DefaultTableModel freshModel = new DefaultTableModel(rows, jobListColumns);
                 jobSearchTable.setModel(freshModel);
                 searchResultsScroll.setVisible(true);
+            }
+        });
+
+        primaryCategoryBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                try {
+                    populateSecondaryCategories(String.valueOf(primaryCategoryBox.getSelectedItem()));
+                }
+                catch (Exception x) {
+                    System.out.println("Problem loading secondary categories!");
+                    x.printStackTrace();
+                }
             }
         });
 
