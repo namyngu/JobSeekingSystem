@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class RecruiterJobGUI {
     private JPanel jobPanel;
@@ -46,7 +47,11 @@ public class RecruiterJobGUI {
         editJobButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ManageJobGUI manageJob = new ManageJobGUI(myJob);
+                try {
+                    ManageJobGUI manageJob = new ManageJobGUI(myJob);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
     }
