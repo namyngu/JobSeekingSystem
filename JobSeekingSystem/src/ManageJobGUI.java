@@ -52,6 +52,7 @@ public class ManageJobGUI extends CreateJobGUI {
     private User recruiter;
     private ArrayList<Job> jobList;
     private ArrayList<Location> locationList;
+    private ArrayList<JobCategory> jobCategoryList;
     private Job job;
     private Location location;
     private JobCategory category;
@@ -65,7 +66,7 @@ public class ManageJobGUI extends CreateJobGUI {
         frame1.setVisible(true);
 
         DefaultListModel skillsListGUI = new DefaultListModel();
-        //populateSkills("SkillList.csv", skillsMenu);
+        populateSkills("SkillList.csv", skillsMenu);
         populateCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
         populateForm(job, skillsListGUI);
 
@@ -75,6 +76,34 @@ public class ManageJobGUI extends CreateJobGUI {
                 char c = e.getKeyChar();
                 if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
                     e.consume();  // if it's not a number, ignore the event
+                }
+            }
+        });
+
+        addSkillButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                skillsListGUI.addElement(String.valueOf(skillsMenu.getSelectedItem()));
+                skillsList.setModel(skillsListGUI);
+            }
+        });
+
+        removeSkillButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                skillsListGUI.removeElement(skillsList.getSelectedValue());
+                skillsList.setModel(skillsListGUI);
+            }
+        });
+
+        locationStateMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    populatePostcode("Location.csv", locationStateMenu, postcodeMenu);
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         });
@@ -104,12 +133,27 @@ public class ManageJobGUI extends CreateJobGUI {
                 popSkillsList.addElement(skill);
                 skillsList.setModel(popSkillsList);
             }
-            //locationStateMenu.setSelectedItem(job.getLocation);
-            //postcodeMenu.set
+            //location list
+            for (Location tmpLocation : locationList) {
+                if (tmpLocation.getLocationID() == job.getLocationID()) {
+                    locationStateMenu.setSelectedItem(tmpLocation.getState());
+                    postcodeMenu.setSelectedItem(tmpLocation.getPostcode() + ", " + tmpLocation.getCity());
+                    continue;
+                }
+            }
+
             descriptionText.setText(job.getJobDescription());
-            //categoryMenuPrimary.set
-            //categoryMenuSecondary.set
-            //statusMenu.set
+
+            //categories
+            for (JobCategory tmpCategory : jobCategoryList) {
+                if (tmpCategory.getJobID() == job.getJobID()) {
+                    categoryMenuPrimary.setSelectedItem(tmpCategory.getJobPrimaryCategory());
+                    categoryMenuSecondary.setSelectedItem(tmpCategory.getJobSubCategory());
+                    continue;
+                }
+            }
+
+            statusMenu.setSelectedItem(job.getJobStatus());
         }
 
                 /*
