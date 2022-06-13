@@ -166,7 +166,34 @@ public class File_Control {
             }
         }
         throw new Exception("Error job doesn't exist!");
+    }
 
+    protected static Location findLocation(ArrayList<Location> locationList, int ID) throws Exception
+    {
+        Location myLocation = null;
+        for (Location tmpLocation : locationList)
+        {
+            if (tmpLocation.getLocationID() == ID)
+            {
+                myLocation = tmpLocation;
+                return myLocation;
+            }
+        }
+        throw new Exception("Error job doesn't exist!");
+    }
+
+    protected static User findUser(ArrayList<User> userList, int ID) throws Exception
+    {
+        User myUser = null;
+        for (User tmpUser : userList)
+        {
+            if (tmpUser.getUserID() == ID)
+            {
+                myUser = tmpUser;
+                return myUser;
+            }
+        }
+        throw new Exception("Error job doesn't exist!");
     }
 
     public void writeListToFile(ArrayList<String> list, String filename)

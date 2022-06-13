@@ -7,6 +7,7 @@ public class RecruiterControl {
     private ArrayList<Job> jobList;
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
+    private ArrayList<User> userList;
 
     public RecruiterControl() {
         mainSearch = new Search();
@@ -19,12 +20,13 @@ public class RecruiterControl {
     }
 
     public RecruiterControl(User recruiter, ArrayList<Job> jobs, ArrayList<Location> locations,
-                            ArrayList<JobCategory> categories) {
+                            ArrayList<JobCategory> categories, ArrayList<User> userList) {
         this.recruiter = recruiter;
         jobList = jobs;
         locationList = locations;
         jobCategoryList = categories;
         mainSearch = new Search(this, jobList, locationList, jobCategoryList);
+        this.userList = userList;
 
         RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(this);
     }
@@ -76,5 +78,9 @@ public class RecruiterControl {
 
     public void setJobCategoryList(ArrayList<JobCategory> jobCategoryList) {
         this.jobCategoryList = jobCategoryList;
+    }
+
+    public ArrayList<User> getUserList() {
+        return userList;
     }
 }

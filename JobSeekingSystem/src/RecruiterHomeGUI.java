@@ -148,7 +148,7 @@ public class RecruiterHomeGUI {
     private void createTable()
     {
         ArrayList<Job> myJobs = findRecruiterJob(myParent.getJobList());
-        String[][] data = new String[myJobs.size()][6];
+        String[][] data = new String[myJobs.size()][7];
 
         for (int i = 0; i < myJobs.size(); i++)
         {
@@ -176,7 +176,7 @@ public class RecruiterHomeGUI {
                     }
 
                     case 4:
-                        data[i][j] = String.valueOf(myJobs.get(i).getSalary());
+                        data[i][j] = String.valueOf(myJobs.get(i).getJobStatus());
                         break;
 
                     case 5:
@@ -184,7 +184,7 @@ public class RecruiterHomeGUI {
                         break;
 
                     case 6: {
-                        if (myJobs.get(i).getApplications().isEmpty())
+                        if (myJobs.get(i).getApplications().size() == 0)
                             data[i][j] = "0";
                         else
                             data[i][j] = String.valueOf(myJobs.get(i).getApplications().size());
@@ -199,7 +199,7 @@ public class RecruiterHomeGUI {
             }
         }
 
-        jobsTable.setModel(new DefaultTableModel(data, new String[]{"JobID","Title","Employer","Location","Salary","Type", "Applicants"}));
+        jobsTable.setModel(new DefaultTableModel(data, new String[]{"JobID","Title","Employer","Location","Status","Type", "Applicants"}));
     }
 
     public void populateSkills(String fileName) throws IOException {
