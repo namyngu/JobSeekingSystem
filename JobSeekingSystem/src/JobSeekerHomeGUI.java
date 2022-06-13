@@ -81,17 +81,8 @@ public class JobSeekerHomeGUI {
                 for (int x = 1; x < breakCategories.length; x++) {
                     secondaryCategoryBox.addItem(breakCategories[x]);
                 }
-                else {
-                    break;
-                }
             }
-
-            primaryCategoryBox.addItem(firstCategory);
-            firstCategory = "";
         }
-
-        file.close();
-        //populateSecondaryCategories(fileName);
     }
 
     public JobSeekerHomeGUI(JobseekerControl parent, ArrayList<JobCategory> categories,
