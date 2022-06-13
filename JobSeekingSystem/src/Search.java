@@ -354,17 +354,16 @@ public class Search
     }
 
     // Method 2. Search for a list of matching JobSeekers
-    public ArrayList<Jobseeker> seekerSearch(Location seekerLocation, ArrayList<String> seekerSkills) throws Exception {
+    public ArrayList<Jobseeker> seekerSearch(String searchLocation, ArrayList<String> seekerSkills) throws Exception {
         ArrayList<Jobseeker> results = new ArrayList<Jobseeker>();
-
-
-
         return results;
     }
 
     // Method 3. Search for a list of recommended jobs.
-    public ArrayList<Job> recommendedJobs() {
+    public ArrayList<Job> recommendedJobs(Location seekerLocation, ArrayList<String> seekerSkills) throws Exception {
         //TODO
+        ArrayList<Job> results = new ArrayList<>();
+        return results;
     }
 
     protected int calculateMatch(int jobID, int userID)

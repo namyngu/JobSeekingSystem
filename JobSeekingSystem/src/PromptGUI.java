@@ -23,10 +23,10 @@ public class PromptGUI
         JFrame frame = new JFrame("USER PROMPT");
         frame.setContentPane(this.promptPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
         this.message = "";
         this.details = "";
+        frame.pack();
+        frame.setVisible(true);
         proceedButton.addActionListener(new ActionListener()
         {
             @Override
@@ -43,10 +43,10 @@ public class PromptGUI
         JFrame frame = new JFrame("USER PROMPT");
         frame.setContentPane(this.promptPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
         this.message = message;
         this.messageLabel.setText(this.message);
+        frame.pack();
+        frame.setVisible(true);
         proceedButton.addActionListener(new ActionListener()
         {
             @Override
