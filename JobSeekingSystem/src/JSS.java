@@ -669,7 +669,7 @@ public class JSS
 
                     System.out.println("senderID is: " + message.getSenderID());
 
-                    nextMessageID +=1;
+//                    nextMessageID +=1;
 
 
                     User temp = this.userList.get(userIndex-1);
@@ -819,12 +819,13 @@ public class JSS
                 //split each user into another array of userDetails
                 String[] messageDetails = messageString[i].split(",");
                currentMessageID = Integer.parseInt(messageDetails[0]);
-
+                System.out.println("current message ID in loop uis " + currentMessageID);
 
 
 
             }
             nextMessageID = currentMessageID;
+            System.out.println("out of loop now NEXT MESSAGE ID will be " + nextMessageID);
         }
         catch (Exception e)
         {
