@@ -119,7 +119,12 @@ public class JobSeekerHomeGUI {
         //display skills in profile
         buildSkillList();
 
-        //test build table will condense into reusable method
+        // TODO: Obtain a list of recommended jobs for this seeker.
+        ArrayList<Job> searchResults = myParent.recommendedSearch();
+
+        //
+        // TODO: remove this when above method works.
+        // TODO: test build table will condense into reusable method.
      String[] jobListColumns = {"JobID", "Title", "Employer", "Location", "Salary", "Type"};
         String[][] jobListRows = {
                 {"001", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},

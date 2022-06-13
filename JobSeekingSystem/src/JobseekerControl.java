@@ -41,6 +41,14 @@ public class JobseekerControl
         return searchResults;
     }
 
+    public ArrayList<Job> recommendedSearch() {
+        // TODO: Get the jobSeeker's location somehow.
+        // TODO: Mocked in for now.
+        Location seekerLocation = new Location();
+        ArrayList<Job> searchResults = new mainSearch.seekerSearch(seekerLocation, jobseeker.getSkills());
+        return searchResults;
+}
+
 
     public float matchScore(ArrayList<String> keywords, ArrayList skills)
     {
