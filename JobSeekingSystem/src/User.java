@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Locale;
 
 public abstract class User
 {
@@ -15,6 +13,21 @@ public abstract class User
     private ArrayList<Message> messages;
 
 
+    // Default Constructor.
+    public User ()
+    {
+        userID = -1;
+        firstName = "Default";
+        lastName = "Default";
+        userName = "unknownUser";
+        password = "password";
+        loggedIn = false;
+        active = true;
+        userType = "Guest";
+        messages = new ArrayList<>();
+    }
+
+    // Non-default Constructor.
     public User(String userName, String password)
     {
         this.userName = userName;
@@ -25,7 +38,7 @@ public abstract class User
         messages = new ArrayList<Message>();
     }
 
-
+    // Non-default Constructor.
     public User(int userID, String firstName, String lastName, String userName, String password, String userType)
     {
         this.userID = userID;
@@ -39,6 +52,7 @@ public abstract class User
         messages = new ArrayList<Message>();
     }
 
+    // Non-default Constructor.
     public User(int userID, String firstName, String lastName, String userName, String password, String userType, boolean active)
     {
         this.userID = userID;
@@ -52,17 +66,9 @@ public abstract class User
         messages = new ArrayList<Message>();
     }
 
-    public void display()
-    {
-        System.out.println("UserID: " + userID);
-        System.out.println("Name: " + firstName + " " + lastName);
-        System.out.println("Username: " + userName);
-        System.out.println("UserType: " + userType);
-    }
-
-
     //TODO look at putting this into control class?
 
+    // Method to add a message for this user.
     public boolean addMessage(Message message)
     {
 
@@ -79,6 +85,63 @@ public abstract class User
         }
         return delivered;
     }
+
+    // Display method.
+    public void display()
+    {
+        System.out.println("UserID: " + userID);
+        System.out.println("Name: " + firstName + " " + lastName);
+        System.out.println("Username: " + userName);
+        System.out.println("UserType: " + userType);
+    }
+
+    // Accessor methods.
+    public boolean isActive()
+    {
+        return active;
+    }
+
+    public boolean isLoggedIn()
+    {
+        return loggedIn;
+    }
+
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    public String getLastName()
+    {
+        return lastName;
+    }
+
+    public ArrayList<Message> getMessages()
+    {
+
+        return messages;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public int getUserID()
+    {
+        return userID;
+    }
+
+    public String getUserName()
+    {
+        return userName;
+    }
+
+    public String getUserType()
+    {
+        return userType;
+    }
+
     /*
     Method below is just to check messages are getting though, probably delete later, Gerard
      */
@@ -97,54 +160,10 @@ public abstract class User
         return mail;
     }
 
-    public ArrayList<Message> getMessages()
+    // Mutator methods.
+    public void setActive(boolean active)
     {
-
-        return messages;
-    }
-
-    public void setMessages(ArrayList<Message> messages)
-    {
-        this.messages = messages;
-    }
-
-//Method to save user to users.csv
-//    public void saveUser(String fileName)
-//    {
-//        try
-//        {
-//            String userData = userID + "," + firstName + "," + lastName + "," + userName + "," + password + "," + userType;
-//            File_Control io = new File_Control();
-//            io.writeFile("users.csv", userData);
-//        }
-//        catch (Exception e)
-//        {
-//            System.out.println("Error failed to save user into csv.");
-//        }
-//
-//    }
-
-
-    //Setters & Getters
-
-    public int getUserID()
-    {
-        return userID;
-    }
-
-    public void setUserID(int userID)
-    {
-        this.userID = userID;
-    }
-
-    public String getFirstName()
-    {
-        return firstName;
-    }
-
-    public String getLastName()
-    {
-        return lastName;
+        this.active = active;
     }
 
     public void setFirstName(String firstName)
@@ -157,19 +176,14 @@ public abstract class User
         this.lastName = lastName;
     }
 
-    public String getUserName()
+    public void setLoggedIn(boolean loggedIn)
     {
-        return userName;
+        this.loggedIn = loggedIn;
     }
 
-    public void setUserName(String userName)
+    public void setMessages(ArrayList<Message> messages)
     {
-        this.userName = userName;
-    }
-
-    public String getPassword()
-    {
-        return password;
+        this.messages = messages;
     }
 
     public void setPassword(String password)
@@ -177,38 +191,21 @@ public abstract class User
         this.password = password;
     }
 
-    public boolean isLoggedIn()
+    public void setUserID(int userID)
     {
-        return loggedIn;
+        this.userID = userID;
     }
 
-    public void setLoggedIn(boolean loggedIn)
+    public void setUserName(String userName)
     {
-        this.loggedIn = loggedIn;
+        this.userName = userName;
     }
-
-    public boolean isActive()
-    {
-        return active;
-    }
-
-    public void setActive(boolean active)
-    {
-        this.active = active;
-    }
-
-    public String getUserType()
-    {
-        return userType;
-    }
-
 
     //possible security concern - can set a user to Admin.
     public String setUserType(String userType)
     {
         return (this.userType = userType);
     }
-
 
     @Override
     public String toString()
@@ -222,4 +219,21 @@ public abstract class User
                 ", active=" + active +
                 '}';
     }
+
+    // TODO: Remove if not needed.
+    //Method to save user to users.csv
+    //    public void saveUser(String fileName)
+    //    {
+    //        try
+    //        {
+    //            String userData = userID + "," + firstName + "," + lastName + "," + userName + "," + password + "," + userType;
+    //            File_Control io = new File_Control();
+    //            io.writeFile("users.csv", userData);
+    //        }
+    //        catch (Exception e)
+    //        {
+    //            System.out.println("Error failed to save user into csv.");
+    //        }
+    //
+    //    }
 }
