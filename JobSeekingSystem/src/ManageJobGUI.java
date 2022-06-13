@@ -57,12 +57,60 @@ public class ManageJobGUI extends CreateJobGUI {
     private JobCategory category;
 
     //public ManageJobGUI(User recruiter, ArrayList<Job> jobList, ArrayList<Location> locationList) throws IOException {
-    public ManageJobGUI(Job job) {
+    public ManageJobGUI(Job job) throws IOException {
         JFrame frame1 = new JFrame("Manage Job");
         frame1.setContentPane(this.manageJobPanel);
         frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame1.pack();
         frame1.setVisible(true);
+
+        DefaultListModel skillsListGUI = new DefaultListModel();
+        //populateSkills("SkillList.csv", skillsMenu);
+        populateCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
+        populateForm(job, skillsListGUI);
+
+
+        salaryText.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+                    e.consume();  // if it's not a number, ignore the event
+                }
+            }
+        });
+
+        categoryMenuPrimary.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    populateSecondaryCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+    }
+
+        public void populateForm(Job job, DefaultListModel popSkillsList) {
+            intJobIDLabel.setText(Integer.toString(job.getJobID()));
+            intRecIDLabel.setText(Integer.toString(job.getRecruiterID()));
+            jobTitleText.setText(job.getJobTitle());
+            employerText.setText(job.getEmployer());
+
+            jobTypeMenu.setSelectedItem(job.getJobType());
+            salaryText.setText(String.valueOf(job.getSalary()));
+            //skills list
+            for (String skill : job.getSkills()) {
+                popSkillsList.addElement(skill);
+                skillsList.setModel(popSkillsList);
+            }
+            //locationStateMenu.setSelectedItem(job.getLocation);
+            //postcodeMenu.set
+            descriptionText.setText(job.getJobDescription());
+            //categoryMenuPrimary.set
+            //categoryMenuSecondary.set
+            //statusMenu.set
+        }
 
                 /*
                 this.recruiter = recruiter;
@@ -71,21 +119,14 @@ public class ManageJobGUI extends CreateJobGUI {
                 job = new Job();
 
                 job.setRecruiterID(recruiter.getUserID());
-                intRecIDLabel.setText(Integer.toString(job.getRecruiterID()));
+
 
                 DefaultListModel skillsListGUI = new DefaultListModel();
 
                 populateSkills("SkillList.csv", skillsMenu);
                 populateCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
 
-                salaryText.addKeyListener(new KeyAdapter() {
-                    public void keyTyped(KeyEvent e) {
-                        char c = e.getKeyChar();
-                        if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-                            e.consume();  // if it's not a number, ignore the event
-                        }
-                    }
-                });
+
 
                 jobIDButton.addActionListener(new ActionListener() {
                     @Override
@@ -159,24 +200,7 @@ public class ManageJobGUI extends CreateJobGUI {
                     frame.pack();
                     frame.setVisible(true);
                 }
-                public void populateForm(Job job, DefaultListModel popSkillsList) {
-                    jobTitleText.setText(job.getJobTitle());
-                    employerText.setText(job.getEmployer());
 
-                    jobTypeMenu.setSelectedItem(job.getJobType());
-                    salaryText.setText(String.valueOf(job.getSalary()));
-                    //skills list
-                    for (String skill : job.getSkills()) {
-                        popSkillsList.addElement(skill);
-                        skillsList.setModel(popSkillsList);
-                    }
-                    //locationStateMenu.setSelectedItem(job.getLocation);
-                    //postcodeMenu.set
-                    descriptionText.setText(job.getJobDescription());
-                    //categoryMenuPrimary.set
-                    //categoryMenuSecondary.set
-                    //statusMenu.set
-                }
                 public void populateJob(int jobID) {
                     for (Job tmpJob : jobList) {
                         if (tmpJob.getJobID() == job.getJobID()) {
@@ -201,4 +225,4 @@ public class ManageJobGUI extends CreateJobGUI {
                 }
                 */
     }
-}
+
