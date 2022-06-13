@@ -56,6 +56,10 @@ public class RecruiterControl {
         return recruiter;
     }
 
+    public ArrayList<User> getUserList() {
+        return userList;
+    }
+
     public ArrayList<Job> getJobList() {
         return jobList;
     }
@@ -80,7 +84,5 @@ public class RecruiterControl {
         this.jobCategoryList = jobCategoryList;
     }
 
-    public ArrayList<User> getUserList() {
-        return userList;
-    }
+
 }

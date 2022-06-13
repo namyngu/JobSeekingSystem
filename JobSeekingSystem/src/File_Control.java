@@ -154,6 +154,20 @@ public class File_Control {
        return list;
     }
 
+    public static User findUser(ArrayList<User> userList, int ID) throws Exception
+    {
+        User myUser = null;
+        for (User tmpUser : userList)
+        {
+            if (tmpUser.getUserID() == ID)
+            {
+                myUser = tmpUser;
+                return myUser;
+            }
+        }
+        throw new Exception("Error job doesn't exist!");
+    }
+
     protected static Job findJob(ArrayList<Job> jobList, int ID) throws Exception
     {
         Job myJob = null;
@@ -182,19 +196,7 @@ public class File_Control {
         throw new Exception("Error job doesn't exist!");
     }
 
-    protected static User findUser(ArrayList<User> userList, int ID) throws Exception
-    {
-        User myUser = null;
-        for (User tmpUser : userList)
-        {
-            if (tmpUser.getUserID() == ID)
-            {
-                myUser = tmpUser;
-                return myUser;
-            }
-        }
-        throw new Exception("Error job doesn't exist!");
-    }
+
 
     public void writeListToFile(ArrayList<String> list, String filename)
     {
