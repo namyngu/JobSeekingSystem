@@ -314,7 +314,7 @@ public class JSS
         if (!Exists)
         {
             //We did not find a username matching the entered name
-            throw new Exception("could not find a user with this username!");
+            throw new Exception("Username doesn't exist!");
         }
 
         // 2. Verify password
@@ -354,7 +354,7 @@ public class JSS
                 catch (Exception e)
                 {
 
-                    PromptGUI error = new PromptGUI("Contact Administrator", e.toString());
+                    PromptGUI error = new PromptGUI("Contact Administrator", e.getMessage());
 
                 }
 
@@ -684,7 +684,7 @@ public class JSS
             }
         } catch (Exception e)
         {
-            System.out.println("message read error" + e.toString());
+            System.out.println("message read error" + e.getMessage());
         }
 
         return hasMail;
@@ -817,7 +817,7 @@ public class JSS
         }
         catch (Exception e)
         {
-            System.out.println("message read error" + e.toString());
+            System.out.println("message read error" + e.getMessage());
         }
     }
 
@@ -878,7 +878,7 @@ public class JSS
         }
         catch (Exception e)
         {
-            System.out.println("message read error" + e.toString());
+            System.out.println("message read error" + e.getMessage());
         }
 
         return message;
