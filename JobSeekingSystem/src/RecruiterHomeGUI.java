@@ -172,6 +172,7 @@ public class RecruiterHomeGUI {
                     int selectedRow = jobsTable.getSelectedRow();
                     int ID = Integer.parseInt(jobsTable.getValueAt(selectedRow, 0).toString());
                     RecruiterJobGUI recruiterJobGUI= new RecruiterJobGUI(parent, ID);
+                    window.dispose();
                 }
             }
         });
