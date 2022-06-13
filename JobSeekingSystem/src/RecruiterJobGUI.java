@@ -1,9 +1,6 @@
 import javax.swing.*;
-<<<<<<< HEAD
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
-=======
->>>>>>> origin/master
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -52,7 +49,6 @@ public class RecruiterJobGUI {
             frame.dispose();
         }
         frame.setVisible(true);
-<<<<<<< HEAD
 
         //setting parameters for job GUI
         jobTitle.setText(myJob.getJobTitle());
@@ -132,8 +128,6 @@ public class RecruiterJobGUI {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-=======
->>>>>>> origin/master
         editJobButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
