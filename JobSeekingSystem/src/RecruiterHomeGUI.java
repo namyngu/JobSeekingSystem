@@ -262,7 +262,7 @@ public class RecruiterHomeGUI {
         //search through all jobs for the recruiter's job
         for (Job tmpJob : jobList)
         {
-            if (tmpJob.getRecruiterID() == myParent.getRecruiter().getUserID())
+            if (tmpJob.getRecruiterID() == myParent.getRecruiter().getUserID() && (!tmpJob.getJobStatus().equalsIgnoreCase("Archived")))
             {
                 myJob.add(tmpJob);
             }
