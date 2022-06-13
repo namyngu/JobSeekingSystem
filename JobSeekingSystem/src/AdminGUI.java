@@ -37,14 +37,15 @@ public class AdminGUI
 
     public AdminGUI(AdminControl adminControl, JSS program)
     {
+
         this.adminControl = adminControl;
         this.program = program;
 
         this.userNames = new ArrayList<String>();
         this.userListModel = new DefaultListModel();
         this.userList.setModel(this.userListModel);
-
 //        this.userMessages = new ArrayList<Message>();
+        ArrayList<Message> userMessages = this.adminControl.relayMessages();
         this.mailListModel = new DefaultListModel();
         this.inboxList.setModel(this.mailListModel);
 
@@ -55,8 +56,10 @@ public class AdminGUI
         frame.setVisible(true);
 
         //retrieve messages for inbox
-        int userID = this.adminControl.adminID()-1;
+
+        int userID = this.adminControl.adminID();
         System.out.println("59 userID without -1 is " + this.adminControl.adminID());
+        System.out.println("60 retrieving messages for user " + userID);
 
         if (this.program.checkMessages(userID) == false)
         {
@@ -66,14 +69,16 @@ public class AdminGUI
         }
         else
         {
-            ArrayList<Message> userMessages = adminControl.relayMessages();
+//            ArrayList<Message> userMessages = this.adminControl.relayMessages();
 
-            String toDisplay = "";
             for (Message each: userMessages)
             {
+                String toDisplay = "";
 
               int senderID = each.getSenderID();
                String senderName = program.retrieveUsername(senderID);
+                System.out.println("ADMIN GUI 80 sender ID IS  " + each.getSenderID());
+                System.out.println("ADMIN GUI 80 sender is "+senderName+ "subject is " + each.getHeader());
                 toDisplay += senderName + " Re: " + each.getHeader();
                 refreshList(toDisplay,inboxList,mailListModel);
             }
@@ -85,7 +90,7 @@ public class AdminGUI
             int numUsers = program.countUsers();
             for (int i=0; i<numUsers; i+=1)
             {
-                String name = this.program.retrieveUsername(i);
+                String name = this.program.retrieveUsername(i+1);
                 this.userNames.add(name);
                 this.refreshList(name);
             }
@@ -155,8 +160,9 @@ public class AdminGUI
             public void actionPerformed(ActionEvent e)
             {
 
-                int userIndex = userList.getSelectedIndex();
+                int userIndex = userList.getSelectedIndex()+1;
                 System.out.println("line 158 index selected is " + userList.getSelectedIndex() );
+                System.out.println("159 userIndex from this is " + userIndex);
                 System.out.println("warning user line 154" + userIndex);
 
                 adminControl.blockedMessage(adminControl.adminID(),userIndex);
@@ -202,10 +208,16 @@ public class AdminGUI
             public void actionPerformed(ActionEvent e)
             {
                 int sender = adminControl.adminID();
-                int destination = inboxList.getSelectedIndex();
+                System.out.println("206 admin sender Id is: " + sender);
+
+                int indexNumber = inboxList.getSelectedIndex();
+                Message replyTo = userMessages.get(indexNumber);
+                int replyToID = replyTo.getSenderID();
+
+                System.out.println("208 destin ID is: " + replyToID);
                 String header = "Admin Reply";
                 String body = replyTextField.getText();
-                adminControl.createMessage(sender,destination,header,body);
+                adminControl.createMessage(sender,replyToID,header,body);
 
             }
         });

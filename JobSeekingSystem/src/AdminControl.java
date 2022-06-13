@@ -34,8 +34,9 @@ public class AdminControl implements Communication
             String header = "ACCOUNT LOCK WARNING";
             String text = "Your account will be blocked by Administrator " + this.admin.getUserName();
             text += ". Please contact them immediately to discuss";
-            Message notification = new Message(senderID, receiverID,header,text);
-            program.storeMessage(senderID,receiverID,header,text);
+            int messageID = this.program.issueMessageID();
+            Message notification = new Message(messageID, senderID, receiverID,header,text);
+            program.storeMessage(messageID, senderID,receiverID,header,text);
             sent = true;
         }
         catch (Exception e)
@@ -49,7 +50,18 @@ public class AdminControl implements Communication
 
     public ArrayList<Message> relayMessages()
     {
+        System.out.println("relay messages called");
+
         ArrayList<Message> toRelay = this.admin.getMessages();
+
+        System.out.println("message array size is " + toRelay.size());
+        for (Message each: toRelay
+             )
+        {
+            System.out.println("ADMIN CONTROL 57");
+            System.out.println("messageID relayed" + each.getMessageID());
+        }
+
 
         return toRelay;
 
@@ -62,6 +74,7 @@ public class AdminControl implements Communication
 
     public void createMessage(int sender, int destination, String header, String body)
     {
-        this.sendMessage(this.program,sender,destination,header,body);
+        int messageID = this.program.issueMessageID();
+        this.sendMessage(this.program,messageID,sender,destination,header,body);
     }
 }
