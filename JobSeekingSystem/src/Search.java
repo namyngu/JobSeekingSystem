@@ -40,6 +40,17 @@ public class Search
         jobseekerList = new ArrayList<>();
     }
 
+    // Non-default constructor.
+    public Search(RecruiterControl parent, ArrayList<Job> jobs,
+                  ArrayList<Location> locations, ArrayList<JobCategory> categories,
+                  ArrayList<Jobseeker> seekers) {
+        myParent = parent;
+        jobList = jobs;
+        locationList = locations;
+        jobCategoryList = categories;
+        jobseekerList = seekers;
+    }
+
     /* Method to filter out inappropriate search results based
      * on user input.
      */
@@ -378,7 +389,7 @@ public class Search
             // TODO: When location is added to a user, this will work.
             // TODO: Mocked in for now.
             // Location seekerLocation = seeker.getLocation();
-            Location seekerLocation = new Location();
+            Location seekerLocation = locationList.get(1);
             boolean valid = true;
 
             int searchPostCode = 0;
@@ -447,6 +458,7 @@ public class Search
          * into the results list in scored order.
          */
         int skillMatch = 0;
+        int skillResult = 0;
         for (Jobseeker seeker : results) {
             for (String skill: seeker.getSkills()) {
                 String lSkill = skill.toLowerCase();
@@ -460,8 +472,18 @@ public class Search
             }
 
             // Weight the skillMatch.
-            int skillResult = skillMatch / seekerSkills.size() * 100;
+            skillResult = skillMatch / seekerSkills.size() * 100;
 
+            // Add the scored entry into scored results.
+            if (skillResult > 10) {
+                if (scoredResults.get(skillResult) == null) {
+                    ArrayList<Jobseeker> newList = new ArrayList<>();
+                    newList.add(seeker);
+                    scoredResults.put(skillResult, newList);
+                } else {
+                    scoredResults.get(skillResult).add(seeker);
+                }
+            }
         }
 
         /* Sort the TreeMap and put the sorted list back into results.
