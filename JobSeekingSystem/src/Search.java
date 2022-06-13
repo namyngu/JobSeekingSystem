@@ -361,8 +361,119 @@ public class Search
 
     // Method 3. Search for a list of recommended jobs.
     public ArrayList<Job> recommendedJobs(Location seekerLocation, ArrayList<String> seekerSkills) throws Exception {
-        //TODO
+
+        /* Ideas for this method:
+         * Jobs *must* be within the same State OR the Same City
+         * (same Postcode is probably too small a search range).
+         * Jobs must match some of the skills of the Jobseeker
+         * (more matched skills = higher search result).
+         */
+
+        // Setup a few variables.
         ArrayList<Job> results = new ArrayList<>();
+        TreeMap<Integer, ArrayList<Job>> scoredResults = new TreeMap<>(Collections.reverseOrder());
+
+        /* For each job in our list our jobs, filter out the ones that do not
+         * match the seeker's location. Add the remaining ones into an
+         * ArrayList for use later.
+         */
+
+        for (Job tmp: jobList) {
+
+            String thisJobState = "";
+            String thisJobCity = "";
+
+            for (Location place : locationList) {
+                if (place.getLocationID() == tmp.getLocationID()) {
+                    thisJobState = place.getState().toLowerCase();
+                    thisJobCity = place.getCity().toLowerCase();
+                    break;
+                }
+            }
+
+            if (thisJobState.equals(seekerLocation.getState().toLowerCase())
+                    || thisJobCity.equals(seekerLocation.getCity().toLowerCase())) {
+                // This job matches the seeker's location.
+                results.add(tmp);
+            }
+
+        }
+
+        /* For each job in our filtered list, score each job according to how
+         * well it compares to the seeker's skills. Also score on location -
+         * jobs offered in the seeker's Postcode or City should rank higher
+         * than jobs offered in the seeker's State.
+         */
+
+        // Setup variables.
+        int skillMatch = 0;
+        int locationMatch = 0;
+
+        for (Job tmp: results) {
+
+            // Score on skills.
+            for (String skill : seekerSkills) {
+            String lSkill = skill.toLowerCase();
+                for (String check : tmp.getSkills()) {
+                    String lJobSkill = check.toLowerCase();
+                    if (lSkill.equals(lJobSkill)) {
+                        //Direct match on the skill
+                        skillMatch++;
+                    }
+                }
+            }
+
+            // Score on location.
+            String thisJobState = "";
+            String thisJobCity = "";
+            int thisJobPostcode = 0;
+
+            for (Location place : locationList) {
+                if (place.getLocationID() == tmp.getLocationID()) {
+                    thisJobState = place.getState().toLowerCase();
+                    thisJobCity = place.getCity().toLowerCase();
+                    thisJobPostcode = place.getPostcode();
+                    break;
+                }
+            }
+
+            if (thisJobPostcode == seekerLocation.getPostcode()) {
+                // Job is very nearby.
+                locationMatch = 50;
+            } else if (thisJobCity.equals(seekerLocation.getCity())) {
+                // Job is nearby.
+                locationMatch = 30;
+            } else {
+                // Job is in the same State.
+                locationMatch = 10;
+            }
+
+            // Weight this job's matches as a percentage.
+            int skillResult = (skillMatch / seekerSkills.size() * 50) + locationMatch;
+
+            // Add this job and its scored to the TreeMap.
+            if (scoredResults.get(skillResult) == null) {
+                ArrayList<Job> newList = new ArrayList<Job>();
+                newList.add(tmp);
+                scoredResults.put(skillResult,newList);
+            } else {
+                scoredResults.get(skillResult).add(tmp);
+            }
+        }
+
+        /* Sort the TreeMap and put the sorted list back into results.
+         * Note the TreeMap should always be already sorted for  in
+         * descending order for us as specified in our intialization, so
+         * simply iterating through gets us the Job list
+         * sorted by the score descending.
+         */
+        results.clear();
+        results = new ArrayList<>();
+        for (Integer key : scoredResults.keySet()) {
+            for (int i = 0; i < scoredResults.get(key).size(); i++) {
+                results.add(scoredResults.get(key).get(i));
+            }
+        }
         return results;
     }
 

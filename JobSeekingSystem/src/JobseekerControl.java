@@ -42,8 +42,8 @@ public class JobseekerControl
     public ArrayList<Job> recommendedSearch() {
         // TODO: Get the jobSeeker's location somehow.
         // TODO: Mocked in for now.
-        Location seekerLocation = new Location();
-        ArrayList<Job> searchResults = new ArrayList<Job>();
+        Location seekerLocation = locationList.get(0);
+        ArrayList<Job> searchResults = new ArrayList<>();
         try {
             searchResults = mainSearch.recommendedJobs(seekerLocation, jobseeker.getSkills());
         }
