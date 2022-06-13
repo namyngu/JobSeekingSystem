@@ -664,25 +664,17 @@ public class JSS
 
 
                     Message message = new Message(nextMessageID, messageDetails[1],sender,messageTo,messageDetails[4],messageDetails[5]);
-                    System.out.println("JSS 659 loading message to array... " + message.getMessageID());
-                    System.out.println("message content is " + message.getBody());
-
-                    System.out.println("senderID is: " + message.getSenderID());
-
-                    nextMessageID +=1;
 
 
                     User temp = this.userList.get(userIndex-1);
-                    System.out.println("JSS line 664 temp userIndex is " + temp.getUserID() );
+
                     temp.addMessage(message);
                     //TODO alter messages arraylist so this is received if true
                 }
                 //TODO check user type and determine message type accordingly
                 //TODO deal with \n -- try replace with String methods? -- do this at point of writing
                 //TODO refresh message.csv list when done
-                //checking message is getting there....
-//                User one = userList.get(userIndex);
-//                System.out.println("Nessafe: " + one.messagesToString());
+
             }
         } catch (Exception e)
         {
@@ -756,17 +748,7 @@ public class JSS
         return locked;
     }
 
-    //message sorter??
 
-//    public void messageSend(int senderID, int receiverID)
-//    {
-//        User sender = userList.get(senderID);
-//
-//        if (sender instanceof Administrator)
-//        {
-//            Message alert = new AdminAlert(senderID, receiverID);
-//        }
-//    }
     public User getUserByID(int userID)
     {
         User inQuestion = userList.get(userID);
@@ -785,9 +767,9 @@ public class JSS
     public int issueMessageID()
     {
         int messageID = nextMessageID;
-        System.out.println("JSS 764 issuing message ID" + messageID);
+
         nextMessageID+=1;
-        System.out.println("next message ID now: " + nextMessageID);
+
         return messageID;
     }
 
@@ -825,6 +807,7 @@ public class JSS
 
             }
             nextMessageID = currentMessageID;
+
         }
         catch (Exception e)
         {
@@ -874,7 +857,7 @@ public class JSS
                     int sender = Integer.parseInt(messageDetails[1]);
                     int messageTo = Integer.parseInt(messageDetails[2]);
 
-                    System.out.println("JSS 808 read message ID is: " + readID);
+
 
                     message.setMessageID(readID);
                     message.setSenderID(sender);

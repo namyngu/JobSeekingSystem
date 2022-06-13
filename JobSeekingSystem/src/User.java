@@ -66,7 +66,7 @@ public abstract class User
     public boolean addMessage(Message message)
     {
 
-        System.out.println("MESSAGE IS BEING ADDED IN USER CLASS LINE 69");
+
         boolean delivered = false;
         try
         {
