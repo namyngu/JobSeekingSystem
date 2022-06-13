@@ -203,9 +203,15 @@ public class RecruiterHomeGUI {
                         break;
 
                     case 3: {
-                        int locationID = myJobs.get(i).getLocationID();
-                        String city = myParent.getLocationList().get(locationID).getCity();
-                        data[i][j] = city;
+                        try
+                        {
+                            Location location = File_Control.findLocation(myParent.getLocationList(), myJobs.get(i).getLocationID());
+                            data[i][j] = location.getCity();
+                        }
+                        catch (Exception e)
+                        {
+                            System.out.println("Error cannot find location.");
+                        }
                         break;
                     }
 
