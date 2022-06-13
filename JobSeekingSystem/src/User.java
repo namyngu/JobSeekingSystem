@@ -35,7 +35,7 @@ public abstract class User
         loggedIn = false;
         active = true;
         userType = "Guest";
-        messages = new ArrayList<Message>();
+        messages = new ArrayList<>();
     }
 
     // Non-default Constructor.
@@ -49,7 +49,7 @@ public abstract class User
         loggedIn = false;
         active = true;
         this.userType = userType;
-        messages = new ArrayList<Message>();
+        messages = new ArrayList<>();
     }
 
     // Non-default Constructor.
@@ -63,7 +63,7 @@ public abstract class User
         loggedIn = false;
         this.active = active;
         this.userType = userType;
-        messages = new ArrayList<Message>();
+        messages = new ArrayList<>();
     }
 
     //TODO look at putting this into control class?
@@ -71,8 +71,6 @@ public abstract class User
     // Method to add a message for this user.
     public boolean addMessage(Message message)
     {
-
-
         boolean delivered = false;
         try
         {
@@ -142,22 +140,21 @@ public abstract class User
         return userType;
     }
 
-    /*
-    Method below is just to check messages are getting though, probably delete later, Gerard
+    /* This method converts a message to a String which can be printed to
+     * the terminal or a PromptGUI notification for the user.
      */
     public String messagesToString()
     {
-        String mail = "";
-        for (Message list: this.messages
-             )
+        StringBuilder mail = new StringBuilder();
+        for (Message list: this.messages)
         {
-
            String header = list.getHeader().toUpperCase();
            String body = list.getBody().toLowerCase();
-           mail += header + ": " + body;
-
+           mail.append(header);
+           mail.append(":");
+           mail.append(body);
         }
-        return mail;
+        return mail.toString();
     }
 
     // Mutator methods.
