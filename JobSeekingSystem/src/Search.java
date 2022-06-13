@@ -175,7 +175,7 @@ public class Search
         if (!fullTime && !partTime && !casual) {
             throw new Exception("Please select a Job Type to search for!");
         }
-        if (categoryPrimary = "Category") {
+        if (categoryPrimary.equals("Category")) {
             throw new Exception("Please select a Primary Category to search in!");
         }
 
