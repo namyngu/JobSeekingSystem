@@ -14,7 +14,7 @@ public class RecruiterControl {
     }
 
     public RecruiterControl(User recruiter) {
-        RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(this);
+        RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(this, locationList);
         this.recruiter = recruiter;
         mainSearch = new Search();
     }
@@ -28,19 +28,20 @@ public class RecruiterControl {
         mainSearch = new Search(this, jobList, locationList, jobCategoryList);
         this.userList = userList;
 
-        RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(this);
+        RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(this, locationList);
     }
 
-    public void seekerSearch(String location, ArrayList<String> requiredSkills)
+    public ArrayList<Jobseeker> seekerSearch(String location, ArrayList<String> requiredSkills)
     {
         System.out.println("Searching...");
+        ArrayList<Jobseeker> searchList = new ArrayList<>();
         try
         {
-            ArrayList<Jobseeker> someList = mainSearch.seekerSearch(location, requiredSkills);
+            searchList = mainSearch.seekerSearch(location, requiredSkills);
 
             // Debug search results:
             System.out.println("Results: \n");
-            for (Jobseeker seeker : someList) {
+            for (Jobseeker seeker : searchList) {
                 System.out.println(seeker.toString());
             }
 
@@ -50,10 +51,15 @@ public class RecruiterControl {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+        return searchList;
     }
 
     public User getRecruiter() {
         return recruiter;
+    }
+
+    public ArrayList<User> getUserList() {
+        return userList;
     }
 
     public ArrayList<Job> getJobList() {
@@ -80,7 +86,5 @@ public class RecruiterControl {
         this.jobCategoryList = jobCategoryList;
     }
 
-    public ArrayList<User> getUserList() {
-        return userList;
-    }
+
 }

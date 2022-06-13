@@ -86,8 +86,7 @@ public class RecruiterJobGUI {
             try
             {
                 int jobseekerID = applicationList.get(i).getSenderID();
-                //TODO: line below somehow breaks things
-                //jobseeker = File_Control.findUser(control.getUserList(), jobseekerID);
+                jobseeker = File_Control.findUser(control.getUserList(), jobseekerID);
             }
             catch (Exception e)
             {
