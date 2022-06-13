@@ -66,8 +66,9 @@ public class ManageJobGUI extends CreateJobGUI {
 
         JFrame frame = new JFrame("Manage Job");
         frame.setContentPane(this.manageJobPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
+        frame.setLocation(650, 40);
         frame.setVisible(true);
 
         DefaultListModel skillsListGUI = new DefaultListModel();

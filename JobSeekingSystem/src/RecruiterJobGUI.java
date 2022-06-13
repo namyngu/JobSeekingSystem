@@ -21,6 +21,8 @@ public class RecruiterJobGUI {
     private JLabel locationLabel;
     private JLabel employerLabel;
     private JLabel jobTypeLabel;
+    private JScrollPane descriptionScrollPane;
+    private JTextPane jobDescriptionPane;
 
     private RecruiterControl control;
     private int jobID;
@@ -70,7 +72,10 @@ public class RecruiterJobGUI {
         //TODO: format salary to make it look nice using regEx
         jobSalary.setText("$ " + myJob.getSalary());
         jobTypeLabel.setText((myJob.getJobType()));
-
+        //removing double quotes at the start and end of a string, if it exists.
+        String jobDescription = myJob.getJobDescription().replaceAll("^\"|\"$","");
+        jobDescriptionPane.setText(jobDescription);
+        jobDescriptionPane.setFocusable(false);
         createTable();
 
         editJobButton.addActionListener(new ActionListener() {
@@ -78,6 +83,7 @@ public class RecruiterJobGUI {
             public void actionPerformed(ActionEvent e) {
                 try {
                     ManageJobGUI manageJob = new ManageJobGUI(control, myJob);
+                    frame.dispose();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
