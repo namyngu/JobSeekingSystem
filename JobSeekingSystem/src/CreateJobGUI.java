@@ -41,11 +41,15 @@ public class CreateJobGUI {
     private JScrollPane descriptionScroll;
     private JScrollPane jobTitleScroll;
     private JTextField employerText;
+    private JLabel salaryMessage;
 
     private User recruiter;
     private ArrayList<Job> jobList;
     private ArrayList<Location> locationList;
 
+    public CreateJobGUI() {
+
+    }
     public CreateJobGUI(RecruiterControl recruiterControl) throws IOException {
         JFrame frame = new JFrame("Create Job");
         frame.setContentPane(this.createJobPanel);

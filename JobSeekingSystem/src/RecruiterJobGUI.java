@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class RecruiterJobGUI {
     private JPanel jobPanel;
@@ -41,5 +43,11 @@ public class RecruiterJobGUI {
         }
 
         frame.setVisible(true);
+        editJobButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ManageJobGUI manageJob = new ManageJobGUI(myJob);
+            }
+        });
     }
 }
