@@ -2,6 +2,8 @@ import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,6 +29,7 @@ public class JobSeekerHomeGUI {
     private JComboBox comboBox2;
     private JTable jobSearchTable;
     private JComboBox primaryCategoryBox;
+    private JComboBox secondaryCategoryBox;
     private JTextField textField2;
     private JTabbedPane navbar;
     private JPanel home;
@@ -55,35 +58,41 @@ public class JobSeekerHomeGUI {
 
     public int searchCount;
 
-    public void populateCategories(String fileName) throws IOException {
-        FileReader file = new FileReader(fileName);
-        Scanner scan = new Scanner(file);
-        String returnString = "";
-        String firstCategory = "";
+    public void populateCategories() throws IOException {
+        File_Control IO = new File_Control();
+        String catList = IO.readFile("CategoryList.csv");
+        String[] categories = catList.split("\n");
 
-        while (scan.hasNextLine()) {
-            returnString = scan.nextLine();
+        for (String category : categories) {
+            String[] breakCategories = category.split(",");
+            primaryCategoryBox.addItem(breakCategories[0]);
+        }
+    }
 
-            for (int i = 0; i < returnString.length(); i++) {
-                if (returnString.charAt(i) != ',') {
-                    firstCategory += returnString.charAt(i);
-                }
-                else {
-                    break;
+    public void populateSecondaryCategories(String primaryCategory) throws IOException {
+        File_Control IO = new File_Control();
+        String catList = IO.readFile("CategoryList.csv");
+        String[] categories = catList.split("\n");
+
+        secondaryCategoryBox.removeAllItems();
+        secondaryCategoryBox.setSelectedItem("Category");
+
+        for (String category: categories) {
+
+            String[] breakCategories = category.split(",");
+                if (breakCategories[0].equals(primaryCategory)) {
+                    secondaryCategoryBox.addItem("All");
+                for (int x = 1; x < breakCategories.length; x++) {
+                    secondaryCategoryBox.addItem(breakCategories[x]);
                 }
             }
-
-            primaryCategoryBox.addItem(firstCategory);
-            firstCategory = "";
         }
-
-        file.close();
-        //populateSecondaryCategories(fileName);
     }
 
     public JobSeekerHomeGUI(JobseekerControl parent, ArrayList<JobCategory> categories,
-                            ArrayList<Location> locations) {
+                            ArrayList<Location> locations, Jobseeker seeker) {
         JobSeekerHomeGUI home = this;
+        jobseeker = seeker;
         myParent = parent;
         locationList = locations;
         jobCategoryList = categories;
@@ -98,7 +107,7 @@ public class JobSeekerHomeGUI {
 
         // Try populate categories to search in.
         try {
-            populateCategories("CategoryList.csv");
+            populateCategories();
         }
         catch (Exception e) {
             throw new RuntimeException(e);
@@ -110,7 +119,12 @@ public class JobSeekerHomeGUI {
         //display skills in profile
         buildSkillList();
 
-        //test build table will condense into reusable method
+        // TODO: Obtain a list of recommended jobs for this seeker.
+        ArrayList<Job> searchResults = myParent.recommendedSearch();
+
+        //
+        // TODO: remove this when above method works.
+        // TODO: test build table will condense into reusable method.
      String[] jobListColumns = {"JobID", "Title", "Employer", "Location", "Salary", "Type"};
         String[][] jobListRows = {
                 {"001", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
@@ -134,20 +148,14 @@ public class JobSeekerHomeGUI {
             public void actionPerformed(ActionEvent e) {
                 String searchDesc = textField1.getText();
                 String catPrimary = String.valueOf(primaryCategoryBox.getSelectedItem());
-                // TODO: Will we need secondary category? Or not?
-                String catSecondary = "some other category";
-                //String catSecondary = comboBox3.getDropTarget();
+                String catSecondary = String.valueOf(secondaryCategoryBox.getSelectedItem());
                 String location = textField2.getText();
                 boolean fullTime = fullTimeCheckBox.isSelected();
                 boolean partTime = partTimeCheckBox.isSelected();
                 boolean casual = casualCheckBox.isSelected();
                 int salMin = Integer.parseInt(comboBox1.getSelectedItem().toString());
                 int salMax = Integer.parseInt(comboBox2.getSelectedItem().toString());
-                // TODO: This class gets passed a USER, not a JOBSEEKER
-                // TODO: How do we get the list of skills for the JOBSEEKER
-                // TODO: if we only have access to the USER??
-                // ArrayList<String> skills = jobseeker.getSkills();
-                ArrayList<String> skills = new ArrayList<String>();
+                ArrayList<String> skills = jobseeker.getSkills();
 
                 ArrayList<Job> searchResults = myParent.jobSearch(searchDesc, catPrimary, catSecondary, location, fullTime,
                         partTime, casual, salMin, salMax, skills);
@@ -167,9 +175,29 @@ public class JobSeekerHomeGUI {
                 DefaultTableModel freshModel = new DefaultTableModel(rows, jobListColumns);
                 jobSearchTable.setModel(freshModel);
                 searchResultsScroll.setVisible(true);
+                searchPanel.repaint();
             }
         });
 
+        primaryCategoryBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                try {
+                    populateSecondaryCategories(String.valueOf(primaryCategoryBox.getSelectedItem()));
+                }
+                catch (Exception x) {
+                    System.out.println("Problem loading secondary categories!");
+                    x.printStackTrace();
+                }
+            }
+        });
+
+        /*Add these methods back in once the actual components exist on the GUI
+
+            //navbar
+            searchJobsButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
 
         editProfileButton.addActionListener(new ActionListener() {
             @Override
@@ -179,15 +207,22 @@ public class JobSeekerHomeGUI {
         });
     }
 
+        */
+    }
 
     public void buildSkillList(){
         jsSkillsModel = new DefaultListModel<>();
         ArrayList<String> skills = myParent.getSkills();
+        System.out.println("In JS Home GUI");
+        System.out.println(skills);
 
         for (int i = 0; i < skills.size(); i++)
         {
             jsSkillsModel.addElement("- "+skills.get(i));
         }
+
+        System.out.println();
+
         jsSkillsTable.setModel(jsSkillsModel);
     }
 
