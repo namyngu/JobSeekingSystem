@@ -50,17 +50,10 @@ public class AdminControl implements Communication
 
     public ArrayList<Message> relayMessages()
     {
-        System.out.println("relay messages called");
+
 
         ArrayList<Message> toRelay = this.admin.getMessages();
 
-        System.out.println("message array size is " + toRelay.size());
-        for (Message each: toRelay
-             )
-        {
-            System.out.println("ADMIN CONTROL 57");
-            System.out.println("messageID relayed" + each.getMessageID());
-        }
 
 
         return toRelay;

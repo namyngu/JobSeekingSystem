@@ -44,7 +44,7 @@ public class AdminGUI
         this.userNames = new ArrayList<String>();
         this.userListModel = new DefaultListModel();
         this.userList.setModel(this.userListModel);
-//        this.userMessages = new ArrayList<Message>();
+
         ArrayList<Message> userMessages = this.adminControl.relayMessages();
         this.mailListModel = new DefaultListModel();
         this.inboxList.setModel(this.mailListModel);
@@ -58,8 +58,7 @@ public class AdminGUI
         //retrieve messages for inbox
 
         int userID = this.adminControl.adminID();
-        System.out.println("59 userID without -1 is " + this.adminControl.adminID());
-        System.out.println("60 retrieving messages for user " + userID);
+
 
         if (this.program.checkMessages(userID) == false)
         {
@@ -69,7 +68,7 @@ public class AdminGUI
         }
         else
         {
-//            ArrayList<Message> userMessages = this.adminControl.relayMessages();
+
 
             for (Message each: userMessages)
             {
@@ -77,8 +76,7 @@ public class AdminGUI
 
               int senderID = each.getSenderID();
                String senderName = program.retrieveUsername(senderID);
-                System.out.println("ADMIN GUI 80 sender ID IS  " + each.getSenderID());
-                System.out.println("ADMIN GUI 80 sender is "+senderName+ "subject is " + each.getHeader());
+
                 toDisplay += senderName + " Re: " + each.getHeader();
                 refreshList(toDisplay,inboxList,mailListModel);
             }
@@ -161,9 +159,7 @@ public class AdminGUI
             {
 
                 int userIndex = userList.getSelectedIndex()+1;
-                System.out.println("line 158 index selected is " + userList.getSelectedIndex() );
-                System.out.println("159 userIndex from this is " + userIndex);
-                System.out.println("warning user line 154" + userIndex);
+
 
                 adminControl.blockedMessage(adminControl.adminID(),userIndex);
 
@@ -184,37 +180,20 @@ public class AdminGUI
                 mailTextArea.setText(display);
             }
         });
-//        newMessageButton.addActionListener(new ActionListener()
-//        {
-//            @Override
-//            public void actionPerformed(ActionEvent e)
-//            {
-////                MessageGUI sendMessage = new MessageGUI();
-//            }
-//        });
-//        replyButton.addActionListener(new ActionListener()
-//        {
-//            @Override
-//            public void actionPerformed(ActionEvent e)
-//            {
-//
-//                MessageGUI reply = new MessageGUI(sender,destination);
-//                Message toSend = reply.getMessage(sender,destination);
-//            }
-//        });
+
         replyButton.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
                 int sender = adminControl.adminID();
-                System.out.println("206 admin sender Id is: " + sender);
+
 
                 int indexNumber = inboxList.getSelectedIndex();
                 Message replyTo = userMessages.get(indexNumber);
                 int replyToID = replyTo.getSenderID();
 
-                System.out.println("208 destin ID is: " + replyToID);
+
                 String header = "Admin Reply";
                 String body = replyTextField.getText();
                 adminControl.createMessage(sender,replyToID,header,body);
@@ -236,22 +215,11 @@ private void refreshList(String content, JList list, DefaultListModel listModel)
     {
         userList.setVisible(true);
         userDetailsText.setBackground(Color.white);
-//        System.out.println("removing elements");
-//        list.removeAllElements();
-//        System.out.println("adding name to list:" + name);
+
         userListModel.addElement(name);
-//        for (String each: userNames)
-//        {
-//
-//            list.addElement(each.toString());
-//        }
+
     }
 
-//    public AdminHome(AdminControl adminControl)
-//    {
-//        this.adminControl = adminControl;
-//
-//    }
 
 
 }
