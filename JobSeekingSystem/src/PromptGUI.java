@@ -47,6 +47,8 @@ public class PromptGUI
         this.messageLabel.setText(this.message);
         frame.pack();
         frame.setVisible(true);
+        frame.setLocation(600, 100);
+
         proceedButton.addActionListener(new ActionListener()
         {
             @Override
@@ -66,12 +68,13 @@ public class PromptGUI
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        frame.setLocation(600, 100);
 
         this.message = message;
         this.details = details;
 
         this.messageLabel.setText(this.message);
-        this.detailsLabel.setText("Please send the following to Admin: " + this.details);
+        this.detailsLabel.setText(this.details);
         this.messageLabel.setVisible(true);
         this.detailsLabel.setVisible(true);
         proceedButton.addActionListener(new ActionListener()

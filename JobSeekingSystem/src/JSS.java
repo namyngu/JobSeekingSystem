@@ -447,8 +447,15 @@ public class JSS
     }
 
     //Create User
-    public void createUser(String firstName, String lastName, String userName, String password, String userType)
+    public void createUser(String firstName, String lastName, String userName, String password, String userType) throws Exception
     {
+        for (User tmpUser : userList)
+        {
+            if (tmpUser.getUserName().equalsIgnoreCase(userName))
+            {
+                throw new Exception("Username already exists!");
+            }
+        }
         //encrypt password
         String encryptPW = EncryptMe.encryptThisString(password);
         //create jobseeker
@@ -571,7 +578,6 @@ public class JSS
     }
 
     //Method to save user to users.csv
-    //TODO adapt to include active status
     public void saveUser(int userID, String firstName, String lastName, String userName, String password, String userType, boolean active)
     {
         try
