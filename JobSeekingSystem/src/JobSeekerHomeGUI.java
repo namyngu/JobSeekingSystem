@@ -145,11 +145,7 @@ public class JobSeekerHomeGUI {
                 boolean casual = casualCheckBox.isSelected();
                 int salMin = Integer.parseInt(comboBox1.getSelectedItem().toString());
                 int salMax = Integer.parseInt(comboBox2.getSelectedItem().toString());
-                // TODO: This class gets passed a USER, not a JOBSEEKER
-                // TODO: How do we get the list of skills for the JOBSEEKER
-                // TODO: if we only have access to the USER??
-                // ArrayList<String> skills = jobseeker.getSkills();
-                ArrayList<String> skills = new ArrayList<String>();
+                ArrayList<String> skills = jobseeker.getSkills();
 
                 ArrayList<Job> searchResults = myParent.jobSearch(searchDesc, catPrimary, catSecondary, location, fullTime,
                         partTime, casual, salMin, salMax, skills);

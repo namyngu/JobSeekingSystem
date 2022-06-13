@@ -175,14 +175,6 @@ public class Search
         ArrayList<Job> results = new ArrayList<>();
         TreeMap<Integer, Job> scoredResults = new TreeMap<>();
 
-        // TODO: For testing purposes, setup the seekerSkills.
-        // TODO: Not needed for actual method when real skills
-        // TODO: will be provided.
-
-        seekerSkills.add("skill1");
-        seekerSkills.add("skill2");
-        seekerSkills.add("skill3");
-
         // Change search algorithm weightings here, if needed.
         int titleWeight = 35;
         int keywordWeight = 20;
