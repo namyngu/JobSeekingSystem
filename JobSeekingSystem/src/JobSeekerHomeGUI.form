@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="JobSeekerHomeGUI">
   <tabbedpane id="e6adc" binding="navbar">
     <constraints>
-      <xy x="8" y="20" width="1372" height="1259"/>
+      <xy x="8" y="20" width="1372" height="1260"/>
     </constraints>
     <properties>
       <background color="-16745473"/>
@@ -562,7 +562,7 @@
                   <text value="Phone"/>
                 </properties>
               </component>
-              <component id="ad5f6" class="javax.swing.JLabel" binding="phoneText">
+              <component id="ad5f6" class="javax.swing.JLabel" binding="jobseekerPhone">
                 <constraints>
                   <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
                     <preferred-size width="448" height="16"/>
@@ -582,7 +582,7 @@
                   <text value="Email"/>
                 </properties>
               </component>
-              <component id="eed72" class="javax.swing.JLabel">
+              <component id="eed72" class="javax.swing.JLabel" binding="jobseekerEmail">
                 <constraints>
                   <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
                     <preferred-size width="448" height="16"/>
@@ -599,7 +599,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Address"/>
+                  <text value="Location"/>
                 </properties>
               </component>
               <component id="423e2" class="javax.swing.JLabel">
@@ -615,7 +615,7 @@
                   <text value="You Sklls"/>
                 </properties>
               </component>
-              <component id="ed26d" class="javax.swing.JLabel">
+              <component id="ed26d" class="javax.swing.JLabel" binding="jobseekerLocation">
                 <constraints>
                   <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
                     <preferred-size width="448" height="16"/>

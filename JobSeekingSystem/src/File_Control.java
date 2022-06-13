@@ -106,9 +106,9 @@ public class File_Control {
         try {
             Scanner scanner = new Scanner(new File(filename));
 
-            while(scanner.hasNext() && !found)
+            while(scanner.hasNextLine() && !found)
             {
-                String data = scanner.next();
+                String data = scanner.nextLine();
                 String[] arr = data.split(",");
                 //if id is found
                 if(arr[0].equals(searchId))
@@ -120,6 +120,7 @@ public class File_Control {
                     found = true;
                 }
             }
+            scanner.close();
 
         }
         catch (Exception e)

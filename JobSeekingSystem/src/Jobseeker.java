@@ -9,13 +9,18 @@ public class Jobseeker extends User {
     private int totalOffers;
     private int totalInvites;
 
+    private String email;
+
+    private String phone;
+
+    private Location location;
+
     public Jobseeker(int userID, String firstName, String lastName, String userName, String password) {
 
         super(userID, firstName, lastName, userName, password, "Jobseeker");
 
         this.applications = new ArrayList<Application>();
         this.invitations = new ArrayList<Invitation>();
-        loadSkills();
         this.totalApplied = 0;
         this.totalOffers = 0;
         this.totalInvites = 0;
@@ -31,7 +36,21 @@ public class Jobseeker extends User {
         this.totalApplied = 0;
         this.totalOffers = 0;
         this.totalInvites = 0;
+        System.out.println(getFullName());
+    }
+
+    public Jobseeker(int userID, String firstName, String lastName, String userName, String password, boolean active, boolean forHomeGui) {
+
+        super(userID, firstName, lastName, userName, password, "Jobseeker", active);
+
+        this.applications = new ArrayList<Application>();
+        this.invitations = new ArrayList<Invitation>();
+        this.skills = new ArrayList<String>();
+        this.totalApplied = 0;
+        this.totalOffers = 0;
+        this.totalInvites = 0;
         loadSkills();
+        loadContact();
         System.out.println(getFullName());
     }
 
@@ -47,6 +66,32 @@ public class Jobseeker extends User {
         System.out.println(skills);
     }
 
+    public void loadContact() {
+
+        File_Control fc = new File_Control();
+
+         ArrayList<String> temp = fc.fileSearchId(super.getUserID(), "user-contact.csv");
+
+        System.out.println("load contact details");
+        int locationId = Integer.parseInt(temp.get(0));
+        email = temp.get(1);
+        phone = temp.get(2);
+
+        //get contact info
+        loadLocation(locationId);
+    }
+
+
+    public void loadLocation(int locationId)
+    {
+        File_Control fc = new File_Control();
+        ArrayList<String> temp = fc.fileSearchId(locationId, "Location.csv");
+
+        //state postcode suburb
+        location = new Location(locationId, temp.get(0), Integer.parseInt(temp.get(1)), temp.get(2));
+        System.out.println(location.toString());
+    }
+
     public String getFullName()
     {
         String fullname = getFirstName() + " " + getLastName();
@@ -58,6 +103,21 @@ public class Jobseeker extends User {
     // Method to hand skill Array off to Search class
     public ArrayList<String> getSkills() {
         return skills;
+    }
+
+    public Location getLocation()
+    {
+        return location;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public String getPhone()
+    {
+        return phone;
     }
 
     // Method to set list of Skills (needed at the moment for search testing)
