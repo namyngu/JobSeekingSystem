@@ -39,6 +39,15 @@ public class RecruiterJobGUI {
         frame.pack();
         frame.setLocation(650,40);
 
+
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                new RecruiterHomeGUI(control, control.getLocationList());
+                frame.dispose();
+            }
+        });
+
         //find job from the jobID
         try
         {

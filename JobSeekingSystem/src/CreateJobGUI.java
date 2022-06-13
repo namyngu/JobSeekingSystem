@@ -63,7 +63,7 @@ public class CreateJobGUI {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 if (JOptionPane.showConfirmDialog(frame,
-                        "Are you sure you want to close this window?", "Close Window?",
+                        "Exit to Home?", "Close Window?",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
                     RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl, locationList);

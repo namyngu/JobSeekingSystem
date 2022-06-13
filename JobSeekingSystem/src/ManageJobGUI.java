@@ -66,7 +66,7 @@ public class ManageJobGUI extends CreateJobGUI {
 
         JFrame frame = new JFrame("Manage Job");
         frame.setContentPane(this.manageJobPanel);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.pack();
         frame.setLocation(650, 40);
         frame.setVisible(true);
@@ -121,6 +121,20 @@ public class ManageJobGUI extends CreateJobGUI {
                     populateSecondaryCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
                 } catch (FileNotFoundException ex) {
                     throw new RuntimeException(ex);
+                }
+            }
+        });
+
+        //Event on close
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if (JOptionPane.showConfirmDialog(frame,
+                        "Exit to Home?", "Close Window?",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+                    RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(control, control.getLocationList());
+                    frame.dispose();
                 }
             }
         });

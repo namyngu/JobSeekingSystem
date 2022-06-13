@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -11,7 +13,7 @@ public class JobSeekerUpdateGUI {
     private JPanel updateSkillsPanel;
     private JTextField jobseekerPhoneInput;
     private JTextField jobseekerEmailInput;
-    private JTextField textField3;
+    private JTextField locationInput;
     private JList userSkillList;
     private JButton updateButton;
     private JLabel jobSeekerFullname;
@@ -105,6 +107,17 @@ public class JobSeekerUpdateGUI {
 
                 frame.dispose();
 
+            }
+        });
+        locationList.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+
+                locationInput.setText(locationModel.getElementAt(locationList.getSelectedIndex()).toString());
+
+                System.out.println(locationsArr.get(locationList.getSelectedIndex()).toString());
+                locationsArr.get(locationList.getSelectedIndex() +1).toString();
             }
         });
     }
