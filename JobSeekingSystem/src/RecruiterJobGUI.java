@@ -128,7 +128,6 @@ public class RecruiterJobGUI {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-
         editJobButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
