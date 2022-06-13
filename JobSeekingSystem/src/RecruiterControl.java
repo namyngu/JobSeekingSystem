@@ -8,6 +8,7 @@ public class RecruiterControl {
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
     private ArrayList<User> userList;
+    private ArrayList<Jobseeker> jobseekerList;
 
     public RecruiterControl() {
         mainSearch = new Search();
@@ -21,14 +22,31 @@ public class RecruiterControl {
 
     public RecruiterControl(User recruiter, ArrayList<Job> jobs, ArrayList<Location> locations,
                             ArrayList<JobCategory> categories, ArrayList<User> userList) {
+        this.userList = userList;
+        jobseekerList = buildSeekerList();
         this.recruiter = recruiter;
         jobList = jobs;
         locationList = locations;
         jobCategoryList = categories;
-        mainSearch = new Search(this, jobList, locationList, jobCategoryList);
-        this.userList = userList;
+        mainSearch = new Search(this, jobList, locationList, jobCategoryList, jobseekerList);
 
         RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(this, locationList);
+    }
+
+    // Method to build out the ArrayList of Jobseekers from the user list.
+    public ArrayList<Jobseeker> buildSeekerList() {
+        ArrayList<Jobseeker> returnList = new ArrayList<>();
+        for (User user : userList) {
+            if (user.getUserType().equals("Jobseeker")) {
+                // This user is a jobseeker.
+                Jobseeker seeker = new Jobseeker(user.getUserID(), user.getFirstName(),
+                        user.getLastName(), user.getUserName(), user.getPassword(),
+                        user.isActive());
+                returnList.add(seeker);
+            }
+        }
+
+        return returnList;
     }
 
     public ArrayList<Jobseeker> seekerSearch(String location, ArrayList<String> requiredSkills)

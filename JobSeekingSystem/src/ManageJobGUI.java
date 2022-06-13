@@ -49,21 +49,26 @@ public class ManageJobGUI extends CreateJobGUI {
     private JLabel salaryMessage;
     private JButton jobIDButton;
     private JButton submitButton;
-    private User recruiter;
     private ArrayList<Job> jobList;
-    private ArrayList<Location> locationList;
-    private ArrayList<JobCategory> jobCategoryList;
     private Job job;
     private Location location;
     private JobCategory category;
+    private RecruiterControl control;
+    private ArrayList<String> skills;
 
     //public ManageJobGUI(User recruiter, ArrayList<Job> jobList, ArrayList<Location> locationList) throws IOException {
-    public ManageJobGUI(Job job) throws IOException {
-        JFrame frame1 = new JFrame("Manage Job");
-        frame1.setContentPane(this.manageJobPanel);
-        frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame1.pack();
-        frame1.setVisible(true);
+    public ManageJobGUI(RecruiterControl control, Job myJob) throws IOException {
+        this.control = control;
+        this.job = myJob;
+        location = new Location();
+        category = new JobCategory();
+        skills = new ArrayList<>();
+
+        JFrame frame = new JFrame("Manage Job");
+        frame.setContentPane(this.manageJobPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
 
         DefaultListModel skillsListGUI = new DefaultListModel();
         populateSkills("SkillList.csv", skillsMenu);
@@ -118,9 +123,104 @@ public class ManageJobGUI extends CreateJobGUI {
                 }
             }
         });
+
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //System.out.println("Submit button has been clicked");
+                frame.setVisible(false);
+
+                job.setJobTitle(jobTitleText.getText());
+                //System.out.println("jobTitle has been set to: " + job.getJobTitle());
+                job.setEmployer(employerText.getText());
+                job.setJobType(String.valueOf(jobTypeMenu.getSelectedItem()));
+                //System.out.println("JobType has been set to: " + job.getJobType());
+
+                job.setSalary(Integer.parseInt(salaryText.getText()));
+                //System.out.println("Salary has been set to: " + job.getSalary());
+
+                for (int i = 0; i < skillsList.getModel().getSize(); i++) {
+                    skills.add(String.valueOf(skillsList.getModel().getElementAt(i)));
+                }
+                job.setSkills(skills);
+                //System.out.println("Skills have been set to: " + job.getSkills());
+
+                String state = String.valueOf(locationStateMenu.getSelectedItem());
+                String selectedPostcode = String.valueOf(postcodeMenu.getSelectedItem());
+                String postcode = "";
+                for (int i = 0; i < 4; i++) {
+                    postcode += selectedPostcode.charAt(i);
+                    //System.out.println("postcode is: " + postcode);
+                }
+                int postCode = Integer.parseInt(postcode);
+
+                String city = "";
+                for (int i = 6; i < selectedPostcode.length(); i++) {
+                    city += selectedPostcode.charAt(i);
+                }
+
+                for (Location tmpLocation : control.getLocationList())
+                {
+                    boolean check = true;
+                    //check state
+                    if (!tmpLocation.getState().equalsIgnoreCase(state))
+                    {
+                        check = false;
+                        continue;
+                    }
+                    if (tmpLocation.getPostcode() != postCode)
+                    {
+                        check = false;
+                        continue;
+                    }
+                    if (!tmpLocation.getCity().equalsIgnoreCase(city))
+                    {
+                        check = false;
+                        continue;
+                    }
+
+                    if (check)
+                    {
+                        job.setLocationID(tmpLocation.getLocationID());
+                        break;
+                    }
+                }
+
+                //Comment out for now.
+                //job.setJobDescription(updateJobDescription(job.getJobDescription(), String.valueOf(descriptionText.getText())));
+                //System.out.println("jobDescription has been set to: " + job.getJobDescription());
+
+                job.setJobDescription(String.valueOf(descriptionText.getText()));
+
+                JobCategory category = new JobCategory(job.getJobID(), String.valueOf(categoryMenuPrimary.getSelectedItem()), String.valueOf(categoryMenuSecondary.getSelectedItem()));
+
+                job.setJobStatus(String.valueOf(statusMenu.getSelectedItem()));
+
+                //write to JobList and JobCategory and JobSkill csv
+                File_Control io = new File_Control();
+                try {
+                    io.updateJob(job.getJobID(), job.getJobTitle(), job.getEmployer(), job.getRecruiterID(),
+                            job.getJobType(), job.getJobStatus(), job.getSalary(), job.getLocationID(), job.getJobDescription(), job.getSkills(), category);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                /*
+                //update JobList
+                jobList.add(job);
+
+                RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(control, control.getLocationList());
+                //close
+
+                 */
+            }
+        });
+
+
     }
 
-        public void populateForm(Job job, DefaultListModel popSkillsList) {
+        public void populateForm(Job job, DefaultListModel popSkillsList) throws IOException {
+            intNumAppLabel.setText(Integer.toString(job.getApplications().size()));
             intJobIDLabel.setText(Integer.toString(job.getJobID()));
             intRecIDLabel.setText(Integer.toString(job.getRecruiterID()));
             jobTitleText.setText(job.getJobTitle());
@@ -134,139 +234,46 @@ public class ManageJobGUI extends CreateJobGUI {
                 skillsList.setModel(popSkillsList);
             }
             //location list
-            for (Location tmpLocation : locationList) {
+            for (Location tmpLocation : control.getLocationList()) {
                 if (tmpLocation.getLocationID() == job.getLocationID()) {
-                    locationStateMenu.setSelectedItem(tmpLocation.getState());
-                    postcodeMenu.setSelectedItem(tmpLocation.getPostcode() + ", " + tmpLocation.getCity());
-                    continue;
+                    location.setLocationID(tmpLocation.getLocationID());
+                    location.setState(tmpLocation.getState());
+                    location.setPostcode(tmpLocation.getPostcode());
+                    location.setCity(tmpLocation.getCity());
+                    break;
                 }
             }
 
-            descriptionText.setText(job.getJobDescription());
+            locationStateMenu.setSelectedItem(location.getState());
+            populatePostcode("Location.csv", locationStateMenu, postcodeMenu);
+            postcodeMenu.setSelectedItem(location.getPostcode() + ", " + location.getCity());
+
+            String tmpDescription = "";
+            for (int i = 1; i < job.getJobDescription().length() - 1; i++) {
+                tmpDescription += job.getJobDescription().charAt(i);
+            }
+            descriptionText.setText(tmpDescription);
 
             //categories
-            for (JobCategory tmpCategory : jobCategoryList) {
+            for (JobCategory tmpCategory : control.getJobCategoryList()) {
                 if (tmpCategory.getJobID() == job.getJobID()) {
-                    categoryMenuPrimary.setSelectedItem(tmpCategory.getJobPrimaryCategory());
-                    categoryMenuSecondary.setSelectedItem(tmpCategory.getJobSubCategory());
-                    continue;
+                    category.setJobID(tmpCategory.getJobID());
+                    category.setJobPrimaryCategory(tmpCategory.getJobPrimaryCategory());
+                    category.setJobSubCategory(tmpCategory.getJobSubCategory());
+                    break;
                 }
             }
 
+            categoryMenuPrimary.setSelectedItem(category.getJobPrimaryCategory());
+            populateCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
+            categoryMenuSecondary.setSelectedItem(category.getJobSubCategory());
             statusMenu.setSelectedItem(job.getJobStatus());
         }
 
-                /*
-                this.recruiter = recruiter;
-                this.jobList = jobList;
-                this.locationList = locationList;
-                job = new Job();
-
-                job.setRecruiterID(recruiter.getUserID());
 
 
-                DefaultListModel skillsListGUI = new DefaultListModel();
-
-                populateSkills("SkillList.csv", skillsMenu);
-                populateCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
-
-
-
-                jobIDButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-
-                    }
-                });
-
-                categoryMenuPrimary.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        try {
-                            populateSecondaryCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
-                        } catch (FileNotFoundException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                });
-
-                jobIDText.addKeyListener(new KeyAdapter() {
-                    public void keyTyped(KeyEvent e) {
-                        char c = e.getKeyChar();
-                        if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-                            e.consume();  // if it's not a number, ignore the event
-                        }
-                    }
-                });
-                jobIDButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        job.setJobID(Integer.parseInt(jobIDText.getText()));
-                        populateJob(job.getJobID());
-                        populateCategory(job.getJobID());
-                        populateLocation(job.getLocationID());
-                        populateForm(job, skillsListGUI);
-                    }
-                });
-
-                addSkillButton.addActionListener(new ActionListener() {
-
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        skillsListGUI.addElement(String.valueOf(skillsMenu.getSelectedItem()));
-                        skillsList.setModel(skillsListGUI);
-                    }
-                });
-
-                removeSkillButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        skillsListGUI.removeElement(skillsList.getSelectedValue());
-                        skillsList.setModel(skillsListGUI);
-                    }
-                });
-            }
-
-            private void createUIComponents() {
-                // TODO: place custom component creation code here
-            }
-
-            public static void main(String[] args) {
-
-        each action needs to store in the variable for the job, then at the end, create a
-        job object that stores all of the info and writes it to the job database
-
-                public void populateCategory(int jobID) {
-
-                    JFrame frame = new JFrame("Manage Job");
-                    frame.setContentPane(new ManageJobGUI().manageJobPanel);
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    frame.pack();
-                    frame.setVisible(true);
-                }
-
-                public void populateJob(int jobID) {
-                    for (Job tmpJob : jobList) {
-                        if (tmpJob.getJobID() == job.getJobID()) {
-                            System.out.println("Chosen job is: " + tmpJob.toString());
-                            job.setJobTitle(tmpJob.getJobTitle());
-                            job.setEmployer(tmpJob.getEmployer());
-                            job.setJobType(tmpJob.getJobType());
-                            job.setJobStatus(tmpJob.getJobStatus());
-                            job.setSalary(tmpJob.getSalary());
-                            job.setLocationID(tmpJob.getLocationID());
-                            job.setJobDescription(tmpJob.getJobDescription());
-                            job.setSkills(tmpJob.getSkills());
-                            job.setApplications(tmpJob.getApplications());
-                            job.setKeywords(tmpJob.getKeywords());
-                        }
-                    }
-                }
-
-                public void populateLocation(int locationID) {
-                    location.setLocationID(locationID);
-                    //location.
-                }
-                */
+        private void createUIComponents() {
+            // TODO: place custom component creation code here
+        }
     }
 

@@ -72,6 +72,17 @@ public class RecruiterJobGUI {
         jobTypeLabel.setText((myJob.getJobType()));
 
         createTable();
+
+        editJobButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    ManageJobGUI manageJob = new ManageJobGUI(control, myJob);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
     }
 
     private void createTable()
@@ -127,15 +138,6 @@ public class RecruiterJobGUI {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        editJobButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    ManageJobGUI manageJob = new ManageJobGUI(myJob);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
+
     }
 }
