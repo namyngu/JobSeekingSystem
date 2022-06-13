@@ -464,6 +464,7 @@ public class JSS
     //Create User
     public void createUser(String firstName, String lastName, String userName, String password, String userType) throws Exception
     {
+        //Validate username
         for (User tmpUser : userList)
         {
             if (tmpUser.getUserName().equalsIgnoreCase(userName))
@@ -515,6 +516,7 @@ public class JSS
             {
                 int userID = countUsers() + 1;
                 Administrator admin = new Administrator(userID, firstName, lastName, userName, encryptPW,true);
+                userList.add(admin);
 
                 //write new recruiter to users.csv
                 this.saveUser(userID, firstName, lastName, userName, encryptPW,userType,true);
