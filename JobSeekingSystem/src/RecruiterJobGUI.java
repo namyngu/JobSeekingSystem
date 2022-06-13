@@ -30,8 +30,6 @@ public class RecruiterJobGUI {
     {
         this.control = control;
         this.jobID = jobID;
-        //find job from the jobID
-
 
         JFrame frame = new JFrame("RecruiterJobGUI");
         frame.setContentPane(this.recruiterJobGUI);
@@ -39,6 +37,7 @@ public class RecruiterJobGUI {
         frame.pack();
         frame.setLocation(650,40);
 
+        //find job from the jobID
         try
         {
             myJob = File_Control.findJob(control.getJobList(), jobID);
@@ -87,7 +86,8 @@ public class RecruiterJobGUI {
             try
             {
                 int jobseekerID = applicationList.get(i).getSenderID();
-                jobseeker = File_Control.findUser(control.getUserList(), jobseekerID);
+                //TODO: line below somehow breaks things
+                //jobseeker = File_Control.findUser(control.getUserList(), jobseekerID);
             }
             catch (Exception e)
             {
