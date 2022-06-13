@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -10,8 +9,8 @@ import java.util.Scanner;
 
 public class JobSeekerUpdateGUI {
     private JPanel updateSkillsPanel;
-    private JTextField textField1;
-    private JTextField textField2;
+    private JTextField jobseekerPhoneInput;
+    private JTextField jobseekerEmailInput;
     private JTextField textField3;
     private JList userSkillList;
     private JButton updateButton;
@@ -22,6 +21,7 @@ public class JobSeekerUpdateGUI {
     private JList allSkillList;
     private JButton addSkillButton;
     private JButton removeSkillButton;
+    private JList list1;
     private DefaultListModel userSkillsModel;
     private DefaultListModel allSkillsModel;
 
@@ -42,6 +42,9 @@ public class JobSeekerUpdateGUI {
 
         //display name in profile
         jobSeekerFullname.setText(jsControl.getFullName());
+        jobseekerEmailInput.setText(jsControl.getEmail());
+        jobseekerPhoneInput.setText(jsControl.getPhone());
+//        jobseekerLocationSelector.setText(parent.getLocation().toString());
 
 //        //build user skill list
         buildList(mySkills, userSkillsModel, userSkillList);
@@ -85,6 +88,14 @@ public class JobSeekerUpdateGUI {
                 //update jobseeker-skills file
                 jsControl.saveSkills();
 
+
+                //set email, phone & location on jobseeker
+                jsControl.setEmail(jobseekerEmailInput.getText().trim());
+                jsControl.setPhone(jobseekerPhoneInput.getText().trim());
+
+                //update jobseeker home gui
+
+                //save updated details to contact
 
                 frame.dispose();
 
