@@ -374,8 +374,9 @@ public class Search
         TreeMap<Integer, ArrayList<Job>> scoredResults = new TreeMap<>(Collections.reverseOrder());
 
         /* For each job in our list our jobs, filter out the ones that do not
-         * match the seeker's location. Add the remaining ones into an
-         * ArrayList for use later.
+         * match the seeker's location. Also filter out jobs that do not match
+         * any of the jobseeker's skills. Put the remaining jobs into a list
+         * to be scored.
          */
 
         for (Job tmp: jobList) {
@@ -391,9 +392,24 @@ public class Search
                 }
             }
 
+            int skillMatch = 0;
+            for (String skill: seekerSkills) {
+                String lSkill = skill.toLowerCase();
+                for (String check : tmp.getSkills()) {
+                    String lJobSkill = check.toLowerCase();
+                    if (lSkill.equals(lJobSkill)) {
+                        // Direct match on the skill
+                        skillMatch++;
+                    }
+                }
+            }
+
             if (thisJobState.equals(seekerLocation.getState().toLowerCase())
-                    || thisJobCity.equals(seekerLocation.getCity().toLowerCase())) {
-                // This job matches the seeker's location.
+                    || thisJobCity.equals(seekerLocation.getCity().toLowerCase())
+                    && skillMatch > 0) {
+                /* This job matches the seeker's location and at least one of the
+                 * seeker's skills.
+                 */
                 results.add(tmp);
             }
 
