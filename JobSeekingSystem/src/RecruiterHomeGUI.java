@@ -30,11 +30,14 @@ public class RecruiterHomeGUI {
     private JTable inboxTable;
     private JTable searchResults;
     private JButton createJobButton;
+    private ArrayList<Location> locationList;
     private JScrollPane recruiterInboxTable;
     private JScrollPane recruiterJobsTable;
+    private JScrollPane seekerTable;
 
-    public RecruiterHomeGUI(RecruiterControl parent){
+    public RecruiterHomeGUI(RecruiterControl parent, ArrayList<Location> locations){
         myParent = parent;
+        locationList = locations;
         JFrame window = new JFrame("JSS: Recruiter Home");
         window.add(recruiterNav);
 
@@ -112,6 +115,7 @@ public class RecruiterHomeGUI {
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                // Get data from the user's selections on the form.
                 String location = textField1.getText();
                 ListModel searchModel = candidateSkillList.getModel();
                 ArrayList<String> searchSkills = new ArrayList<>();
@@ -120,9 +124,40 @@ public class RecruiterHomeGUI {
                     searchSkills.add(skill);
                 }
 
-                // This method should return a list of jobSeekers and then
-                // we need to display them somehow.
-                myParent.seekerSearch(location, searchSkills);
+                // Pass the user's selections into a search to find matching jobSeekers.
+                ArrayList<Jobseeker> results = myParent.seekerSearch(location, searchSkills);
+
+                /* Set the list of search results into the candidate search panel.
+                 * First, set the columns up.
+                 */
+                String[] seekerListColumns = {"First Name", "Last Name", "Location", "Skills"};
+
+                // Set each Jobseeker up as a Row. Need to do some work to populate the location field.
+                ArrayList<String[]> seekerListRows = new ArrayList<>();
+                for (Jobseeker seeker : results) {
+                    int resultNum = 1;
+                    String resultLocation = "";
+                    for (Location place: locationList) {
+                        //TODO: if (place.getLocationID() == seeker.getLocationID()) {
+                        if (place.getLocationID() == 1)
+                            resultLocation = place.toString();
+                        }
+
+                    // Set the Jobseeker details up into the fields in the row.
+                    String[] thisSeeker = {seeker.getFirstName(), seeker.getLastName(), resultLocation,
+                                            String.join(",", seeker.getSkills())};
+
+                    // Add this row to the list of rows.
+                    seekerListRows.add(thisSeeker);
+                }
+
+                // Convert the list of rows into a TableModel readable format.
+                String[][] rows = seekerListRows.toArray(new String[0][0]);
+
+                // Set the Table Model into the results table.
+                DefaultTableModel freshModel = new DefaultTableModel(rows, seekerListColumns);
+                searchResults.setModel(freshModel);
+                searchResults.repaint();
             }
         });
 
@@ -147,7 +182,7 @@ public class RecruiterHomeGUI {
     private void createTable()
     {
         ArrayList<Job> myJobs = findRecruiterJob(myParent.getJobList());
-        String[][] data = new String[myJobs.size()][6];
+        String[][] data = new String[myJobs.size()][7];
 
         for (int i = 0; i < myJobs.size(); i++)
         {
@@ -175,7 +210,7 @@ public class RecruiterHomeGUI {
                     }
 
                     case 4:
-                        data[i][j] = String.valueOf(myJobs.get(i).getSalary());
+                        data[i][j] = String.valueOf(myJobs.get(i).getJobStatus());
                         break;
 
                     case 5:
@@ -183,7 +218,7 @@ public class RecruiterHomeGUI {
                         break;
 
                     case 6: {
-                        if (myJobs.get(i).getApplications().isEmpty())
+                        if (myJobs.get(i).getApplications().size() == 0)
                             data[i][j] = "0";
                         else
                             data[i][j] = String.valueOf(myJobs.get(i).getApplications().size());
@@ -198,7 +233,7 @@ public class RecruiterHomeGUI {
             }
         }
 
-        jobsTable.setModel(new DefaultTableModel(data, new String[]{"JobID","Title","Employer","Location","Salary","Type", "Applicants"}));
+        jobsTable.setModel(new DefaultTableModel(data, new String[]{"JobID","Title","Employer","Location","Status","Type", "Applicants"}));
     }
 
     public void populateSkills(String fileName) throws IOException {

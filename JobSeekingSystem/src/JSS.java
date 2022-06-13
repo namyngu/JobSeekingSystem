@@ -11,6 +11,7 @@ public class JSS
 {
     private static ArrayList<String> categories;
     private static int nextJobID;
+    private static int nextMessageID;
     private final File_Control fileControl = new File_Control();
     private ArrayList<User> userList = new ArrayList<>();
     private ArrayList<Job> jobList = new ArrayList<>();
@@ -59,6 +60,16 @@ public class JSS
         } catch (Exception e)
         {
             System.out.println("FATAL ERROR!! Failed to updateJobs!!");
+        }
+
+        try
+        {
+            this.messageIDloader();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Could not set message ID counter");
+            e.printStackTrace();
         }
 
         //display();
@@ -354,7 +365,7 @@ public class JSS
 
             case "Recruiter":
                 //Launch Recruiter Control
-                RecruiterControl recruiterControl = new RecruiterControl(userList.get(userIndex), jobList, locationList, jobCategoryList);
+                RecruiterControl recruiterControl = new RecruiterControl(userList.get(userIndex), jobList, locationList, jobCategoryList, userList);
                 break;
 
             default:
@@ -362,8 +373,12 @@ public class JSS
         }
     }
 
+
+    //arraylist starts at 0 but usernames start at 1
+
     public String retrieveUsername(int userID)
     {
+        userID -=1;
         User temp = userList.get(userID);
         String username = temp.getUserName();
         return username;
@@ -447,8 +462,15 @@ public class JSS
     }
 
     //Create User
-    public void createUser(String firstName, String lastName, String userName, String password, String userType)
+    public void createUser(String firstName, String lastName, String userName, String password, String userType) throws Exception
     {
+        for (User tmpUser : userList)
+        {
+            if (tmpUser.getUserName().equalsIgnoreCase(userName))
+            {
+                throw new Exception("Username already exists!");
+            }
+        }
         //encrypt password
         String encryptPW = EncryptMe.encryptThisString(password);
         //create jobseeker
@@ -571,7 +593,6 @@ public class JSS
     }
 
     //Method to save user to users.csv
-    //TODO adapt to include active status
     public void saveUser(int userID, String firstName, String lastName, String userName, String password, String userType, boolean active)
     {
         try
@@ -604,8 +625,10 @@ public class JSS
     // Check Messages method provided by Gerard.
     public boolean checkMessages(int userIndex)
     {
+
         //decreasing userIndex!!!
 //        userIndex -=1;
+        System.out.println();
         boolean hasMail = false;
 
         ArrayList<Message> messages = new ArrayList<>();
@@ -622,6 +645,7 @@ public class JSS
 
         try
         {
+
             for (int i = 0; i < messageString.length; i++)
             {
                 //If messages.csv contains an empty line skip it.
@@ -635,18 +659,20 @@ public class JSS
                 String[] messageDetails = messageString[i].split(",");
 
                 //find out who the message is for
-                int messageTo = Integer.parseInt(messageDetails[2]);
+                int messageTo = Integer.parseInt(messageDetails[3]);
 
                 //if it is for the user checking, add it to their list
                 if (messageTo == userIndex)
                 {
                     hasMail =true;
-                    int sender = Integer.parseInt(messageDetails[1]);
+                    int sender = Integer.parseInt(messageDetails[2]);
                     //TODO fix this to reflect changes to message class
-                    Message message = new Message(sender,messageTo,messageDetails[3],messageDetails[4]);
 
 
-                    User temp = this.userList.get(userIndex);
+                    Message message = new Message(nextMessageID, messageDetails[1],sender,messageTo,messageDetails[4],messageDetails[5]);
+
+
+                    User temp = this.userList.get(userIndex-1);
 
                     temp.addMessage(message);
                     //TODO alter messages arraylist so this is received if true
@@ -654,9 +680,7 @@ public class JSS
                 //TODO check user type and determine message type accordingly
                 //TODO deal with \n -- try replace with String methods? -- do this at point of writing
                 //TODO refresh message.csv list when done
-                //checking message is getting there....
-//                User one = userList.get(userIndex);
-//                System.out.println("Nessafe: " + one.messagesToString());
+
             }
         } catch (Exception e)
         {
@@ -667,9 +691,9 @@ public class JSS
     }
 
     // Store message method as copied from Gerard's branch.
-    public void storeMessage(int senderID, int receiverID, String header, String body)
+    public void storeMessage(int messageID, int senderID, int receiverID, String header, String body)
     {
-        String message = "pending" + "," + senderID + "," + receiverID + "," + header+"," + body;
+        String message = nextMessageID + "," + "pending" + "," + senderID + "," + receiverID + "," + header+"," + body;
         try
         {
             File_Control io = new File_Control();
@@ -713,6 +737,8 @@ public class JSS
         }
 
 
+
+
     }
 
     public boolean checkLocked(int userNumber)
@@ -728,17 +754,7 @@ public class JSS
         return locked;
     }
 
-    //message sorter??
 
-//    public void messageSend(int senderID, int receiverID)
-//    {
-//        User sender = userList.get(senderID);
-//
-//        if (sender instanceof Administrator)
-//        {
-//            Message alert = new AdminAlert(senderID, receiverID);
-//        }
-//    }
     public User getUserByID(int userID)
     {
         User inQuestion = userList.get(userID);
@@ -753,6 +769,119 @@ public class JSS
             System.out.println(tmpJob.toString());
         }
     }
+        //issues a messageID to created messages and increments count for next ID
+    public int issueMessageID()
+    {
+        int messageID = nextMessageID;
 
+        nextMessageID+=1;
+
+        return messageID;
+    }
+
+    private void messageIDloader()
+    {
+        String rawInput = "";
+        try
+        {
+            rawInput = fileControl.readFile("messages.csv");
+        } catch (Exception e)
+        {
+            System.out.println("Error failed to read messages!");
+        }
+
+        String[] messageString = rawInput.split("\n");
+        int currentMessageID = 0;
+        try
+        {
+
+            for (int i = 0; i < messageString.length; i++)
+            {
+                //If messages.csv contains an empty line skip it.
+                if (messageString[i].isEmpty())
+                {
+                    System.out.println("Warning: empty line in messages.csv at line: " + i + ", skipping...");
+                    continue;
+                }
+
+                //split each user into another array of userDetails
+                String[] messageDetails = messageString[i].split(",");
+               currentMessageID = Integer.parseInt(messageDetails[0]);
+
+
+
+
+            }
+            nextMessageID = currentMessageID;
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("message read error" + e.toString());
+        }
+    }
+
+    public Message retrieveMessage(int messageID)
+    {
+
+        Message message = new Message();
+
+        String rawInput = "";
+        try
+        {
+            rawInput = fileControl.readFile("messages.csv");
+        } catch (Exception e)
+        {
+            System.out.println("Error failed to read messages!");
+        }
+
+//        System.out.println("these are the messages: " + rawInput);
+        String[] messageString = rawInput.split("\n");
+
+        try
+        {
+
+            for (int i = 0; i < messageString.length; i++)
+            {
+                //If messages.csv contains an empty line skip it.
+                if (messageString[i].isEmpty())
+                {
+                    System.out.println("Warning: empty line in messages.csv at line: " + i + ", skipping...");
+                    continue;
+                }
+
+                //split each user into another array of userDetails
+                String[] messageDetails = messageString[i].split(",");
+
+                //find out who the message is for
+                int readID = Integer.parseInt(messageDetails[0]);
+
+                //if it is for the user checking, add it to their list
+                if (readID == messageID)
+                {
+
+                    int sender = Integer.parseInt(messageDetails[1]);
+                    int messageTo = Integer.parseInt(messageDetails[2]);
+
+
+
+                    message.setMessageID(readID);
+                    message.setSenderID(sender);
+                    message.setReceiverID(messageTo);
+                    message.setHeader(messageDetails[3]);
+                    message.setBody(messageDetails[4]);
+
+                }
+
+
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("message read error" + e.toString());
+        }
+
+        return message;
+    }
 }
 

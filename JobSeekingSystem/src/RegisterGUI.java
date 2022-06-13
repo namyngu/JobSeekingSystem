@@ -19,6 +19,11 @@ public class RegisterGUI
     private JRadioButton radioButtonRecruiter;
     private JButton loginButton;
     private JRadioButton radioButtonAdmin;
+    private JTextField emailInput;
+    private JTextField phoneInput;
+    private JLabel emailLabel;
+    private JLabel phoneLabel;
+    private JComboBox comboBox1;
     private JSS program;
 
 

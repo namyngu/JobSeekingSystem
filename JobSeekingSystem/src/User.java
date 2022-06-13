@@ -65,6 +65,8 @@ public abstract class User
 
     public boolean addMessage(Message message)
     {
+
+
         boolean delivered = false;
         try
         {

@@ -67,7 +67,7 @@ public class CreateJobGUI {
                         "Are you sure you want to close this window?", "Close Window?",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-                    RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl);
+                    RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl, locationList);
                     frame.dispose();
                 }
             }
@@ -186,7 +186,7 @@ public class CreateJobGUI {
                 //update JobList
                 jobList.add(job);
 
-                RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl);
+                RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl, locationList);
                 //close
             }
         });
