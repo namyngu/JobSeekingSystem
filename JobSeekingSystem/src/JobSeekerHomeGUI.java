@@ -4,11 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class JobSeekerHomeGUI {
 
@@ -36,7 +33,7 @@ public class JobSeekerHomeGUI {
     private JPanel search;
     private JPanel applicationsPanel;
     private JPanel profile;
-    private JLabel phoneText;
+    private JLabel jobseekerPhone;
 
     private JPanel inboxPanel;
     private JPanel profilePanel;
@@ -52,6 +49,8 @@ public class JobSeekerHomeGUI {
     private JList jsSkillsTable;
     private JLabel resultsHeading;
     private JScrollPane searchResultsScroll;
+    private JLabel jobseekerLocation;
+    private JLabel jobseekerEmail;
     private DefaultListModel jsSkillsModel;
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
@@ -115,7 +114,9 @@ public class JobSeekerHomeGUI {
 
         //display name in profile
         jobSeekerFullname.setText(parent.getFullName());
-
+        jobseekerEmail.setText(parent.getEmail());
+        jobseekerPhone.setText(parent.getPhone());
+        jobseekerLocation.setText(parent.getLocation().toString());
         //display skills in profile
         buildSkillList();
 
@@ -224,13 +225,19 @@ public class JobSeekerHomeGUI {
     }
 
         */
+        editProfileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JobSeekerUpdateGUI updateGUI = new JobSeekerUpdateGUI(myParent, home, locations );
+            }
+        });
     }
+
+
 
     public void buildSkillList(){
         jsSkillsModel = new DefaultListModel<>();
         ArrayList<String> skills = myParent.getSkills();
-        System.out.println("In JS Home GUI");
-        System.out.println(skills);
 
         for (int i = 0; i < skills.size(); i++)
         {

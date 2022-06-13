@@ -41,11 +41,11 @@ public class CreateJobGUI {
     private JScrollPane descriptionScroll;
     private JScrollPane jobTitleScroll;
     private JTextField employerText;
-    private JLabel salaryMessage;
 
     private User recruiter;
     private ArrayList<Job> jobList;
     private ArrayList<Location> locationList;
+    private ArrayList<JobCategory> jobCategoryList;
 
     public CreateJobGUI() {
 
@@ -63,7 +63,7 @@ public class CreateJobGUI {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 if (JOptionPane.showConfirmDialog(frame,
-                        "Are you sure you want to close this window?", "Close Window?",
+                        "Exit to Home?", "Close Window?",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
                     RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl, locationList);
@@ -75,6 +75,7 @@ public class CreateJobGUI {
         this.recruiter = recruiterControl.getRecruiter();
         this.jobList = recruiterControl.getJobList();
         this.locationList = recruiterControl.getLocationList();
+        this.jobCategoryList = recruiterControl.getJobCategoryList();
 
 
         Job job = new Job();
@@ -86,7 +87,7 @@ public class CreateJobGUI {
 
         intRecIDLabel.setText(Integer.toString(recruiter.getUserID()));
 
-        populateSkills("SkillList.csv");
+        populateSkills("SkillList.csv", skillsMenu);
         populateCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
 
         DefaultListModel skillsListGUI = new DefaultListModel();
@@ -221,7 +222,7 @@ public class CreateJobGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    populatePostcode("Location.csv");
+                    populatePostcode("Location.csv", locationStateMenu, postcodeMenu);
                 } catch (FileNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -264,9 +265,9 @@ public class CreateJobGUI {
         populateSecondaryCategories(fileName, menuCatPrim, menuCatSec);
     }
 
-    public void populatePostcode(String fileName) throws FileNotFoundException {
-        postcodeMenu.removeAllItems();
-        String state = String.valueOf(locationStateMenu.getSelectedItem());
+    public void populatePostcode(String fileName, JComboBox menuState, JComboBox menuPC) throws FileNotFoundException {
+        menuPC.removeAllItems();
+        String state = String.valueOf(menuState.getSelectedItem());
         //System.out.println("state is: " + state);
 
         FileReader file = new FileReader(fileName);
@@ -285,7 +286,7 @@ public class CreateJobGUI {
             city = locationDetails[3];
 
             if (state.equals(stateCheck)) {
-                postcodeMenu.addItem(postcode + ", " + city);
+                menuPC.addItem(postcode + ", " + city);
             }
 
             stateCheck = "";
@@ -320,14 +321,14 @@ public class CreateJobGUI {
         menuCatSec.removeItemAt(0);
     }
 
-    public void populateSkills(String fileName) throws IOException {
+    public void populateSkills(String fileName, JComboBox menuSkill) throws IOException {
         FileReader file = new FileReader(fileName);
         Scanner scan = new Scanner(file);
         String returnString = "";
 
         while (scan.hasNextLine()) {
             returnString = scan.nextLine();
-            skillsMenu.addItem(returnString);
+            menuSkill.addItem(returnString);
             //System.out.println(returnString + " added to skills menu");
         }
         file.close();

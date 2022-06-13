@@ -1,5 +1,6 @@
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -10,9 +11,9 @@ import java.util.Scanner;
 
 public class JobSeekerUpdateGUI {
     private JPanel updateSkillsPanel;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField jobseekerPhoneInput;
+    private JTextField jobseekerEmailInput;
+    private JTextField locationInput;
     private JList userSkillList;
     private JButton updateButton;
     private JLabel jobSeekerFullname;
@@ -22,11 +23,15 @@ public class JobSeekerUpdateGUI {
     private JList allSkillList;
     private JButton addSkillButton;
     private JButton removeSkillButton;
+    private JList locationList;
     private DefaultListModel userSkillsModel;
     private DefaultListModel allSkillsModel;
 
+    private DefaultListModel locationModel;
 
-    public JobSeekerUpdateGUI(JobseekerControl jsControl, JobSeekerHomeGUI jshomescreen) {
+    private ArrayList locationsArr;
+
+    public JobSeekerUpdateGUI(JobseekerControl jsControl, JobSeekerHomeGUI jshomescreen, ArrayList<Location> locations) {
         userSkillsModel = new DefaultListModel<>();
         allSkillsModel = buildModel("SkillList.csv");
         JFrame frame = new JFrame("Job Title");
@@ -42,12 +47,18 @@ public class JobSeekerUpdateGUI {
 
         //display name in profile
         jobSeekerFullname.setText(jsControl.getFullName());
-
+        jobseekerEmailInput.setText(jsControl.getEmail());
+        jobseekerPhoneInput.setText(jsControl.getPhone());
+//        jobseekerLocationSelector.setText(parent.getLocation().toString());
+        locationsArr = locations;
 //        //build user skill list
         buildList(mySkills, userSkillsModel, userSkillList);
 
         //build all skills list
         buildList(allSkills, allSkillsModel, allSkillList);
+
+        buildLocationList();
+
 
         //action listener on button to add skill to user and remove from all skills list
         addSkillButton.addActionListener(new ActionListener() {
@@ -86,8 +97,27 @@ public class JobSeekerUpdateGUI {
                 jsControl.saveSkills();
 
 
+                //set email, phone & location on jobseeker
+                jsControl.setEmail(jobseekerEmailInput.getText().trim());
+                jsControl.setPhone(jobseekerPhoneInput.getText().trim());
+
+                //update jobseeker home gui
+
+                //save updated details to contact
+
                 frame.dispose();
 
+            }
+        });
+        locationList.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+
+                locationInput.setText(locationModel.getElementAt(locationList.getSelectedIndex()).toString());
+
+                System.out.println(locationsArr.get(locationList.getSelectedIndex()).toString());
+                locationsArr.get(locationList.getSelectedIndex() +1).toString();
             }
         });
     }
@@ -100,6 +130,20 @@ public class JobSeekerUpdateGUI {
             model.addElement(list.get(i));
         }
         listGUI.setModel(model);
+    }
+
+    private void buildLocationList(){
+        locationModel = new DefaultListModel<>();
+
+
+        for (int i = 0; i < locationsArr.size(); i++)
+        {
+            locationModel.addElement(locationsArr.get(i));
+        }
+
+        System.out.println();
+
+        locationList.setModel(locationModel);
     }
 
     // take skills from csv file and return a List Model

@@ -9,9 +9,6 @@ import java.util.Locale;
 public class LoginGUI {
 
     private JSS program;
-    private String username;
-    private char [] password;
-
     private JLabel loginTitle;
     public JPanel loginPanel;
     private JLabel loginUsername;
@@ -20,7 +17,7 @@ public class LoginGUI {
     private JLabel loginPassword;
     private JButton loginButton;
     private JButton registerButton;
-    private JLabel outputLabel;
+    private JLabel errorLabel;
 
 
 
@@ -47,8 +44,8 @@ public class LoginGUI {
                 }
                 catch (Exception x)
                 {
-                    outputLabel.setText("System Error! Contact Admin with message: " + x.toString());
-                    outputLabel.setVisible(true);
+                    errorLabel.setText("System Error! " + x.getMessage());
+                    errorLabel.setVisible(true);
                     x.printStackTrace();
                 }
 
@@ -69,8 +66,8 @@ public class LoginGUI {
                 }
                 catch (Exception x)
                 {
-                    outputLabel.setText("System Error contact Admin with message " + x.toString());
-                    outputLabel.setVisible(true);
+                    errorLabel.setText("System Error contact Admin with message " + x.toString());
+                    errorLabel.setVisible(true);
                     x.printStackTrace();
                 }
             }

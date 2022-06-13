@@ -172,6 +172,7 @@ public class RecruiterHomeGUI {
                     int selectedRow = jobsTable.getSelectedRow();
                     int ID = Integer.parseInt(jobsTable.getValueAt(selectedRow, 0).toString());
                     RecruiterJobGUI recruiterJobGUI= new RecruiterJobGUI(parent, ID);
+                    window.dispose();
                 }
             }
         });
@@ -203,9 +204,15 @@ public class RecruiterHomeGUI {
                         break;
 
                     case 3: {
-                        int locationID = myJobs.get(i).getLocationID();
-                        String city = myParent.getLocationList().get(locationID).getCity();
-                        data[i][j] = city;
+                        try
+                        {
+                            Location location = File_Control.findLocation(myParent.getLocationList(), myJobs.get(i).getLocationID());
+                            data[i][j] = location.getCity();
+                        }
+                        catch (Exception e)
+                        {
+                            System.out.println("Error cannot find location.");
+                        }
                         break;
                     }
 
@@ -256,7 +263,7 @@ public class RecruiterHomeGUI {
         //search through all jobs for the recruiter's job
         for (Job tmpJob : jobList)
         {
-            if (tmpJob.getRecruiterID() == myParent.getRecruiter().getUserID())
+            if (tmpJob.getRecruiterID() == myParent.getRecruiter().getUserID() && (!tmpJob.getJobStatus().equalsIgnoreCase("Archived")))
             {
                 myJob.add(tmpJob);
             }

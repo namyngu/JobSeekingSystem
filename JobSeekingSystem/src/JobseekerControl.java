@@ -14,7 +14,7 @@ public class JobseekerControl
     public JobseekerControl(User user, ArrayList<Job> jobs, ArrayList<Location> locations,
                             ArrayList<JobCategory> categories) {
 
-        jobseeker = new Jobseeker(user.getUserID(), user.getFirstName(), user.getLastName(), user.getUserName(), user.getPassword(),user.isActive());
+        jobseeker = new Jobseeker(user.getUserID(), user.getFirstName(), user.getLastName(), user.getUserName(), user.getPassword(),user.isActive(), true);
         jobList = jobs;
         locationList = locations;
         jobCategoryList = categories;
@@ -53,33 +53,11 @@ public class JobseekerControl
         return searchResults;
 }
 
-
     public float matchScore(ArrayList<String> keywords, ArrayList skills)
     {
         float matchPercentage = 0;
         return matchPercentage;
     };
-
-    public void modifySkill()
-    {
-        System.out.println("Searching...");
-    }
-
-
-    public void viewApplications()
-    {
-
-    }
-
-    public void viewJobDetails(int jobId)
-    {
-
-    }
-
-    public void viewInvitations()
-    {
-
-    }
 
     public String getFullName()
     {
@@ -95,12 +73,10 @@ public class JobseekerControl
     public void setSkills(ArrayList<String> skills)
     {
         jobseeker.setSkills(skills);
-
     }
 
     public void saveSkills()
     {
-
 
         String file = "jobseeker-skills.csv";
         try {
@@ -145,10 +121,37 @@ public class JobseekerControl
         {
 
         }
-
-
     }
 
+    public Location getLocation()
+    {
+        return jobseeker.getLocation();
+    }
+
+    public String getEmail()
+    {
+        return jobseeker.getEmail();
+    }
+
+    public String getPhone()
+    {
+        return jobseeker.getPhone();
+    }
+
+    public void setLocation(Location location)
+    {
+        jobseeker.setLocation(location);
+    }
+
+    public void setEmail(String email)
+    {
+        jobseeker.setEmail(email);
+    }
+
+    public void setPhone(String phone)
+    {
+        jobseeker.setPhone(phone);
+    }
 
 
 

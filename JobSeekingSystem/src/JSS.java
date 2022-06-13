@@ -314,7 +314,7 @@ public class JSS
         if (!Exists)
         {
             //We did not find a username matching the entered name
-            throw new Exception("could not find a user with this username!");
+            throw new Exception("Username doesn't exist!");
         }
 
         // 2. Verify password
@@ -354,7 +354,7 @@ public class JSS
                 catch (Exception e)
                 {
 
-                    PromptGUI error = new PromptGUI("Contact Administrator", e.toString());
+                    PromptGUI error = new PromptGUI("Contact Administrator", e.getMessage());
 
                 }
 
@@ -462,8 +462,16 @@ public class JSS
     }
 
     //Create User
-    public void createUser(String firstName, String lastName, String userName, String password, String userType)
+    public void createUser(String firstName, String lastName, String userName, String password, String userType) throws Exception
     {
+        //Validate username
+        for (User tmpUser : userList)
+        {
+            if (tmpUser.getUserName().equalsIgnoreCase(userName))
+            {
+                throw new Exception("Username already exists!");
+            }
+        }
         //encrypt password
         String encryptPW = EncryptMe.encryptThisString(password);
         //create jobseeker
@@ -508,6 +516,7 @@ public class JSS
             {
                 int userID = countUsers() + 1;
                 Administrator admin = new Administrator(userID, firstName, lastName, userName, encryptPW,true);
+                userList.add(admin);
 
                 //write new recruiter to users.csv
                 this.saveUser(userID, firstName, lastName, userName, encryptPW,userType,true);
@@ -586,7 +595,6 @@ public class JSS
     }
 
     //Method to save user to users.csv
-    //TODO adapt to include active status
     public void saveUser(int userID, String firstName, String lastName, String userName, String password, String userType, boolean active)
     {
         try
@@ -678,7 +686,7 @@ public class JSS
             }
         } catch (Exception e)
         {
-            System.out.println("message read error" + e.toString());
+            System.out.println("message read error" + e.getMessage());
         }
 
         return hasMail;
@@ -811,7 +819,7 @@ public class JSS
         }
         catch (Exception e)
         {
-            System.out.println("message read error" + e.toString());
+            System.out.println("message read error" + e.getMessage());
         }
     }
 
@@ -872,7 +880,7 @@ public class JSS
         }
         catch (Exception e)
         {
-            System.out.println("message read error" + e.toString());
+            System.out.println("message read error" + e.getMessage());
         }
 
         return message;

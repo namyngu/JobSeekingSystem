@@ -79,7 +79,7 @@ public class File_Control {
 
         try
         {
-            writeFile("jobList.csv", data);
+            writeFile("JobList.csv", data);
         }
         catch (Exception e)
         {
@@ -106,9 +106,9 @@ public class File_Control {
         try {
             Scanner scanner = new Scanner(new File(filename));
 
-            while(scanner.hasNext() && !found)
+            while(scanner.hasNextLine() && !found)
             {
-                String data = scanner.next();
+                String data = scanner.nextLine();
                 String[] arr = data.split(",");
                 //if id is found
                 if(arr[0].equals(searchId))
@@ -120,6 +120,7 @@ public class File_Control {
                     found = true;
                 }
             }
+            scanner.close();
 
         }
         catch (Exception e)
@@ -210,6 +211,64 @@ public class File_Control {
         }
         catch(Exception e) {
             System.out.println("Something went wrong");
+        }
+    }
+
+    public void updateJob(int jobID, String jobTitle, String employer, int recruiterID, String jobType,
+                        String jobStatus, int salary, int locationID, String jobDescription, ArrayList<String> skills, JobCategory category) throws IOException {
+
+        //replaces all new line in the jobDescription with a "|"
+        String jobDescription2 = jobDescription.replaceAll("\n", "|");
+
+        String data = jobID + "," + jobTitle + "," + employer + "," + recruiterID + "," + jobType + "," + jobStatus + "," + salary + "," + locationID + "," + "\"" + jobDescription2 + "\"";
+        System.out.println("data is: " + data);
+        String data2 = "";
+
+        ArrayList<String> updatedSkills = removeById(jobID, "JobSkills.csv");
+        clearFile("JobSkills.csv");
+        writeFile("JobSkills.csv", "jobID, skills");
+        writeListToFile(updatedSkills, "JobSkills.csv");
+
+        for (String tmpSkill : skills)
+        {
+            data2 += jobID + "," + tmpSkill;
+            try
+            {
+                writeFile("JobSkills.csv", data2);
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error failed to save skills.");
+            }
+            data2 = "";
+        }
+
+        ArrayList<String> updatedJobs = removeById(jobID, "JobList.csv");
+        clearFile("JobList.csv");
+        writeFile("JobList.csv", "jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescription");
+        writeListToFile(updatedJobs, "JobList.csv");
+        try
+        {
+            writeFile("JobList.csv", data);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to save Job.");
+        }
+
+        ArrayList<String> updatedCategory = removeById(jobID, "JobCategory.csv");
+        clearFile("JobCategory.csv");
+        writeFile("JobCategory.csv", "jobID,jobPrimaryCategory,jobSubCategory");
+        writeListToFile(updatedJobs, "JobCategory.csv");
+
+        String categoryData = jobID + "," + category.getJobPrimaryCategory() + "," + category.getJobSubCategory();
+        try
+        {
+            writeFile("JobCategory.csv",categoryData);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to save category.");
         }
     }
 

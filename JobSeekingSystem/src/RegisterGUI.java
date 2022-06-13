@@ -19,6 +19,11 @@ public class RegisterGUI
     private JRadioButton radioButtonRecruiter;
     private JButton loginButton;
     private JRadioButton radioButtonAdmin;
+    private JTextField emailInput;
+    private JTextField phoneInput;
+    private JLabel emailLabel;
+    private JLabel phoneLabel;
+    private JComboBox comboBox1;
     private JSS program;
 
 
@@ -47,7 +52,7 @@ public class RegisterGUI
 
                     if (this.checkBlanks() == true)
                     {
-                    PromptGUI error = new PromptGUI("All fields must be complete and either JOBSEEKER or RECRUITER selected");
+                    PromptGUI error = new PromptGUI("Error: Invalid input.","All fields must be complete and either JOBSEEKER or RECRUITER selected");
                     allowRegistration = false;
                     }
                     if (this.checkPassword() == false)
@@ -58,7 +63,7 @@ public class RegisterGUI
                 }
                 catch (Exception x)
                 {
-                    PromptGUI error = new PromptGUI("Couldn't validate", x.toString());
+                    PromptGUI error = new PromptGUI("Couldn't validate", x.getMessage());
                     allowRegistration = false;
                 }
                 if (allowRegistration == true)
@@ -88,7 +93,7 @@ public class RegisterGUI
                         }
                     } catch (Exception x)
                     {
-                        PromptGUI error = new PromptGUI("Error", x.toString());
+                        PromptGUI error = new PromptGUI("Error", x.getMessage());
                     }
                 }
             }
