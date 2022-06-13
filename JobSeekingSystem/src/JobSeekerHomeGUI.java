@@ -170,6 +170,7 @@ public class JobSeekerHomeGUI {
                 DefaultTableModel freshModel = new DefaultTableModel(rows, jobListColumns);
                 jobSearchTable.setModel(freshModel);
                 searchResultsScroll.setVisible(true);
+                searchPanel.repaint();
             }
         });
 
