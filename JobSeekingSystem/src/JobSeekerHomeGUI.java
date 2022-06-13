@@ -228,7 +228,7 @@ public class JobSeekerHomeGUI {
         editProfileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JobSeekerUpdateGUI updateGUI = new JobSeekerUpdateGUI(myParent, home );
+                JobSeekerUpdateGUI updateGUI = new JobSeekerUpdateGUI(myParent, home, locations );
             }
         });
     }
@@ -238,8 +238,6 @@ public class JobSeekerHomeGUI {
     public void buildSkillList(){
         jsSkillsModel = new DefaultListModel<>();
         ArrayList<String> skills = myParent.getSkills();
-        System.out.println("In JS Home GUI");
-        System.out.println(skills);
 
         for (int i = 0; i < skills.size(); i++)
         {

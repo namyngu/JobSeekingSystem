@@ -21,12 +21,15 @@ public class JobSeekerUpdateGUI {
     private JList allSkillList;
     private JButton addSkillButton;
     private JButton removeSkillButton;
-    private JList list1;
+    private JList locationList;
     private DefaultListModel userSkillsModel;
     private DefaultListModel allSkillsModel;
 
+    private DefaultListModel locationModel;
 
-    public JobSeekerUpdateGUI(JobseekerControl jsControl, JobSeekerHomeGUI jshomescreen) {
+    private ArrayList locationsArr;
+
+    public JobSeekerUpdateGUI(JobseekerControl jsControl, JobSeekerHomeGUI jshomescreen, ArrayList<Location> locations) {
         userSkillsModel = new DefaultListModel<>();
         allSkillsModel = buildModel("SkillList.csv");
         JFrame frame = new JFrame("Job Title");
@@ -45,12 +48,15 @@ public class JobSeekerUpdateGUI {
         jobseekerEmailInput.setText(jsControl.getEmail());
         jobseekerPhoneInput.setText(jsControl.getPhone());
 //        jobseekerLocationSelector.setText(parent.getLocation().toString());
-
+        locationsArr = locations;
 //        //build user skill list
         buildList(mySkills, userSkillsModel, userSkillList);
 
         //build all skills list
         buildList(allSkills, allSkillsModel, allSkillList);
+
+        buildLocationList();
+
 
         //action listener on button to add skill to user and remove from all skills list
         addSkillButton.addActionListener(new ActionListener() {
@@ -111,6 +117,20 @@ public class JobSeekerUpdateGUI {
             model.addElement(list.get(i));
         }
         listGUI.setModel(model);
+    }
+
+    private void buildLocationList(){
+        locationModel = new DefaultListModel<>();
+
+
+        for (int i = 0; i < locationsArr.size(); i++)
+        {
+            locationModel.addElement(locationsArr.get(i));
+        }
+
+        System.out.println();
+
+        locationList.setModel(locationModel);
     }
 
     // take skills from csv file and return a List Model
