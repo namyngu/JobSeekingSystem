@@ -18,8 +18,8 @@ public class JobseekerControl
         jobList = jobs;
         locationList = locations;
         jobCategoryList = categories;
-        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(this, jobCategoryList, locationList);
         mainSearch = new Search(this, jobList, locationList, jobCategoryList);
+        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(this, jobCategoryList, locationList, jobseeker);
     }
 
 
@@ -29,18 +29,29 @@ public class JobseekerControl
     {
         System.out.println("Searching...");
         ArrayList<Job> searchResults = new ArrayList<>();
-        try
-        {
+        try {
             searchResults = mainSearch.jobSearch(jobDesc, categoryPrimary, categorySecondary, location, fullTime, partTime,
             casual, salMin, salMax, seekerSkills);
         }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+        catch (Exception e) {
+            PromptGUI notification = new PromptGUI(e.getMessage());
         }
         return searchResults;
     }
+
+    public ArrayList<Job> recommendedSearch() {
+        // TODO: Get the jobSeeker's location somehow.
+        // TODO: Mocked in for now.
+        Location seekerLocation = locationList.get(0);
+        ArrayList<Job> searchResults = new ArrayList<>();
+        try {
+            searchResults = mainSearch.recommendedJobs(seekerLocation, jobseeker.getSkills());
+        }
+        catch (Exception e) {
+            PromptGUI notification = new PromptGUI(e.getMessage());
+        }
+        return searchResults;
+}
 
 
     public float matchScore(ArrayList<String> keywords, ArrayList skills)

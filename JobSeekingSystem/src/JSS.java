@@ -365,7 +365,7 @@ public class JSS
 
             case "Recruiter":
                 //Launch Recruiter Control
-                RecruiterControl recruiterControl = new RecruiterControl(userList.get(userIndex), jobList, locationList, jobCategoryList);
+                RecruiterControl recruiterControl = new RecruiterControl(userList.get(userIndex), jobList, locationList, jobCategoryList, userList);
                 break;
 
             default:

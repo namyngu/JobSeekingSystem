@@ -40,13 +40,16 @@ public class CreateJobGUI {
     private JButton submitButton;
     private JScrollPane descriptionScroll;
     private JScrollPane jobTitleScroll;
-    private JLabel salaryTextLabel;
     private JTextField employerText;
+    private JLabel salaryMessage;
 
     private User recruiter;
     private ArrayList<Job> jobList;
     private ArrayList<Location> locationList;
 
+    public CreateJobGUI() {
+
+    }
     public CreateJobGUI(RecruiterControl recruiterControl) throws IOException {
         JFrame frame = new JFrame("Create Job");
         frame.setContentPane(this.createJobPanel);
@@ -84,7 +87,7 @@ public class CreateJobGUI {
         intRecIDLabel.setText(Integer.toString(recruiter.getUserID()));
 
         populateSkills("SkillList.csv");
-        populateCategories("CategoryList.csv");
+        populateCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
 
         DefaultListModel skillsListGUI = new DefaultListModel();
         ArrayList<String> skills = job.getSkills();
@@ -207,7 +210,7 @@ public class CreateJobGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    populateSecondaryCategories("CategoryList.csv");
+                    populateSecondaryCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
                 } catch (FileNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -235,7 +238,7 @@ public class CreateJobGUI {
         return numJobs;
     }
 
-    public void populateCategories(String fileName) throws IOException {
+    public void populateCategories(String fileName, JComboBox menuCatPrim, JComboBox menuCatSec) throws IOException {
         FileReader file = new FileReader(fileName);
         Scanner scan = new Scanner(file);
         String returnString = "";
@@ -253,12 +256,12 @@ public class CreateJobGUI {
                 }
             }
 
-            categoryMenuPrimary.addItem(firstCategory);
+            menuCatPrim.addItem(firstCategory);
             firstCategory = "";
         }
 
         file.close();
-        populateSecondaryCategories(fileName);
+        populateSecondaryCategories(fileName, menuCatPrim, menuCatSec);
     }
 
     public void populatePostcode(String fileName) throws FileNotFoundException {
@@ -290,9 +293,9 @@ public class CreateJobGUI {
         }
     }
 
-    public void populateSecondaryCategories(String fileName) throws FileNotFoundException {
-        categoryMenuSecondary.removeAllItems();
-        int index = categoryMenuPrimary.getSelectedIndex();
+    public void populateSecondaryCategories(String fileName, JComboBox menuCatPrim, JComboBox menuCatSec) throws FileNotFoundException {
+        menuCatSec.removeAllItems();
+        int index = menuCatPrim.getSelectedIndex();
         //System.out.println("index is: " + index);
 
         FileReader file = new FileReader(fileName);
@@ -310,11 +313,11 @@ public class CreateJobGUI {
                 secondCategory += returnString.charAt(i);
             }
             else {
-                categoryMenuSecondary.addItem(secondCategory);
+                menuCatSec.addItem(secondCategory);
                 secondCategory = "";
             }
         }
-        categoryMenuSecondary.removeItemAt(0);
+        menuCatSec.removeItemAt(0);
     }
 
     public void populateSkills(String fileName) throws IOException {
