@@ -1,6 +1,9 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class RecruiterJobGUI {
     private JPanel jobPanel;
@@ -125,5 +128,15 @@ public class RecruiterJobGUI {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+        editJobButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    ManageJobGUI manageJob = new ManageJobGUI(myJob);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
     }
 }

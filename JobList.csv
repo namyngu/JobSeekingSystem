@@ -40,3 +40,4 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 39,Manager,McDonalds,14,FullTime,Advertised,55000,3895,"This job requires good communication and people skills.|McDonalds is a big company....|"
 40,Builder,Megastructure,14,Casual,Advertised,65000,12173,""
 41,Clerk,Bunnings,14,Casual,Draft,35000,7,"Your job is to SELL SELL SELL|Also smile and greet everyone!"
+
