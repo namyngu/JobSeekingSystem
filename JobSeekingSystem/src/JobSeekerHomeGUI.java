@@ -74,6 +74,9 @@ public class JobSeekerHomeGUI {
         String catList = IO.readFile("CategoryList.csv");
         String[] categories = catList.split("\n");
 
+        secondaryCategoryBox.removeAllItems();
+        secondaryCategoryBox.setSelectedItem("Category");
+
         for (String category: categories) {
 
             String[] breakCategories = category.split(",");
@@ -86,8 +89,9 @@ public class JobSeekerHomeGUI {
     }
 
     public JobSeekerHomeGUI(JobseekerControl parent, ArrayList<JobCategory> categories,
-                            ArrayList<Location> locations) {
+                            ArrayList<Location> locations, Jobseeker seeker) {
         JobSeekerHomeGUI home = this;
+        jobseeker = seeker;
         myParent = parent;
         locationList = locations;
         jobCategoryList = categories;

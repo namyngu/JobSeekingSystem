@@ -18,7 +18,7 @@ public class JobseekerControl
         jobList = jobs;
         locationList = locations;
         jobCategoryList = categories;
-        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(this, jobCategoryList, locationList);
+        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(this, jobCategoryList, locationList, jobseeker);
         mainSearch = new Search(this, jobList, locationList, jobCategoryList);
     }
 
