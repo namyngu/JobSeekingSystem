@@ -119,29 +119,45 @@ public class JobSeekerHomeGUI {
         //display skills in profile
         buildSkillList();
 
-        // TODO: Obtain a list of recommended jobs for this seeker.
+        // Obtain a list of recommended jobs for this seeker.
         ArrayList<Job> searchResults = myParent.recommendedSearch();
 
-        //
-        // TODO: remove this when above method works.
-        // TODO: test build table will condense into reusable method.
-     String[] jobListColumns = {"JobID", "Title", "Employer", "Location", "Salary", "Type"};
-        String[][] jobListRows = {
-                {"001", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
-                {"002", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
-                {"003", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
-                {"004", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"},
-                {"005", "Software Developer", "Google", "San Francisco","$300,000", "Full Time"}
-        };
-        DefaultTableModel jtest = new DefaultTableModel(jobListRows, jobListColumns);
-        jobTable.setModel(jtest);
+        /* Set the list of recommended jobs into the recommended jobs panel.
+         * First, set the columns up.
+         */
+        String[] jobListColumns = {"JobID", "Title", "Employer", "Location", "Salary", "Type"};
 
+        // Set each Job up as a Row. Need to do some work to populate the location field.
+        ArrayList<String[]> jobListRows = new ArrayList<>();
+        for (Job job : searchResults) {
+            int resultNum = 1;
+            String resultLocation = "";
+            for (Location place: locationList) {
+                if (place.getLocationID() == job.getLocationID()) {
+                    resultLocation = place.toString();
+                }
+            }
+
+            // Set the job details up into the fields in the row.
+            String[] thisJob = {Integer.toString(resultNum), job.getJobTitle(), job.getEmployer(),
+                    resultLocation, Integer.toString(job.getSalary()), job.getJobType()};
+
+            // Add this row to the list of rows.
+            jobListRows.add(thisJob);
+        }
+
+        // Convert the list of rows into a TableModel readable format.
+        String[][] rows = jobListRows.toArray(new String[0][0]);
+
+        // Set the Table Model into the results table.
+        DefaultTableModel freshModel = new DefaultTableModel(rows, jobListColumns);
+        jobTable.setModel(freshModel);
+        jobTable.repaint();
         searchResultsScroll.setVisible(false);
-        //initial search table
+
+        // Setup the initial search table.
         DefaultTableModel jobSearchModel = new DefaultTableModel(null, jobListColumns);
         jobSearchTable.setModel(jobSearchModel);
-
-
 
         searchButton.addActionListener(new ActionListener() {
             @Override
