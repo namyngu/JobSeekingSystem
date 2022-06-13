@@ -53,33 +53,11 @@ public class JobseekerControl
         return searchResults;
 }
 
-
     public float matchScore(ArrayList<String> keywords, ArrayList skills)
     {
         float matchPercentage = 0;
         return matchPercentage;
     };
-
-    public void modifySkill()
-    {
-        System.out.println("Searching...");
-    }
-
-
-    public void viewApplications()
-    {
-
-    }
-
-    public void viewJobDetails(int jobId)
-    {
-
-    }
-
-    public void viewInvitations()
-    {
-
-    }
 
     public String getFullName()
     {
@@ -158,6 +136,21 @@ public class JobseekerControl
     public String getPhone()
     {
         return jobseeker.getPhone();
+    }
+
+    public void setLocation(Location location)
+    {
+        jobseeker.setLocation(location);
+    }
+
+    public void setEmail(String email)
+    {
+        jobseeker.setEmail(email);
+    }
+
+    public void setPhone(String phone)
+    {
+        jobseeker.setPhone(phone);
     }
 
 

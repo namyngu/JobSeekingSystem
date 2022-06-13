@@ -114,11 +114,8 @@ public class JobSeekerHomeGUI {
 
         //display name in profile
         jobSeekerFullname.setText(parent.getFullName());
-
         jobseekerEmail.setText(parent.getEmail());
-
         jobseekerPhone.setText(parent.getPhone());
-
         jobseekerLocation.setText(parent.getLocation().toString());
         //display skills in profile
         buildSkillList();
@@ -228,7 +225,15 @@ public class JobSeekerHomeGUI {
     }
 
         */
+        editProfileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JobSeekerUpdateGUI updateGUI = new JobSeekerUpdateGUI(myParent, home );
+            }
+        });
     }
+
+
 
     public void buildSkillList(){
         jsSkillsModel = new DefaultListModel<>();

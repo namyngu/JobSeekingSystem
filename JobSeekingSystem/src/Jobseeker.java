@@ -72,13 +72,24 @@ public class Jobseeker extends User {
 
          ArrayList<String> temp = fc.fileSearchId(super.getUserID(), "user-contact.csv");
 
-        System.out.println("load contact details");
-        int locationId = Integer.parseInt(temp.get(0));
-        email = temp.get(1);
-        phone = temp.get(2);
 
-        //get contact info
-        loadLocation(locationId);
+        if(temp.size() == 3)
+        {
+            System.out.println("load contact details");
+            int locationId = Integer.parseInt(temp.get(0));
+            email = temp.get(1);
+            phone = temp.get(2);
+            //get contact info
+            loadLocation(locationId);
+        }
+        else {
+            System.out.println("No contact details, filling with temp");
+            email = "temporary email";
+            phone = "temporary phone";
+            loadLocation(813);
+        }
+
+
     }
 
 
@@ -110,14 +121,29 @@ public class Jobseeker extends User {
         return location;
     }
 
+    public void setLocation(Location location)
+    {
+        this.location = location;
+    }
+
     public String getEmail()
     {
         return email;
     }
 
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
     public String getPhone()
     {
         return phone;
+    }
+
+    public void setPhone(String phone)
+    {
+        this.phone = phone;
     }
 
     // Method to set list of Skills (needed at the moment for search testing)
