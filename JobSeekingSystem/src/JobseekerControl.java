@@ -36,8 +36,7 @@ public class JobseekerControl
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            PromptGUI notification = new PromptGUI(e.getMessage());
         }
         return searchResults;
     }

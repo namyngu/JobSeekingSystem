@@ -56,13 +56,6 @@ public class Search
                 // Retrieve the job Salary.
                 int salary = tmp.getSalary();
 
-                // Precheck: Job Type specification must be supplied for
-                // search to execute properly.
-                if (!fullTime && !partTime && !casual) {
-                    // Search has not specified any job type, search cannot be executed
-                    throw new Exception("You must specify a Job Type!");
-                }
-
                 // Filter 1. Job must be currently advertised.
                 if (!tmp.getJobStatus().equals("Advertised")) {
                     valid = false;
@@ -171,6 +164,22 @@ public class Search
         String categorySecondary, String location, boolean fullTime, boolean partTime,
         boolean casual, int salMin, int salMax, ArrayList<String> seekerSkills) throws Exception {
 
+        // Throw notification messages if needed data is missing.
+        // TODO: Notification messages.
+        if (jobDesc.isEmpty()) {
+            throw new Exception("Please enter a Job Title to search for!");
+        }
+        if (location.isEmpty()) {
+            throw new Exception("Please enter a location to search in!");
+        }
+        if (!fullTime && !partTime && !casual) {
+            throw new Exception("Please select a Job Type to search for!");
+        }
+        if (categoryPrimary = "Category") {
+            throw new Exception("Please select a Primary Category to search in!");
+        }
+
+
         // Setup a few variables.
         ArrayList<Job> results = new ArrayList<>();
         TreeMap<Integer, Job> scoredResults = new TreeMap<>();
@@ -265,14 +274,20 @@ public class Search
                 // Match on Primary Category.
                 primaryCatMatch = 1;
             }
-            if (categorySecondary.equals(jobCategoryList.get(tmp.getJobID()-1).getJobSubCategory())) {
+            if (categorySecondary.equals(jobCategoryList.get(tmp.getJobID()-1).getJobSubCategory()) ||
+                    categorySecondary.equals("All")) {
                 secondaryCatMatch = 1;
             }
 
 
             // Weight the category matches.
             int primaryCatResult = primaryCatMatch * primaryCatWeight;
-            int secondaryCatResult = secondaryCatMatch * secondaryCatWeight;
+            /* The secondary category should *only* match if it is a valid
+             * subset of the primary category.*/
+            int secondaryCatResult = 0;
+            if (primaryCatResult > 0) {
+                secondaryCatResult = secondaryCatMatch * secondaryCatWeight;
+            }
 
             // 4. Score this Job for the search
             int totalResult = titleResult + keywordResult + skillResult + primaryCatResult + secondaryCatResult;

@@ -81,6 +81,7 @@ public class JobSeekerHomeGUI {
 
             String[] breakCategories = category.split(",");
                 if (breakCategories[0].equals(primaryCategory)) {
+                    secondaryCategoryBox.addItem("All");
                 for (int x = 1; x < breakCategories.length; x++) {
                     secondaryCategoryBox.addItem(breakCategories[x]);
                 }
