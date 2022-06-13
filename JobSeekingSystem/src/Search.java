@@ -157,7 +157,7 @@ public class Search
                 }
 
                 // c. Pull all the locations check parameters together
-                if (locationMatch == 0 && searchPostCode == 0 && searchPostCode != thisJobPostCode) {
+                if (locationMatch == 0 && (searchPostCode == 0 || searchPostCode != thisJobPostCode)) {
                     // This job's location does not match any of the location search data
                     valid = false;
                     break;
@@ -355,19 +355,133 @@ public class Search
 
     // Method 2. Search for a list of matching JobSeekers
     public ArrayList<Jobseeker> seekerSearch(String searchLocation, ArrayList<String> seekerSkills) throws Exception {
-        ArrayList<Jobseeker> results = new ArrayList<Jobseeker>();
+
+        /* Ideas for this method:
+         * Needs to collect a list of all jobSeekers.
+         * Needs to filter list of jobSeekers for ones that match the
+         * search location.
+         * Needs to filter list of jobSeekers for ones that match the
+         * required skills.
+         * Needs to rank seekers - more matches on skills = higher result.
+         */
+
+        // Setup a few variables.
+        ArrayList<Jobseeker> results = new ArrayList<>();
+        TreeMap<Integer, ArrayList<Jobseeker>> scoredResults = new TreeMap<>(Collections.reverseOrder());
+
+        /* For each Jobseeker in our list of Jobseekers, check to see
+         * if they are in the right location. Also check to see if they
+         * have any skills that match our requirements. If so, add them
+         * to an initial list of results.
+         */
+        for (Jobseeker seeker : jobseekerList) {
+            // TODO: When location is added to a user, this will work.
+            // TODO: Mocked in for now.
+            // Location seekerLocation = seeker.getLocation();
+            Location seekerLocation = new Location();
+            boolean valid = true;
+
+            int searchPostCode = 0;
+            String searchState = "";
+            String searchCity = "";
+
+            for (Location place : locationList) {
+                if (place.getLocationID() == seekerLocation.getLocationID()) {
+                    searchPostCode = place.getPostcode();
+                    searchState = place.getState().toLowerCase();
+                    searchCity = place.getCity().toLowerCase();
+                    break;
+                }
+            }
+
+            /* a. Has the user entered a postcode to be searched?
+             * Check the location entered and see if it contains
+             * a valid postcode.
+             */
+            char[] chars = searchLocation.toCharArray();
+            StringBuilder postCodeCheck = new StringBuilder();
+            for (char c : chars) {
+                if (Character.isDigit(c)) {
+                    postCodeCheck.append(c);
+                }
+            }
+
+            int checkPostCode = 0;
+            try {
+                checkPostCode = Integer.parseInt(postCodeCheck.toString());
+            }
+            catch (Exception e) {
+                // Don't assign any value to checkPostCode
+            }
+
+            /* b. Has the user entered a State or City to be searched?
+             * Check the location entered and see if it contains any
+             * relevant data.
+             */
+            int locationMatch = 0;
+            String[] locationsSearched = searchLocation.split("\\W+");
+            for (String searchString : locationsSearched) {
+                String lSearchString = searchString.toLowerCase();
+                if (lSearchString.equals(searchState) || lSearchString.equals(searchCity)) {
+                    /* This location search term matches this seeker's location
+                     * and this seeker is therefore relevant.
+                     */
+                    locationMatch++;
+                }
+            }
+
+            // c. Pull all the locations check parameters together
+            if (locationMatch == 0 && (checkPostCode == 0 || checkPostCode != searchPostCode)) {
+                // This seeker's location does not match any of the location search data
+                valid = false;
+                break;
+            }
+
+            if (valid) {
+                // This seeker matches searched parameters.
+                results.add(seeker);
+            }
+        }
+
+        /* Now score the seekers in the results list and put them back
+         * into the results list in scored order.
+         */
+        int skillMatch = 0;
+        for (Jobseeker seeker : results) {
+            for (String skill: seeker.getSkills()) {
+                String lSkill = skill.toLowerCase();
+                for (String searchSkill : seekerSkills) {
+                    String lSearchSkill = searchSkill.toLowerCase();
+                    if (lSkill.equals(lSearchSkill)) {
+                        // Direct match on the skill
+                        skillMatch++;
+                    }
+                }
+            }
+
+            // Weight the skillMatch.
+            int skillResult = skillMatch / seekerSkills.size() * 100;
+
+        }
+
+        /* Sort the TreeMap and put the sorted list back into results.
+         * Note the TreeMap should always be already sorted for  in
+         * descending order for us as specified in our intialization, so
+         * simply iterating through gets us the Job list
+         * sorted by the score descending.
+         */
+        results.clear();
+        results = new ArrayList<>();
+        for (Integer key : scoredResults.keySet()) {
+            for (int i = 0; i < scoredResults.get(key).size(); i++) {
+                results.add(scoredResults.get(key).get(i));
+            }
+        }
         return results;
     }
 
     // Method 3. Search for a list of recommended jobs.
     public ArrayList<Job> recommendedJobs(Location seekerLocation, ArrayList<String> seekerSkills) throws Exception {
-
-        /* Ideas for this method:
-         * Jobs *must* be within the same State OR the Same City
-         * (same Postcode is probably too small a search range).
-         * Jobs must match some of the skills of the Jobseeker
-         * (more matched skills = higher search result).
-         */
 
         // Setup a few variables.
         ArrayList<Job> results = new ArrayList<>();
