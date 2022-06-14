@@ -78,6 +78,7 @@ public class AdminGUI
                String senderName = program.retrieveUsername(senderID);
 
                 toDisplay += senderName + " Re: " + each.getHeader();
+
                 refreshList(toDisplay,inboxList,mailListModel);
             }
         }

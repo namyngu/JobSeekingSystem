@@ -30,9 +30,9 @@ public interface Communication
 
 
         User user = this.relayUser();
-//        System.out.println("com31 userID " + user.getUserID());
+
         ArrayList<Message> messages = user.getMessages();
-        //TODO this needs to get the index relevant to the user!
+
 
         int messageIndex = 0;
         int counter = 0;
@@ -48,17 +48,7 @@ public interface Communication
             }
             counter +=1;
         }
-        //running through to find the message index
 
-//        for (int i=0; i<messages.size(); i+=1)
-//        {
-//            if (messageID == messages.get(i).getMessageID())
-//            {
-//                messageIndex = i;
-//                System.out.println("com40 message ID is" + messages.get(i).getMessageID());
-//                System.out.println("counter is " +i);
-//            }
-//        }
 
 
         Message toOpen = messages.get(messageIndex);
@@ -72,6 +62,21 @@ public interface Communication
 
 
         return toOpen;
+    }
+
+    default boolean checkHasReceived (int messageID)
+    {
+        boolean sent = false;
+
+        User user = relayUser();
+        ArrayList<Message> messages = user.getMessages();
+      Message toCheck = messages.get(messageID);
+      if (toCheck.isHasReceived() == true)
+      {
+          sent = true;
+      }
+
+        return sent;
     }
 
     //requires implementing class to provide User for use in interface methods

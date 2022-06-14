@@ -67,7 +67,7 @@ public class JSS
         try
         {
             this.messageIDloader();
-            System.out.println("CURRENT MESSAGE ID WORKS and is " + nextMessageID);
+
             this.allMessages = new ArrayList<Message>();
         }
         catch (Exception e)
@@ -823,7 +823,7 @@ public void markAsSent(Message message)
         String body = each.getBody();
 
         this.storeMessage(ID, status, sender,destination,header,body);
-        System.out.println("JSS 823 storing message " + ID + " with status of " + status);
+
     }
     this.allMessages = messageList;
     }
