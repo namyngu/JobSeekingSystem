@@ -17,6 +17,11 @@ public class JSS
     private final File_Control fileControl = new File_Control();
     private ArrayList<User> userList = new ArrayList<>();
     private ArrayList<Job> jobList = new ArrayList<>();
+
+    public ArrayList<Location> getLocationList() {
+        return locationList;
+    }
+
     private ArrayList<Location> locationList = new ArrayList<>();
     private ArrayList<JobCategory> jobCategoryList = new ArrayList<>();
 
@@ -480,7 +485,7 @@ public class JSS
     }
 
     //Create User
-    public void createUser(String firstName, String lastName, String userName, String password, String userType) throws Exception
+    public void createUser(String firstName, String lastName, String userName, String password, String userType, Location userLocation, String userEmail, String userPhone) throws Exception
     {
         //Validate username
         for (User tmpUser : userList)
@@ -504,6 +509,8 @@ public class JSS
                 //write new user to users.csv
                 this.saveUser(userID, firstName, lastName, userName, encryptPW,userType,true);
 
+                //write new user contact info to user-contact.csv
+                this.saveContactInfo(userID, userLocation, userEmail, userPhone);
             } catch (Exception e)
             {
                 System.out.println("Error failed to create Jobseeker, check your parameters!");
@@ -522,6 +529,9 @@ public class JSS
 
                 //write new recruiter to users.csv
                 this.saveUser(userID, firstName, lastName, userName, encryptPW,userType,true);
+
+                //write new user contact info to user-contact.csv
+                this.saveContactInfo(userID, userLocation, userEmail, userPhone);
             } catch (Exception e)
             {
                 System.out.println("Error failed to create Recruiter, check your parameters!");
@@ -538,6 +548,9 @@ public class JSS
 
                 //write new recruiter to users.csv
                 this.saveUser(userID, firstName, lastName, userName, encryptPW,userType,true);
+
+                //write new user contact info to user-contact.csv
+                this.saveContactInfo(userID, userLocation, userEmail, userPhone);
             } catch (Exception e)
             {
                 System.out.println("Error failed to create admin, check your parameters!");
@@ -1029,6 +1042,35 @@ public void markAsSent(Message message)
         }
 
         return message;
+    }
+
+    public void saveContactInfo(int userId, Location userLocation, String userEmail, String userPhone )
+    {
+
+        String file = "user-contact.csv";
+        try {
+
+            String newLocationString = Integer.toString(userId) + "," + String.valueOf(userLocation.getLocationID()) + "," + userEmail + "," + userPhone;
+//
+            File_Control fc = new File_Control();
+
+            //get all contacts except current (not relevant for new user)
+            ArrayList<String> all = fc.removeById(userId, file);
+
+            //add current users new skill set
+            all.add(newLocationString);
+
+            //clear existing csv
+            fc.clearFile(file);
+
+            //re-write new contact info
+            fc.writeListToFile(all, file);
+            System.out.println("Updated contact information has been saved to user-contact.csv");
+        }
+        catch(Exception e)
+        {
+
+        }
     }
 }
 

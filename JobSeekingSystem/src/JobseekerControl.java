@@ -142,23 +142,18 @@ public class JobseekerControl implements Communication
 
             String newLocationString = Integer.toString(jobseeker.getUserID()) + "," + String.valueOf(getLocation().getLocationID()) + "," + getEmail() + "," + getPhone();
 //
-
-            //save all skills from skills csv
             File_Control fc = new File_Control();
 
-            //get all skills except for current user
+            //get all contact details except for current jobseeker
             ArrayList<String> all = fc.removeById(jobseeker.getUserID(), file);
 
-            //add current users new skill set
+            //add updated contact info to full contact array
             all.add(newLocationString);
 
-//                for(String line : all){
-//                    System.out.println(line);
-//                }
-//                clear skills csv
+            //clear contact csv
             fc.clearFile(file);
 
-//                rewrite skill set to skills csv
+            //rewrite contact info
             fc.writeListToFile(all, file);
             System.out.println("Updated contact information has been saved to user-contact.csv");
         }
