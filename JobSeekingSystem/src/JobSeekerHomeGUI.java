@@ -112,11 +112,8 @@ public class JobSeekerHomeGUI {
             throw new RuntimeException(e);
         }
 
-        //display name in profile
-        jobSeekerFullname.setText(parent.getFullName());
-        jobseekerEmail.setText(parent.getEmail());
-        jobseekerPhone.setText(parent.getPhone());
-        jobseekerLocation.setText(parent.getLocation().toString());
+        //display contact information in profile
+        buildContactInfo();
         //display skills in profile
         buildSkillList();
 
@@ -247,6 +244,15 @@ public class JobSeekerHomeGUI {
         System.out.println();
 
         jsSkillsTable.setModel(jsSkillsModel);
+    }
+
+
+    public void buildContactInfo()
+    {
+        jobSeekerFullname.setText(myParent.getFullName());
+        jobseekerEmail.setText(myParent.getEmail());
+        jobseekerPhone.setText(myParent.getPhone());
+        jobseekerLocation.setText(myParent.getLocation().toString());
     }
 
 

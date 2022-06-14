@@ -13,7 +13,7 @@ public class JobSeekerUpdateGUI {
     private JPanel updateSkillsPanel;
     private JTextField jobseekerPhoneInput;
     private JTextField jobseekerEmailInput;
-    private JTextField locationInput;
+    private JTextField jobseekerLocationInput;
     private JList userSkillList;
     private JButton updateButton;
     private JLabel jobSeekerFullname;
@@ -29,9 +29,14 @@ public class JobSeekerUpdateGUI {
 
     private DefaultListModel locationModel;
 
-    private ArrayList locationsArr;
+    private ArrayList<Location> locationsArr;
+
+    private JobseekerControl jsControl;
 
     public JobSeekerUpdateGUI(JobseekerControl jsControl, JobSeekerHomeGUI jshomescreen, ArrayList<Location> locations) {
+        locationsArr = locations;
+        this.jsControl = jsControl;
+        buildLocationList();
         userSkillsModel = new DefaultListModel<>();
         allSkillsModel = buildModel("SkillList.csv");
         JFrame frame = new JFrame("Job Title");
@@ -45,19 +50,17 @@ public class JobSeekerUpdateGUI {
         ArrayList<String> allSkills = new ArrayList<String>();;
         ArrayList<String> mySkills = jsControl.getSkills();
 
-        //display name in profile
-        jobSeekerFullname.setText(jsControl.getFullName());
-        jobseekerEmailInput.setText(jsControl.getEmail());
-        jobseekerPhoneInput.setText(jsControl.getPhone());
-//        jobseekerLocationSelector.setText(parent.getLocation().toString());
-        locationsArr = locations;
+        //display contact info in profile
+        displayContactInfo();
+
+
 //        //build user skill list
         buildList(mySkills, userSkillsModel, userSkillList);
 
         //build all skills list
         buildList(allSkills, allSkillsModel, allSkillList);
 
-        buildLocationList();
+
 
 
         //action listener on button to add skill to user and remove from all skills list
@@ -97,13 +100,21 @@ public class JobSeekerUpdateGUI {
                 jsControl.saveSkills();
 
 
-                //set email, phone & location on jobseeker
+                //set email, phone & location on jobseeker object
                 jsControl.setEmail(jobseekerEmailInput.getText().trim());
                 jsControl.setPhone(jobseekerPhoneInput.getText().trim());
+                jsControl.setLocation(locationsArr.get(locationList.getSelectedIndex()));
+                System.out.println(locationsArr.get(locationList.getSelectedIndex()).getLocationID());
+
+                //update jobseeker home gui to reflect new contact information
+                System.out.println("Location updated to:");
+                System.out.println(jsControl.getLocation().toString());
 
                 //update jobseeker home gui
+                jshomescreen.buildContactInfo();
+                //save updated details to contact to database
 
-                //save updated details to contact
+                jsControl.saveContactInfo();
 
                 frame.dispose();
 
@@ -114,10 +125,9 @@ public class JobSeekerUpdateGUI {
             @Override
             public void valueChanged(ListSelectionEvent e) {
 
-                locationInput.setText(locationModel.getElementAt(locationList.getSelectedIndex()).toString());
+                jobseekerLocationInput.setText(locationModel.getElementAt(locationList.getSelectedIndex()).toString());
 
-                System.out.println(locationsArr.get(locationList.getSelectedIndex()).toString());
-                locationsArr.get(locationList.getSelectedIndex() +1).toString();
+
             }
         });
     }
@@ -186,6 +196,27 @@ public class JobSeekerUpdateGUI {
 
             return arrList;
         };
+
+    public void displayContactInfo()
+    {
+        jobSeekerFullname.setText(jsControl.getFullName());
+        jobseekerEmailInput.setText(jsControl.getEmail());
+        jobseekerPhoneInput.setText(jsControl.getPhone());
+
+        //loop through locations to find matching location ID
+        for (int i = 0; i < locationsArr.size(); i++) {
+            Location currentLocation = locationsArr.get(i);
+            if (currentLocation.getLocationID() == jsControl.getLocation().getLocationID())
+            {
+                //on match pre-select on the location list & fill location input
+                locationList.setSelectedIndex(i);
+                jobseekerLocationInput.setText(locationModel.getElementAt(locationList.getSelectedIndex()).toString());
+
+            }
+
+        }
+//
+    }
 
     }
 
