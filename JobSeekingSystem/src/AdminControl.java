@@ -58,7 +58,7 @@ public class AdminControl implements Communication
             text += ". Please contact them immediately to discuss";
             int messageID = this.program.issueMessageID();
             Message notification = new Message(messageID, senderID, receiverID,header,text);
-            program.storeMessage(messageID,false, senderID,receiverID,header,text);
+            program.storeMessage(messageID,false, senderID,receiverID,header,text, -1);
             sent = true;
         }
         catch (Exception e)

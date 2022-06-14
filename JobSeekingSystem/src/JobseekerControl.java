@@ -209,7 +209,12 @@ public class JobseekerControl implements Communication
         int recruiterID = applyFor.getRecruiterID();
         try
         {
-            sent = this.sendMessage(program, program.issueMessageID(), this.jobseeker.getUserID(), recruiterID, "Application", text);
+            int messageID = program.issueMessageID();
+            Application application = new Application(messageID,this.jobseeker.getUserID(), recruiterID, "Application", text);
+            application.setJobRef(applyFor.getJobID());
+
+            sent = this.sendMessage(program, messageID, this.jobseeker.getUserID(), recruiterID, "Application", text);
+
         }
         catch (Exception e)
         {
