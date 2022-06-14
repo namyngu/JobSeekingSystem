@@ -997,7 +997,7 @@ public void markAsSent(Message message)
 
                 //find out who the message is for
                 int readID = Integer.parseInt(messageDetails[0])+1;
-                System.out.println("JSS 1000 message ID cehcking for number " + readID);
+                System.out.println("JSS 1000 message ID cehcking for number " + readID + "matching number " + messageID);
                 //if it is for the user checking, add it to their list
                 if (readID == messageID)
                 {
