@@ -2,6 +2,7 @@ public class Application extends Message
 {
     private int applicationID;
     private String coverLetter;
+    private String status;
 
     public Application()
     {
@@ -12,6 +13,7 @@ public class Application extends Message
     {
         this.applicationID = applicationID;
         this.coverLetter = coverLetter;
+        this.status = "Pending";
     }
 
     public void display()

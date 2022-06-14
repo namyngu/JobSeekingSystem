@@ -45,6 +45,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\JobSeekingSystem\messages.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\JobSkills.csv">
           <value>
             <Attribute>
@@ -60,6 +67,13 @@
           </value>
         </entry>
         <entry key="\SkillList.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\user-contact.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
