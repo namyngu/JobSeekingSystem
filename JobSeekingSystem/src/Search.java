@@ -1,3 +1,9 @@
+/**
+ * This class represents the Search control class, which will execute the main search
+ * algorithm functions of the system.
+ * @author  Team D - Tom Barker, Jakeob Clarke-Kennedy, Bradley Meyn, Hoang Nguyen, Gerard Samson-Dekker
+ */
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.TreeMap;
@@ -8,10 +14,11 @@ public class Search
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
     private ArrayList<Jobseeker> jobseekerList;
-    private int matchScore;
     private Object myParent;
 
-    // Default constructor.
+    /**
+     * This is the Default constructor for this class.
+     */
     public Search() {
         myParent = null;
         jobList = new ArrayList<>();
@@ -20,7 +27,16 @@ public class Search
         jobseekerList = new ArrayList<>();
     }
 
-    // Non-default constructor.
+    /**
+     * This is a Non-default constructor for this class.
+     * @param parent    a JobseekerControl Object, representing the Object which
+     *                  spawned this Search Object.
+     * @param jobs      an ArrayList of Jobs containing all Jobs in the system.
+     * @param locations an ArrayList of Locations containing all the Locations
+     *                  in the system.
+     * @param categories an ArrayList of JobCategories containing all the Job
+     *                   Categories in the system.
+     */
     public Search(JobseekerControl parent, ArrayList<Job> jobs,
                   ArrayList<Location> locations, ArrayList<JobCategory> categories) {
         myParent = parent;
@@ -30,7 +46,16 @@ public class Search
         jobseekerList = new ArrayList<>();
     }
 
-    // Non-default constructor.
+    /**
+     * This is a Non-default constructor for this class.
+     * @param parent    a RecruiterControl Object, representing the Object which
+     *                  spawned this Search Object.
+     * @param jobs      an ArrayList of Jobs containing all the Jobs in the system.
+     * @param locations an ArrayList of Locations containing all the Locations
+     *                  in the system.
+     * @param categories an ArrayList of JobCategories containing all the Job
+     *                   Categories in the system.
+     */
     public Search(RecruiterControl parent, ArrayList<Job> jobs,
                   ArrayList<Location> locations, ArrayList<JobCategory> categories) {
         myParent = parent;
@@ -40,7 +65,18 @@ public class Search
         jobseekerList = new ArrayList<>();
     }
 
-    // Non-default constructor.
+    /**
+     * This is a Non-default constructor for this class.
+     * @param parent    a RecruiterControl Object, representing the Object which
+     *                  spawned this Search Object.
+     * @param jobs      an ArrayList of Jobs containing all the Jobs in the system.
+     * @param locations an ArrayList of Locations containing all the Locations
+     *                  in the system.
+     * @param categories an ArrayList of JobCategories containing all the Job
+     *                   Categories in the system.
+     * @param seekers   an ArrayList of Jobseekers, containing all the Users which
+     *                  are set as userType "Jobseeker" in the system.
+     */
     public Search(RecruiterControl parent, ArrayList<Job> jobs,
                   ArrayList<Location> locations, ArrayList<JobCategory> categories,
                   ArrayList<Jobseeker> seekers) {
@@ -51,16 +87,41 @@ public class Search
         jobseekerList = seekers;
     }
 
-    /* Method to filter out inappropriate search results based
-     * on user input.
+    /**
+     * This is the display method for this class.
+     */
+    public void display() {
+        System.out.println("Parent Object: " + myParent);
+        System.out.println("Job List: " + jobList);
+        System.out.println("Location List: " + locationList);
+        System.out.println("Category List: " + jobCategoryList);
+        System.out.println("Job Seeker List: " + jobseekerList);
+    }
+
+    /**
+     * This method examines a list of Jobs, filters out ones that do not
+     * meet specified requirements, and returns the rest.
+     * @param fullTime  a Boolean representing if Jobs of Type "Fulltime" should
+     *                  be included in the results or not.
+     * @param partTime  a Boolean representing if Jobs of Type "Parttime" should
+     *                  be included in the results or not.
+     * @param casual    a Boolean representing if Jobs of Type "Casual" should
+     *                  be included in the results or not.
+     * @param salMin    an Integer representing the minimum salary amount. Jobs
+     *                  with a salary less than this should be filtered out.
+     * @param salMax    an Integer representing the maximum salary amount. Jobs
+     *                  with a salary more than this should be filtered out.
+     * @param location  a String representing the location which has been searched for.
+     * @return          an ArrayList of Jobs which fall into the filter parameters
+     *                  provided.
      */
     public ArrayList<Job> filterResults(boolean fullTime, boolean partTime, boolean casual,
-                                        int salMin, int salMax, String location) throws Exception {
+                                        int salMin, int salMax, String location) {
         // Setup a few variables.
         ArrayList<Job> results = new ArrayList<>();
 
         for (Job tmp : jobList) {
-            // Setup a boolean to track if the job should be filtered out.
+            // Set up a boolean to track if the job should be filtered out.
             boolean valid = true;
 
             /* As soon as the job is filtered out, we will end checking.
@@ -105,9 +166,7 @@ public class Search
                 }
 
                 // 3. Job must match salary range
-                if (salary >= salMin && salary <= salMax) {
-                    //Job is within salary range specified
-                } else {
+                if (salary < salMin && salary > salMax) {
                     // Job is outside desired salary range
                     valid = false;
                     break;
@@ -186,13 +245,78 @@ public class Search
         return results;
     }
 
-    // Method 1. Search for a list of matching jobs
+    /**
+     * This is the Accessor method for the jobCategoryList field.
+     * @return an ArrayList of Job Categories.
+     */
+    public ArrayList<JobCategory> getJobCategoryList() {
+        return jobCategoryList;
+    }
+
+    /**
+     * This is the Accessor method for the jobList field.
+     * @return an ArrayList of Jobs in the system.
+     */
+    public ArrayList<Job> getJobList() {
+        return jobList;
+    }
+
+    /**
+     * This is the Accessor method for the jobseekerList field.
+     * @return an ArrayList of Jobseekers in the system.
+     */
+    public ArrayList<Jobseeker> getJobseekerList() {
+        return jobseekerList;
+    }
+
+    /**
+     * This is the Accessor method for the locationList field.
+     * @return an ArrayList of Locations in the system.
+     */
+    public ArrayList<Location> getLocationList() {
+        return locationList;
+    }
+
+    /**
+     * This is the Accessor method for the myParent field.
+     * @return the Object which spawned this Search class.
+     */
+    public Object getMyParent() {
+        return myParent;
+    }
+
+    /**
+     * This method searches for Jobs in the system which match provided
+     * parameters and returns them in an ArrayList of Jobs.
+     * @param jobDesc           a String containing the search text entered by
+     *                          the User.
+     * @param categoryPrimary   a String containing the Primary Category selected
+     *                          to search in by the User.
+     * @param categorySecondary a String containing the Secondary Category selected
+     *                          to search in by the User.
+     * @param location          a String containing the location text entered by
+     *                          the User.
+     * @param fullTime          a Boolean containing the checkbox selection for "Fulltime"
+     *                          made by the User.
+     * @param partTime          a Boolean containing the checkbox selection for "Parttime"
+     *                          made by the User.
+     * @param casual            a Boolean containing the checkbox selection for "Casual"
+     *                          made by the User.
+     * @param salMin            an Integer containing the minimum salary selected by the User
+     *                          to search for.
+     * @param salMax            an Integer containing the maximum salary selected bt the User
+     *                          to search for.
+     * @param seekerSkills      an ArrayList of Strings representing the skills of the
+     *                          Jobseeker who executed the search.
+     * @return                  an ArrayList of Jobs, sorted in order of relevance.
+     * @throws Exception        Exceptions are thrown when parameters which are required to
+     *                          successfully execute the search have not been provided.
+     */
     public ArrayList<Job> jobSearch(String jobDesc, String categoryPrimary,
         String categorySecondary, String location, boolean fullTime, boolean partTime,
         boolean casual, int salMin, int salMax, ArrayList<String> seekerSkills) throws Exception {
 
         // Throw notification messages if needed data is missing.
-        // TODO: Notification messages.
         if (jobDesc.isEmpty()) {
             throw new Exception("Please enter a Job Title to search for!");
         }
@@ -208,7 +332,6 @@ public class Search
 
 
         // Setup a few variables.
-        ArrayList<Job> results = new ArrayList<>();
         TreeMap<Integer, ArrayList<Job>> scoredResults = new TreeMap<>(Collections.reverseOrder());
 
         // Change search algorithm weightings here, if needed.
@@ -219,7 +342,7 @@ public class Search
         int secondaryCatWeight = 10;
 
         // First let's apply filter data to filter out unmatching jobs
-        results = filterResults(fullTime, partTime, casual, salMin, salMax, location);
+        ArrayList<Job> results = filterResults(fullTime, partTime, casual, salMin, salMax, location);
 
         /* Now the result list has been populated with Jobs which have passed
          * the search filters. Now to do some matching and scoring on search
@@ -339,7 +462,7 @@ public class Search
 
             // 6. Add this job and its score into a TreeMap for sorting
             if (scoredResults.get(totalResult) == null) {
-                ArrayList<Job> newList = new ArrayList<Job>();
+                ArrayList<Job> newList = new ArrayList<>();
                 newList.add(tmp);
                 scoredResults.put(totalResult,newList);
             } else {
@@ -364,17 +487,16 @@ public class Search
         return results;
     }
 
-    // Method 2. Search for a list of matching JobSeekers
-    public ArrayList<Jobseeker> seekerSearch(String searchLocation, ArrayList<String> seekerSkills) throws Exception {
-
-        /* Ideas for this method:
-         * Needs to collect a list of all jobSeekers.
-         * Needs to filter list of jobSeekers for ones that match the
-         * search location.
-         * Needs to filter list of jobSeekers for ones that match the
-         * required skills.
-         * Needs to rank seekers - more matches on skills = higher result.
-         */
+    /**
+     * This method searches for Jobseekers in the system that match provided parameters.
+     * @param searchLocation a String containing the text input the Recruiter
+     *                       has searched in.
+     * @param seekerSkills   an ArrayList of Strings containing the skills that
+     *                       the Recruiter has searched for.
+     * @return               an ArrayList of Jobseekers which match the search
+     *                       parameters.
+     */
+    public ArrayList<Jobseeker> seekerSearch(String searchLocation, ArrayList<String> seekerSkills) {
 
         // Setup a few variables.
         ArrayList<Jobseeker> results = new ArrayList<>();
@@ -458,7 +580,6 @@ public class Search
          * into the results list in scored order.
          */
         int skillMatch = 0;
-        int skillResult = 0;
         for (Jobseeker seeker : results) {
             for (String skill: seeker.getSkills()) {
                 String lSkill = skill.toLowerCase();
@@ -472,7 +593,7 @@ public class Search
             }
 
             // Weight the skillMatch.
-            skillResult = skillMatch / seekerSkills.size() * 100;
+            int skillResult = skillMatch / seekerSkills.size() * 100;
 
             // Add the scored entry into scored results.
             if (skillResult > 10) {
@@ -502,8 +623,59 @@ public class Search
         return results;
     }
 
-    // Method 3. Search for a list of recommended jobs.
-    public ArrayList<Job> recommendedJobs(Location seekerLocation, ArrayList<String> seekerSkills) throws Exception {
+    /**
+     * This is the Mutator method for the jobCategoryList field.
+     * @param jobCategories an ArrayList of JobCategories containing all the
+     *                      Job Categories in the system.
+     */
+    public void setJobCategoryList(ArrayList<JobCategory> jobCategories) {
+        jobCategoryList = jobCategories;
+    }
+
+    /**
+     * This is the Mutator method for the jobList field.
+     * @param jobs an ArrayList of Jobs containing all the Jobs in the system.
+     */
+    public void setJobList(ArrayList<Job> jobs) {
+        jobList = jobs;
+    }
+
+    /**
+     * This is the Mutator method for the jobseekerList field.
+     * @param seekers an ArrayList of Jobseekers containing all the Users in
+     *                the system of Type Jobseeker.
+     */
+    public void setJobseekerList(ArrayList<Jobseeker> seekers) {
+        jobseekerList = seekers;
+    }
+
+    /**
+     * This is the Mutator method for the locationList field.
+     * @param locations an ArrayList of Locations containing all the Locations
+     *                  in the system.
+     */
+    public void setLocationList(ArrayList<Location> locations) {
+        locationList = locations;
+    }
+
+    /**
+     * This is the Mutator method for the myParent field.
+     * @param parent the Object which spawned this Search Object and should be
+     *               set as the parent Object.
+     */
+    public void setMyParent(Object parent) {
+        myParent = parent;
+    }
+
+    /**
+     * This method searches for Jobs which should be recommended to the User.
+     * @param seekerLocation    the Location which this User is in.
+     * @param seekerSkills      an ArrayList of Strings which represent the skills
+     *                          this User has entered on their profile.
+     * @return                  an ArrayList of Jobs, sorted by relevance, which
+     *                          can be recommended to the User.
+     */
+    public ArrayList<Job> recommendedJobs(Location seekerLocation, ArrayList<String> seekerSkills) {
 
         // Setup a few variables.
         ArrayList<Job> results = new ArrayList<>();
@@ -605,7 +777,7 @@ public class Search
 
             // Add this job and its scored to the TreeMap.
             if (scoredResults.get(skillResult) == null) {
-                ArrayList<Job> newList = new ArrayList<Job>();
+                ArrayList<Job> newList = new ArrayList<>();
                 newList.add(tmp);
                 scoredResults.put(skillResult,newList);
             } else {
@@ -627,10 +799,5 @@ public class Search
             }
         }
         return results;
-    }
-
-    protected int calculateMatch(int jobID, int userID)
-    {
-        return 0;
     }
 }
