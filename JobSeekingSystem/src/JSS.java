@@ -20,8 +20,13 @@ public class JSS
     private ArrayList<Location> locationList = new ArrayList<>();
     private ArrayList<JobCategory> jobCategoryList = new ArrayList<>();
 
+    boolean gerardWork;
+
     public JSS()
     {
+        this.gerardWork = true;
+
+
         try
         {
             importUserList("users.csv");
@@ -74,6 +79,15 @@ public class JSS
         {
             System.out.println("Could not set message ID counter");
             e.printStackTrace();
+        }
+
+        if (gerardWork)
+        {
+            Job job = jobList.get(1);
+            Jobseeker jobseeker = (Jobseeker) userList.get(10);
+            JobseekerControl control = new JobseekerControl(this,jobseeker, this.jobList,this.locationList,this.jobCategoryList);
+            TestGUI test = new TestGUI(this,control);
+//            JobSeekerApplication testJob = new JobSeekerApplication();
         }
 
         //display();
@@ -933,8 +947,11 @@ public void markAsSent(Message message)
                currentMessageID = Integer.parseInt(messageDetails[0]);
 
             }
-            nextMessageID = currentMessageID;
-
+            nextMessageID = currentMessageID+1;
+            if (nextMessageID == 0)
+            {
+                nextMessageID =1;
+            }
         }
         catch (Exception e)
         {
