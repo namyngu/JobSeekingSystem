@@ -276,7 +276,7 @@
           <grid row="25" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="/error if &gt;0 apps (changing to draft)"/>
+          <text value="Job cannot be edited if already Advertised"/>
         </properties>
       </component>
       <component id="8a9c8" class="javax.swing.JLabel" binding="intNumAppLabel">
@@ -348,6 +348,14 @@
         </constraints>
         <properties>
           <text value="Submit"/>
+        </properties>
+      </component>
+      <component id="c95d1" class="javax.swing.JButton" binding="withdrawJobButton">
+        <constraints>
+          <grid row="26" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Withdraw Job"/>
         </properties>
       </component>
     </children>
