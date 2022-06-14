@@ -5,12 +5,14 @@ TODO upon login transfer control to relevant subclass controller
 
  */
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class JSS
 {
     private static ArrayList<String> categories;
     private static int nextJobID;
+    private ArrayList<Message> allMessages;
     private static int nextMessageID;
     private final File_Control fileControl = new File_Control();
     private ArrayList<User> userList = new ArrayList<>();
@@ -65,6 +67,8 @@ public class JSS
         try
         {
             this.messageIDloader();
+
+            this.allMessages = new ArrayList<Message>();
         }
         catch (Exception e)
         {
@@ -633,7 +637,7 @@ public class JSS
         System.out.println();
         boolean hasMail = false;
 
-        ArrayList<Message> messages = new ArrayList<>();
+//        ArrayList<Message> messages = new ArrayList<>();
 
         String rawInput = "";
         try {
@@ -641,6 +645,8 @@ public class JSS
         } catch (Exception e) {
             System.out.println("Error failed to read messages!");
         }
+
+
 
 //        System.out.println("these are the messages: " + rawInput);
         String[] messageString = rawInput.split("\n");
@@ -662,26 +668,28 @@ public class JSS
 
                 //find out who the message is for
                 int messageTo = Integer.parseInt(messageDetails[3]);
-
+                int sender = Integer.parseInt(messageDetails[2]);
+                int messageID = Integer.parseInt(messageDetails[0]);
                 //if it is for the user checking, add it to their list
                 if (messageTo == userIndex)
                 {
                     hasMail =true;
-                    int sender = Integer.parseInt(messageDetails[2]);
-                    //TODO fix this to reflect changes to message class
 
 
-                    Message message = new Message(nextMessageID, messageDetails[1],sender,messageTo,messageDetails[4],messageDetails[5]);
+
+
+                    Message message = new Message(messageID, messageDetails[1],sender,messageTo,messageDetails[4],messageDetails[5]);
 
 
                     User temp = this.userList.get(userIndex-1);
 
                     temp.addMessage(message);
-                    //TODO alter messages arraylist so this is received if true
+
                 }
+                this.allMessages.add(new Message(messageID, messageDetails[1],sender,messageTo,messageDetails[4],messageDetails[5]));
                 //TODO check user type and determine message type accordingly
                 //TODO deal with \n -- try replace with String methods? -- do this at point of writing
-                //TODO refresh message.csv list when done
+
 
             }
         } catch (Exception e)
@@ -693,9 +701,17 @@ public class JSS
     }
 
     // Store message method as copied from Gerard's branch.
-    public void storeMessage(int messageID, int senderID, int receiverID, String header, String body)
+    public void storeMessage(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String body)
     {
-        String message = nextMessageID + "," + "pending" + "," + senderID + "," + receiverID + "," + header+"," + body;
+        String status = "pending";
+        if (hasReceived == true)
+        {
+            status = "sent";
+        }
+        String message = messageID + "," + status + "," + senderID + "," + receiverID + "," + header+"," + body;
+
+
+
         try
         {
             File_Control io = new File_Control();
@@ -704,6 +720,112 @@ public class JSS
         {
             System.out.println("Error failed to save user into csv.");
         }
+    }
+
+    private ArrayList<Message> allMessagesList()
+    {
+        ArrayList<Message> totalMessages = new ArrayList<Message>();
+
+        File_Control fileControl = new File_Control();
+        String rawInput= "";
+        try
+        {
+           rawInput += fileControl.readFile("messages.csv");
+        }
+        catch (Exception e)
+        {
+            System.out.println("failed to read file allMessagesList");
+            e.printStackTrace();
+        }
+        String[] messageString = rawInput.split("\n");
+
+        try
+        {
+
+            for (int i = 0; i < messageString.length; i++)
+            {
+                //If messages.csv contains an empty line skip it.
+                if (messageString[i].isEmpty())
+                {
+                    System.out.println("Warning: empty line in messages.csv at line: " + i + ", skipping...");
+                    continue;
+                }
+
+                //split each user into another array of userDetails
+                String[] messageDetails = messageString[i].split(",");
+
+                int messageID = Integer.parseInt(messageDetails[0]);
+                boolean hasReceived = false;
+                if (messageDetails[1].equalsIgnoreCase("sent"))
+                {
+                    hasReceived = true;
+                }
+                int sender = Integer.parseInt(messageDetails[2]);
+                int destination = Integer.parseInt(messageDetails[3]);
+                String header = messageDetails[4];
+                String body = messageDetails[5];
+
+                Message toAdd = new Message(messageID,sender,destination,header,body);
+                totalMessages.add(toAdd);
+            }
+            this.allMessages = totalMessages;
+        }
+        catch (Exception e)
+        {
+            System.out.println("message read error" + e.getMessage());
+        }
+
+
+        return totalMessages;
+    }
+
+public void markAsSent(Message message)
+{
+
+
+
+//create ArrayList of all messages
+
+            ArrayList<Message> messageList = this.allMessages;
+
+
+
+           int messageIndex = message.getMessageID()-1;
+//    System.out.println("message index is " + messageIndex);
+           //remove the message to update the status of and replace with updated status
+
+//            messageList.remove(messageIndex);
+//    System.out.println("JSS800 messageID to remove " + messageList.get(messageIndex).getMessageID());
+//            messageList.add(messageIndex,message);
+
+    messageList.set(messageIndex,message);
+
+    //clear the old file
+            try
+            {
+                File_Control fileControl = new File_Control();
+                fileControl.clearFile("messages.csv");
+            } catch (IOException e)
+            {
+                System.out.println("MARK AS SENT ISSUE");
+                e.printStackTrace();
+            }
+
+            //write new message list to file
+
+    for (Message each:messageList)
+    {
+        int ID = each.getMessageID();
+        boolean status = each.isHasReceived();
+        int sender = each.getSenderID();
+        int destination = each.getReceiverID();
+        String header = each.getHeader();
+        String body = each.getBody();
+
+        this.storeMessage(ID, status, sender,destination,header,body);
+
+    }
+    this.allMessages = messageList;
     }
 
 
@@ -810,9 +932,6 @@ public class JSS
                 String[] messageDetails = messageString[i].split(",");
                currentMessageID = Integer.parseInt(messageDetails[0]);
 
-
-
-
             }
             nextMessageID = currentMessageID;
 
@@ -872,10 +991,14 @@ public class JSS
                     message.setReceiverID(messageTo);
                     message.setHeader(messageDetails[3]);
                     message.setBody(messageDetails[4]);
-
+                    //check whether message is pending or sent!
+                    if (messageDetails[0].equalsIgnoreCase("sent"))
+                    {
+                        message.setHasReceived(true);
+                    }
                 }
 
-
+                this.allMessages.add(message);
             }
         }
         catch (Exception e)
