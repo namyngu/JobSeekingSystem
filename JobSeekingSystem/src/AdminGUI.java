@@ -78,6 +78,7 @@ public class AdminGUI
                String senderName = program.retrieveUsername(senderID);
 
                 toDisplay += senderName + " Re: " + each.getHeader();
+
                 refreshList(toDisplay,inboxList,mailListModel);
             }
         }
@@ -173,7 +174,10 @@ public class AdminGUI
             public void valueChanged(ListSelectionEvent e)
             {
                 int selected = inboxList.getSelectedIndex();
-                Message toDisplay = adminControl.relayMessages().get(selected);
+                //this access is for GUI array...
+                int messageID = userMessages.get(selected).getMessageID();
+
+                Message toDisplay = adminControl.messageToOpen(messageID);
                 String title = toDisplay.getHeader().toUpperCase();
                 String content = toDisplay.getBody();
                 String display = title + "\n\n" + content;
