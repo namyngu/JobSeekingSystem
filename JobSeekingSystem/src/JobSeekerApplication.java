@@ -1,6 +1,8 @@
 import javax.swing.*;
+import java.util.ArrayList;
 
-public class JobSeekerApplication {
+public class JobSeekerApplication
+{
     private JPanel jobContainer;
     private JLabel jobTitle;
     private JLabel jobEmployer;
@@ -8,4 +10,7 @@ public class JobSeekerApplication {
     private JLabel jobSalary;
     private JLabel jobType;
     private JLabel jobDescription;
+
+
+
 }
