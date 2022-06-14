@@ -7,6 +7,12 @@ public class Recruiter extends User
     private int totalAdverts;
     private int totalApplications;
 
+    public Recruiter(){
+        jobs = new ArrayList<>();
+        invitations = new ArrayList<>();
+        totalAdverts = -1;
+        totalApplications = -1;
+    }
     public Recruiter(int userID, String firstName, String lastName, String userName, String password)
     {
         super(userID, firstName, lastName, userName, password, "Recruiter");
