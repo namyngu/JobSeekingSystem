@@ -73,6 +73,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\messages.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\user-contact.csv">
           <value>
             <Attribute>
