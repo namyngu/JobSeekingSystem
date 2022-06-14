@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class JobseekerControl
+public class JobseekerControl implements Communication
 {
 
     private Search mainSearch;
@@ -8,7 +8,9 @@ public class JobseekerControl
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
 
+
     private Jobseeker jobseeker;
+    private JSS program;
     public JobseekerControl() {
     }
     public JobseekerControl(User user, ArrayList<Job> jobs, ArrayList<Location> locations,
@@ -22,6 +24,17 @@ public class JobseekerControl
         JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(this, jobCategoryList, locationList, jobseeker);
     }
 
+    public JobseekerControl(JSS program, User user, ArrayList<Job> jobs, ArrayList<Location> locations,
+                            ArrayList<JobCategory> categories) {
+
+        jobseeker = new Jobseeker(user.getUserID(), user.getFirstName(), user.getLastName(), user.getUserName(), user.getPassword(),user.isActive(), true);
+        jobList = jobs;
+        locationList = locations;
+        jobCategoryList = categories;
+        mainSearch = new Search(this, jobList, locationList, jobCategoryList);
+        JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(this, jobCategoryList, locationList, jobseeker);
+        this.program = program;
+    }
 
     public ArrayList<Job> jobSearch(String jobDesc, String categoryPrimary,
                           String categorySecondary, String location, boolean fullTime, boolean partTime,
@@ -185,9 +198,35 @@ public class JobseekerControl
         jobseeker.setPhone(phone);
     }
 
+//method that creates new application
+    //returns true if sent
+    //sends via send message method in interface
+    public boolean apply(int jobID, String text)
+    {
+        boolean sent = false;
+        JSS program = this.relayProgram();
+        Job applyFor = jobList.get(jobID);
+        int recruiterID = applyFor.getRecruiterID();
+        try
+        {
+            sent = this.sendMessage(program, program.issueMessageID(), this.jobseeker.getUserID(), recruiterID, "Application", text);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return sent;
+    }
 
+    @Override
+    public User relayUser()
+    {
+        return this.jobseeker;
+    }
 
-
-
-
+    @Override
+    public JSS relayProgram()
+    {
+        return this.program;
+    }
 }
