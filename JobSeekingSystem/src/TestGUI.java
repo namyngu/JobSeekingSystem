@@ -46,7 +46,7 @@ public class TestGUI
             {
                 int jobID = 1;
                 String coverLetter = coverLetterField.getText();
-                System.out.println("this is the text: " + coverLetter);
+//                System.out.println("this is the text: " + coverLetter);
                 control.apply(jobID,coverLetter);
             }
         });
