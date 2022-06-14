@@ -116,7 +116,12 @@ public abstract class User
 
     public ArrayList<Message> getMessages()
     {
-
+        System.out.println("user119");
+        for (Message each:
+             messages)
+        {
+            System.out.println("messageID is " + each.getMessageID());
+        }
         return messages;
     }
 

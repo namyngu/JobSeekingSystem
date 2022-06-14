@@ -36,7 +36,7 @@ public class Message
         this.header = header;
         this.body = body;
 
-        if (status.equalsIgnoreCase("delivered"))
+        if (status.equalsIgnoreCase("sent"))
         {
             this.hasReceived = true;
         }

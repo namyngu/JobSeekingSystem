@@ -36,7 +36,7 @@ public class AdminControl implements Communication
             text += ". Please contact them immediately to discuss";
             int messageID = this.program.issueMessageID();
             Message notification = new Message(messageID, senderID, receiverID,header,text);
-            program.storeMessage(messageID, senderID,receiverID,header,text);
+            program.storeMessage(messageID,false, senderID,receiverID,header,text);
             sent = true;
         }
         catch (Exception e)
@@ -69,5 +69,18 @@ public class AdminControl implements Communication
     {
         int messageID = this.program.issueMessageID();
         this.sendMessage(this.program,messageID,sender,destination,header,body);
+    }
+
+
+    @Override
+    public User relayUser()
+    {
+        return this.admin;
+    }
+
+    @Override
+    public JSS relayProgram()
+    {
+        return program;
     }
 }
