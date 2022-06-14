@@ -40,4 +40,4 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 40,Builder,Megastructure,14,Casual,Advertised,65000,12173,""
 42,Packer,Aldi,11,PartTime,Draft,60000,3889,"Pack shelves|receive orders|help customers"
 33,checkout assistant,foodland,11,FullTime,Draft,60000,3870,"pdated description|is fu"
-41,Apple Picker,Coles Farm,11,Casual,Advertised,30000,10678,"icking apples.|Summer months.|Ideal for uni student.|Update pt "
+41,Apple Picker,Coles Farm,11,Casual,Archived,30000,10678,""icking apples.|Summer months.|Ideal for uni student.|Update pt ""

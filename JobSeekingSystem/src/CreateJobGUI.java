@@ -41,6 +41,7 @@ public class CreateJobGUI {
     private JScrollPane descriptionScroll;
     private JScrollPane jobTitleScroll;
     private JTextField employerText;
+    private JLabel statusMessageLabel;
 
     private User recruiter;
     private ArrayList<Job> jobList;

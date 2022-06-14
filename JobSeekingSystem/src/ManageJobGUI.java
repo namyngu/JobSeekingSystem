@@ -49,6 +49,7 @@ public class ManageJobGUI extends CreateJobGUI {
     private JLabel salaryMessage;
     private JButton jobIDButton;
     private JButton submitButton;
+    private JButton withdrawJobButton;
     private ArrayList<Job> jobList;
     private Job job;
     private Location location;
@@ -84,9 +85,15 @@ public class ManageJobGUI extends CreateJobGUI {
             salaryText.setEditable(false);
             jobTypeMenu.setEnabled(false);
             locationStateMenu.setEnabled(false);
+            skillsMenu.setEnabled(false);
+            postcodeMenu.setEnabled(false);
+            categoryMenuPrimary.setEnabled(false);
+            categoryMenuSecondary.setEnabled(false);
             postcodeMenu.setEnabled(false);
             descriptionText.setEditable(false);
             statusMenu.setEnabled(false);
+            removeSkillButton.setEnabled(false);
+            addSkillButton.setEnabled(false);
         }
         salaryText.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
@@ -239,7 +246,27 @@ public class ManageJobGUI extends CreateJobGUI {
             }
         });
 
+        withdrawJobButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+                job.setJobStatus("Archived");
+                File_Control io = new File_Control();
+                try {
+                    io.updateJob(job.getJobID(), job.getJobTitle(), job.getEmployer(), job.getRecruiterID(),
+                            job.getJobType(), job.getJobStatus(), job.getSalary(), job.getLocationID(), job.getJobDescription(), job.getSkills(), category);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
 
+                //update JobList
+                jobList.remove(myJob);
+                jobList.add(job);
+                control.setJobList(jobList);
+
+                RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(control, control.getLocationList());
+            }
+        });
     }
 
         public void populateForm(Job job, DefaultListModel popSkillsList) throws IOException {
