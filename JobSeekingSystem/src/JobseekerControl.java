@@ -113,9 +113,41 @@ public class JobseekerControl
 
 //                rewrite skill set to skills csv
                 fc.writeListToFile(all, file);
+            System.out.println("Updated skill information has been saved to jobseeker-skill.csv");
+        }
+        catch(Exception e)
+        {
 
-//                jobseeker.loadSkills();
+        }
+    }
 
+    public void saveContactInfo()
+    {
+
+        String file = "user-contact.csv";
+        try {
+
+            String newLocationString = Integer.toString(jobseeker.getUserID()) + "," + String.valueOf(getLocation().getLocationID()) + "," + getEmail() + "," + getPhone();
+//
+
+            //save all skills from skills csv
+            File_Control fc = new File_Control();
+
+            //get all skills except for current user
+            ArrayList<String> all = fc.removeById(jobseeker.getUserID(), file);
+
+            //add current users new skill set
+            all.add(newLocationString);
+
+//                for(String line : all){
+//                    System.out.println(line);
+//                }
+//                clear skills csv
+            fc.clearFile(file);
+
+//                rewrite skill set to skills csv
+            fc.writeListToFile(all, file);
+            System.out.println("Updated contact information has been saved to user-contact.csv");
         }
         catch(Exception e)
         {
