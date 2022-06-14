@@ -28,7 +28,6 @@ public class RegisterGUI
     private JSS program;
 
     private ArrayList<Location> locations;
-
     private Location userLocation;
 
 
@@ -118,7 +117,8 @@ public class RegisterGUI
             {
                 boolean blank = false;
 
-                if (firstNameText.getText().isEmpty()||lastNameText.getText().isEmpty()||usernameTextTextField.getText().isEmpty())
+                if (firstNameText.getText().isEmpty()||lastNameText.getText().isEmpty()||usernameTextTextField.getText().isEmpty()||
+                        userEmailText.getText().isBlank()||userPhoneText.getText().isBlank())
                 {
                     blank = true;
                 }
