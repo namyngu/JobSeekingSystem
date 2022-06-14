@@ -118,7 +118,7 @@ public class RegisterGUI
                 boolean blank = false;
 
                 if (firstNameText.getText().isEmpty()||lastNameText.getText().isEmpty()||usernameTextTextField.getText().isEmpty()||
-                        userEmailText.getText().isBlank()||userPhoneText.getText().isBlank())
+                        userEmailText.getText().isEmpty()||userPhoneText.getText().isEmpty())
                 {
                     blank = true;
                 }
