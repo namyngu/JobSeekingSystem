@@ -49,6 +49,7 @@ public class ManageJobGUI extends CreateJobGUI {
     private JLabel salaryMessage;
     private JButton jobIDButton;
     private JButton submitButton;
+    private JButton withdrawJobButton;
     private ArrayList<Job> jobList;
     private Job job;
     private Location location;
@@ -63,6 +64,7 @@ public class ManageJobGUI extends CreateJobGUI {
         location = new Location();
         category = new JobCategory();
         skills = new ArrayList<>();
+        jobList = control.getJobList();
 
         JFrame frame = new JFrame("Manage Job");
         frame.setContentPane(this.manageJobPanel);
@@ -76,7 +78,23 @@ public class ManageJobGUI extends CreateJobGUI {
         populateCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
         populateForm(job, skillsListGUI);
 
-
+        // Restricting Edit if job is Advertised already
+        if (job.getJobStatus().equals("Advertised")) {
+            jobTitleText.setEditable(false);
+            employerText.setEditable(false);
+            salaryText.setEditable(false);
+            jobTypeMenu.setEnabled(false);
+            locationStateMenu.setEnabled(false);
+            skillsMenu.setEnabled(false);
+            postcodeMenu.setEnabled(false);
+            categoryMenuPrimary.setEnabled(false);
+            categoryMenuSecondary.setEnabled(false);
+            postcodeMenu.setEnabled(false);
+            descriptionText.setEditable(false);
+            statusMenu.setEnabled(false);
+            removeSkillButton.setEnabled(false);
+            addSkillButton.setEnabled(false);
+        }
         salaryText.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
@@ -201,10 +219,6 @@ public class ManageJobGUI extends CreateJobGUI {
                     }
                 }
 
-                //Comment out for now.
-                //job.setJobDescription(updateJobDescription(job.getJobDescription(), String.valueOf(descriptionText.getText())));
-                //System.out.println("jobDescription has been set to: " + job.getJobDescription());
-
                 job.setJobDescription(String.valueOf(descriptionText.getText()));
 
                 JobCategory category = new JobCategory(job.getJobID(), String.valueOf(categoryMenuPrimary.getSelectedItem()), String.valueOf(categoryMenuSecondary.getSelectedItem()));
@@ -220,18 +234,39 @@ public class ManageJobGUI extends CreateJobGUI {
                     throw new RuntimeException(ex);
                 }
 
-                /*
                 //update JobList
+                jobList.remove(myJob);
                 jobList.add(job);
+                control.setJobList(jobList);
 
                 RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(control, control.getLocationList());
                 //close
 
-                 */
+
             }
         });
 
+        withdrawJobButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+                job.setJobStatus("Archived");
+                File_Control io = new File_Control();
+                try {
+                    io.updateJob(job.getJobID(), job.getJobTitle(), job.getEmployer(), job.getRecruiterID(),
+                            job.getJobType(), job.getJobStatus(), job.getSalary(), job.getLocationID(), job.getJobDescription(), job.getSkills(), category);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
 
+                //update JobList
+                jobList.remove(myJob);
+                jobList.add(job);
+                control.setJobList(jobList);
+
+                RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(control, control.getLocationList());
+            }
+        });
     }
 
         public void populateForm(Job job, DefaultListModel popSkillsList) throws IOException {
