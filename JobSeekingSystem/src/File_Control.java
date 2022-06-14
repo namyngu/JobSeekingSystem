@@ -1,25 +1,151 @@
+/**
+ * This class is a generic class to be used for interacting with database files.
+ * @author: Team D - Tom Barker, Jakeob Clarke-Kennedy, Bradley Meyn, Hoang Nguyen, Gerard Samson-Dekker
+ */
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class File_Control {
+
+    /**
+     * This is the Default constructor for the class.
+     */
     public File_Control()
     {
     }
 
-    /* Things we want the class to do:
-     * 1. Read the list of users and their passwords and types and keywords from the user file
-     * 2. When a user signs up, write the new user to the user file
-     *
-     * One type of user file to read from: users.csv
-     * Has: username, password, user type, keyword list (if seeker or recruiter)
-     *
+    /**
+     * This method opens and clears a specified file.
+     * @param fileName     a String describing the filename in the database
+     *                     file directory.
+     * @throws IOException Exceptions are thrown if the file specified cannot
+     *                     be located in the file directory.
      */
+    public void clearFile(String fileName) throws IOException
+    {
+        FileWriter file = new FileWriter(fileName);
+        // file.append(data);
+        // file.append("\n");
+        file.close();
+    }
 
-    /* Method to read data in from a File. Returns a String with users separated by "\n"
-     * User the .split method to separate these out into arrays or whatever
-     * Then, use another .split to separate by "," to break each user into individual chunks
+    /**
+     * This method searches through a given file and returns all matching values.
+     * @param id       an Integer containing the ID number to be searched for.
+     * @param filename a String containing the filename to be opened.
+     * @return an ArrayList of Strings containing all the matching data
+     *         found within the file.
+     */
+    public ArrayList<String> fileSearchId(int id, String filename)
+    {
+        String searchId = Integer.toString(id);
+        ArrayList list = new ArrayList();
+
+        boolean found = false;
+        try {
+            Scanner scanner = new Scanner(new File(filename));
+
+            while(scanner.hasNextLine() && !found)
+            {
+                String data = scanner.nextLine();
+                String[] arr = data.split(",");
+                //if id is found
+                if(arr[0].equals(searchId))
+                {
+                    //convert array to arraylist
+                    list = new ArrayList<>(Arrays.asList(arr));
+                    //remove id
+                    list.remove(0);
+                    found = true;
+                }
+            }
+            scanner.close();
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("something went wrong");
+        }
+        return list;
+    }
+
+    /**
+     * This method looks for a specific Job in the list of Jobs and returns it.
+     * @param jobList   an ArrayList of Jobs in the system.
+     * @param ID        an Integer containing the Job ID number to be searched for.
+     * @return          a Job which matches the specified ID number.
+     * @throws Exception Exceptions are thrown if the specified Job cannot be found.
+     */
+    // TODO: This method should not be in this class (put in the JSS class?)
+    protected static Job findJob(ArrayList<Job> jobList, int ID) throws Exception
+    {
+        Job myJob = null;
+        for (Job tmpJob : jobList)
+        {
+            if (tmpJob.getJobID() == ID)
+            {
+                myJob = tmpJob;
+                return myJob;
+            }
+        }
+        throw new Exception("Error: Job doesn't exist!");
+    }
+
+    /**
+     * This method looks for a specific Location in the list of Locations
+     * and returns it.
+     * @param locationList  an ArrayList of Locations in the system.
+     * @param ID            an Integer containing the Location ID number
+     *                      to be searched for.
+     * @return              a Location which matches the specified ID number.
+     * @throws Exception    Exceptions are thrown if the specified Location cannot be found.
+     */
+    protected static Location findLocation(ArrayList<Location> locationList, int ID) throws Exception
+    {
+        Location myLocation = null;
+        for (Location tmpLocation : locationList)
+        {
+            if (tmpLocation.getLocationID() == ID)
+            {
+                myLocation = tmpLocation;
+                return myLocation;
+            }
+        }
+        throw new Exception("Error: Location doesn't exist!");
+    }
+
+    /**
+     * This method looks for a specific User in the list of Users and returns it.
+     * @param userList  an ArrayList of Users in the system.
+     * @param ID        an Integer containing the User ID number to be searched for.
+     * @return          a User which matches the specified ID number.
+     * @throws Exception Exceptions are thrown if the specified User cannot be found.
+     */
+    // TODO: This method should not be in this class (put in the JSS class?)
+    public static User findUser(ArrayList<User> userList, int ID) throws Exception
+    {
+        User myUser = null;
+        for (User tmpUser : userList)
+        {
+            if (tmpUser.getUserID() == ID)
+            {
+                myUser = tmpUser;
+                return myUser;
+            }
+        }
+        throw new Exception("Error: User doesn't exist!");
+    }
+
+    /**
+     * This method reads in a file of data and returns it.
+     * @param fileName      a String describing the filename in the database
+     *                      file directory.
+     * @return              a String containing all of the file data.
+     * @throws IOException  Exceptions are thrown if the file specified cannot
+     *                      be located in the file directory.
      */
     public String readFile(String fileName) throws IOException
     {
@@ -36,23 +162,56 @@ public class File_Control {
         return returnString;
     }
 
-    //Method to write data to a file as a String
-    public void writeFile(String fileName, String data) throws IOException
+    /**
+     * This method opens a specified file and returns all the items in the file
+     * that do not match a given ID parameter.
+     * @param id        an integer containing the ID number of the item to be
+     *                  removed.
+     * @param filename  a String containing the filename to be opened.
+     * @return an ArrayList of Strings of all data from the file that did not match
+     *         the ID parameter.
+     */
+    public ArrayList<String> removeById(int id, String filename)
     {
-        FileWriter file = new FileWriter(fileName, true);
-        file.append(data);
-        file.append("\n");
-        file.close();
+        String searchId = Integer.toString(id);
+        ArrayList list = new ArrayList();
+
+        try {
+            Scanner scanner = new Scanner(new File(filename));
+            while(scanner.hasNextLine())
+            {
+                String data = scanner.nextLine();
+                String[] values = data.split(",");
+                if(!values[0].equals(searchId))
+                {
+                    list.add(data);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
+        return list;
     }
 
-    public void clearFile(String fileName) throws IOException
-    {
-        FileWriter file = new FileWriter(fileName);
-//        file.append(data);
-//        file.append("\n");
-        file.close();
-    }
-
+    /**
+     * This method saves a new Job into the Job data files used by the system.
+     * @param jobID         an Integer containing the Job ID number.
+     * @param jobTitle      a String containing the Job title.
+     * @param employer      a String containing the Job employer.
+     * @param recruiterID   an Integer containing the ID number of the Recruiter
+     *                      who created the Job.
+     * @param jobType       a String containing the type of the Job.
+     * @param jobStatus     a String containing the status of the Job.
+     * @param salary        an Integer containing the salary of the Job.
+     * @param locationID    an Integer containing the ID number of the Location
+     *                      that this Job takes place in.
+     * @param jobDescription a String containing the Job description.
+     * @param skills        an ArrayList of Strings describing the skills required
+     *                      to successfully complete this Job.
+     * @param category      a JobCategory assigned to this Job.
+     */
     public void saveJob(int jobID, String jobTitle, String employer, int recruiterID, String jobType,
                         String jobStatus, int salary, int locationID, String jobDescription, ArrayList<String> skills, JobCategory category)
     {
@@ -97,125 +256,27 @@ public class File_Control {
         }
     }
 
-    public ArrayList<String> fileSearchId(int id, String filename)
-    {
-        String searchId = Integer.toString(id);
-        ArrayList list = new ArrayList();
-
-        boolean found = false;
-        try {
-            Scanner scanner = new Scanner(new File(filename));
-
-            while(scanner.hasNextLine() && !found)
-            {
-                String data = scanner.nextLine();
-                String[] arr = data.split(",");
-                //if id is found
-                if(arr[0].equals(searchId))
-                {
-                    //convert array to arraylist
-                    list = new ArrayList<>(Arrays.asList(arr));
-                    //remove id
-                    list.remove(0);
-                    found = true;
-                }
-            }
-            scanner.close();
-
-        }
-        catch (Exception e)
-        {
-            System.out.println("something went wrong");
-        }
-        return list;
-    }
-
-    //look at passed in file and write to an array all but item passed in
-    public ArrayList<String> removeById(int id, String filename)
-    {
-        String searchId = Integer.toString(id);
-        ArrayList list = new ArrayList();
-
-        try {
-            Scanner scanner = new Scanner(new File(filename));
-            while(scanner.hasNextLine())
-            {
-                String data = scanner.nextLine();
-                String[] values = data.split(",");
-                if(!values[0].equals(searchId))
-                {
-                    list.add(data);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-
-        }
-       return list;
-    }
-
-    public static User findUser(ArrayList<User> userList, int ID) throws Exception
-    {
-        User myUser = null;
-        for (User tmpUser : userList)
-        {
-            if (tmpUser.getUserID() == ID)
-            {
-                myUser = tmpUser;
-                return myUser;
-            }
-        }
-        throw new Exception("Error job doesn't exist!");
-    }
-
-    protected static Job findJob(ArrayList<Job> jobList, int ID) throws Exception
-    {
-        Job myJob = null;
-        for (Job tmpJob : jobList)
-        {
-            if (tmpJob.getJobID() == ID)
-            {
-                myJob = tmpJob;
-                return myJob;
-            }
-        }
-        throw new Exception("Error job doesn't exist!");
-    }
-
-    protected static Location findLocation(ArrayList<Location> locationList, int ID) throws Exception
-    {
-        Location myLocation = null;
-        for (Location tmpLocation : locationList)
-        {
-            if (tmpLocation.getLocationID() == ID)
-            {
-                myLocation = tmpLocation;
-                return myLocation;
-            }
-        }
-        throw new Exception("Error job doesn't exist!");
-    }
-
-
-
-    public void writeListToFile(ArrayList<String> list, String filename)
-    {
-        try {
-            FileWriter file = new FileWriter(filename);
-            PrintWriter write = new PrintWriter(file);
-            for(String line: list){
-                write.println(line);
-            }
-            write.close();
-        }
-        catch(Exception e) {
-            System.out.println("Something went wrong");
-        }
-    }
-
+    /**
+     * This method updates an existing Job in the Job data files in the database.
+     * @param jobID         an Integer containing the ID of the Job to be updated.
+     * @param jobTitle      a String containing the new Job title.
+     * @param employer      a String containing the new Job employer.
+     * @param recruiterID   an Integer containing the ID number of the Recruiter
+     *                      who created this Job.
+     * @param jobType       a String containing the new type of this Job.
+     * @param jobStatus     a String containing the new status of this Job.
+     * @param salary        an Integer containing the new Job salary.
+     * @param locationID    an Integer containing the ID number of the new
+     *                      Location for this Job.
+     * @param jobDescription a String containing the new Job description.
+     * @param skills        an ArrayList of Strings which represent the new
+     *                      skills required to complete this Job.
+     * @param category      a JobCategory to be assigned to this Job.
+     * @throws IOException  Exceptions are thrown if the job database files cannot
+     *                      be found.
+     */
     public void updateJob(int jobID, String jobTitle, String employer, int recruiterID, String jobType,
-                        String jobStatus, int salary, int locationID, String jobDescription, ArrayList<String> skills, JobCategory category) throws IOException {
+                          String jobStatus, int salary, int locationID, String jobDescription, ArrayList<String> skills, JobCategory category) throws IOException {
 
         //replaces all new line in the jobDescription with a "|"
         String jobDescription2 = jobDescription.replaceAll("\n", "|");
@@ -272,5 +333,42 @@ public class File_Control {
         }
     }
 
+    /**
+     * This method writes data into a file.
+     * @param fileName     a String describing the filename in the database
+     *                     file directory.
+     * @param data         a String containing all the data to be saved
+     *                     into the file.
+     * @throws IOException Exceptions are thrown if the file specified cannot
+     *                     be located in the file directory.
+     */
+    public void writeFile(String fileName, String data) throws IOException
+    {
+        FileWriter file = new FileWriter(fileName, true);
+        file.append(data);
+        file.append("\n");
+        file.close();
     }
+
+    /**
+     * This method writes data in ArrayList format to a file.
+     * @param list     an ArrayList of Strings to be written to the file.
+     * @param filename a String containing the filename in the database
+     *                 file directory.
+     */
+    public void writeListToFile(ArrayList<String> list, String filename)
+    {
+        try {
+            FileWriter file = new FileWriter(filename);
+            PrintWriter write = new PrintWriter(file);
+            for(String line: list){
+                write.println(line);
+            }
+            write.close();
+        }
+        catch(Exception e) {
+            System.out.println("Something went wrong");
+        }
+    }
+}
 

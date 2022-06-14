@@ -33,20 +33,12 @@ public class AdminControl implements Communication
     }
 
     /**
-     * This method toggles a given User between being locked and unlocked.
-     * @param userIndex an Integer representing the index in the JSS userList
-     *                  field where the desired User can be found.
+     * This method accesses the controlled Admin's User ID.
+     * @return
      */
-    public void switchLock(int userIndex)
+    public int adminID()
     {
-        try{
-            program.alterActive(userIndex);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            PromptGUI error = new PromptGUI("Failed to lock", e.toString());
-        }
+        return this.admin.getUserID();
     }
 
     /**
@@ -76,27 +68,6 @@ public class AdminControl implements Communication
         }
     }
 
-    public ArrayList<Message> relayMessages()
-    {
-
-
-        ArrayList<Message> toRelay = this.admin.getMessages();
-
-
-
-        return toRelay;
-
-    }
-
-    /**
-     * This method accesses the controlled Admin's User ID.
-     * @return
-     */
-    public int adminID()
-    {
-        return this.admin.getUserID();
-    }
-
     /**
      * This method creates a new Message.
      * @param sender      an Integer representing the User ID of the sender.
@@ -110,6 +81,34 @@ public class AdminControl implements Communication
         this.sendMessage(this.program,messageID,sender,destination,header,body);
     }
 
+    public ArrayList<Message> relayMessages()
+    {
+
+
+        ArrayList<Message> toRelay = this.admin.getMessages();
+
+
+
+        return toRelay;
+
+    }
+
+    /**
+     * This method toggles a given User between being locked and unlocked.
+     * @param userIndex an Integer representing the index in the JSS userList
+     *                  field where the desired User can be found.
+     */
+    public void switchLock(int userIndex)
+    {
+        try{
+            program.alterActive(userIndex);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            PromptGUI error = new PromptGUI("Failed to lock", e.toString());
+        }
+    }
 
     @Override
     public User relayUser()
