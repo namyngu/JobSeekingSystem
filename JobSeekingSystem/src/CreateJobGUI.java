@@ -124,8 +124,6 @@ public class CreateJobGUI {
                 //System.out.println("Skills have been set to: " + job.getSkills());
 
                 String state = String.valueOf(locationStateMenu.getSelectedItem());
-
-
                 String selectedPostcode = String.valueOf(postcodeMenu.getSelectedItem());
                 String postcode = "";
                 for (int i = 0; i < 4; i++) {
@@ -167,10 +165,6 @@ public class CreateJobGUI {
                     }
                 }
 
-                //Comment out for now.
-                //job.setJobDescription(updateJobDescription(job.getJobDescription(), String.valueOf(descriptionText.getText())));
-                //System.out.println("jobDescription has been set to: " + job.getJobDescription());
-
                 job.setJobDescription(String.valueOf(descriptionText.getText()));
 
                 JobCategory category = new JobCategory(job.getJobID(), String.valueOf(categoryMenuPrimary.getSelectedItem()), String.valueOf(categoryMenuSecondary.getSelectedItem()));
@@ -184,6 +178,7 @@ public class CreateJobGUI {
 
                 //update JobList
                 jobList.add(job);
+                recruiterControl.setJobList(jobList);
 
                 RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl, locationList);
                 //close
