@@ -1,42 +1,47 @@
 public class Application extends Message
 {
-    private int applicationID;
-    private String coverLetter;
+
+
+    private int jobRef;
 
     public Application()
     {
 
     }
 
-    public Application(int applicationID, String coverLetter)
+    public Application(int senderID, int receiverID, String header, String body)
     {
-        this.applicationID = applicationID;
-        this.coverLetter = coverLetter;
+        super(senderID, receiverID, header, body);
+    }
+
+    public Application(int nextMessageID, String status, int sender, int messageTo, String header, String body)
+    {
+        super(nextMessageID, status, sender, messageTo, header, body);
+    }
+
+    public Application(int messageID, int senderID, int receiverID, String header, String text)
+    {
+        super(messageID, senderID, receiverID, header, text);
     }
 
     public void display()
     {
-        System.out.println("Application no: " + applicationID);
-        System.out.println("Message: " + coverLetter);
+        System.out.println("Job refrence is " + jobRef);
     }
 //
-    public int getApplicationID()
+
+    public int getJobRef()
     {
-        return applicationID;
+        return jobRef;
     }
 
-    public String getCoverLetter()
+    public void setJobRef(int jobRef)
     {
-        return coverLetter;
+        this.jobRef = jobRef;
     }
 
-    public void setApplicationID(int applicationID)
+    public char[] getApplicationID()
     {
-        this.applicationID = applicationID;
-    }
-
-    public void setCoverLetter(String coverLetter)
-    {
-        this.coverLetter = coverLetter;
+        return new char[2];
     }
 }

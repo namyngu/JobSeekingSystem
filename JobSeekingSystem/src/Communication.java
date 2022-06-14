@@ -5,10 +5,22 @@ public interface Communication
 
     default boolean sendMessage(JSS program, int messageID, int senderID, int receiverID, String header, String body)
     {
+
+        //TODO check message type (generic, application or invitation and save differently
+        Message message = program.retrieveMessage(messageID);
+        System.out.println("this.is the ID being asked for " + messageID);
+        System.out.println("this is the message ID " + message.getMessageID());
+        System.out.println("this is the message class " + message.getClass());
+        if (message instanceof Application)
+        {
+
+            int jobRef = ((Application) message).getJobRef();
+            program.storeMessage(messageID, false, senderID, receiverID, header, body, jobRef);
+        }
         boolean sent = false;
         try
         {
-            program.storeMessage(messageID, false, senderID, receiverID, header, body);
+            program.storeMessage(messageID, false, senderID, receiverID, header, body, -1);
             sent = true;
         }
         catch (Exception e)
