@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="JobSeekerHomeGUI">
   <tabbedpane id="e6adc" binding="navbar">
     <constraints>
-      <xy x="8" y="20" width="1372" height="1260"/>
+      <xy x="8" y="20" width="1372" height="1304"/>
     </constraints>
     <properties>
       <background color="-16745473"/>
@@ -22,7 +22,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <grid id="27dc6" binding="JSHomePanel" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="27dc6" binding="JSHomePanel" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="50" left="50" bottom="50" right="50"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="0" indent="0" use-parent-layout="false">
@@ -65,7 +65,7 @@
               <grid id="ee8c9" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -89,6 +89,14 @@
                   </scrollpane>
                 </children>
               </grid>
+              <component id="866c7" class="javax.swing.JLabel" binding="instructionText">
+                <constraints>
+                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Double click a search result below to view more information about that Job."/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>
@@ -103,7 +111,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <grid id="c5e31" binding="searchPanel" layout-manager="GridLayoutManager" row-count="23" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="c5e31" binding="searchPanel" layout-manager="GridLayoutManager" row-count="24" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="50" left="50" bottom="50" right="50"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false">
@@ -338,7 +346,7 @@
               </hspacer>
               <scrollpane id="2897d" binding="searchResultsScroll">
                 <constraints>
-                  <grid row="17" column="0" row-span="6" col-span="7" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="18" column="0" row-span="6" col-span="7" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -363,6 +371,14 @@
                   <model>
                     <item value="Category"/>
                   </model>
+                </properties>
+              </component>
+              <component id="99c55" class="javax.swing.JLabel" binding="searchInstructionText">
+                <constraints>
+                  <grid row="17" column="0" row-span="1" col-span="7" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Double click a search result below to view more information about that Job."/>
                 </properties>
               </component>
             </children>

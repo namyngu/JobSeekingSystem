@@ -101,7 +101,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <grid id="3db03" binding="updateSkillsPanel" layout-manager="GridLayoutManager" row-count="13" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="3db03" binding="updateSkillsPanel" layout-manager="GridLayoutManager" row-count="14" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="50" left="50" bottom="50" right="50"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
@@ -281,7 +281,7 @@
               </hspacer>
               <scrollpane id="29d" binding="seekerTable">
                 <constraints>
-                  <grid row="12" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="13" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -294,6 +294,14 @@
                   </component>
                 </children>
               </scrollpane>
+              <component id="80df4" class="javax.swing.JLabel" binding="searchInstructionsText">
+                <constraints>
+                  <grid row="12" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Double click a search result below to view more information about that candidate."/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>

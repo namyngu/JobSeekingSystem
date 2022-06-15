@@ -36,8 +36,8 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 37,Coffee Boy,Kickstarter,14,FullTime,Draft,55000,3867,"WELCOME!|This job will help kickstart your career at Kickstarter!|"
 38,Sales,Coles,14,Casual,Advertised,33000,12172,"This is a great opportunity to work for a big company like Coles.|We welcome all talents, please apply."
 39,Manager,McDonalds,14,FullTime,Advertised,55000,3895,"This job requires good communication and people skills.|McDonalds is a big company....|"
-40,Builder,Megastructure,14,Casual,Advertised,65000,12173,""
 42,Packer,Aldi,11,PartTime,Draft,60000,3889,"Pack shelves|receive orders|help customers"
 33,checkout assistant,foodland,11,FullTime,Draft,60000,3870,"pdated description|is fu"
 41,Apple Picker,Coles Farm,11,Casual,Archived,30000,10678,""icking apples.|Summer months.|Ideal for uni student.|Update pt ""
-29,Accounting,Accounts Officers/Clerks
+29,Assistant Programmer,Pied Piper,14,PartTime,Advertised,35000,3866,"elcome, we are a new kickstarter company at Silicon Valley.|We have a great team of highly talented individual, and this is a great opportunity to join a new starting company.|As the company grows, you grow with us"
+40,Builder,Megastructure

@@ -1,10 +1,6 @@
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
 
 public class LoginGUI {
 
@@ -18,7 +14,8 @@ public class LoginGUI {
     private JButton loginButton;
     private JButton registerButton;
     private JLabel errorLabel;
-
+    private JLabel usernameWarning;
+    private JLabel passwordWarning;
 
 
     public LoginGUI(JSS program) {
@@ -60,9 +57,8 @@ public class LoginGUI {
 
                 try
                 {
-//                    frame.dispose();
-//                 TestGUI test = new TestGUI();
                    RegisterGUI register = new RegisterGUI(program);
+                   frame.dispose();
                 }
                 catch (Exception x)
                 {
@@ -80,14 +76,23 @@ public class LoginGUI {
         welcomeToJSSPasswordField.setText("");
     }
 
-    /*public static void main(String[] args) {
-        JFrame frame = new JFrame("LoginGUI");
-        frame.setContentPane(new LoginGUI().loginPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }*/
+    private Boolean validInputs()
+    {
+        boolean valid = true;
+        JTextField[] inputs = {usernameField, welcomeToJSSPasswordField};
+        JLabel[] warningLabels = {usernameWarning, passwordWarning};
+        JLabel[] inputLabels = {loginUsername, loginPassword};
 
+        for (int i = 0; i < inputs.length; i++) {
+
+            if((Validation.isInputBlank(inputs[i])))
+            {
+                Validation.invalidInputWarning(warningLabels[i], inputLabels[i].getText()+ " cannot be blank");
+                valid =  false;
+            }
+        }
+        return valid;
+    }
 
 
 }

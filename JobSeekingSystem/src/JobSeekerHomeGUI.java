@@ -1,9 +1,7 @@
 import javax.swing.*;
 import javax.swing.table.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -52,6 +50,8 @@ public class JobSeekerHomeGUI {
     private JScrollPane searchResultsScroll;
     private JLabel jobseekerLocation;
     private JLabel jobseekerEmail;
+    private JLabel instructionText;
+    private JLabel searchInstructionText;
     private DefaultListModel jsSkillsModel;
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
@@ -96,6 +96,7 @@ public class JobSeekerHomeGUI {
         myParent = parent;
         locationList = locations;
         jobCategoryList = categories;
+        searchInstructionText.setVisible(false);
         JFrame window = new JFrame("JSS: Job Seeker Home");
         window.add(navbar);
         searchCount = 0;
@@ -163,6 +164,13 @@ public class JobSeekerHomeGUI {
                 DefaultTableModel freshModel = new DefaultTableModel(rows, jobListColumns);
                 jobSearchTable.setModel(freshModel);
                 searchResultsScroll.setVisible(true);
+
+                // Display instructions for double-clicking Jobs, if there are results.
+                if (!searchResults.isEmpty()) {
+                    searchInstructionText.setVisible(true);
+                } else {
+                    searchInstructionText.setVisible(false);
+                }
                 searchPanel.repaint();
             }
         });
@@ -202,37 +210,70 @@ public class JobSeekerHomeGUI {
                 JobSeekerUpdateGUI updateGUI = new JobSeekerUpdateGUI(myParent, home, locations );
             }
         });
+
+        // Add a listener so that double-clicking a search result opens that Job
+        jobSearchTable.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                Point point = mouseEvent.getPoint();
+                int row = jobSearchTable.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && jobSearchTable.getSelectedRow() != -1) {
+                    // Action to take after double clicking.
+                    int selectedRow = jobSearchTable.getSelectedRow();
+                    int jobID = Integer.parseInt(jobSearchTable.getValueAt(selectedRow, 1).toString());
+                    JobSeekerJobGUI JobSeekerJobGUI= new JobSeekerJobGUI(myParent, jobID);
+                }
+            }
+        });
+
+        // Add a listener so that double-clicking a recommended job opens that Job
+        jobTable.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                Point point = mouseEvent.getPoint();
+                int row = jobTable.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && jobTable.getSelectedRow() != -1) {
+                    // Action to take after double clicking.
+                    int selectedRow = jobTable.getSelectedRow();
+                    int jobID = Integer.parseInt(jobTable.getValueAt(selectedRow, 1).toString());
+                    JobSeekerJobGUI JobSeekerJobGUI= new JobSeekerJobGUI(myParent, jobID);
+                }
+            }
+        });
+
     }
 
 
     public void displayRecommendedJobs() {
         // Obtain a list of recommended jobs for this seeker.
-        ArrayList<Job> searchResults = myParent.recommendedSearch();
+        TreeMap<Integer, ArrayList<Job>> searchResults = myParent.recommendedSearch();
 
         /* Set the list of recommended jobs into the recommended jobs panel.
          * First, set the columns up.
          */
-        String[] jobListColumns = {"Result #", "Job ID #", "Title", "Employer", "Location", "Salary", "Type"};
+        String[] jobListColumns = {"Match Score", "Job ID #", "Title", "Employer", "Location", "Salary", "Type"};
 
         // Set each Job up as a Row. Need to do some work to populate the location field.
         ArrayList<String[]> jobListRows = new ArrayList<>();
-        int resultNum = 1;
-        for (Job job : searchResults) {
-            String resultLocation = "";
-            for (Location place: locationList) {
-                if (place.getLocationID() == job.getLocationID()) {
-                    resultLocation = place.toString();
+
+        // Set the job details up into the fields in the row.
+        for (Integer key : searchResults.keySet()) {
+            for (int i = 0; i < searchResults.get(key).size(); i++) {
+                Job job = searchResults.get(key).get(i);
+                String resultLocation = "";
+
+                for (Location place : locationList) {
+                    if (place.getLocationID() == job.getLocationID()) {
+                        resultLocation = place.toString();
+                        break;
+                    }
                 }
+
+                String [] thisJob = {Integer.toString(key), Integer.toString(job.getJobID()),
+                        job.getJobTitle(), job.getEmployer(), resultLocation,
+                        Integer.toString(job.getSalary()), job.getJobType()};
+
+                // Add this row to the list of rows.
+                jobListRows.add(thisJob);
             }
-
-            // Set the job details up into the fields in the row.
-            String[] thisJob = {Integer.toString(resultNum), Integer.toString(job.getJobID()),
-                    job.getJobTitle(), job.getEmployer(), resultLocation,
-                    Integer.toString(job.getSalary()), job.getJobType()};
-
-            // Add this row to the list of rows.
-            jobListRows.add(thisJob);
-            resultNum++;
         }
 
         // Convert the list of rows into a TableModel readable format.
@@ -247,6 +288,14 @@ public class JobSeekerHomeGUI {
         // Setup the initial search table.
         DefaultTableModel jobSearchModel = new DefaultTableModel(null, jobListColumns);
         jobSearchTable.setModel(jobSearchModel);
+
+        // Display instructions for double-clicking Jobs, if there are results.
+        if (!searchResults.isEmpty()) {
+            instructionText.setVisible(true);
+        } else {
+            instructionText.setVisible(false);
+        }
+
     }
 
     public void buildSkillList(){

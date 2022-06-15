@@ -4,10 +4,11 @@
  */
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class RecruiterControl {
 
-    private User recruiter;
+    private Recruiter recruiter;
     private Search mainSearch;
     private ArrayList<Job> jobList;
     private ArrayList<Location> locationList;
@@ -32,30 +33,35 @@ public class RecruiterControl {
      * This is a Non-default constructor for the class.
      * @param recruiter a User which describes the Recruiter this class is controlling.
      */
-    public RecruiterControl(User recruiter) {
+    public RecruiterControl(Recruiter recruiter) {
         RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(this, locationList);
         this.recruiter = recruiter;
         mainSearch = new Search();
+
+        updateRecruiterJobs(jobList);
     }
 
     /**
      * This is a Non-default constructor for the class.
-     * @param recruiter a User which describes the Recruiter this class is controlling.
+     * @param user a User which describes the Recruiter this class is controlling.
      * @param jobs      an ArrayList containing all the Jobs in the system.
      * @param locations an ArrayList containing all the Locations in the system.
      * @param categories an ArrayList containing all the Job Categories in the system.
      * @param userList  an ArrayList containing all the Users in the system.
      */
-    public RecruiterControl(User recruiter, ArrayList<Job> jobs, ArrayList<Location> locations,
+    public RecruiterControl(User user, ArrayList<Job> jobs, ArrayList<Location> locations,
                             ArrayList<JobCategory> categories, ArrayList<User> userList) {
         this.userList = userList;
         jobseekerList = buildSeekerList();
-        this.recruiter = recruiter;
+        this.recruiter = new Recruiter(user.getUserID(), user.getFirstName(), user.getLastName(), user.getUserName(), user.getPassword(),user.isActive());;
         jobList = jobs;
         locationList = locations;
         jobCategoryList = categories;
         mainSearch = new Search(this, jobList, locationList, jobCategoryList, jobseekerList);
 
+        //update recruiter's jobs
+        updateRecruiterJobs(jobList);
+        //Launch recruiter HomeGUI
         RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(this, locationList);
     }
 
@@ -133,7 +139,7 @@ public class RecruiterControl {
      * This is the Accessor method for the recruiter field.
      * @return the Recruiter which is controlled by this control class.
      */
-    public User getRecruiter() {
+    public Recruiter getRecruiter() {
         return recruiter;
     }
 
@@ -154,20 +160,13 @@ public class RecruiterControl {
      *                       Recruiter would like to search for.
      * @return an ArrayList of Jobseekers which match the search parameters.
      */
-    public ArrayList<Jobseeker> seekerSearch(String location, ArrayList<String> requiredSkills)
+    public TreeMap<Integer, ArrayList<Jobseeker>> seekerSearch(String location, ArrayList<String> requiredSkills)
     {
         System.out.println("Searching...");
-        ArrayList<Jobseeker> searchList = new ArrayList<>();
+        TreeMap<Integer, ArrayList<Jobseeker>> searchList = new TreeMap<>();
         try
         {
             searchList = mainSearch.seekerSearch(location, requiredSkills);
-
-            // Debug search results:
-            System.out.println("Results: \n");
-            for (Jobseeker seeker : searchList) {
-                System.out.println(seeker.toString());
-            }
-
         }
         catch (Exception e)
         {
@@ -236,6 +235,21 @@ public class RecruiterControl {
      */
     public void setUserList(ArrayList<User> users) {
         userList = users;
+    }
+
+    //Method to add all recruiter's job in.
+    public void updateRecruiterJobs (ArrayList<Job> jobList)
+    {
+        ArrayList<Job> myJob = new ArrayList<>();
+        //search through all jobs for the recruiter's job
+        for (Job tmpJob : jobList)
+        {
+            if (tmpJob.getRecruiterID() == recruiter.getUserID())
+            {
+                myJob.add(tmpJob);
+            }
+        }
+        recruiter.setJobs(myJob);
     }
 
 }

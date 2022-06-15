@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class RegisterGUI
 {
@@ -27,7 +25,12 @@ public class RegisterGUI
     private JLabel emailLabel;
     private JLabel phoneLabel;
     private JComboBox locationSelect;
+    private JLabel fnameWarning;
+    private JLabel lnameWarning;
+    private JLabel emailWarning;
+    private JLabel phoneWarning;
     private JLabel usernameWarning;
+    private JLabel passwordWarning;
     private JSS program;
 
     private ArrayList<Location> locations;
@@ -56,46 +59,37 @@ public class RegisterGUI
             {
                 boolean allowRegistration = true;
 
-                try
+                //input validation
+                if(!this.validInputs() || !this.validPassword())
                 {
+                    allowRegistration = false;
+                }
 
-                    if (this.checkBlanks() == true)
-                    {
-                    PromptGUI error = new PromptGUI("Error: Invalid input.","All fields must be complete and either JOBSEEKER or RECRUITER selected");
-                    allowRegistration = false;
-                    }
-                    if (this.checkPassword() == false)
-                    {
-                        PromptGUI error = new PromptGUI("Password must be at least 8 characters long");
-                        allowRegistration = false;
-                    }
-                }
-                catch (Exception x)
+                //check if username exists
+                if(Validation.usernameExists(program.getUserList(), usernameTextTextField.getText()))
                 {
-                    PromptGUI error = new PromptGUI("Couldn't validate", x.getMessage());
+                    Validation.invalidInputWarning(usernameWarning, "That username already exists");
                     allowRegistration = false;
                 }
+
                 if (allowRegistration == true)
                 {
                     try
                     {
                         if (radioButtonJobseeker.isSelected())
                         {
-                            //TODO: need to check if username already exists.
                             program.createUser(firstNameText.getText(), lastNameText.getText(), usernameTextTextField.getText(), String.valueOf(passwordField.getPassword()), "Jobseeker", userLocation, userEmailText.getText(), userPhoneText.getText());
                             PromptGUI confirm = new PromptGUI("Account created! Log in to continue");
                             frame.dispose();
 
                         } else if (radioButtonRecruiter.isSelected())
                         {
-                            //TODO: need to check if username already exists.
                             program.createUser(firstNameText.getText(), lastNameText.getText(), usernameTextTextField.getText(), String.valueOf(passwordField.getPassword()), "Recruiter",userLocation, userEmailText.getText(), userPhoneText.getText());
                             PromptGUI confirm = new PromptGUI("Account created! Log in to continue");
                             frame.dispose();
                         }
                         else if (radioButtonAdmin.isSelected())
                         {
-                            //TODO: need to check if username already exists.
                             program.createUser(firstNameText.getText(), lastNameText.getText(), usernameTextTextField.getText(), String.valueOf(passwordField.getPassword()), "Admin",userLocation, userEmailText.getText(), userPhoneText.getText());
                             PromptGUI confirm = new PromptGUI("Account created! Log in to continue");
                             frame.dispose();
@@ -107,33 +101,38 @@ public class RegisterGUI
                 }
             }
 
-            private boolean checkPassword()
+            private boolean validPassword()
             {
                 boolean valid = true;
                 if (passwordField.getPassword().length<8)
                 {
+                    Validation.invalidInputWarning(passwordWarning,  "Password must 8 or more characters");
                     valid = false;
                 }
                 return valid;
             }
 
-            private Boolean checkBlanks()
+            //method that loops through all inputs (excluding location & radio), if any are empty a warning message is displayed
+            private Boolean validInputs()
             {
-                boolean blank = false;
+                boolean valid = true;
+                JTextField[] inputs = {firstNameText, lastNameText, userEmailText, userPhoneText, usernameTextTextField,passwordField};
+                JLabel[] warningLabels = {fnameWarning,lnameWarning,emailWarning,phoneWarning, usernameWarning, passwordWarning};
+                JLabel[] inputLabels = {firstNameLabel,lastNameLabel,emailLabel,phoneLabel,userNameLabel, passwordLabel};
 
+                for (int i = 0; i < inputs.length; i++) {
 
-                if (firstNameText.getText().isEmpty()||lastNameText.getText().isEmpty()||usernameTextTextField.getText().isEmpty()||
-                        userEmailText.getText().isEmpty()||userPhoneText.getText().isEmpty())
-                {
-                    blank = true;
+                    if((Validation.isInputBlank(inputs[i])))
+                    {
+                        Validation.invalidInputWarning(warningLabels[i], inputLabels[i].getText()+ " cannot be blank");
+                        valid =  false;
+                    }
                 }
-                else if (!radioButtonJobseeker.isSelected()&&!radioButtonRecruiter.isSelected()&&!radioButtonAdmin.isSelected())
-                {
-                    blank = true;
-                }
-               return blank;
+
+               return valid;
             }
         });
+
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -161,8 +160,6 @@ public class RegisterGUI
             locationSelect.addItem(locations.get(i).toString());
         }
     }
-
-
 
 
 }

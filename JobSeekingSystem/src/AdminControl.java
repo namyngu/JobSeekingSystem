@@ -85,6 +85,17 @@ public class AdminControl implements Communication
         this.sendMessage(this.program,messsage);
     }
 
+    /**
+     * This is the display method for the class.
+     */
+    public void display() {
+        System.out.println("Program: " + program);
+    }
+    public String getAdminFirstName()
+    {
+        return admin.getFirstName();
+    }
+
     public ArrayList<Message> relayMessages()
     {
 
@@ -95,6 +106,38 @@ public class AdminControl implements Communication
 
         return toRelay;
 
+    }
+
+    /**
+     * This is the Accessor method for the admin field.
+     * @return the Administrator this Control class controls.
+     */
+    public Administrator getAdmin() {
+        return admin;
+    }
+
+    /**
+     * This is the Accessor method for the program field.
+     * @return the JSS Object which represents the main system.
+     */
+    public JSS getProgram() {
+        return program;
+    }
+
+    /**
+     * This is the Mutator method for the admin field.
+     * @param newAdmin an Administrator to be the Admin for the system.
+     */
+    public void setAdmin(Administrator newAdmin) {
+        admin = newAdmin;
+    }
+
+    /**
+     * This is the Mutator method for the program field.
+     * @param newProgram a JSS Object which represents the main system.
+     */
+    public void setProgram(JSS newProgram) {
+        program = newProgram;
     }
 
     /**
