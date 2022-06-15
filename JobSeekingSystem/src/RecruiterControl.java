@@ -8,7 +8,7 @@ import java.util.TreeMap;
 
 public class RecruiterControl {
 
-    private User recruiter;
+    private Recruiter recruiter;
     private Search mainSearch;
     private ArrayList<Job> jobList;
     private ArrayList<Location> locationList;
@@ -33,7 +33,7 @@ public class RecruiterControl {
      * This is a Non-default constructor for the class.
      * @param recruiter a User which describes the Recruiter this class is controlling.
      */
-    public RecruiterControl(User recruiter) {
+    public RecruiterControl(Recruiter recruiter) {
         RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(this, locationList);
         this.recruiter = recruiter;
         mainSearch = new Search();
@@ -41,17 +41,17 @@ public class RecruiterControl {
 
     /**
      * This is a Non-default constructor for the class.
-     * @param recruiter a User which describes the Recruiter this class is controlling.
+     * @param user a User which describes the Recruiter this class is controlling.
      * @param jobs      an ArrayList containing all the Jobs in the system.
      * @param locations an ArrayList containing all the Locations in the system.
      * @param categories an ArrayList containing all the Job Categories in the system.
      * @param userList  an ArrayList containing all the Users in the system.
      */
-    public RecruiterControl(User recruiter, ArrayList<Job> jobs, ArrayList<Location> locations,
+    public RecruiterControl(User user, ArrayList<Job> jobs, ArrayList<Location> locations,
                             ArrayList<JobCategory> categories, ArrayList<User> userList) {
         this.userList = userList;
         jobseekerList = buildSeekerList();
-        this.recruiter = recruiter;
+        this.recruiter = new Recruiter(user.getUserID(), user.getFirstName(), user.getLastName(), user.getUserName(), user.getPassword(),user.isActive());;
         jobList = jobs;
         locationList = locations;
         jobCategoryList = categories;
@@ -134,7 +134,7 @@ public class RecruiterControl {
      * This is the Accessor method for the recruiter field.
      * @return the Recruiter which is controlled by this control class.
      */
-    public User getRecruiter() {
+    public Recruiter getRecruiter() {
         return recruiter;
     }
 

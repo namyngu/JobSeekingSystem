@@ -1,39 +1,82 @@
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class RecruiterViewCandidateGUI {
     private JPanel profilePanel;
     private JPanel profile;
-    private JLabel phoneText;
+    private JLabel candidatePhone;
     private JList candidateSkillsTable;
     private JButton sendInviteButton;
     private JComboBox selectJob;
-    private RecruiterControl myParent;
+    private JPanel candidatePanel;
+    private JLabel nameLabel;
+    private JLabel candidateEmail;
+    private JLabel candidateLocation;
 
-    /**
-     * This is the Default constructor for the class.
-     */
-    public RecruiterViewCandidateGUI()
-    {
+    public RecruiterViewCandidateGUI(RecruiterControl control, int jobseekerID) {
+        JFrame frame = new JFrame("CandidateGUI");
+        frame.setContentPane(this.candidatePanel);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setLocation(650, 40);
 
+        //Find jobseeker
+        Jobseeker jobseeker = null;
+        try {
+            for (Jobseeker tmpJobseeker : control.getJobseekerList()) {
+                if (tmpJobseeker.getUserID() == jobseekerID) {
+                    jobseeker = tmpJobseeker;
+                    break;
+                }
+            }
+            //populate labels
+            populateLabels(jobseeker);
+            //populate skillList
+            populateSkills(jobseeker);
+            //populate jobComboBox
+
+        } catch (Exception e) {
+            System.out.println("Error cannot find candidate!");
+        }
+            //populate labels
+            populateLabels(jobseeker);
+            //populate skillList
+            populateSkills(jobseeker);
+            //populate jobComboBox
+            populateJobCombo(control);
     }
 
-    /**
-     * This is a Non-default constructor for the class.
-     * @param parent
-     * @param jobSeekerID
-     */
-    public RecruiterViewCandidateGUI(RecruiterControl parent, int jobSeekerID) {
+    public void populateLabels (Jobseeker jobseeker)
+    {
+        //Populate labels
+        nameLabel.setText(jobseeker.getFirstName() + " " + jobseeker.getLastName());
+        candidatePhone.setText(jobseeker.getPhone());
+        candidateEmail.setText(jobseeker.getEmail());
+        candidateLocation.setText(jobseeker.getLocation().getCity() + " " + jobseeker.getLocation().getState() + " " + jobseeker.getLocation().getPostcode());
+    }
 
-        myParent = parent;
-        JFrame window = new JFrame("JSS: View Job Seeker");
+    public void populateSkills(Jobseeker jobseeker)
+    {
+        DefaultListModel listModel = new DefaultListModel();
+        ArrayList<String> skills = jobseeker.getSkills();
+        for (String skill : skills)
+        {
+            listModel.addElement(skill);
+        }
+        candidateSkillsTable.setModel(listModel);
+    }
 
-        window.add(profilePanel);
-        window.setSize(400,400);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setLocation(600,20);
-        window.pack();
-        window.setResizable(true);
-        window.setVisible(true);
-
+    public void populateJobCombo(RecruiterControl control)
+    {
+        DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
+        ArrayList<Job> recruiterJobs = control.getRecruiter().getJobs();
+        for (Job job : recruiterJobs)
+        {
+            comboModel.addElement(job);
+        }
+        selectJob.setModel(comboModel);
     }
 }
+
+
+
