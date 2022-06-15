@@ -201,7 +201,7 @@ public class JobSeekerHomeGUI {
             }
         });
 
-        //double click on jobs to bring up the jobs menu
+        // Add a listener so that double-clicking a search result opens that Job
         jobSearchTable.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent mouseEvent) {
                 Point point = mouseEvent.getPoint();
@@ -214,6 +214,21 @@ public class JobSeekerHomeGUI {
                 }
             }
         });
+
+        // Add a listener so that double-clicking a recommended job opens that Job
+        jobTable.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                Point point = mouseEvent.getPoint();
+                int row = jobTable.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && jobTable.getSelectedRow() != -1) {
+                    // Action to take after double clicking.
+                    int selectedRow = jobTable.getSelectedRow();
+                    int jobID = Integer.parseInt(jobTable.getValueAt(selectedRow, 1).toString());
+                    JobSeekerJobGUI JobSeekerJobGUI= new JobSeekerJobGUI(myParent, jobID);
+                }
+            }
+        });
+
     }
 
 
