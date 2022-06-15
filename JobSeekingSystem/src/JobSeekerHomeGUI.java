@@ -212,7 +212,6 @@ public class JobSeekerHomeGUI {
                     int selectedRow = jobSearchTable.getSelectedRow();
                     int jobID = Integer.parseInt(jobSearchTable.getValueAt(selectedRow, 1).toString());
                     JobSeekerJobGUI JobSeekerJobGUI= new JobSeekerJobGUI(myParent, jobID);
-                    window.dispose();
                 }
             }
         });

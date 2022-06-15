@@ -1,5 +1,8 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -95,6 +98,34 @@ public class RecruiterJobGUI {
                     frame.dispose();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
+                }
+            }
+        });
+
+        //double click on jobs to bring up the jobs menu
+        applicationsTable.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                applicationsTable = (JTable) mouseEvent.getSource();
+                Point point = mouseEvent.getPoint();
+                int row = applicationsTable.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && applicationsTable.getSelectedRow() != -1) {
+                    // Action to take after double clicking.
+                    int selectedRow = applicationsTable.getSelectedRow();
+                    //get aoplicationID from table
+                    int applicationID = Integer.parseInt(applicationsTable.getValueAt(selectedRow, 0).toString());
+
+                    //get jobseeker details from the selected application
+                    for ( Application tmpApplication: myJob.getApplications())
+                    {
+                        if (tmpApplication.getMessageID() == applicationID)
+                        {
+                            //get jobseeker ID
+                            int jobseekerID = tmpApplication.getSenderID();
+                            //Launch candidate profile
+                            RecruiterViewCandidateGUI candidateGUI = new RecruiterViewCandidateGUI(control, jobseekerID);
+                            break;
+                        }
+                    }
                 }
             }
         });
