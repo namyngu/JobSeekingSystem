@@ -287,7 +287,7 @@ public class Search
 
     /**
      * This method searches for Jobs in the system which match provided
-     * parameters and returns them in an ArrayList of Jobs.
+     * parameters and returns them in a TreeMap.
      * @param jobDesc           a String containing the search text entered by
      *                          the User.
      * @param categoryPrimary   a String containing the Primary Category selected
@@ -308,7 +308,7 @@ public class Search
      *                          to search for.
      * @param seekerSkills      an ArrayList of Strings representing the skills of the
      *                          Jobseeker who executed the search.
-     * @return                  an ArrayList of Jobs, sorted in order of relevance.
+     * @return                  a TreeMap of ArrayList<Job>, sorted by relevance descending.
      * @throws Exception        Exceptions are thrown when parameters which are required to
      *                          successfully execute the search have not been provided.
      */
