@@ -1,13 +1,28 @@
-/* Class taken from Geeks For Geeks website:
-https://www.geeksforgeeks.org/sha-1-hash-in-java/?ref=lbp
-https://www.geeksforgeeks.org/sha-256-hash-in-java/?ref=lbp
+/**
+ * This class encrypts User passwords so they cannot be manually extracted from
+ * database .csv files.
+ * @author: Geeks for Geeks
+ * @see https://www.geeksforgeeks.org/sha-1-hash-in-java/?ref=lbp
+ * @see https://www.geeksforgeeks.org/sha-256-hash-in-java/?ref=lbp
  */
+
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class EncryptMe {
+
+    /**
+     * This is the Default constructor for the class.
+     */
+    public EncryptMe(){
+    }
+
+    /**
+     * This method takes a specified String and encrypts it.
+     * @param input a String to be encrypted.
+     * @return a String which has been encrypted.
+     */
     public static String encryptThisString(String input)
     {
         //Salting - Add some padding

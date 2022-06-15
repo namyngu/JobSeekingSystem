@@ -1,11 +1,12 @@
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 /**
  * This class represents Messages which can be passed back and forth between Users.
  * @author: Team D - Tom Barker, Jakeob Clarke-Kennedy, Bradley Meyn, Hoang Nguyen, Gerard Samson-Dekker
  */
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 public class Message
 {
     private int messageID;
