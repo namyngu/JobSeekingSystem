@@ -50,6 +50,8 @@ public class JobSeekerHomeGUI {
     private JScrollPane searchResultsScroll;
     private JLabel jobseekerLocation;
     private JLabel jobseekerEmail;
+    private JLabel instructionText;
+    private JLabel searchInstructionText;
     private DefaultListModel jsSkillsModel;
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
@@ -94,6 +96,7 @@ public class JobSeekerHomeGUI {
         myParent = parent;
         locationList = locations;
         jobCategoryList = categories;
+        searchInstructionText.setVisible(false);
         JFrame window = new JFrame("JSS: Job Seeker Home");
         window.add(navbar);
         searchCount = 0;
@@ -161,6 +164,13 @@ public class JobSeekerHomeGUI {
                 DefaultTableModel freshModel = new DefaultTableModel(rows, jobListColumns);
                 jobSearchTable.setModel(freshModel);
                 searchResultsScroll.setVisible(true);
+
+                // Display instructions for double-clicking Jobs, if there are results.
+                if (!searchResults.isEmpty()) {
+                    searchInstructionText.setVisible(true);
+                } else {
+                    searchInstructionText.setVisible(false);
+                }
                 searchPanel.repaint();
             }
         });
@@ -278,6 +288,14 @@ public class JobSeekerHomeGUI {
         // Setup the initial search table.
         DefaultTableModel jobSearchModel = new DefaultTableModel(null, jobListColumns);
         jobSearchTable.setModel(jobSearchModel);
+
+        // Display instructions for double-clicking Jobs, if there are results.
+        if (!searchResults.isEmpty()) {
+            instructionText.setVisible(true);
+        } else {
+            instructionText.setVisible(false);
+        }
+
     }
 
     public void buildSkillList(){
