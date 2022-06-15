@@ -197,31 +197,39 @@ public class RecruiterHomeGUI {
 
     private void createTable()
     {
-        ArrayList<Job> myJobs = findRecruiterJob(myParent.getJobList());
-        String[][] data = new String[myJobs.size()][7];
+        ArrayList<Job> recruiterJobs = myParent.getRecruiter().getJobs();
+        ArrayList<Job> activeJobs = new ArrayList<>();
+        for (Job tmpJob : recruiterJobs)
+        {
+            if (!tmpJob.getJobStatus().equalsIgnoreCase("Archived"))
+                activeJobs.add(tmpJob);
+        }
 
-        for (int i = 0; i < myJobs.size(); i++)
+        //ArrayList<Job> myJobs = findRecruiterJob(myParent.getJobList());
+        String[][] data = new String[activeJobs.size()][7];
+
+        for (int i = 0; i < activeJobs.size(); i++)
         {
             for (int j = 0; j < 6; j++)
             {
                 switch (j)
                 {
                     case 0:
-                        data[i][j] = String.valueOf(myJobs.get(i).getJobID());
+                        data[i][j] = String.valueOf(activeJobs.get(i).getJobID());
                         break;
 
                     case 1:
-                        data[i][j] = myJobs.get(i).getJobTitle();
+                        data[i][j] = activeJobs.get(i).getJobTitle();
                         break;
 
                     case 2:
-                        data[i][j] = myJobs.get(i).getEmployer();
+                        data[i][j] = activeJobs.get(i).getEmployer();
                         break;
 
                     case 3: {
                         try
                         {
-                            Location location = File_Control.findLocation(myParent.getLocationList(), myJobs.get(i).getLocationID());
+                            Location location = File_Control.findLocation(myParent.getLocationList(), activeJobs.get(i).getLocationID());
                             data[i][j] = location.getCity();
                         }
                         catch (Exception e)
@@ -232,18 +240,18 @@ public class RecruiterHomeGUI {
                     }
 
                     case 4:
-                        data[i][j] = String.valueOf(myJobs.get(i).getJobStatus());
+                        data[i][j] = String.valueOf(activeJobs.get(i).getJobStatus());
                         break;
 
                     case 5:
-                        data[i][j] = myJobs.get(i).getJobType();
+                        data[i][j] = activeJobs.get(i).getJobType();
                         break;
 
                     case 6: {
-                        if (myJobs.get(i).getApplications().size() == 0)
+                        if (activeJobs.get(i).getApplications().size() == 0)
                             data[i][j] = "0";
                         else
-                            data[i][j] = String.valueOf(myJobs.get(i).getApplications().size());
+                            data[i][j] = String.valueOf(activeJobs.get(i).getApplications().size());
                         break;
                     }
 
@@ -270,22 +278,6 @@ public class RecruiterHomeGUI {
         allSkillList.setListData(returnModel.toArray());
         file.close();
     }
-
-    //Method to search through all jobs to find the recruiter's jobs.
-    private ArrayList<Job> findRecruiterJob(ArrayList<Job> jobList)
-    {
-        ArrayList<Job> myJob = new ArrayList<>();
-        //search through all jobs for the recruiter's job
-        for (Job tmpJob : jobList)
-        {
-            if (tmpJob.getRecruiterID() == myParent.getRecruiter().getUserID() && (!tmpJob.getJobStatus().equalsIgnoreCase("Archived")))
-            {
-                myJob.add(tmpJob);
-            }
-        }
-        return myJob;
-    }
-
 }
 
 

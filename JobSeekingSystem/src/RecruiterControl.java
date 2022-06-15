@@ -37,6 +37,8 @@ public class RecruiterControl {
         RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(this, locationList);
         this.recruiter = recruiter;
         mainSearch = new Search();
+
+        updateRecruiterJobs(jobList);
     }
 
     /**
@@ -57,6 +59,9 @@ public class RecruiterControl {
         jobCategoryList = categories;
         mainSearch = new Search(this, jobList, locationList, jobCategoryList, jobseekerList);
 
+        //update recruiter's jobs
+        updateRecruiterJobs(jobList);
+        //Launch recruiter HomeGUI
         RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(this, locationList);
     }
 
@@ -230,6 +235,21 @@ public class RecruiterControl {
      */
     public void setUserList(ArrayList<User> users) {
         userList = users;
+    }
+
+    //Method to add all recruiter's job in.
+    public void updateRecruiterJobs (ArrayList<Job> jobList)
+    {
+        ArrayList<Job> myJob = new ArrayList<>();
+        //search through all jobs for the recruiter's job
+        for (Job tmpJob : jobList)
+        {
+            if (tmpJob.getRecruiterID() == recruiter.getUserID())
+            {
+                myJob.add(tmpJob);
+            }
+        }
+        recruiter.setJobs(myJob);
     }
 
 }

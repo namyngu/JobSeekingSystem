@@ -19,6 +19,8 @@ public class Recruiter extends User
         invitations = new ArrayList<>();
         totalAdverts = -1;
         totalApplications = -1;
+
+        updateRecruiterJobs(jobs);
     }
 
     /**
@@ -36,6 +38,8 @@ public class Recruiter extends User
         this.invitations = new ArrayList<>();
         this.totalAdverts = 0;
         this.totalApplications = 0;
+
+        updateRecruiterJobs(jobs);
     }
 
     /**
@@ -55,6 +59,8 @@ public class Recruiter extends User
         this.invitations = new ArrayList<>();
         this.totalAdverts = 0;
         this.totalApplications = 0;
+
+        updateRecruiterJobs(jobs);
     }
 
     /**
@@ -135,5 +141,18 @@ public class Recruiter extends User
      */
     public void setTotalApplications(int apps) {
         totalApplications = apps;
+    }
+
+    public void updateRecruiterJobs (ArrayList<Job> jobList)
+    {
+        ArrayList<Job> myJob = new ArrayList<>();
+        //search through all jobs for the recruiter's job
+        for (Job tmpJob : jobList)
+        {
+            if (tmpJob.getRecruiterID() == getUserID())
+            {
+                myJob.add(tmpJob);
+            }
+        }
     }
 }

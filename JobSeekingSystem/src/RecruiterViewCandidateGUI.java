@@ -69,13 +69,22 @@ public class RecruiterViewCandidateGUI {
 
     public void populateJobCombo(RecruiterControl control)
     {
-        DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
+        //get recruiter jobs
+        //DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
         ArrayList<Job> recruiterJobs = control.getRecruiter().getJobs();
+        /*
         for (Job job : recruiterJobs)
         {
-            comboModel.addElement(job);
+            //remove all archived jobs
+            if(!job.getJobStatus().equalsIgnoreCase("Archived"))
+                comboModel.addElement(job);
         }
-        selectJob.setModel(comboModel);
+        */
+        String[] jobLabel = new String[recruiterJobs.size()];
+        for (int i = 0; i < recruiterJobs.size(); i++)
+        {
+            selectJob.addItem(recruiterJobs.get(i).getJobID() + ". " +recruiterJobs.get(i).getJobTitle());
+        }
     }
 }
 
