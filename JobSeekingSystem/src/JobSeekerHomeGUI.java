@@ -204,7 +204,6 @@ public class JobSeekerHomeGUI {
         //double click on jobs to bring up the jobs menu
         jobSearchTable.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent mouseEvent) {
-                jobSearchTable = (JTable) mouseEvent.getSource();
                 Point point = mouseEvent.getPoint();
                 int row = jobSearchTable.rowAtPoint(point);
                 if (mouseEvent.getClickCount() == 2 && jobSearchTable.getSelectedRow() != -1) {
@@ -212,7 +211,6 @@ public class JobSeekerHomeGUI {
                     int selectedRow = jobSearchTable.getSelectedRow();
                     int jobID = Integer.parseInt(jobSearchTable.getValueAt(selectedRow, 1).toString());
                     JobSeekerJobGUI JobSeekerJobGUI= new JobSeekerJobGUI(myParent, jobID);
-                    window.dispose();
                 }
             }
         });
