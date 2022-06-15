@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class RecruiterHomeGUI {
     private RecruiterControl myParent;
@@ -110,6 +111,20 @@ public class RecruiterHomeGUI {
             }
         });
 
+        // Add a listener so that double-clicking a searched candidate opens their Profile
+        searchResults.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                Point point = mouseEvent.getPoint();
+                int row = searchResults.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && searchResults.getSelectedRow() != -1) {
+                    // Action to take after double clicking.
+                    int selectedRow = searchResults.getSelectedRow();
+                    int seekerID = Integer.parseInt(searchResults.getValueAt(selectedRow, 1).toString());
+                    RecruiterViewCandidateGUI thisJobseeker = new RecruiterViewCandidateGUI(myParent, seekerID);
+                }
+            }
+        });
+
         searchButton.addActionListener(new ActionListener()
         {
             @Override
@@ -125,30 +140,30 @@ public class RecruiterHomeGUI {
                 }
 
                 // Pass the user's selections into a search to find matching jobSeekers.
-                ArrayList<Jobseeker> results = myParent.seekerSearch(location, searchSkills);
+                TreeMap<Integer, ArrayList<Jobseeker>> results = myParent.seekerSearch(location, searchSkills);
 
                 /* Set the list of search results into the candidate search panel.
                  * First, set the columns up.
                  */
-                String[] seekerListColumns = {"First Name", "Last Name", "Location", "Skills"};
+                String[] seekerListColumns = {"Match Score", "User ID", "First Name", "Last Name", "Location", "Skills"};
 
                 // Set each Jobseeker up as a Row. Need to do some work to populate the location field.
                 ArrayList<String[]> seekerListRows = new ArrayList<>();
-                for (Jobseeker seeker : results) {
-                    int resultNum = 1;
-                    String resultLocation = "";
-                    for (Location place: locationList) {
-                        //TODO: if (place.getLocationID() == seeker.getLocationID()) {
-                        if (place.getLocationID() == 1)
-                            resultLocation = place.toString();
+                for (Integer key : results.keySet()) {
+                    for (int i = 0; i < results.get(key).size(); i++) {
+                        Jobseeker seeker = results.get(key).get(i);
+                        String resultLocation = "";
+                        for (Location place : locationList) {
+                            if (place.getLocationID() == seeker.getLocation().getLocationID()) {
+                                resultLocation = place.toString();
+                                break;
+                            }
                         }
-
-                    // Set the Jobseeker details up into the fields in the row.
-                    String[] thisSeeker = {seeker.getFirstName(), seeker.getLastName(), resultLocation,
-                                            String.join(",", seeker.getSkills())};
-
-                    // Add this row to the list of rows.
-                    seekerListRows.add(thisSeeker);
+                        String [] thisSeeker = {Integer.toString(key), Integer.toString(seeker.getUserID()),
+                                seeker.getFirstName(), seeker.getLastName(), resultLocation,
+                                String.join(",", seeker.getSkills())};
+                        seekerListRows.add(thisSeeker);
+                    }
                 }
 
                 // Convert the list of rows into a TableModel readable format.

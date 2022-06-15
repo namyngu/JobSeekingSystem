@@ -85,6 +85,11 @@ public class AdminControl implements Communication
         this.sendMessage(this.program,messsage);
     }
 
+    public String getAdminFirstName()
+    {
+        return admin.getFirstName();
+    }
+
     public ArrayList<Message> relayMessages()
     {
 

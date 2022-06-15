@@ -24,6 +24,7 @@ public class AdminGUI
     private JLabel inboxLabel;
     private JTextField replyTextField;
     private JButton removeJobButton;
+    private JLabel userFirstname;
 //    private JButton newMessageButton;
 
     private AdminControl adminControl;
@@ -52,7 +53,7 @@ public class AdminGUI
         this.userMessages = this.adminControl.relayMessages();
         this.mailListModel = new DefaultListModel();
         this.inboxList.setModel(this.mailListModel);
-
+        this.userFirstname.setText("Hi, "+ adminControl.getAdminFirstName());
 
         this.jobListModel = new DefaultListModel();
         this.jobList.setModel(this.jobListModel);
