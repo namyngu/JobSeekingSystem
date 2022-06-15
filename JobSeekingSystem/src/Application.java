@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public class Application extends Message
 {
     private int jobRef;
@@ -8,27 +10,27 @@ public class Application extends Message
 
     }
 
-    public Application(int senderID, int receiverID, String header, String body)
+    public Application(int senderID, int receiverID, String header, String body, LocalDate sentDate)
     {
-        super(senderID, receiverID, header, body);
-        status = "Pending";
+        super(senderID, receiverID, header, body, sentDate);
+        status = "pending";
     }
 
-    public Application(int nextMessageID, String status, int sender, int messageTo, String header, String body)
+    public Application(int nextMessageID, String status, int sender, int messageTo, String header, String body, LocalDate sentDate)
     {
-        super(nextMessageID, status, sender, messageTo, header, body);
-        status = "Pending";
+        super(nextMessageID, status, sender, messageTo, header, body, sentDate);
+        status = "pending";
     }
 
-    public Application(int messageID, int senderID, int receiverID, String header, String text)
+    public Application(int messageID, int senderID, int receiverID, String header, String text, LocalDate sentDate)
     {
-        super(messageID, senderID, receiverID, header, text);
-        status = "Pending";
+        super(messageID, senderID, receiverID, header, text, sentDate);
+        status = "pending";
     }
 
     public void display()
     {
-        System.out.println("Job refrence is " + jobRef);
+        System.out.println("Job reference is " + jobRef);
     }
 //
 

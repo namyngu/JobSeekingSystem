@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class JobseekerControl implements Communication
@@ -200,10 +201,11 @@ public class JobseekerControl implements Communication
         JSS program = this.relayProgram();
         Job applyFor = jobList.get(jobID);
         int recruiterID = applyFor.getRecruiterID();
+        LocalDate date = LocalDate.now();
         try
         {
             int messageID = program.issueMessageID();
-            Application application = new Application(messageID,this.jobseeker.getUserID(), recruiterID, "Application", text);
+            Application application = new Application(messageID,this.jobseeker.getUserID(), recruiterID, "Application", text, date);
             application.setJobRef(applyFor.getJobID());
 
             sent = this.sendMessage(program,application);

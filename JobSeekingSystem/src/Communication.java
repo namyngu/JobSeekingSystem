@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface Communication
@@ -12,6 +13,7 @@ public interface Communication
         int receiverID = message.getReceiverID();
         String header = message.getHeader();
         String body = message.getBody();
+        LocalDate date = message.getSentDate();
 
         try
         {
@@ -20,7 +22,7 @@ public interface Communication
         {
 
             int jobRef = ((Application) message).getJobRef();
-            program.storeMessage(messageID, false, senderID, receiverID, header, body, jobRef);
+            program.storeMessage(messageID, false, senderID, receiverID, header, body, jobRef,date);
         }
 
         else if (message instanceof Invitation)
@@ -30,7 +32,7 @@ public interface Communication
         }
             else
 
-            program.storeMessage(messageID, false, senderID, receiverID, header, body, -1);
+            program.storeMessage(messageID, false, senderID, receiverID, header, body, -1,date);
             sent = true;
         }
         catch (Exception e)
