@@ -4,6 +4,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class RecruiterControl {
 
@@ -154,20 +155,13 @@ public class RecruiterControl {
      *                       Recruiter would like to search for.
      * @return an ArrayList of Jobseekers which match the search parameters.
      */
-    public ArrayList<Jobseeker> seekerSearch(String location, ArrayList<String> requiredSkills)
+    public TreeMap<Integer, ArrayList<Jobseeker>> seekerSearch(String location, ArrayList<String> requiredSkills)
     {
         System.out.println("Searching...");
-        ArrayList<Jobseeker> searchList = new ArrayList<>();
+        TreeMap<Integer, ArrayList<Jobseeker>> searchList = new TreeMap<>();
         try
         {
             searchList = mainSearch.seekerSearch(location, requiredSkills);
-
-            // Debug search results:
-            System.out.println("Results: \n");
-            for (Jobseeker seeker : searchList) {
-                System.out.println(seeker.toString());
-            }
-
         }
         catch (Exception e)
         {
