@@ -1,5 +1,7 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.TreeMap;
 
 public class JobseekerControl implements Communication
 {
@@ -37,12 +39,12 @@ public class JobseekerControl implements Communication
         this.program = program;
     }
 
-    public ArrayList<Job> jobSearch(String jobDesc, String categoryPrimary,
+    public TreeMap<Integer, ArrayList<Job>> jobSearch(String jobDesc, String categoryPrimary,
                           String categorySecondary, String location, boolean fullTime, boolean partTime,
                           boolean casual, int salMin, int salMax, ArrayList<String> seekerSkills)
     {
         System.out.println("Searching...");
-        ArrayList<Job> searchResults = new ArrayList<>();
+        TreeMap<Integer, ArrayList<Job>> searchResults = new TreeMap<>(Collections.reverseOrder());
         try {
             searchResults = mainSearch.jobSearch(jobDesc, categoryPrimary, categorySecondary, location, fullTime, partTime,
             casual, salMin, salMax, seekerSkills);

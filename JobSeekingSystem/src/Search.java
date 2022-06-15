@@ -166,7 +166,7 @@ public class Search
                 }
 
                 // 3. Job must match salary range
-                if (salary < salMin && salary > salMax) {
+                if (salary < salMin || salary > salMax) {
                     // Job is outside desired salary range
                     valid = false;
                     break;
@@ -312,7 +312,7 @@ public class Search
      * @throws Exception        Exceptions are thrown when parameters which are required to
      *                          successfully execute the search have not been provided.
      */
-    public ArrayList<Job> jobSearch(String jobDesc, String categoryPrimary,
+    public TreeMap<Integer, ArrayList<Job>> jobSearch(String jobDesc, String categoryPrimary,
         String categorySecondary, String location, boolean fullTime, boolean partTime,
         boolean casual, int salMin, int salMax, ArrayList<String> seekerSkills) throws Exception {
 
@@ -471,12 +471,15 @@ public class Search
             System.out.println(scoredResults);
         }
 
+        // Return the TreeMap (which is already sorted descending) as results.
+        return scoredResults;
+
         /* Sort the TreeMap and put the sorted list back into results.
          * Note the TreeMap should always be already sorted for  in
          * descending order for us as specified in our intialization, so
          * simply iterating through gets us the Job list
          * sorted by the score descending.
-         */
+
         results.clear();
         results = new ArrayList<>();
         for (Integer key : scoredResults.keySet()) {
@@ -484,7 +487,7 @@ public class Search
                 results.add(scoredResults.get(key).get(i));
             }
         }
-        return results;
+        return results;*/
     }
 
     /**

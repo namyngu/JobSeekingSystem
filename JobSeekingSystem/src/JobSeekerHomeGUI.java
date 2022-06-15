@@ -6,6 +6,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class JobSeekerHomeGUI {
 
@@ -134,19 +135,27 @@ public class JobSeekerHomeGUI {
                 int salMax = Integer.parseInt(comboBox2.getSelectedItem().toString());
                 ArrayList<String> skills = jobseeker.getSkills();
 
-                ArrayList<Job> searchResults = myParent.jobSearch(searchDesc, catPrimary, catSecondary, location, fullTime,
+                TreeMap<Integer, ArrayList<Job>> searchResults = myParent.jobSearch(searchDesc, catPrimary, catSecondary, location, fullTime,
                         partTime, casual, salMin, salMax, skills);
 
-                String[] jobListColumns = {"Result #", "Job ID #", "Title", "Employer", "Location", "Salary", "Type"};
+                String[] jobListColumns = {"Match Score", "Job ID #", "Title", "Employer", "Location", "Salary", "Type"};
                 ArrayList<String[]> jobListRows = new ArrayList<>();
-                int resultNum = 1;
-                for (Job job : searchResults) {
-                    String resultLocation = locationList.get(job.getLocationID()-1).toString();
-                    String[] thisJob = {Integer.toString(resultNum), Integer.toString(job.getJobID()),
-                            job.getJobTitle(), job.getEmployer(), resultLocation,
-                            Integer.toString(job.getSalary()), job.getJobType()};
-                    jobListRows.add(thisJob);
-                    resultNum++;
+
+                for (Integer key : searchResults.keySet()) {
+                    for (int i = 0; i < searchResults.get(key).size(); i++) {
+                        Job job = searchResults.get(key).get(i);
+                        String resultLocation = "";
+                        for (Location place : locationList) {
+                            if (place.getLocationID() == job.getLocationID()) {
+                                resultLocation = place.toString();
+                                break;
+                            }
+                        }
+                        String [] thisJob = {Integer.toString(key), Integer.toString(job.getJobID()),
+                                    job.getJobTitle(), job.getEmployer(), resultLocation,
+                                    Integer.toString(job.getSalary()), job.getJobType()};
+                        jobListRows.add(thisJob);
+                    }
                 }
 
                 String[][] rows = jobListRows.toArray(new String[0][0]);
