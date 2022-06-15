@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,6 +20,18 @@ public class Validation {
     public static boolean isInputBlank(JTextField input)
     {
         return input.getText().isEmpty();
+    }
+
+    public static boolean usernameExists(ArrayList<User> users, String username) {
+        boolean exists = false;
+        for (int i = 0; i < users.size(); i++) {
+
+            if (users.get(i).getUserName().equalsIgnoreCase(username)) {
+                exists = true;
+                break;
+            }
+        }
+        return exists;
     }
 }
 

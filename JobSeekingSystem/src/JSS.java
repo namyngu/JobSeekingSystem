@@ -17,6 +17,11 @@ public class JSS
     private ArrayList<Message> allMessages;
     private static int nextMessageID;
     private final File_Control fileControl = new File_Control();
+
+    public ArrayList<User> getUserList() {
+        return userList;
+    }
+
     private ArrayList<User> userList = new ArrayList<>();
     private ArrayList<Job> jobList = new ArrayList<>();
 

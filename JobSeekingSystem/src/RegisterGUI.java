@@ -59,40 +59,37 @@ public class RegisterGUI
             {
                 boolean allowRegistration = true;
 
-                try
+                //input validation
+                if(!this.validInputs() || !this.validPassword())
                 {
-                    if(!this.validInputs() || !this.validPassword())
-                    {
-                        allowRegistration = false;
-                    }
-
-                }
-                catch (Exception x)
-                {
-                    PromptGUI error = new PromptGUI("Couldn't validate", x.getMessage());
                     allowRegistration = false;
                 }
+
+                //check if username exists
+                if(Validation.usernameExists(program.getUserList(), usernameTextTextField.getText()))
+                {
+                    Validation.invalidInputWarning(usernameWarning, "That username already exists");
+                    allowRegistration = false;
+                }
+
                 if (allowRegistration == true)
                 {
                     try
                     {
                         if (radioButtonJobseeker.isSelected())
                         {
-                            //TODO: need to check if username already exists.
                             program.createUser(firstNameText.getText(), lastNameText.getText(), usernameTextTextField.getText(), String.valueOf(passwordField.getPassword()), "Jobseeker", userLocation, userEmailText.getText(), userPhoneText.getText());
                             PromptGUI confirm = new PromptGUI("Account created! Log in to continue");
                             frame.dispose();
 
                         } else if (radioButtonRecruiter.isSelected())
                         {
-                            //TODO: need to check if username already exists.
                             program.createUser(firstNameText.getText(), lastNameText.getText(), usernameTextTextField.getText(), String.valueOf(passwordField.getPassword()), "Recruiter",userLocation, userEmailText.getText(), userPhoneText.getText());
                             PromptGUI confirm = new PromptGUI("Account created! Log in to continue");
                             frame.dispose();
                         }
                         else if (radioButtonAdmin.isSelected())
                         {
-                            //TODO: need to check if username already exists.
                             program.createUser(firstNameText.getText(), lastNameText.getText(), usernameTextTextField.getText(), String.valueOf(passwordField.getPassword()), "Admin",userLocation, userEmailText.getText(), userPhoneText.getText());
                             PromptGUI confirm = new PromptGUI("Account created! Log in to continue");
                             frame.dispose();
