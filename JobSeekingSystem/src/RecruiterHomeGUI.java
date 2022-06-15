@@ -35,12 +35,14 @@ public class RecruiterHomeGUI {
     private JScrollPane recruiterInboxTable;
     private JScrollPane recruiterJobsTable;
     private JScrollPane seekerTable;
+    private JLabel searchInstructionsText;
 
     public RecruiterHomeGUI(RecruiterControl parent, ArrayList<Location> locations){
         myParent = parent;
         locationList = locations;
         JFrame window = new JFrame("JSS: Recruiter Home");
         window.add(recruiterNav);
+        searchInstructionsText.setVisible(false);
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLocation(600,20);
@@ -172,6 +174,16 @@ public class RecruiterHomeGUI {
                 // Set the Table Model into the results table.
                 DefaultTableModel freshModel = new DefaultTableModel(rows, seekerListColumns);
                 searchResults.setModel(freshModel);
+
+                /* If there are results, provide instructions to the User on
+                 * how to view the candidate.
+                 */
+                if (!results.isEmpty()) {
+                    searchInstructionsText.setVisible(true);
+                } else {
+                    searchInstructionsText.setVisible(false);
+                }
+
                 searchResults.repaint();
             }
         });
