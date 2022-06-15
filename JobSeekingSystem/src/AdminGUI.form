@@ -233,7 +233,7 @@
           <hspacer id="103c0">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <minimum-size width="-1" height="50"/>
+                <minimum-size width="-1" height="25"/>
               </grid>
             </constraints>
           </hspacer>
