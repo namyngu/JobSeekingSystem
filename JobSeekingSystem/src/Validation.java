@@ -49,7 +49,7 @@ public class Validation {
     /**
      * This method checks to see if a chosen username already exists in the system.
      * @param users     an ArrayList of Users, containing all the Users in the system.
-     * @param username  a String contaning the desired username to be checked.
+     * @param username  a String containing the desired username to be checked.
      * @return          a Boolean describing if the chosen username already exists.
      */
     public static boolean usernameExists(ArrayList<User> users, String username) {
