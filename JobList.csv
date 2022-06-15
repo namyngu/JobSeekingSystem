@@ -41,3 +41,6 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 41,Apple Picker,Coles Farm,11,Casual,Archived,30000,10678,""icking apples.|Summer months.|Ideal for uni student.|Update pt ""
 29,Assistant Programmer,Pied Piper,14,PartTime,Advertised,35000,3866,"elcome, we are a new kickstarter company at Silicon Valley.|We have a great team of highly talented individual, and this is a great opportunity to join a new starting company.|As the company grows, you grow with us"
 40,Builder,Megastructure,14,Casual,Archived,65000,12173,""""
+43,Ticket Scanner,Ticketek,11,Casual,Draft,30000,3882,"This job is to scan people's tickets as they enter the venue.||Locations will be varied, will follow events around."
+44,Bartender,Crown Casino,11,Casual,Draft,40000,10815,"Pouring drinks.|Customer service.|Bar cleanup."
+45,Banker,ANZ,11,FullTime,Draft,80000,3914,"nking.|Loans.|Customer Service.|Data Analysi"

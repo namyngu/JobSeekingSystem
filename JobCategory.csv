@@ -1,43 +1,39 @@
-jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescription
-1,Software Developer,Walmart,2,FullTime,Advertised,50000,1,Testing
-2,Influencer,State Grid,2,FullTime,Advertised,50000,2,Job Descr1
-3,Tester,Amazon,2,FullTime,Archived,50000,2,Job Descr1
-4,Main Test Analyst,Apple,3,FullTime,Withdrawn,50000,10,Testing
-5,Payroll Officer,CVS Group,3,PartTime,Draft,50000,5,Job Descr1
-6,Communications Officer,McKesson,3,Casual,Archived,50000,6,Job Descr1
-7,Plumber,BP,3,Casual,Advertised,20000,7,Testing
-8,Senior Test Analyst,Shell,3,Casual,Advertised,20000,8,Job Descr1
-9,Graphic Designer,ICBC,4,PartTime,Archived,20000,10,Job Descr1
-10,Junior Business Analyst,Volkswagen,4,PartTime,Withdrawn,100000,22,Testing
-11,Lead Designer,UnitedHealth,4,PartTime,Draft,100000,15,Job Descr1
-12,Accounts Payable Officer,Ping An Insurance,4,PartTime,Archived,100000,12,Job Descr1
-13,Chief Operating Officer,Exor,4,Casual,Archived,100000,13,Testing
-14,Transformation Lead,Allianz,5,Casual,Advertised,100000,14,Job Descr1
-15,Customer Service Officer,Kroger,5,PartTime,Withdrawn,150000,15,Job Descr1
-16,Videographer,Bank of China,5,Casual,Withdrawn,150000,16,Testing
-17,Radiologist,Foxconn,5,Casual,Draft,150000,17,Job Descr1
-18,Store Owner,Samsung Electronics,6,Casual,Draft,150000,6,Job Descr1
-19,Product Analyst,BP,6,Casual,Advertised,180000,7,Testing
-20,Team Leader,Shell,6,FullTime,Advertised,180000,20,Job Descr1
-21,Electrician,Anthem,6,FullTime,Withdrawn,180000,15,Job Descr1
-22,Painter,General Motors,7,FullTime,Withdrawn,180000,22,Testing
-23,Payroll Officer,Home Depot,7,FullTime,Draft,180000,23,Job Descr1
-24,Graphic Designer,Kroger,7,Casual,Draft,75000,24,Job Descr1
-25,Social Media Producer,Bank of China,7,PartTime,Advertised,75000,15,Testing
-26,Barista,Verizon,8,PartTime,Archived,75000,26,Job Descr1
-27,Web Developer,General Motors,8,PartTime,Withdrawn,75000,18,Job Descr1
-28,Leader Designer,Anthem,8,Casual,Withdrawn,20000,28,Testing
-30,new job,employer,11,PartTime,Draft,343242,9124,"line 1, word 2|line 2, word 2|line 3, word 2||line 5, word 2"
-31,new job,employer,11,PartTime,Draft,452,9124,"line1|line2,lalala|line 3||line 5"
-32,new job,employer,11,PartTime,Draft,34545,9124,"desc"
-34,new job,employer,11,PartTime,Draft,34234,3864,"desc"
-35,job title,Boeing,11,FullTime,Advertised,80000,9138,"line1|line2, word 2|line3||line 5"
-36,Software Developer,Apple,14,PartTime,Draft,85000,3868,"This job will help kickstart your career!|Welcome to Apple|"
-37,Coffee Boy,Kickstarter,14,FullTime,Draft,55000,3867,"WELCOME!|This job will help kickstart your career at Kickstarter!|"
-38,Sales,Coles,14,Casual,Advertised,33000,12172,"This is a great opportunity to work for a big company like Coles.|We welcome all talents, please apply."
-39,Manager,McDonalds,14,FullTime,Advertised,55000,3895,"This job requires good communication and people skills.|McDonalds is a big company....|"
-42,Packer,Aldi,11,PartTime,Draft,60000,3889,"Pack shelves|receive orders|help customers"
-33,checkout assistant,foodland,11,FullTime,Draft,60000,3870,"pdated description|is fu"
-41,Apple Picker,Coles Farm,11,Casual,Archived,30000,10678,""icking apples.|Summer months.|Ideal for uni student.|Update pt ""
-29,Assistant Programmer,Pied Piper,14,PartTime,Advertised,35000,3866,"elcome, we are a new kickstarter company at Silicon Valley.|We have a great team of highly talented individual, and this is a great opportunity to join a new starting company.|As the company grows, you grow with us"
-40,Builder,Megastructure
+jobID,jobPrimaryCategory,jobSubCategory
+1,Computer Science,Software
+2, Computer Science, Software Engineer
+3,Administration & Office Support,Assistant
+4,Advertising/Arts/Media,Agency Account Management
+5,Banking & Financial Services,Account & Relationship Management
+6,Call Centre & Customer Service,Collections
+7,CEO & General Management,Board Appointments
+8,Community Services,Aged & Disability Support
+9,Construction,Contracts Management
+10,Consulting & Strategy,Analyst
+11,Design & Architecture,Architecture Drafting
+12,Education & Training,Childcare & Outside School Hours Care
+13,Engineering,Aerospace Engineering
+14,Farming/Animals & Conservation,Agronomy & Farm Services
+15,Government & Defence,Air Force
+16,Healthcare & Medical,Ambulance/Paramedics
+17,Hospitality & Tourism,Airlines
+18,Human Resources & Recruitment,Consulting & Generalist HR
+19,Information & Communication Technology,Architects
+20,Insurance & Superannuation,Actuarial
+21,Legal,Banking & Finance Law
+22,Manufacturing/Transport & Logistics,Analysis & Reporting
+23,Marketing & Communications,Brand Management
+24,Mining/Resources & Energy,Analysis & Reporting
+25,Real Estate & Property,Administration
+26,Retail & Consumer Products,Buying
+27,Sales,Account & Relationship Management
+28,Science & Technology,Biological & Biomedical Sciences
+29,Self Employment,Self Employment
+30,Sport & Recreation,Coaching & Instruction
+30,Banking & Financial Services,Account & Relationship Management
+30,Banking & Financial Services,Account & Relationship Management
+31,Engineering,Systems Engineering
+32,Call Centre & Customer Service,Collections
+33,Accounting,Accounts Officers/Clerks
+29,Accounting,Accounts Officers/Clerks
+29,Banking & Financial Services,Client Services
+45,Banking & Financial Services,Investment Banking

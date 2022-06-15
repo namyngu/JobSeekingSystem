@@ -85,7 +85,7 @@ public class CreateJobGUI {
         category = new JobCategory();
 
 
-        job = new Job();
+        this.job = new Job();
         int numJobs = jobList.size() + 1;
         job.setJobID(numJobs);
         intJobIDLabel.setText(String.valueOf(numJobs));
@@ -114,7 +114,7 @@ public class CreateJobGUI {
             public void actionPerformed(ActionEvent e) {
                 //System.out.println("Submit button has been clicked");
                 frame.setVisible(false);
-                submitButtonActions();
+                submitButtonActions(job);
                 //write to JobList and JobCategory and JobSkill csv
                 newJobToDatabase();
             }
@@ -276,7 +276,7 @@ public class CreateJobGUI {
         file.close();
     }
 
-    public void submitButtonActions() {
+    public void submitButtonActions(Job job) {
         job.setJobTitle(jobTitleText.getText());
         //System.out.println("jobTitle has been set to: " + job.getJobTitle());
         job.setEmployer(employerText.getText());
