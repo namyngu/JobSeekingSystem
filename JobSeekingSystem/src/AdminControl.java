@@ -78,7 +78,8 @@ public class AdminControl implements Communication
     public void createMessage(int sender, int destination, String header, String body)
     {
         int messageID = this.program.issueMessageID();
-        this.sendMessage(this.program,messageID,sender,destination,header,body);
+        Message messsage = new Message(messageID,sender,destination,header,body);
+        this.sendMessage(this.program,messsage);
     }
 
     public ArrayList<Message> relayMessages()

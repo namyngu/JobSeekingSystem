@@ -702,7 +702,7 @@ public class JSS
                 {
                     hasMail =true;
 
-
+                    //TODO differentiate between messages and applications etc here
 
 
                     Message message = new Message(messageID, messageDetails[1],sender,messageTo,messageDetails[4],messageDetails[5]);
@@ -1009,12 +1009,12 @@ public void markAsSent(Message message)
                 String[] messageDetails = messageString[i].split(",");
 
                 //find out who the message is for
-                int readID = Integer.parseInt(messageDetails[0])+1;
-                System.out.println("JSS 1000 message ID cehcking for number " + readID + "matching number " + messageID);
+                int readID = Integer.parseInt(messageDetails[0]);
+
                 //if it is for the user checking, add it to their list
                 if (readID == messageID)
                 {
-                    System.out.println("JSS 1004");
+
                     int sender = Integer.parseInt(messageDetails[1]);
                     int messageTo = Integer.parseInt(messageDetails[2]);
 
@@ -1025,7 +1025,6 @@ public void markAsSent(Message message)
                     message.setReceiverID(messageTo);
                     message.setHeader(messageDetails[3]);
                     message.setBody(messageDetails[4]);
-                    System.out.println("JSS 1015 message ID is " + message.getMessageID());
                     //check whether message is pending or sent!
                     if (messageDetails[0].equalsIgnoreCase("sent"))
                     {

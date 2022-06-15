@@ -3,23 +3,33 @@ import java.util.ArrayList;
 public interface Communication
 {
 
-    default boolean sendMessage(JSS program, int messageID, int senderID, int receiverID, String header, String body)
+    default boolean sendMessage(JSS program, Message message)
     {
 
-        //TODO check message type (generic, application or invitation and save differently
-        Message message = program.retrieveMessage(messageID);
-        System.out.println("this.is the ID being asked for " + messageID);
-        System.out.println("this is the message ID " + message.getMessageID());
-        System.out.println("this is the message class " + message.getClass());
+        boolean sent = false;
+        int messageID = message.getMessageID();
+        int senderID = message.getSenderID();
+        int receiverID = message.getReceiverID();
+        String header = message.getHeader();
+        String body = message.getBody();
+
+        try
+        {
+
         if (message instanceof Application)
         {
 
             int jobRef = ((Application) message).getJobRef();
             program.storeMessage(messageID, false, senderID, receiverID, header, body, jobRef);
         }
-        boolean sent = false;
-        try
+
+        else if (message instanceof Invitation)
+
         {
+
+        }
+            else
+
             program.storeMessage(messageID, false, senderID, receiverID, header, body, -1);
             sent = true;
         }
