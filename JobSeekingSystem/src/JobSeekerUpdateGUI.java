@@ -99,12 +99,12 @@ public class JobSeekerUpdateGUI {
 
                 //check no inputs are empty
                 if (phoneInput.getText().isEmpty()) {
-                    invalidInputWarning(phoneWarning, "Phone number cannot be blank.");
+                    Validation.invalidInputWarning(phoneWarning, "Phone number cannot be blank.");
                     validInput = false;
                 }
 
                 if (emailInput.getText().isEmpty()) {
-                    invalidInputWarning(emailWarning, "Email cannot be blank.");
+                    Validation.invalidInputWarning(emailWarning, "Email cannot be blank.");
                     validInput = false;
                 }
 
@@ -113,16 +113,14 @@ public class JobSeekerUpdateGUI {
                 Matcher matcher = pattern.matcher(emailInput.getText());
 
                 if (!matcher.matches()) {
-                    invalidInputWarning(emailWarning, "You have not entered a valid email.");
+                    Validation.invalidInputWarning(emailWarning, "You have not entered a valid email.");
                     validInput = false;
                 }
-
 
                 if (locationInput.getText().isEmpty()) {
-                    invalidInputWarning(locationWarning, "Location details are required.");
+                    Validation.invalidInputWarning(locationWarning, "Location details are required.");
                     validInput = false;
                 }
-
 
                 if (validInput) {
                     //get updated skills from user skills Jlist
@@ -260,20 +258,6 @@ public class JobSeekerUpdateGUI {
         }
 //
     }
-
-    public void invalidInputWarning(JLabel warningLabel, String message) {
-        warningLabel.setText(message);
-        warningLabel.setVisible(true);
-
-        new Timer().schedule(new TimerTask() {
-
-            public void run() {
-                warningLabel.setVisible(false);
-            }
-        }, 4000L); // 300 is the delay in millis
-
-    }
-
 
 }
 
