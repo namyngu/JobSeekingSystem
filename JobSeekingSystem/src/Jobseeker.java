@@ -36,6 +36,8 @@ public class Jobseeker extends User {
         this.totalApplied = 0;
         this.totalOffers = 0;
         this.totalInvites = 0;
+        loadSkills();
+        loadContact();
         System.out.println(getFullName());
     }
 
