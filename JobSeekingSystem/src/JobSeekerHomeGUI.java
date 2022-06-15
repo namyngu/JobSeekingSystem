@@ -137,13 +137,14 @@ public class JobSeekerHomeGUI {
                 ArrayList<Job> searchResults = myParent.jobSearch(searchDesc, catPrimary, catSecondary, location, fullTime,
                         partTime, casual, salMin, salMax, skills);
 
-                String[] jobListColumns = {"Result#", "Title", "Employer", "Location", "Salary", "Type"};
+                String[] jobListColumns = {"Result #", "Job ID #", "Title", "Employer", "Location", "Salary", "Type"};
                 ArrayList<String[]> jobListRows = new ArrayList<>();
                 int resultNum = 1;
                 for (Job job : searchResults) {
                     String resultLocation = locationList.get(job.getLocationID()-1).toString();
-                    String[] thisJob = {Integer.toString(resultNum), job.getJobTitle(), job.getEmployer(),
-                            resultLocation, Integer.toString(job.getSalary()), job.getJobType()};
+                    String[] thisJob = {Integer.toString(resultNum), Integer.toString(job.getJobID()),
+                            job.getJobTitle(), job.getEmployer(), resultLocation,
+                            Integer.toString(job.getSalary()), job.getJobType()};
                     jobListRows.add(thisJob);
                     resultNum++;
                 }
@@ -202,7 +203,7 @@ public class JobSeekerHomeGUI {
         /* Set the list of recommended jobs into the recommended jobs panel.
          * First, set the columns up.
          */
-        String[] jobListColumns = {"Result#", "Title", "Employer", "Location", "Salary", "Type"};
+        String[] jobListColumns = {"Result #", "Job ID #", "Title", "Employer", "Location", "Salary", "Type"};
 
         // Set each Job up as a Row. Need to do some work to populate the location field.
         ArrayList<String[]> jobListRows = new ArrayList<>();
@@ -216,8 +217,9 @@ public class JobSeekerHomeGUI {
             }
 
             // Set the job details up into the fields in the row.
-            String[] thisJob = {Integer.toString(resultNum), job.getJobTitle(), job.getEmployer(),
-                    resultLocation, Integer.toString(job.getSalary()), job.getJobType()};
+            String[] thisJob = {Integer.toString(resultNum), Integer.toString(job.getJobID()),
+                    job.getJobTitle(), job.getEmployer(), resultLocation,
+                    Integer.toString(job.getSalary()), job.getJobType()};
 
             // Add this row to the list of rows.
             jobListRows.add(thisJob);
