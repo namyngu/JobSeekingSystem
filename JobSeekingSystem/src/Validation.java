@@ -54,9 +54,8 @@ public class Validation {
      */
     public static boolean usernameExists(ArrayList<User> users, String username) {
         boolean exists = false;
-        for (int i = 0; i < users.size(); i++) {
-
-            if (users.get(i).getUserName().equalsIgnoreCase(username)) {
+        for (User user : users) {
+            if (user.getUserName().equalsIgnoreCase(username)) {
                 exists = true;
                 break;
             }
