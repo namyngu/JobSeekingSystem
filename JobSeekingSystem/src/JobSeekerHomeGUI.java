@@ -1,9 +1,7 @@
 import javax.swing.*;
 import javax.swing.table.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -200,6 +198,22 @@ public class JobSeekerHomeGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JobSeekerUpdateGUI updateGUI = new JobSeekerUpdateGUI(myParent, home, locations );
+            }
+        });
+
+        //double click on jobs to bring up the jobs menu
+        jobSearchTable.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                jobSearchTable = (JTable) mouseEvent.getSource();
+                Point point = mouseEvent.getPoint();
+                int row = jobSearchTable.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && jobSearchTable.getSelectedRow() != -1) {
+                    // Action to take after double clicking.
+                    int selectedRow = jobSearchTable.getSelectedRow();
+                    int jobID = Integer.parseInt(jobSearchTable.getValueAt(selectedRow, 1).toString());
+                    JobSeekerJobGUI JobSeekerJobGUI= new JobSeekerJobGUI(myParent, jobID);
+                    window.dispose();
+                }
             }
         });
     }
