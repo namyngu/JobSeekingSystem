@@ -19,6 +19,7 @@ public class RecruiterViewCandidateGUI {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setLocation(650, 40);
+        frame.setVisible(true);
 
         //Find jobseeker
         Jobseeker jobseeker = null;
