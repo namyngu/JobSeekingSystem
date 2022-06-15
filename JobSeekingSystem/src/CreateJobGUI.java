@@ -47,6 +47,10 @@ public class CreateJobGUI {
     private ArrayList<Job> jobList;
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
+    private Job job;
+    private RecruiterControl recruiterControl;
+    private ArrayList<String> skills;
+    private JobCategory category;
 
     public CreateJobGUI() {
 
@@ -73,13 +77,15 @@ public class CreateJobGUI {
             }
         });
 
+        this.recruiterControl = recruiterControl;
         this.recruiter = recruiterControl.getRecruiter();
         this.jobList = recruiterControl.getJobList();
         this.locationList = recruiterControl.getLocationList();
         this.jobCategoryList = recruiterControl.getJobCategoryList();
+        category = new JobCategory();
 
 
-        Job job = new Job();
+        job = new Job();
         int numJobs = jobList.size() + 1;
         job.setJobID(numJobs);
         intJobIDLabel.setText(String.valueOf(numJobs));
@@ -92,7 +98,7 @@ public class CreateJobGUI {
         populateCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
 
         DefaultListModel skillsListGUI = new DefaultListModel();
-        ArrayList<String> skills = job.getSkills();
+        skills = job.getSkills();
 
         salaryText.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
@@ -108,81 +114,9 @@ public class CreateJobGUI {
             public void actionPerformed(ActionEvent e) {
                 //System.out.println("Submit button has been clicked");
                 frame.setVisible(false);
-
-                job.setJobTitle(jobTitleText.getText());
-                //System.out.println("jobTitle has been set to: " + job.getJobTitle());
-                job.setEmployer(employerText.getText());
-                job.setJobType(String.valueOf(jobTypeMenu.getSelectedItem()));
-                //System.out.println("JobType has been set to: " + job.getJobType());
-
-                job.setSalary(Integer.parseInt(salaryText.getText()));
-                //System.out.println("Salary has been set to: " + job.getSalary());
-
-                for (int i = 0; i < skillsList.getModel().getSize(); i++) {
-                    skills.add(String.valueOf(skillsList.getModel().getElementAt(i)));
-                }
-                job.setSkills(skills);
-                //System.out.println("Skills have been set to: " + job.getSkills());
-
-                String state = String.valueOf(locationStateMenu.getSelectedItem());
-                String selectedPostcode = String.valueOf(postcodeMenu.getSelectedItem());
-                String postcode = "";
-                for (int i = 0; i < 4; i++) {
-                    postcode += selectedPostcode.charAt(i);
-                    //System.out.println("postcode is: " + postcode);
-                }
-
-                int postCode = Integer.parseInt(postcode);
-
-                String city = "";
-                for (int i = 6; i < selectedPostcode.length(); i++) {
-                    city += selectedPostcode.charAt(i);
-                }
-
-                for (Location tmpLocation : locationList)
-                {
-                    boolean check = true;
-                    //check state
-                    if (!tmpLocation.getState().equalsIgnoreCase(state))
-                    {
-                        check = false;
-                        continue;
-                    }
-                    if (tmpLocation.getPostcode() != postCode)
-                    {
-                        check = false;
-                        continue;
-                    }
-                    if (!tmpLocation.getCity().equalsIgnoreCase(city))
-                    {
-                        check = false;
-                        continue;
-                    }
-
-                    if (check)
-                    {
-                        job.setLocationID(tmpLocation.getLocationID());
-                        break;
-                    }
-                }
-
-                job.setJobDescription(String.valueOf(descriptionText.getText()));
-
-                JobCategory category = new JobCategory(job.getJobID(), String.valueOf(categoryMenuPrimary.getSelectedItem()), String.valueOf(categoryMenuSecondary.getSelectedItem()));
-
-                job.setJobStatus(String.valueOf(statusMenu.getSelectedItem()));
-
+                submitButtonActions();
                 //write to JobList and JobCategory and JobSkill csv
-                File_Control io = new File_Control();
-                io.saveJob(job.getJobID(), job.getJobTitle(), job.getEmployer(), recruiter.getUserID(),
-                            job.getJobType(), job.getJobStatus(), job.getSalary(), job.getLocationID(), job.getJobDescription(), job.getSkills(), category);
-
-                //update JobList
-                jobList.add(job);
-                recruiterControl.setJobList(jobList);
-
-                RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl, locationList);
-                //close
+                newJobToDatabase();
             }
         });
 
@@ -230,6 +164,18 @@ public class CreateJobGUI {
         // TODO: place custom component creation code here
     }
 
+    public void newJobToDatabase() {
+        File_Control io = new File_Control();
+        io.saveJob(job.getJobID(), job.getJobTitle(), job.getEmployer(), recruiter.getUserID(),
+                job.getJobType(), job.getJobStatus(), job.getSalary(), job.getLocationID(), job.getJobDescription(), job.getSkills(), category);
+
+        //update JobList
+        jobList.add(job);
+        recruiterControl.setJobList(jobList);
+
+        RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl, locationList);
+        //close
+    }
     public int generateJobID() throws IOException {
         int numJobs = jobList.size() + 1;
         return numJobs;
@@ -330,25 +276,72 @@ public class CreateJobGUI {
         file.close();
     }
 
+    public void submitButtonActions() {
+        job.setJobTitle(jobTitleText.getText());
+        //System.out.println("jobTitle has been set to: " + job.getJobTitle());
+        job.setEmployer(employerText.getText());
+        job.setJobType(String.valueOf(jobTypeMenu.getSelectedItem()));
+        //System.out.println("JobType has been set to: " + job.getJobType());
 
-    public ArrayList<String> updateJobDescription(ArrayList<String> jobDescAL, String input) {
-        //System.out.println("jobDescAL is: " + jobDescAL);
-        //System.out.println("input is: " + input);
-        String line = "";
+        job.setSalary(Integer.parseInt(salaryText.getText()));
+        //System.out.println("Salary has been set to: " + job.getSalary());
 
-        for (int i = 0; i < input.length(); i++) {
-            if (input.charAt(i) == '\n') {
-                jobDescAL.add(line);
-                line = "";
-                //System.out.println("jobDescAL is: " + jobDescAL);
+        for (int i = 0; i < skillsList.getModel().getSize(); i++) {
+            skills.add(String.valueOf(skillsList.getModel().getElementAt(i)));
+        }
+        job.setSkills(skills);
+        //System.out.println("Skills have been set to: " + job.getSkills());
+
+        String state = String.valueOf(locationStateMenu.getSelectedItem());
+        String selectedPostcode = String.valueOf(postcodeMenu.getSelectedItem());
+        String postcode = "";
+        for (int i = 0; i < 4; i++) {
+            postcode += selectedPostcode.charAt(i);
+            //System.out.println("postcode is: " + postcode);
+        }
+
+        int postCode = Integer.parseInt(postcode);
+
+        String city = "";
+        for (int i = 6; i < selectedPostcode.length(); i++) {
+            city += selectedPostcode.charAt(i);
+        }
+
+        for (Location tmpLocation : locationList)
+        {
+            boolean check = true;
+            //check state
+            if (!tmpLocation.getState().equalsIgnoreCase(state))
+            {
+                check = false;
+                continue;
             }
-            else {
-                line += input.charAt(i);
-                //System.out.println("line is: " + line);
+            if (tmpLocation.getPostcode() != postCode)
+            {
+                check = false;
+                continue;
+            }
+            if (!tmpLocation.getCity().equalsIgnoreCase(city))
+            {
+                check = false;
+                continue;
+            }
+
+            if (check)
+            {
+                job.setLocationID(tmpLocation.getLocationID());
+                break;
             }
         }
-        jobDescAL.add(line);
-        //System.out.println("Finished, jobDescAL is: " + jobDescAL);
-        return jobDescAL;
+
+        job.setJobDescription(String.valueOf(descriptionText.getText()));
+
+        category.setJobID(job.getJobID());
+        category.setJobPrimaryCategory(String.valueOf(categoryMenuPrimary.getSelectedItem()));
+        category.setJobSubCategory(String.valueOf(categoryMenuSecondary.getSelectedItem()));
+
+        job.setJobStatus(String.valueOf(statusMenu.getSelectedItem()));
+
+
     }
 }
