@@ -125,4 +125,23 @@ public class AdminControl implements Communication
     {
         return program;
     }
+
+    public boolean removeJob(int jobID)
+    {
+        boolean success = false;
+        try
+        {
+            program.switchJobStatus(jobID);
+            success = true;
+        }
+
+        catch (Exception e)
+        {
+            System.out.println("error switching jobs");
+            e.printStackTrace();
+        }
+
+
+        return success;
+    }
 }

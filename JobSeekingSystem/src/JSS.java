@@ -1089,5 +1089,30 @@ public void markAsSent(Message message)
 
         }
     }
+
+    public ArrayList<Job> getJobList()
+    {
+        return jobList;
+    }
+
+    public void setJobList(ArrayList<Job> jobList)
+    {
+        this.jobList = jobList;
+    }
+
+
+    /**
+     * Method that swithces job to archived for the administrators
+     * @param jobID
+     */
+    public void switchJobStatus(int jobID)
+    {
+
+
+        Job job = jobList.get(jobID-1);
+        System.out.println("this is the job to be deleted: " + jobID);
+        job.setJobStatus("Archived");
+
+    }
 }
 
