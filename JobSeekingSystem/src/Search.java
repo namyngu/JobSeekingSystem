@@ -101,9 +101,9 @@ public class Search
     /**
      * This method examines a list of Jobs, filters out ones that do not
      * meet specified requirements, and returns the rest.
-     * @param fullTime  a Boolean representing if Jobs of Type "Fulltime" should
+     * @param fullTime  a Boolean representing if Jobs of Type "FullTime" should
      *                  be included in the results or not.
-     * @param partTime  a Boolean representing if Jobs of Type "Parttime" should
+     * @param partTime  a Boolean representing if Jobs of Type "PartTime" should
      *                  be included in the results or not.
      * @param casual    a Boolean representing if Jobs of Type "Casual" should
      *                  be included in the results or not.
