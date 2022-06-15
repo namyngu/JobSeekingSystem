@@ -473,21 +473,6 @@ public class Search
 
         // Return the TreeMap (which is already sorted descending) as results.
         return scoredResults;
-
-        /* Sort the TreeMap and put the sorted list back into results.
-         * Note the TreeMap should always be already sorted for  in
-         * descending order for us as specified in our intialization, so
-         * simply iterating through gets us the Job list
-         * sorted by the score descending.
-
-        results.clear();
-        results = new ArrayList<>();
-        for (Integer key : scoredResults.keySet()) {
-            for (int i = 0; i < scoredResults.get(key).size(); i++) {
-                results.add(scoredResults.get(key).get(i));
-            }
-        }
-        return results;*/
     }
 
     /**
