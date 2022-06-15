@@ -676,10 +676,10 @@ public class Search
      * @param seekerLocation    the Location which this User is in.
      * @param seekerSkills      an ArrayList of Strings which represent the skills
      *                          this User has entered on their profile.
-     * @return                  an ArrayList of Jobs, sorted by relevance, which
-     *                          can be recommended to the User.
+     * @return                  a TreeMap of ArrayList<Job> which contains search
+     *                          results sorted descending by their match score key.
      */
-    public ArrayList<Job> recommendedJobs(Location seekerLocation, ArrayList<String> seekerSkills) {
+    public TreeMap<Integer, ArrayList<Job>> recommendedJobs(Location seekerLocation, ArrayList<String> seekerSkills) {
 
         // Setup a few variables.
         ArrayList<Job> results = new ArrayList<>();
@@ -779,7 +779,7 @@ public class Search
             // Weight this job's matches as a percentage.
             int skillResult = (skillMatch / seekerSkills.size() * 50) + locationMatch;
 
-            // Add this job and its scored to the TreeMap.
+            // Add this job and its score to the TreeMap.
             if (scoredResults.get(skillResult) == null) {
                 ArrayList<Job> newList = new ArrayList<>();
                 newList.add(tmp);
@@ -789,19 +789,7 @@ public class Search
             }
         }
 
-        /* Sort the TreeMap and put the sorted list back into results.
-         * Note the TreeMap should always be already sorted for  in
-         * descending order for us as specified in our intialization, so
-         * simply iterating through gets us the Job list
-         * sorted by the score descending.
-         */
-        results.clear();
-        results = new ArrayList<>();
-        for (Integer key : scoredResults.keySet()) {
-            for (int i = 0; i < scoredResults.get(key).size(); i++) {
-                results.add(scoredResults.get(key).get(i));
-            }
-        }
-        return results;
+        // Return all of our search results.
+        return scoredResults;
     }
 }

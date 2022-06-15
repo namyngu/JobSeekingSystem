@@ -55,9 +55,9 @@ public class JobseekerControl implements Communication
         return searchResults;
     }
 
-    public ArrayList<Job> recommendedSearch() {
+    public TreeMap<Integer, ArrayList<Job>> recommendedSearch() {
         Location seekerLocation = jobseeker.getLocation();
-        ArrayList<Job> searchResults = new ArrayList<>();
+        TreeMap<Integer, ArrayList<Job>> searchResults = new TreeMap<>();
         try {
             searchResults = mainSearch.recommendedJobs(seekerLocation, jobseeker.getSkills());
         }
