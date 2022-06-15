@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class RegisterGUI
 {
@@ -25,6 +27,7 @@ public class RegisterGUI
     private JLabel emailLabel;
     private JLabel phoneLabel;
     private JComboBox locationSelect;
+    private JLabel usernameWarning;
     private JSS program;
 
     private ArrayList<Location> locations;
@@ -118,7 +121,7 @@ public class RegisterGUI
             {
                 boolean blank = false;
 
-                if (firstNameText.getText().isEmpty()||lastNameText.getText().isEmpty()||usernameTextTextField.getText().isEmpty())
+                if (firstNameText.getText().isEmpty()||lastNameText.getText().isEmpty()||usernameTextTextField.getText().isEmpty()||userEmailText.getText().isEmpty()||userPhoneText.getText().isEmpty())
                 {
                     blank = true;
                 }
@@ -143,6 +146,8 @@ public class RegisterGUI
             public void actionPerformed(ActionEvent e) {
 
                 userLocation = locations.get(locationSelect.getSelectedIndex());
+
+
             }
         });
     }
@@ -154,6 +159,8 @@ public class RegisterGUI
             locationSelect.addItem(locations.get(i).toString());
         }
     }
+
+
 
 
 }

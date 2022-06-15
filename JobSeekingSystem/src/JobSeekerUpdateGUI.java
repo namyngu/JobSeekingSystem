@@ -8,12 +8,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class JobSeekerUpdateGUI {
     private JPanel updateSkillsPanel;
-    private JTextField jobseekerPhoneInput;
-    private JTextField jobseekerEmailInput;
-    private JTextField jobseekerLocationInput;
+    private JTextField phoneInput;
+    private JTextField emailInput;
+    private JTextField locationInput;
     private JList userSkillList;
     private JButton updateButton;
     private JLabel jobSeekerFullname;
@@ -24,6 +28,9 @@ public class JobSeekerUpdateGUI {
     private JButton addSkillButton;
     private JButton removeSkillButton;
     private JList locationList;
+    private JLabel phoneWarning;
+    private JLabel emailWarning;
+    private JLabel locationWarning;
     private DefaultListModel userSkillsModel;
     private DefaultListModel allSkillsModel;
 
@@ -47,7 +54,8 @@ public class JobSeekerUpdateGUI {
         frame.setResizable(true);
         frame.setVisible(true);
 
-        ArrayList<String> allSkills = new ArrayList<String>();;
+        ArrayList<String> allSkills = new ArrayList<String>();
+        ;
         ArrayList<String> mySkills = jsControl.getSkills();
 
         //display contact info in profile
@@ -59,8 +67,6 @@ public class JobSeekerUpdateGUI {
 
         //build all skills list
         buildList(allSkills, allSkillsModel, allSkillList);
-
-
 
 
         //action listener on button to add skill to user and remove from all skills list
@@ -87,36 +93,66 @@ public class JobSeekerUpdateGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                //get updated skills from user skills Jlist
-                ArrayList<String> newSkillList = listToArrayList(userSkillList);
+                boolean validInput = true;
 
-                //update jobseeker skills arraylist
-                jsControl.setSkills(newSkillList);
+                //check no inputs are empty
+                if (phoneInput.getText().isEmpty()) {
+                    invalidInputWarning(phoneWarning, "Phone number cannot be blank.");
+                    validInput = false;
+                }
 
-                //update jobseeker home gui to display new skills
-                jshomescreen.buildSkillList();
+                if (emailInput.getText().isEmpty()) {
+                    invalidInputWarning(emailWarning, "Email cannot be blank.");
+                    validInput = false;
+                }
 
-                //update jobseeker-skills file
-                jsControl.saveSkills();
+                String email = "^(.+)@(.+)$";
+                Pattern pattern = Pattern.compile(email);
+                Matcher matcher = pattern.matcher(emailInput.getText());
+
+                if (!matcher.matches()) {
+                    invalidInputWarning(emailWarning, "You have not entered a valid email.");
+                    validInput = false;
+                }
 
 
-                //set email, phone & location on jobseeker object
-                jsControl.setEmail(jobseekerEmailInput.getText().trim());
-                jsControl.setPhone(jobseekerPhoneInput.getText().trim());
-                jsControl.setLocation(locationsArr.get(locationList.getSelectedIndex()));
-                System.out.println(locationsArr.get(locationList.getSelectedIndex()).getLocationID());
+                if (locationInput.getText().isEmpty()) {
+                    invalidInputWarning(locationWarning, "Location details are required.");
+                    validInput = false;
+                }
 
-                //update jobseeker home gui to reflect new contact information
-                System.out.println("Location updated to:");
-                System.out.println(jsControl.getLocation().toString());
 
-                //update jobseeker home gui
-                jshomescreen.buildContactInfo();
-                //save updated details to contact to database
+                if (validInput) {
+                    //get updated skills from user skills Jlist
+                    ArrayList<String> newSkillList = listToArrayList(userSkillList);
 
-                jsControl.saveContactInfo();
+                    //update jobseeker skills arraylist
+                    jsControl.setSkills(newSkillList);
 
-                frame.dispose();
+                    //update jobseeker home gui to display new skills
+                    jshomescreen.buildSkillList();
+
+                    //update jobseeker-skills file
+                    jsControl.saveSkills();
+
+                    //set email, phone & location on jobseeker object
+                    jsControl.setEmail(emailInput.getText().trim());
+                    jsControl.setPhone(phoneInput.getText().trim());
+                    jsControl.setLocation(locationsArr.get(locationList.getSelectedIndex()));
+                    System.out.println(locationsArr.get(locationList.getSelectedIndex()).getLocationID());
+
+                    //update jobseeker home gui to reflect new contact information
+                    System.out.println("Location updated to:");
+                    System.out.println(jsControl.getLocation().toString());
+
+                    //update jobseeker home gui
+                    jshomescreen.buildContactInfo();
+                    //save updated details to contact to database
+
+                    jsControl.saveContactInfo();
+
+                    frame.dispose();
+                }
 
             }
         });
@@ -125,7 +161,7 @@ public class JobSeekerUpdateGUI {
             @Override
             public void valueChanged(ListSelectionEvent e) {
 
-                jobseekerLocationInput.setText(locationModel.getElementAt(locationList.getSelectedIndex()).toString());
+                locationInput.setText(locationModel.getElementAt(locationList.getSelectedIndex()).toString());
 
 
             }
@@ -133,21 +169,19 @@ public class JobSeekerUpdateGUI {
     }
 
     //add data to JList using ListModel and ArrayList of data
-    private void buildList(ArrayList<String> list,DefaultListModel model, JList listGUI){
+    private void buildList(ArrayList<String> list, DefaultListModel model, JList listGUI) {
 
-        for (int i = 0; i < list.size(); i++)
-        {
+        for (int i = 0; i < list.size(); i++) {
             model.addElement(list.get(i));
         }
         listGUI.setModel(model);
     }
 
-    private void buildLocationList(){
+    private void buildLocationList() {
         locationModel = new DefaultListModel<>();
 
 
-        for (int i = 0; i < locationsArr.size(); i++)
-        {
+        for (int i = 0; i < locationsArr.size(); i++) {
             locationModel.addElement(locationsArr.get(i));
         }
 
@@ -157,60 +191,59 @@ public class JobSeekerUpdateGUI {
     }
 
     // take skills from csv file and return a List Model
-    public DefaultListModel buildModel(String fileName )  {
-            DefaultListModel model = new DefaultListModel<>();
+    public DefaultListModel buildModel(String fileName) {
+        DefaultListModel model = new DefaultListModel<>();
 
-            try {
-                FileReader file = new FileReader(fileName);
-                Scanner scan = new Scanner(file);
-                String returnString = "";
+        try {
+            FileReader file = new FileReader(fileName);
+            Scanner scan = new Scanner(file);
+            String returnString = "";
 
-                while (scan.hasNextLine()) {
-                    returnString = scan.nextLine();
-                    model.addElement(returnString);
-                }
-
-                file.close();
-
-            } catch (FileNotFoundException e){
-                System.out.println("File not found");
-            } catch (IOException e){
-                //code
+            while (scan.hasNextLine()) {
+                returnString = scan.nextLine();
+                model.addElement(returnString);
             }
 
-        return model;
+            file.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            //code
         }
 
-        //convert a Jlist into an ArrayList
-        private ArrayList<String> listToArrayList(JList list)
-        {
-            ArrayList<String> arrList = new ArrayList<>();
+        return model;
+    }
 
-            int listSize = list.getModel().getSize();
+    //convert a Jlist into an ArrayList
+    private ArrayList<String> listToArrayList(JList list) {
+        ArrayList<String> arrList = new ArrayList<>();
 
-                for (int i = 0; i < listSize; i++)
-                {
-                    String skill = list.getModel().getElementAt(i).toString();;
-                    arrList.add(skill);
-                }
+        int listSize = list.getModel().getSize();
 
-            return arrList;
-        };
+        for (int i = 0; i < listSize; i++) {
+            String skill = list.getModel().getElementAt(i).toString();
+            ;
+            arrList.add(skill);
+        }
 
-    public void displayContactInfo()
-    {
+        return arrList;
+    }
+
+    ;
+
+    public void displayContactInfo() {
         jobSeekerFullname.setText(jsControl.getFullName());
-        jobseekerEmailInput.setText(jsControl.getEmail());
-        jobseekerPhoneInput.setText(jsControl.getPhone());
+        emailInput.setText(jsControl.getEmail());
+        phoneInput.setText(jsControl.getPhone());
 
         //loop through locations to find matching location ID
         for (int i = 0; i < locationsArr.size(); i++) {
             Location currentLocation = locationsArr.get(i);
-            if (currentLocation.getLocationID() == jsControl.getLocation().getLocationID())
-            {
+            if (currentLocation.getLocationID() == jsControl.getLocation().getLocationID()) {
                 //on match pre-select on the location list & fill location input
                 locationList.setSelectedIndex(i);
-                jobseekerLocationInput.setText(locationModel.getElementAt(locationList.getSelectedIndex()).toString());
+                locationInput.setText(locationModel.getElementAt(locationList.getSelectedIndex()).toString());
 
             }
 
@@ -218,7 +251,21 @@ public class JobSeekerUpdateGUI {
 //
     }
 
+    public void invalidInputWarning(JLabel warningLabel, String message) {
+        warningLabel.setText(message);
+        warningLabel.setVisible(true);
+
+        new Timer().schedule(new TimerTask() {
+
+            public void run() {
+                warningLabel.setVisible(false);
+            }
+        }, 4000L); // 300 is the delay in millis
+
     }
+
+
+}
 
 
 
