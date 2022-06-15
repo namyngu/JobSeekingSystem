@@ -27,7 +27,6 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 26,Barista,Verizon,8,PartTime,Archived,75000,26,Job Descr1
 27,Web Developer,General Motors,8,PartTime,Withdrawn,75000,18,Job Descr1
 28,Leader Designer,Anthem,8,Casual,Withdrawn,20000,28,Testing
-29,jobTest,employer,14,PartTime,Draft,35000,0,"This is a job, description|line 2, word 2|line 3, word 3"
 30,new job,employer,11,PartTime,Draft,343242,9124,"line 1, word 2|line 2, word 2|line 3, word 2||line 5, word 2"
 31,new job,employer,11,PartTime,Draft,452,9124,"line1|line2,lalala|line 3||line 5"
 32,new job,employer,11,PartTime,Draft,34545,9124,"desc"
@@ -41,3 +40,4 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 42,Packer,Aldi,11,PartTime,Draft,60000,3889,"Pack shelves|receive orders|help customers"
 33,checkout assistant,foodland,11,FullTime,Draft,60000,3870,"pdated description|is fu"
 41,Apple Picker,Coles Farm,11,Casual,Archived,30000,10678,""icking apples.|Summer months.|Ideal for uni student.|Update pt ""
+29,Assistant Programmer,Pied Piper,14,PartTime,Advertised,35000,3866,"elcome, we are a new kickstarter company at Silicon Valley.|We have a great team of highly talented individual, and this is a great opportunity to join a new starting company.|As the company grows, you grow with us"

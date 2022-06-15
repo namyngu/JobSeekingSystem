@@ -3,6 +3,7 @@
  * @author: Team D - Tom Barker, Jakeob Clarke-Kennedy, Bradley Meyn, Hoang Nguyen, Gerard Samson-Dekker
  */
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class AdminControl implements Communication
@@ -57,8 +58,9 @@ public class AdminControl implements Communication
             String text = "Your account will be blocked by Administrator " + this.admin.getUserName();
             text += ". Please contact them immediately to discuss";
             int messageID = this.program.issueMessageID();
-            Message notification = new Message(messageID, senderID, receiverID,header,text);
-            program.storeMessage(messageID,false, senderID,receiverID,header,text);
+            LocalDate date = LocalDate.now();
+            Message notification = new Message(messageID, senderID, receiverID,header,text, date);
+            program.storeMessage(messageID,false, senderID,receiverID,header,text, -1,date);
             sent = true;
         }
         catch (Exception e)
@@ -78,7 +80,9 @@ public class AdminControl implements Communication
     public void createMessage(int sender, int destination, String header, String body)
     {
         int messageID = this.program.issueMessageID();
-        this.sendMessage(this.program,messageID,sender,destination,header,body);
+        LocalDate date = LocalDate.now();
+        Message messsage = new Message(messageID,sender,destination,header,body,date);
+        this.sendMessage(this.program,messsage);
     }
 
     public ArrayList<Message> relayMessages()
@@ -120,5 +124,24 @@ public class AdminControl implements Communication
     public JSS relayProgram()
     {
         return program;
+    }
+
+    public boolean removeJob(int jobID)
+    {
+        boolean success = false;
+        try
+        {
+            program.switchJobStatus(jobID);
+            success = true;
+        }
+
+        catch (Exception e)
+        {
+            System.out.println("error switching jobs");
+            e.printStackTrace();
+        }
+
+
+        return success;
     }
 }

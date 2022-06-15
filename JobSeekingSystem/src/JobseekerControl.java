@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class JobseekerControl implements Communication
@@ -53,9 +54,7 @@ public class JobseekerControl implements Communication
     }
 
     public ArrayList<Job> recommendedSearch() {
-        // TODO: Get the jobSeeker's location somehow.
-        // TODO: Mocked in for now.
-        Location seekerLocation = locationList.get(0);
+        Location seekerLocation = jobseeker.getLocation();
         ArrayList<Job> searchResults = new ArrayList<>();
         try {
             searchResults = mainSearch.recommendedJobs(seekerLocation, jobseeker.getSkills());
@@ -202,9 +201,15 @@ public class JobseekerControl implements Communication
         JSS program = this.relayProgram();
         Job applyFor = jobList.get(jobID);
         int recruiterID = applyFor.getRecruiterID();
+        LocalDate date = LocalDate.now();
         try
         {
-            sent = this.sendMessage(program, program.issueMessageID(), this.jobseeker.getUserID(), recruiterID, "Application", text);
+            int messageID = program.issueMessageID();
+            Application application = new Application(messageID,this.jobseeker.getUserID(), recruiterID, "Application", text, date);
+            application.setJobRef(applyFor.getJobID());
+
+            sent = this.sendMessage(program,application);
+
         }
         catch (Exception e)
         {

@@ -508,10 +508,7 @@ public class Search
          * to an initial list of results.
          */
         for (Jobseeker seeker : jobseekerList) {
-            // TODO: When location is added to a user, this will work.
-            // TODO: Mocked in for now.
-            // Location seekerLocation = seeker.getLocation();
-            Location seekerLocation = locationList.get(1);
+            Location seekerLocation = seeker.getLocation();
             boolean valid = true;
 
             int searchPostCode = 0;
@@ -555,7 +552,7 @@ public class Search
             String[] locationsSearched = searchLocation.split("\\W+");
             for (String searchString : locationsSearched) {
                 String lSearchString = searchString.toLowerCase();
-                if (lSearchString.equals(searchState) || lSearchString.equals(searchCity)) {
+                if (lSearchString.equals(searchState) || searchCity.contains(lSearchString)) {
                     /* This location search term matches this seeker's location
                      * and this seeker is therefore relevant.
                      */
@@ -567,7 +564,7 @@ public class Search
             if (locationMatch == 0 && (checkPostCode == 0 || checkPostCode != searchPostCode)) {
                 // This seeker's location does not match any of the location search data
                 valid = false;
-                break;
+                continue;
             }
 
             if (valid) {
@@ -593,7 +590,11 @@ public class Search
             }
 
             // Weight the skillMatch.
-            int skillResult = skillMatch / seekerSkills.size() * 100;
+            int skillResult = 0;
+            if (seeker.getSkills().size() > 0) {
+                // This seeker has skills and we can calculate skillResult
+                skillResult = skillMatch / seekerSkills.size() * 100;
+            }
 
             // Add the scored entry into scored results.
             if (skillResult > 10) {
@@ -705,15 +706,15 @@ public class Search
                 String lSkill = skill.toLowerCase();
                 for (String check : tmp.getSkills()) {
                     String lJobSkill = check.toLowerCase();
-                    if (lSkill.equals(lJobSkill)) {
+                    if (lJobSkill.equals(lSkill)) {
                         // Direct match on the skill
                         skillMatch++;
                     }
                 }
             }
 
-            if (thisJobState.equals(seekerLocation.getState().toLowerCase())
-                    || thisJobCity.equals(seekerLocation.getCity().toLowerCase())
+            if ((thisJobState.equals(seekerLocation.getState().toLowerCase())
+                    || thisJobCity.equals(seekerLocation.getCity().toLowerCase()))
                     && skillMatch > 0) {
                 /* This job matches the seeker's location and at least one of the
                  * seeker's skills.

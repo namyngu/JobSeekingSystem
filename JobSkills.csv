@@ -1,5 +1,7 @@
 jobID, skills
 1,A/R Management
+1,Java
+1,SQL
 4,Sanding
 5,A/R Management
 10,A/R Management
@@ -32,15 +34,11 @@ jobID, skills
 31,SQL
 31,Communication
 32,SQL
-29,SQL
-29,﻿Java
-29,SQL
 30,SQL
 31,SQL
 32,﻿Java
 34,SQL
 35,Communication
-29,﻿Java
 30,SQL
 31,SQL
 32,Accuracy
@@ -70,3 +68,6 @@ jobID, skills
 33,Adaptability
 41,Accuracy
 41,Ad design
+29,SQL
+29,Ad design
+29,Adobe Illustrator

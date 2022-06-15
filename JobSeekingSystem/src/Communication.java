@@ -1,14 +1,38 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface Communication
 {
 
-    default boolean sendMessage(JSS program, int messageID, int senderID, int receiverID, String header, String body)
+    default boolean sendMessage(JSS program, Message message)
     {
+
         boolean sent = false;
+        int messageID = message.getMessageID();
+        int senderID = message.getSenderID();
+        int receiverID = message.getReceiverID();
+        String header = message.getHeader();
+        String body = message.getBody();
+        LocalDate date = message.getSentDate();
+
         try
         {
-            program.storeMessage(messageID, false, senderID, receiverID, header, body);
+
+        if (message instanceof Application)
+        {
+
+            int jobRef = ((Application) message).getJobRef();
+            program.storeMessage(messageID, false, senderID, receiverID, header, body, jobRef,date);
+        }
+
+        else if (message instanceof Invitation)
+
+        {
+
+        }
+            else
+
+            program.storeMessage(messageID, false, senderID, receiverID, header, body, -1,date);
             sent = true;
         }
         catch (Exception e)

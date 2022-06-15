@@ -6,6 +6,8 @@ TODO upon login transfer control to relevant subclass controller
  */
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class JSS
@@ -88,6 +90,7 @@ public class JSS
 
         if (gerardWork)
         {
+            System.out.println(LocalDate.now());
             Job job = jobList.get(1);
             Jobseeker jobseeker = (Jobseeker) userList.get(10);
             JobseekerControl control = new JobseekerControl(this,jobseeker, this.jobList,this.locationList,this.jobCategoryList);
@@ -697,23 +700,33 @@ public class JSS
                 int messageTo = Integer.parseInt(messageDetails[3]);
                 int sender = Integer.parseInt(messageDetails[2]);
                 int messageID = Integer.parseInt(messageDetails[0]);
+                String dateStr = messageDetails[7];
+                LocalDate date = LocalDate.parse(dateStr);
                 //if it is for the user checking, add it to their list
                 if (messageTo == userIndex)
                 {
                     hasMail =true;
-
-
-
-
-                    Message message = new Message(messageID, messageDetails[1],sender,messageTo,messageDetails[4],messageDetails[5]);
-
-
                     User temp = this.userList.get(userIndex-1);
+                    //TODO differentiate between messages and applications etc here
+                    if (messageDetails[6].equalsIgnoreCase("Application"))
+                    {
+                        Application application = new Application(messageID, messageDetails[1], sender, messageTo, messageDetails[4], messageDetails[5], date);
+                        int jobRef = Integer.parseInt(messageDetails[6]);
+                        application.setJobRef(jobRef);
+                        temp.addMessage(application);
+                    }
+                    else
+                    {
+                        Message message = new Message(messageID, messageDetails[1], sender, messageTo, messageDetails[4], messageDetails[5], date);
+                        temp.addMessage(message);
+                    }
 
-                    temp.addMessage(message);
+
+
+
 
                 }
-                this.allMessages.add(new Message(messageID, messageDetails[1],sender,messageTo,messageDetails[4],messageDetails[5]));
+                this.allMessages.add(new Message(messageID, messageDetails[1],sender,messageTo,messageDetails[4],messageDetails[5],date));
                 //TODO check user type and determine message type accordingly
                 //TODO deal with \n -- try replace with String methods? -- do this at point of writing
 
@@ -722,20 +735,21 @@ public class JSS
         } catch (Exception e)
         {
             System.out.println("message read error" + e.getMessage());
+            e.printStackTrace();
         }
 
         return hasMail;
     }
 
     // Store message method as copied from Gerard's branch.
-    public void storeMessage(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String body)
+    public void storeMessage(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String body, int jobRef, LocalDate date)
     {
         String status = "pending";
         if (hasReceived == true)
         {
             status = "sent";
         }
-        String message = messageID + "," + status + "," + senderID + "," + receiverID + "," + header+"," + body;
+        String message = messageID + "," + status + "," + senderID + "," + receiverID + "," + header+"," + body+ "," + jobRef + "," + date;
 
 
 
@@ -791,8 +805,9 @@ public class JSS
                 int destination = Integer.parseInt(messageDetails[3]);
                 String header = messageDetails[4];
                 String body = messageDetails[5];
+                LocalDate date = LocalDate.parse(messageDetails[6]);
 
-                Message toAdd = new Message(messageID,sender,destination,header,body);
+                Message toAdd = new Message(messageID,sender,destination,header,body,date);
                 totalMessages.add(toAdd);
             }
             this.allMessages = totalMessages;
@@ -848,8 +863,13 @@ public void markAsSent(Message message)
         int destination = each.getReceiverID();
         String header = each.getHeader();
         String body = each.getBody();
-
-        this.storeMessage(ID, status, sender,destination,header,body);
+        LocalDate date = each.getSentDate();
+        int jobRef = -1;
+        if (each instanceof Application)
+        {
+            jobRef = ((Application) each).getJobRef();
+        }
+        this.storeMessage(ID, status, sender,destination,header,body, jobRef, date);
 
     }
     this.allMessages = messageList;
@@ -969,6 +989,7 @@ public void markAsSent(Message message)
         catch (Exception e)
         {
             System.out.println("message read error" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -1034,6 +1055,7 @@ public void markAsSent(Message message)
         catch (Exception e)
         {
             System.out.println("message read error" + e.getMessage());
+            e.printStackTrace();
         }
 
         return message;
@@ -1066,6 +1088,31 @@ public void markAsSent(Message message)
         {
 
         }
+    }
+
+    public ArrayList<Job> getJobList()
+    {
+        return jobList;
+    }
+
+    public void setJobList(ArrayList<Job> jobList)
+    {
+        this.jobList = jobList;
+    }
+
+
+    /**
+     * Method that swithces job to archived for the administrators
+     * @param jobID
+     */
+    public void switchJobStatus(int jobID)
+    {
+
+
+        Job job = jobList.get(jobID-1);
+        System.out.println("this is the job to be deleted: " + jobID);
+        job.setJobStatus("Archived");
+
     }
 }
 

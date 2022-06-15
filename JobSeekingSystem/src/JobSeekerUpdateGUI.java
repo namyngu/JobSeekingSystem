@@ -69,6 +69,8 @@ public class JobSeekerUpdateGUI {
         buildList(allSkills, allSkillsModel, allSkillList);
 
 
+
+
         //action listener on button to add skill to user and remove from all skills list
         addSkillButton.addActionListener(new ActionListener() {
             @Override
@@ -145,12 +147,20 @@ public class JobSeekerUpdateGUI {
                     System.out.println("Location updated to:");
                     System.out.println(jsControl.getLocation().toString());
 
+                //update jobseeker home gui
+                jshomescreen.buildContactInfo();
+                //save updated details to contact to database
+                jsControl.saveContactInfo();
                     //update jobseeker home gui
                     jshomescreen.buildContactInfo();
                     //save updated details to contact to database
 
                     jsControl.saveContactInfo();
 
+                // With my new skills, run the Recommended Jobs search again
+                jshomescreen.displayRecommendedJobs();
+
+                frame.dispose();
                     frame.dispose();
                 }
 
