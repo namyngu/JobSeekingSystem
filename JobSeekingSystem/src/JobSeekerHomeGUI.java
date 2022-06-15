@@ -117,46 +117,8 @@ public class JobSeekerHomeGUI {
         //display skills in profile
         buildSkillList();
 
-        // Obtain a list of recommended jobs for this seeker.
-        ArrayList<Job> searchResults = myParent.recommendedSearch();
-
-        /* Set the list of recommended jobs into the recommended jobs panel.
-         * First, set the columns up.
-         */
-        String[] jobListColumns = {"Result#", "Title", "Employer", "Location", "Salary", "Type"};
-
-        // Set each Job up as a Row. Need to do some work to populate the location field.
-        ArrayList<String[]> jobListRows = new ArrayList<>();
-        int resultNum = 1;
-        for (Job job : searchResults) {
-            String resultLocation = "";
-            for (Location place: locationList) {
-                if (place.getLocationID() == job.getLocationID()) {
-                    resultLocation = place.toString();
-                }
-            }
-
-            // Set the job details up into the fields in the row.
-            String[] thisJob = {Integer.toString(resultNum), job.getJobTitle(), job.getEmployer(),
-                    resultLocation, Integer.toString(job.getSalary()), job.getJobType()};
-
-            // Add this row to the list of rows.
-            jobListRows.add(thisJob);
-            resultNum++;
-        }
-
-        // Convert the list of rows into a TableModel readable format.
-        String[][] rows = jobListRows.toArray(new String[0][0]);
-
-        // Set the Table Model into the results table.
-        DefaultTableModel freshModel = new DefaultTableModel(rows, jobListColumns);
-        jobTable.setModel(freshModel);
-        jobTable.repaint();
-        searchResultsScroll.setVisible(false);
-
-        // Setup the initial search table.
-        DefaultTableModel jobSearchModel = new DefaultTableModel(null, jobListColumns);
-        jobSearchTable.setModel(jobSearchModel);
+        // Display recommended jobs for this Job seeker
+        displayRecommendedJobs();
 
         searchButton.addActionListener(new ActionListener() {
             @Override
@@ -233,6 +195,48 @@ public class JobSeekerHomeGUI {
     }
 
 
+    public void displayRecommendedJobs() {
+        // Obtain a list of recommended jobs for this seeker.
+        ArrayList<Job> searchResults = myParent.recommendedSearch();
+
+        /* Set the list of recommended jobs into the recommended jobs panel.
+         * First, set the columns up.
+         */
+        String[] jobListColumns = {"Result#", "Title", "Employer", "Location", "Salary", "Type"};
+
+        // Set each Job up as a Row. Need to do some work to populate the location field.
+        ArrayList<String[]> jobListRows = new ArrayList<>();
+        int resultNum = 1;
+        for (Job job : searchResults) {
+            String resultLocation = "";
+            for (Location place: locationList) {
+                if (place.getLocationID() == job.getLocationID()) {
+                    resultLocation = place.toString();
+                }
+            }
+
+            // Set the job details up into the fields in the row.
+            String[] thisJob = {Integer.toString(resultNum), job.getJobTitle(), job.getEmployer(),
+                    resultLocation, Integer.toString(job.getSalary()), job.getJobType()};
+
+            // Add this row to the list of rows.
+            jobListRows.add(thisJob);
+            resultNum++;
+        }
+
+        // Convert the list of rows into a TableModel readable format.
+        String[][] rows = jobListRows.toArray(new String[0][0]);
+
+        // Set the Table Model into the results table.
+        DefaultTableModel freshModel = new DefaultTableModel(rows, jobListColumns);
+        jobTable.setModel(freshModel);
+        jobTable.repaint();
+        searchResultsScroll.setVisible(false);
+
+        // Setup the initial search table.
+        DefaultTableModel jobSearchModel = new DefaultTableModel(null, jobListColumns);
+        jobSearchTable.setModel(jobSearchModel);
+    }
 
     public void buildSkillList(){
         jsSkillsModel = new DefaultListModel<>();

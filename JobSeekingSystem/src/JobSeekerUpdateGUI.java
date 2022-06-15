@@ -113,8 +113,10 @@ public class JobSeekerUpdateGUI {
                 //update jobseeker home gui
                 jshomescreen.buildContactInfo();
                 //save updated details to contact to database
-
                 jsControl.saveContactInfo();
+
+                // With my new skills, run the Recommended Jobs search again
+                jshomescreen.displayRecommendedJobs();
 
                 frame.dispose();
 

@@ -706,15 +706,15 @@ public class Search
                 String lSkill = skill.toLowerCase();
                 for (String check : tmp.getSkills()) {
                     String lJobSkill = check.toLowerCase();
-                    if (lSkill.equals(lJobSkill)) {
+                    if (lJobSkill.equals(lSkill)) {
                         // Direct match on the skill
                         skillMatch++;
                     }
                 }
             }
 
-            if (thisJobState.equals(seekerLocation.getState().toLowerCase())
-                    || thisJobCity.equals(seekerLocation.getCity().toLowerCase())
+            if ((thisJobState.equals(seekerLocation.getState().toLowerCase())
+                    || thisJobCity.equals(seekerLocation.getCity().toLowerCase()))
                     && skillMatch > 0) {
                 /* This job matches the seeker's location and at least one of the
                  * seeker's skills.
