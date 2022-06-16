@@ -153,7 +153,7 @@ public class Job
         System.out.println("}");
         System.out.println("Applications: {");
         for (Application app : applications) {
-            System.out.println(app.getHeader() + "\n");
+            System.out.println(app.toString() + "\n");
         }
         System.out.println("}");
         System.out.println("Keywords: {");
