@@ -1159,7 +1159,7 @@ public void markAsSent(Message message)
         int recruiterID = job.getRecruiterID();
         ArrayList<Application> applications = job.getApplications();
         int messageID = this.issueMessageID();
-        String header = "Job Ref: " + job.getJobID() + ", " + job.getJobTitle() +" has been withdrawn";
+        String header = "Job Ref: " + job.getJobID() + ". " + job.getJobTitle() +" has been withdrawn";
         String body = "This job has been removed and applications rejected";
         Message recruiterAlert = new Message(messageID,recruiterID,recruiterID,header,body,LocalDate.now());
         allMessages.add(recruiterAlert);
@@ -1169,7 +1169,7 @@ public void markAsSent(Message message)
         {
             int jobseekerID = each.getSenderID();
             messageID = this.issueMessageID();
-            body = "Dear Jobseeker, this job has been withdrawn and therefore your application rejected";
+            body = "Dear Jobseeker: this job has been withdrawn and therefore your application rejected";
             Message alert = new Message(messageID,recruiterID,jobseekerID,header,body,LocalDate.now());
            allMessages.add(alert);
            //jobRef is -1 as this is a message, although it does concern a job this is identified in the header
