@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class JobSeekerJobGUI {
     private JPanel jobContainer;
@@ -10,6 +12,7 @@ public class JobSeekerJobGUI {
     private JLabel jobDescription;
     private JTextArea coverLetter;
     private JPanel jobPanel;
+    private JButton submitApplicationButton;
 
     public JobSeekerJobGUI() {
 
@@ -20,6 +23,7 @@ public class JobSeekerJobGUI {
         frame.pack();
         frame.setResizable(true);
         frame.setVisible(true);
+
     }
 
     public JobSeekerJobGUI(JobseekerControl control, int jobID)
@@ -30,5 +34,16 @@ public class JobSeekerJobGUI {
         frame.pack();
         frame.setResizable(true);
         frame.setVisible(true);
+
+        submitApplicationButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                String letter = coverLetter.getText();
+                control.apply(jobID,letter);
+
+            }
+        });
     }
 }
