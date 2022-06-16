@@ -162,6 +162,8 @@ public class ManageJobGUI extends CreateJobGUI {
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
                 job.setJobStatus("Archived");
+
+                control.sendWithdrawMessage(job.getJobID());
                 updateDatabase(myJob);
             }
         });

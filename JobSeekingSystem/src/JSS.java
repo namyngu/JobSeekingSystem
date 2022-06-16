@@ -105,6 +105,14 @@ public class JSS
 
         //display();
     }
+    /**
+    non default constructor takes reason for needing constructor
+     loads without normal boot processes
+     **/
+    public JSS (String reason)
+    {
+        System.out.println("reason non default JSS object created");
+    }
 
     //Method to read in the user list into memory
     public void importUserList(String fileName)
@@ -391,12 +399,12 @@ public class JSS
 
             case "Jobseeker":
                 //Do something else
-                JobseekerControl jobSeekerControl = new JobseekerControl(userList.get(userIndex), jobList, locationList, jobCategoryList);
+                JobseekerControl jobSeekerControl = new JobseekerControl(this,userList.get(userIndex), jobList, locationList, jobCategoryList);
                 break;
 
             case "Recruiter":
                 //Launch Recruiter Control
-                RecruiterControl recruiterControl = new RecruiterControl(userList.get(userIndex), jobList, locationList, jobCategoryList, userList);
+                RecruiterControl recruiterControl = new RecruiterControl(this,userList.get(userIndex), jobList, locationList, jobCategoryList, userList);
                 break;
 
             default:
@@ -1145,7 +1153,7 @@ public void markAsSent(Message message)
         }
     }
 
-    private void removeJobAlert(Job job)
+    protected void removeJobAlert(Job job)
     {
 
         int recruiterID = job.getRecruiterID();
