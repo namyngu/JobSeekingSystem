@@ -98,6 +98,7 @@ public class JobSeekerHomeGUI {
         locationList = locations;
         jobCategoryList = categories;
         searchInstructionText.setVisible(false);
+        comboBox2.setSelectedIndex(12);
         JFrame window = new JFrame("JSS: Job Seeker Home");
         window.add(navbar);
         searchCount = 0;
