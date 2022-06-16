@@ -171,7 +171,7 @@ public class CreateJobGUI {
 
         //update JobList
         jobList.add(job);
-        recruiterControl.setJobList(jobList);
+        //recruiterControl.setJobList(jobList);
 
         RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl, locationList);
         //close

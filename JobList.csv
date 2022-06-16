@@ -27,8 +27,6 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 26,Barista,Verizon,8,PartTime,Archived,75000,26,Job Descr1
 27,Web Developer,General Motors,8,PartTime,Withdrawn,75000,18,Job Descr1
 28,Leader Designer,Anthem,8,Casual,Withdrawn,20000,28,Testing
-30,new job,employer,11,PartTime,Draft,343242,9124,"line 1, word 2|line 2, word 2|line 3, word 2||line 5, word 2"
-31,new job,employer,11,PartTime,Draft,452,9124,"line1|line2,lalala|line 3||line 5"
 32,new job,employer,11,PartTime,Draft,34545,9124,"desc"
 34,new job,employer,11,PartTime,Draft,34234,3864,"desc"
 35,job title,Boeing,11,FullTime,Advertised,80000,9138,"line1|line2, word 2|line3||line 5"
@@ -43,4 +41,8 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 40,Builder,Megastructure,14,Casual,Archived,65000,12173,""""
 43,Ticket Scanner,Ticketek,11,Casual,Draft,30000,3882,"This job is to scan people's tickets as they enter the venue.||Locations will be varied, will follow events around."
 44,Bartender,Crown Casino,11,Casual,Draft,40000,10815,"Pouring drinks.|Customer service.|Bar cleanup."
-45,Banker,ANZ,11,FullTime,Draft,80000,3914,"nking.|Loans.|Customer Service.|Data Analysi"
+46,Game Designer,Escape Rooms,11,PartTime,Draft,50000,69,"Design room.|Puzzles.|Difficulty levels vary."
+47,Interior Designer,Bunnings,11,FullTime,Archived,80000,12186,""design rooms|paint and colour scheme|furniture""
+45,Banker,ANZ,11,PartTime,Draft,80000,3914,"nking.|Loans.|Customer Service.|Data Analysi"
+30,new job,employer,11,Casual,Draft,343242,9124,"line 1, word 2|line 2, word 2|line 3, word 2||line 5, word 2"
+31,Builder,Sarah Homes,11,PartTime,Advertised,90000,9124,"ine1|line2,lalala|line 3||line "

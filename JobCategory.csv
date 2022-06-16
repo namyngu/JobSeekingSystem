@@ -28,12 +28,21 @@ jobID,jobPrimaryCategory,jobSubCategory
 27,Sales,Account & Relationship Management
 28,Science & Technology,Biological & Biomedical Sciences
 29,Self Employment,Self Employment
-30,Sport & Recreation,Coaching & Instruction
-30,Banking & Financial Services,Account & Relationship Management
-30,Banking & Financial Services,Account & Relationship Management
-31,Engineering,Systems Engineering
 32,Call Centre & Customer Service,Collections
 33,Accounting,Accounts Officers/Clerks
-29,Accounting,Accounts Officers/Clerks
-29,Banking & Financial Services,Client Services
+34,Accounting,Accounts Officers/Clerks
+35,Accounting,Accounts Officers/Clerks
+36,Accounting,Accounts Officers/Clerks
+37,Accounting,Accounts Officers/Clerks
+38,Accounting,Accounts Officers/Clerks
+39,Accounting,Accounts Officers/Clerks
+40,Accounting,Accounts Officers/Clerks
+41,Accounting,Accounts Officers/Clerks
+42,Accounting,Accounts Officers/Clerks
+43,Accounting,Accounts Officers/Clerks
+44,Accounting,Accounts Officers/Clerks
+46,Engineering,Other
+47,Retail & Consumer Products,Merchandisers
 45,Banking & Financial Services,Investment Banking
+30,Sport & Recreation,Coaching & Instruction
+31,Engineering,Systems Engineering
