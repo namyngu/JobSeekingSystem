@@ -151,6 +151,30 @@ public class ManageJobGUI extends CreateJobGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //System.out.println("Submit button has been clicked");
+                if (jobTitleText.getText().isEmpty()) {
+                    PromptGUI prompt = new PromptGUI("Please enter a Job Title!");
+                    return;
+                }
+                if (employerText.getText().isEmpty()) {
+                    PromptGUI prompt = new PromptGUI("Please enter an Employer!");
+                    return;
+                }
+                if (salaryText.getText().isEmpty()) {
+                    PromptGUI prompt = new PromptGUI("Please enter a Salary!");
+                    return;
+                }
+                if (skillsList.getModel().getSize() == 0) {
+                    PromptGUI prompt = new PromptGUI("Please enter a Skill!");
+                    return;
+                }
+                if (String.valueOf(locationStateMenu.getSelectedItem()).isEmpty()) {
+                    PromptGUI prompt = new PromptGUI("Please enter a State!");
+                    return;
+                }
+                if (descriptionText.getText().isEmpty()) {
+                    PromptGUI prompt = new PromptGUI("Please enter a Description!");
+                    return;
+                }
                 frame.setVisible(false);
                 submitButtonActionsUpdate(job);
                 updateDatabase(myJob);
