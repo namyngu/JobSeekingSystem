@@ -46,3 +46,4 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 45,Banker,ANZ,11,PartTime,Draft,80000,3914,"nking.|Loans.|Customer Service.|Data Analysi"
 30,new job,employer,11,Casual,Draft,343242,9124,"line 1, word 2|line 2, word 2|line 3, word 2||line 5, word 2"
 31,Builder,Sarah Homes,11,PartTime,Advertised,90000,9124,"ine1|line2,lalala|line 3||line "
+48,Web Developer,Webby Websters,16,PartTime,Archived,50000,6640,""This is a test Job for a Web Developer. You will be required to develop webs and code in Java and Scala.""
