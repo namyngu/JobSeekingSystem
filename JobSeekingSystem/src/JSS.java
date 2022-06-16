@@ -1161,7 +1161,7 @@ public void markAsSent(Message message)
         File_Control io = new File_Control();
         try
         {
-            Job job = io.findJob(jobList, jobID);
+            Job job = findJob(jobList, jobID);
 
 
         System.out.println("this is the job to be deleted: " + jobID);
@@ -1213,6 +1213,27 @@ public void markAsSent(Message message)
            //jobRef is -1 as this is a message, although it does concern a job this is identified in the header
            this.storeMessage(messageID,false,recruiterID,jobseekerID,header,body,-1,LocalDate.now());
         }
+    }
+
+    /**
+     * This method looks for a specific Job in the list of Jobs and returns it.
+     * @param jobList   an ArrayList of Jobs in the system.
+     * @param ID        an Integer containing the Job ID number to be searched for.
+     * @return          a Job which matches the specified ID number.
+     * @throws Exception Exceptions are thrown if the specified Job cannot be found.
+     */
+    public Job findJob(ArrayList<Job> jobList, int ID) throws Exception
+    {
+        Job myJob = null;
+        for (Job tmpJob : jobList)
+        {
+            if (tmpJob.getJobID() == ID)
+            {
+                myJob = tmpJob;
+                return myJob;
+            }
+        }
+        throw new Exception("Error: Job doesn't exist!");
     }
 }
 

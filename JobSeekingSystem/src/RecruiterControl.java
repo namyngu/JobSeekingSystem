@@ -284,10 +284,9 @@ public class RecruiterControl {
     public void sendWithdrawMessage(int jobID)
     {
 
-        File_Control io = new File_Control();
         try
         {
-            Job toAlert = io.findJob(this.program.getJobList(), jobID);
+            Job toAlert = findJob(this.program.getJobList(), jobID);
             this.program.removeJobAlert(toAlert);
         }
         catch (Exception e)
@@ -295,5 +294,26 @@ public class RecruiterControl {
             System.out.println("failed to find job");
             e.printStackTrace();
         }
+    }
+
+    /**
+     * This method looks for a specific Job in the list of Jobs and returns it.
+     * @param jobList   an ArrayList of Jobs in the system.
+     * @param ID        an Integer containing the Job ID number to be searched for.
+     * @return          a Job which matches the specified ID number.
+     * @throws Exception Exceptions are thrown if the specified Job cannot be found.
+     */
+    public Job findJob(ArrayList<Job> jobList, int ID) throws Exception
+    {
+        Job myJob = null;
+        for (Job tmpJob : jobList)
+        {
+            if (tmpJob.getJobID() == ID)
+            {
+                myJob = tmpJob;
+                return myJob;
+            }
+        }
+        throw new Exception("Error: Job doesn't exist!");
     }
 }

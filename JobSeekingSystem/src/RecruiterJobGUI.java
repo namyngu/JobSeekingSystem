@@ -54,7 +54,7 @@ public class RecruiterJobGUI {
         //find job from the jobID
         try
         {
-            myJob = findJob(control.getJobList(), jobID);
+            myJob = control.findJob(control.getJobList(), jobID);
         }
         catch (Exception e)
         {
@@ -202,27 +202,6 @@ public class RecruiterJobGUI {
         }
 
         applicationsTable.setModel(new DefaultTableModel(data, new String[]{"Application ID","Name","Email","Applied Date","Status"}));
-    }
-
-    /**
-     * This method looks for a specific Job in the list of Jobs and returns it.
-     * @param jobList   an ArrayList of Jobs in the system.
-     * @param ID        an Integer containing the Job ID number to be searched for.
-     * @return          a Job which matches the specified ID number.
-     * @throws Exception Exceptions are thrown if the specified Job cannot be found.
-     */
-    public Job findJob(ArrayList<Job> jobList, int ID) throws Exception
-    {
-        Job myJob = null;
-        for (Job tmpJob : jobList)
-        {
-            if (tmpJob.getJobID() == ID)
-            {
-                myJob = tmpJob;
-                return myJob;
-            }
-        }
-        throw new Exception("Error: Job doesn't exist!");
     }
 
     /**
