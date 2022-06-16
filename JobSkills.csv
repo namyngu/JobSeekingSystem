@@ -1,35 +1,19 @@
 jobID, skills
-1,A/R Management
-1,Java
-1,SQL
-4,Sanding
-4,SQL
 5,A/R Management
 10,A/R Management
 2,A/R Management
 10,Sanding
-1,Sanding
-6,Sanding
 10,Nursing Management
-6,Nursing Management
 9,Nursing Management
-4,Nursing Management
 5,Nursing Management
 3,Nursing Management
 9,Infrastructure
 5,Infrastructure
-6,Infrastructure
 2,Infrastructure
-1,Infrastructure
 10,Infrastructure
-8,CL Programming
 5,CL Programming
-6,CL Programming
 9,CL Programming
-1,CL Programming
-6,Life Support
 3,Self Service
-6,Information Quality
 3,Self-assembly
 30,﻿Java
 31,SQL
@@ -80,3 +64,19 @@ jobID, skills
 45,Data analysis
 45,Accuracy
 45,Conflict management
+8,CL Programming
+4,Sanding
+4,SQL
+4,Nursing Management
+1,A/R Management
+1,Java
+1,SQL
+1,Sanding
+1,Infrastructure
+1,CL Programming
+6,Sanding
+6,Nursing Management
+6,Infrastructure
+6,CL Programming
+6,Life Support
+6,Information Quality

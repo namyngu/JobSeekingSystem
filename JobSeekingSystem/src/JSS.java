@@ -1136,10 +1136,36 @@ public void markAsSent(Message message)
         jobList.remove(jobID-1);
         jobList.add(job);
         this.setJobList(jobList);
+
+        this.removeJobAlert(job);
         }
         catch (Exception e)
         {
             e.printStackTrace();
+        }
+    }
+
+    private void removeJobAlert(Job job)
+    {
+
+        int recruiterID = job.getRecruiterID();
+        ArrayList<Application> applications = job.getApplications();
+        int messageID = this.issueMessageID();
+        String header = "Job Ref: " + job.getJobID() + ", " + job.getJobTitle() +" has been withdrawn";
+        String body = "This job has been removed and applications rejected";
+        Message recruiterAlert = new Message(messageID,recruiterID,recruiterID,header,body,LocalDate.now());
+        allMessages.add(recruiterAlert);
+        this.storeMessage(messageID,false,recruiterID,recruiterID,header,body,-1,LocalDate.now());
+
+        for (Application each: applications)
+        {
+            int jobseekerID = each.getSenderID();
+            messageID = this.issueMessageID();
+            body = "Dear Jobseeker, this job has been withdrawn and therefore your application rejected";
+            Message alert = new Message(messageID,recruiterID,jobseekerID,header,body,LocalDate.now());
+           allMessages.add(alert);
+           //jobRef is -1 as this is a message, although it does concern a job this is identified in the header
+           this.storeMessage(messageID,false,recruiterID,jobseekerID,header,body,-1,LocalDate.now());
         }
     }
 }

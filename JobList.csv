@@ -1,17 +1,12 @@
 jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescription
-1,Software Developer,Walmart,2,FullTime,Advertised,50000,1,Testing
 2,Influencer,State Grid,2,FullTime,Advertised,50000,2,Job Descr1
 3,Tester,Amazon,2,FullTime,Archived,50000,2,Job Descr1
-4,Main Test Analyst,Apple,3,FullTime,Withdrawn,50000,10,Testing
 5,Payroll Officer,CVS Group,3,PartTime,Draft,50000,5,Job Descr1
-6,Communications Officer,McKesson,3,Casual,Archived,50000,6,Job Descr1
 7,Plumber,BP,3,Casual,Advertised,20000,7,Testing
-8,Senior Test Analyst,Shell,3,Casual,Advertised,20000,8,Job Descr1
 9,Graphic Designer,ICBC,4,PartTime,Archived,20000,10,Job Descr1
 10,Junior Business Analyst,Volkswagen,4,PartTime,Withdrawn,100000,22,Testing
 11,Lead Designer,UnitedHealth,4,PartTime,Draft,100000,15,Job Descr1
 12,Accounts Payable Officer,Ping An Insurance,4,PartTime,Archived,100000,12,Job Descr1
-13,Chief Operating Officer,Exor,4,Casual,Archived,100000,13,Testing
 14,Transformation Lead,Allianz,5,Casual,Advertised,100000,14,Job Descr1
 15,Customer Service Officer,Kroger,5,PartTime,Withdrawn,150000,15,Job Descr1
 16,Videographer,Bank of China,5,Casual,Withdrawn,150000,16,Testing
@@ -44,3 +39,8 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 43,Ticket Scanner,Ticketek,11,Casual,Draft,30000,3882,"This job is to scan people's tickets as they enter the venue.||Locations will be varied, will follow events around."
 44,Bartender,Crown Casino,11,Casual,Draft,40000,10815,"Pouring drinks.|Customer service.|Bar cleanup."
 45,Banker,ANZ,11,FullTime,Draft,80000,3914,"nking.|Loans.|Customer Service.|Data Analysi"
+8,Senior Test Analyst,Shell,3,Casual,Archived,20000,8,"Job Descr1"
+13,Chief Operating Officer,Exor,4,Casual,Archived,100000,13,"Testing"
+4,Main Test Analyst,Apple,3,FullTime,Archived,50000,10,"Testing"
+1,Software Developer,Walmart,2,FullTime,Archived,50000,1,""Testing""
+6,Communications Officer,McKesson,3,Casual,Archived,50000,6,"Job Descr1"
