@@ -61,7 +61,7 @@ public class ManageJobGUI extends CreateJobGUI {
     //public ManageJobGUI(User recruiter, ArrayList<Job> jobList, ArrayList<Location> locationList) throws IOException {
     public ManageJobGUI(RecruiterControl control, Job myJob) throws IOException {
         this.control = control;
-        this.job = myJob;
+        job = myJob;
         location = new Location();
         category = new JobCategory();
         skills = new ArrayList<>();
@@ -152,7 +152,7 @@ public class ManageJobGUI extends CreateJobGUI {
             public void actionPerformed(ActionEvent e) {
                 //System.out.println("Submit button has been clicked");
                 frame.setVisible(false);
-                submitButtonActions();
+                submitButtonActionsUpdate(job);
                 updateDatabase(myJob);
             }
         });
@@ -234,6 +234,73 @@ public class ManageJobGUI extends CreateJobGUI {
             removeSkillButton.setEnabled(false);
             addSkillButton.setEnabled(false);
         }
+
+    public void submitButtonActionsUpdate(Job job) {
+        job.setJobTitle(jobTitleText.getText());
+        //System.out.println("jobTitle has been set to: " + job.getJobTitle());
+        job.setEmployer(employerText.getText());
+        job.setJobType(String.valueOf(jobTypeMenu.getSelectedItem()));
+        //System.out.println("JobType has been set to: " + job.getJobType());
+
+        job.setSalary(Integer.parseInt(salaryText.getText()));
+        //System.out.println("Salary has been set to: " + job.getSalary());
+
+        for (int i = 0; i < skillsList.getModel().getSize(); i++) {
+            skills.add(String.valueOf(skillsList.getModel().getElementAt(i)));
+        }
+        job.setSkills(skills);
+        //System.out.println("Skills have been set to: " + job.getSkills());
+
+        String state = String.valueOf(locationStateMenu.getSelectedItem());
+        String selectedPostcode = String.valueOf(postcodeMenu.getSelectedItem());
+        String postcode = "";
+        for (int i = 0; i < 4; i++) {
+            postcode += selectedPostcode.charAt(i);
+            //System.out.println("postcode is: " + postcode);
+        }
+
+        int postCode = Integer.parseInt(postcode);
+
+        String city = "";
+        for (int i = 6; i < selectedPostcode.length(); i++) {
+            city += selectedPostcode.charAt(i);
+        }
+
+        for (Location tmpLocation : locationList)
+        {
+            boolean check = true;
+            //check state
+            if (!tmpLocation.getState().equalsIgnoreCase(state))
+            {
+                check = false;
+                continue;
+            }
+            if (tmpLocation.getPostcode() != postCode)
+            {
+                check = false;
+                continue;
+            }
+            if (!tmpLocation.getCity().equalsIgnoreCase(city))
+            {
+                check = false;
+                continue;
+            }
+
+            if (check)
+            {
+                job.setLocationID(tmpLocation.getLocationID());
+                break;
+            }
+        }
+
+        job.setJobDescription(String.valueOf(descriptionText.getText()));
+
+        category.setJobID(job.getJobID());
+        category.setJobPrimaryCategory(String.valueOf(categoryMenuPrimary.getSelectedItem()));
+        category.setJobSubCategory(String.valueOf(categoryMenuSecondary.getSelectedItem()));
+
+        job.setJobStatus(String.valueOf(statusMenu.getSelectedItem()));
+    }
 
         public void updateDatabase(Job myJob) {
             File_Control io = new File_Control();

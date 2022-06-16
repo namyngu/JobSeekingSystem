@@ -1,22 +1,32 @@
 jobID, skills
+1,A/R Management
+1,Java
+1,SQL
 4,Sanding
 4,SQL
+5,A/R Management
 10,A/R Management
 2,A/R Management
 10,Sanding
+1,Sanding
 6,Sanding
 10,Nursing Management
 6,Nursing Management
 9,Nursing Management
 4,Nursing Management
+5,Nursing Management
 3,Nursing Management
 9,Infrastructure
+5,Infrastructure
 6,Infrastructure
 2,Infrastructure
+1,Infrastructure
 10,Infrastructure
 8,CL Programming
+5,CL Programming
 6,CL Programming
 9,CL Programming
+1,CL Programming
 6,Life Support
 3,Self Service
 6,Information Quality
@@ -62,13 +72,11 @@ jobID, skills
 40,Accounting Software
 40,Ad design
 40,Big Data Analysis & SQL
-5,A/R Management
-5,Nursing Management
-5,Infrastructure
-5,CL Programming
-1,A/R Management
-1,Java
-1,SQL
-1,Sanding
-1,Infrastructure
-1,CL Programming
+43,Charisma
+43,Clear communication
+44,Charisma
+44,Customer Relationship Management (CRM)
+44,Enthusiasm
+45,Data analysis
+45,Accuracy
+45,Conflict management
