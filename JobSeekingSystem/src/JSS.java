@@ -1112,12 +1112,35 @@ public void markAsSent(Message message)
      */
     public void switchJobStatus(int jobID)
     {
+        File_Control io = new File_Control();
+        try
+        {
+            Job job = io.findJob(jobList, jobID);
 
 
-        Job job = jobList.get(jobID-1);
         System.out.println("this is the job to be deleted: " + jobID);
         job.setJobStatus("Archived");
+        //setting the job category to a default so it will save
 
+        JobCategory category = new JobCategory(jobID);
+
+
+        try {
+            io.updateJob(job.getJobID(), job.getJobTitle(), job.getEmployer(), job.getRecruiterID(),
+                    job.getJobType(), job.getJobStatus(), job.getSalary(), job.getLocationID(), job.getJobDescription(), job.getSkills(), category);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        //update JobList
+        jobList.remove(jobID-1);
+        jobList.add(job);
+        this.setJobList(jobList);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
 

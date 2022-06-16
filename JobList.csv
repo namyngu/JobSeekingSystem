@@ -1,9 +1,7 @@
 jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescription
-1,Software Developer,Walmart,2,FullTime,Advertised,50000,1,Testing
 2,Influencer,State Grid,2,FullTime,Advertised,50000,2,Job Descr1
 3,Tester,Amazon,2,FullTime,Archived,50000,2,Job Descr1
 4,Main Test Analyst,Apple,3,FullTime,Withdrawn,50000,10,Testing
-5,Payroll Officer,CVS Group,3,PartTime,Draft,50000,5,Job Descr1
 6,Communications Officer,McKesson,3,Casual,Archived,50000,6,Job Descr1
 7,Plumber,BP,3,Casual,Advertised,20000,7,Testing
 8,Senior Test Analyst,Shell,3,Casual,Advertised,20000,8,Job Descr1
@@ -41,3 +39,5 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 41,Apple Picker,Coles Farm,11,Casual,Archived,30000,10678,""icking apples.|Summer months.|Ideal for uni student.|Update pt ""
 29,Assistant Programmer,Pied Piper,14,PartTime,Advertised,35000,3866,"elcome, we are a new kickstarter company at Silicon Valley.|We have a great team of highly talented individual, and this is a great opportunity to join a new starting company.|As the company grows, you grow with us"
 40,Builder,Megastructure,14,Casual,Archived,65000,12173,""""
+5,Payroll Officer,CVS Group,3,PartTime,Archived,50000,5,"Job Descr1"
+1,Software Developer,Walmart,2,FullTime,Archived,50000,1,"Testing"

@@ -267,10 +267,14 @@ frame.setBounds(250,250,250,250);
             public void actionPerformed(ActionEvent e)
             {
                 int jobID = jobList.getSelectedIndex()+1;
-                adminControl.removeJob(jobID);
-
-                PromptGUI prompt = new PromptGUI("Job removed and applications all rejected");
-
+                if (adminControl.removeJob(jobID))
+                {
+                    PromptGUI prompt = new PromptGUI("Job removed and applications all rejected");
+                }
+                else
+                {
+                    PromptGUI prompt = new PromptGUI("Error job not removed, contact developer");
+                }
             }
         });
     }
