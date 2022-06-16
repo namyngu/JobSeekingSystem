@@ -16,6 +16,7 @@ public class LoginGUI {
     private JLabel errorLabel;
     private JLabel usernameWarning;
     private JLabel passwordWarning;
+    private JLabel mainWarning;
 
 
     public LoginGUI(JSS program) {
@@ -34,20 +35,37 @@ public class LoginGUI {
                 String username = usernameField.getText();
                 char[] password = welcomeToJSSPasswordField.getPassword();
 
-                try
+                if(validInputs())
                 {
-                    program.login(username, String.valueOf(password));
-                    frame.dispose();
-                }
-                catch (Exception x)
-                {
-                    errorLabel.setText("System Error! " + x.getMessage());
-                    errorLabel.setVisible(true);
-                    x.printStackTrace();
-                }
+                    int userIndex = program.authenticateUser(username, String.valueOf(password));
+                    if (userIndex == -1)
+                    {
+                        Validation.invalidInputWarning(mainWarning, "Invalid username or password");
+                    }
+                    else if (userIndex == -2) {
 
-                //Clear the password box
-                clearPassword();
+                        mainWarning.setText("Your account has been locked. Please contact JSS for more information.");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            program.login(userIndex);
+                            frame.dispose();
+
+                        }
+                        catch (Exception x)
+                        {
+
+                            x.printStackTrace();
+                        }
+                    }
+
+
+
+                    //Clear the password box
+                    clearPassword();
+                }
             }
         });
 
@@ -62,8 +80,6 @@ public class LoginGUI {
                 }
                 catch (Exception x)
                 {
-                    errorLabel.setText("System Error contact Admin with message " + x.toString());
-                    errorLabel.setVisible(true);
                     x.printStackTrace();
                 }
             }

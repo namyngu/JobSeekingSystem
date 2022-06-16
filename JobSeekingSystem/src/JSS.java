@@ -324,51 +324,81 @@ public class JSS
         }
     }
 
+    public int authenticateUser(String username, String password)
+    {
+        int userIndex = Validation.usernameIndex(userList, username);
+
+        if(userIndex < 0)
+        {
+            return userIndex;
+
+        }
+
+        String encryptedPW = EncryptMe.encryptThisString(password);
+        if(!encryptedPW.equals(userList.get(userIndex).getPassword()))
+        {
+            userIndex = -1;
+            return userIndex;
+        }
+
+        if(!userList.get(userIndex).isActive())
+        {
+            userIndex = -2;
+            return userIndex;
+        }
+
+        return userIndex;
+
+    };
+
     //Verifies username/password & logs the user in.
     //TODO: can split this method into two. One for validation, one for logging in.
-    public void login(String username, String password) throws Exception
+    public void login(int userIndex) throws Exception
     {
         // 1. Verify username
-        boolean Exists = false;
-        int userIndex = 0;
-        for (User tmpUser : userList)
-        {
-            if (tmpUser.getUserName().equals(username))
-            {
-                //Match on username
-                Exists = true;
-                break;
-            }
-            userIndex++;
-        }
 
-        if (!Exists)
-        {
-            //We did not find a username matching the entered name
-            throw new Exception("Username doesn't exist!");
-        }
 
-        // 2. Verify password
-        boolean passwordMatch = false;
 
-        //hash user's password
-        String encryptedPW = EncryptMe.encryptThisString(password);
-        if (encryptedPW.equals(userList.get(userIndex).getPassword()))
-            passwordMatch = true;
-
-        if (!passwordMatch)
-        {
-            //This user's password did not match their stored password
-            throw new Exception("passwords do not match!");
-        }
-
-        //2.1 check if the account is locked
-
-        if (!userList.get(userIndex).isActive())
-        {
-            PromptGUI locked = new PromptGUI("This account has been locked.  Contact Administrator");
-            throw new Exception("Account Locked!");
-        }
+//        boolean Exists = false;
+//        int userIndex = 0;
+//        for (User tmpUser : userList)
+//        {
+//            if (tmpUser.getUserName().equals(username))
+//            {
+//                //Match on username
+//                Exists = true;
+//                break;
+//            }
+//            userIndex++;
+//        }
+//
+//        if (!Exists)
+//        {
+//            //We did not find a username matching the entered name
+//            throw new Exception("Username doesn't exist!");
+//        }
+//
+//        // 2. Verify password
+//        boolean passwordMatch = false;
+//
+//        //hash user's password
+//        String encryptedPW = EncryptMe.encryptThisString(password);
+//        if (encryptedPW.equals(userList.get(userIndex).getPassword()))
+//            passwordMatch = true;
+//
+//        if (!passwordMatch)
+//        {
+//            //This user's password did not match their stored password
+//            throw new Exception("passwords do not match!");
+//        }
+//
+//        //2.1 check if the account is locked
+//
+//        if (!userList.get(userIndex).isActive())
+//        {
+//            PromptGUI locked = new PromptGUI("This account has been locked.  Contact Administrator");
+//            throw new Exception("Account Locked!");
+//        }
 
         // 3. Let's check what kind of account this user should have
         String accountType = userList.get(userIndex).getUserType();

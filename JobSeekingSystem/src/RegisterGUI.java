@@ -65,8 +65,11 @@ public class RegisterGUI
                     allowRegistration = false;
                 }
 
+                //email validation
+                allowRegistration = Validation.isValidEmail(userEmailText.getText(), emailWarning);
+
                 //check if username exists
-                if(Validation.usernameExists(program.getUserList(), usernameTextTextField.getText()))
+                if(Validation.usernameIndex(program.getUserList(), usernameTextTextField.getText()) < 0)
                 {
                     Validation.invalidInputWarning(usernameWarning, "That username already exists");
                     allowRegistration = false;

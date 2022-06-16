@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Validation {
 
@@ -52,15 +54,41 @@ public class Validation {
      * @param username  a String containing the desired username to be checked.
      * @return          a Boolean describing if the chosen username already exists.
      */
-    public static boolean usernameExists(ArrayList<User> users, String username) {
-        boolean exists = false;
-        for (User user : users) {
-            if (user.getUserName().equalsIgnoreCase(username)) {
-                exists = true;
+    public static int usernameIndex(ArrayList<User> users, String username) {
+        int userIndex = -1;
+
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUserName().equalsIgnoreCase(username))
+            {
+                userIndex = i;
                 break;
             }
         }
-        return exists;
+
+        return userIndex;
+
     }
+
+    /**
+     * This method checks an input string (email) and compares to a regex pattern.
+     * @param email     a String of the email to be changed against the regex pattern
+     * @param warning  a Jlabel that is used to flash a warning if the email is invalid
+     * @return          a Boolean describing if the string matches the email format.
+     */
+    public static boolean isValidEmail(String email, JLabel warning)
+    {
+        boolean validEmail = true;
+        String emailFormat = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(emailFormat);
+        Matcher matcher = pattern.matcher(email);
+
+        if (!matcher.matches()) {
+            Validation.invalidInputWarning(warning, "You have not entered a valid email.");
+            validEmail = false;
+        }
+
+        return validEmail;
+    }
+
 }
 

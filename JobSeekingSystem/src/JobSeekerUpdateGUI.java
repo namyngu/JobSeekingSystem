@@ -112,10 +112,7 @@ public class JobSeekerUpdateGUI {
                 Pattern pattern = Pattern.compile(email);
                 Matcher matcher = pattern.matcher(emailInput.getText());
 
-                if (!matcher.matches()) {
-                    Validation.invalidInputWarning(emailWarning, "You have not entered a valid email.");
-                    validInput = false;
-                }
+                validInput = Validation.isValidEmail(emailInput.getText(), emailWarning);
 
                 if (locationInput.getText().isEmpty()) {
                     Validation.invalidInputWarning(locationWarning, "Location details are required.");
