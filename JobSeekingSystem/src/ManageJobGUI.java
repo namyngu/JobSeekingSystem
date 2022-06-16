@@ -340,6 +340,7 @@ public class ManageJobGUI extends CreateJobGUI {
             //update JobList
             jobList.remove(myJob);
             jobList.add(job);
+            control.getRecruiter().getJobs().add(job);
             control.setJobList(jobList);
 
             RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(control, control.getLocationList());

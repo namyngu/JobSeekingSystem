@@ -42,18 +42,12 @@ jobID, skills
 35,Emotional intelligence
 38,Active listening
 38,Critical thinking
-39,Accuracy
-39,Closing
-39,Clear communication
 42,Customer Relationship Management (CRM)
 33,SQL
 33,Acute care
 33,Adaptability
 41,Accuracy
 41,Ad design
-29,SQL
-29,Ad design
-29,Adobe Illustrator
 40,Accounting Software
 40,Ad design
 40,Big Data Analysis & SQL
@@ -80,13 +74,22 @@ jobID, skills
 37,Charisma
 37,Clear communication
 37,Consumer Behavior Drivers
-36,Java
-36,Microsoft Powerpoint
-36,PESTEL
-36,Data analysis
-36,Customer Relationship Management (CRM)
 49,Active listening
 49,Acute care
 49,Bookkeeping
 49,Copywriting
 50,Active listening
+51,Adobe Illustrator
+51,Active listening
+51,Adaptability
+36,Java
+36,Microsoft Powerpoint
+36,PESTEL
+36,Data analysis
+36,Customer Relationship Management (CRM)
+29,SQL
+29,Ad design
+29,Adobe Illustrator
+39,Accuracy
+39,Closing
+39,Clear communication

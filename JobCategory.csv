@@ -27,13 +27,11 @@ jobID,jobPrimaryCategory,jobSubCategory
 26,Retail & Consumer Products,Buying
 27,Sales,Account & Relationship Management
 28,Science & Technology,Biological & Biomedical Sciences
-29,Self Employment,Self Employment
 32,Call Centre & Customer Service,Collections
 33,Accounting,Accounts Officers/Clerks
 34,Accounting,Accounts Officers/Clerks
 35,Accounting,Accounts Officers/Clerks
 38,Accounting,Accounts Officers/Clerks
-39,Accounting,Accounts Officers/Clerks
 40,Accounting,Accounts Officers/Clerks
 41,Accounting,Accounts Officers/Clerks
 42,Accounting,Accounts Officers/Clerks
@@ -46,6 +44,9 @@ jobID,jobPrimaryCategory,jobSubCategory
 31,Engineering,Systems Engineering
 48,Computer Science,Programming
 37,Call Centre & Customer Service,Supervisors/Team Leaders
-36,Insurance & Superannuation,Superannuation
 49,Engineering,Systems Engineering
 50,Banking & Financial Services,Account & Relationship Management
+51,Sales,Management
+36,Insurance & Superannuation,Superannuation
+29,Self Employment,Self Employment
+39,Accounting,Accounts Officers/Clerks
