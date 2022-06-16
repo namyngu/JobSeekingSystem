@@ -50,3 +50,4 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 36,Software Developer,Apple,14,PartTime,Archived,85000,3868,"is job will help kickstart your career!|Welcome to Appl"
 29,Assistant Programmer,Pied Piper,14,PartTime,Archived,35000,3866,""elcome, we are a new kickstarter company at Silicon Valley.|We have a great team of highly talented individual, and this is a great opportunity to join a new starting company.|As the company grows, you grow with us""
 39,Manager,McDonalds,14,FullTime,Archived,55000,3895,""This job requires good communication and people skills.|McDonalds is a big company....|""
+52,TestJobV1,Nam,14,Casual,Draft,500000,12167,"Line1, word1|Line2, word1, word 2|Line3, word1, word 2, word 3|"
