@@ -105,6 +105,14 @@ public class JSS
 
         //display();
     }
+    /**
+    non default constructor takes reason for needing constructor
+     loads without normal boot processes
+     **/
+    public JSS (String reason)
+    {
+        System.out.println("reason non default JSS object created");
+    }
 
     //Method to read in the user list into memory
     public void importUserList(String fileName)
@@ -421,12 +429,12 @@ public class JSS
 
             case "Jobseeker":
                 //Do something else
-                JobseekerControl jobSeekerControl = new JobseekerControl(userList.get(userIndex), jobList, locationList, jobCategoryList);
+                JobseekerControl jobSeekerControl = new JobseekerControl(this,userList.get(userIndex), jobList, locationList, jobCategoryList);
                 break;
 
             case "Recruiter":
                 //Launch Recruiter Control
-                RecruiterControl recruiterControl = new RecruiterControl(userList.get(userIndex), jobList, locationList, jobCategoryList, userList);
+                RecruiterControl recruiterControl = new RecruiterControl(this,userList.get(userIndex), jobList, locationList, jobCategoryList, userList);
                 break;
 
             default:
@@ -1142,12 +1150,61 @@ public void markAsSent(Message message)
      */
     public void switchJobStatus(int jobID)
     {
+        File_Control io = new File_Control();
+        try
+        {
+            Job job = io.findJob(jobList, jobID);
 
 
-        Job job = jobList.get(jobID-1);
         System.out.println("this is the job to be deleted: " + jobID);
         job.setJobStatus("Archived");
+        //setting the job category to a default so it will save
 
+        JobCategory category = new JobCategory(jobID);
+
+
+        try {
+            io.updateJob(job.getJobID(), job.getJobTitle(), job.getEmployer(), job.getRecruiterID(),
+                    job.getJobType(), job.getJobStatus(), job.getSalary(), job.getLocationID(), job.getJobDescription(), job.getSkills(), category);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        //update JobList
+        jobList.remove(jobID-1);
+        jobList.add(job);
+        this.setJobList(jobList);
+
+        this.removeJobAlert(job);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    protected void removeJobAlert(Job job)
+    {
+
+        int recruiterID = job.getRecruiterID();
+        ArrayList<Application> applications = job.getApplications();
+        int messageID = this.issueMessageID();
+        String header = "Job Ref: " + job.getJobID() + ". " + job.getJobTitle() +" has been withdrawn";
+        String body = "This job has been removed and applications rejected";
+        Message recruiterAlert = new Message(messageID,recruiterID,recruiterID,header,body,LocalDate.now());
+        allMessages.add(recruiterAlert);
+        this.storeMessage(messageID,false,recruiterID,recruiterID,header,body,-1,LocalDate.now());
+
+        for (Application each: applications)
+        {
+            int jobseekerID = each.getSenderID();
+            messageID = this.issueMessageID();
+            body = "Dear Jobseeker: this job has been withdrawn and therefore your application rejected";
+            Message alert = new Message(messageID,recruiterID,jobseekerID,header,body,LocalDate.now());
+           allMessages.add(alert);
+           //jobRef is -1 as this is a message, although it does concern a job this is identified in the header
+           this.storeMessage(messageID,false,recruiterID,jobseekerID,header,body,-1,LocalDate.now());
+        }
     }
 }
 

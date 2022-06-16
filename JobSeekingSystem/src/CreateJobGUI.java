@@ -85,7 +85,7 @@ public class CreateJobGUI {
         category = new JobCategory();
 
 
-        job = new Job();
+        this.job = new Job();
         int numJobs = jobList.size() + 1;
         job.setJobID(numJobs);
         intJobIDLabel.setText(String.valueOf(numJobs));
@@ -113,8 +113,36 @@ public class CreateJobGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //System.out.println("Submit button has been clicked");
+                if (jobTitleText.getText().isEmpty()) {
+                    PromptGUI prompt = new PromptGUI("Please enter a Job Title!");
+                    return;
+                }
+                if (employerText.getText().isEmpty()) {
+                    PromptGUI prompt = new PromptGUI("Please enter an Employer!");
+                    return;
+                }
+                if (salaryText.getText().isEmpty()) {
+                    PromptGUI prompt = new PromptGUI("Please enter a Salary!");
+                    return;
+                }
+                if (skillsList.getModel().getSize() == 0) {
+                    PromptGUI prompt = new PromptGUI("Please enter a Skill!");
+                    return;
+                }
+                if (String.valueOf(locationStateMenu.getSelectedItem()).isEmpty()) {
+                    PromptGUI prompt = new PromptGUI("Please enter a State!");
+                    return;
+                }
+                if (descriptionText.getText().isEmpty()) {
+                    PromptGUI prompt = new PromptGUI("Please enter a Description!");
+                    return;
+                }
                 frame.setVisible(false);
-                submitButtonActions();
+                try {
+                    submitButtonActions(job);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
                 //write to JobList and JobCategory and JobSkill csv
                 newJobToDatabase();
             }
@@ -171,7 +199,7 @@ public class CreateJobGUI {
 
         //update JobList
         jobList.add(job);
-        recruiterControl.setJobList(jobList);
+        //recruiterControl.setJobList(jobList);
 
         RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl, locationList);
         //close
@@ -276,7 +304,21 @@ public class CreateJobGUI {
         file.close();
     }
 
-    public void submitButtonActions() {
+    public void submitButtonActions(Job job) throws Exception {
+        // Throw notification messages if needed data is missing.
+
+        /*
+        if (location.isEmpty()) {
+            throw new Exception("Please enter a location to search in!");
+        }
+        if (!fullTime && !partTime && !casual) {
+            throw new Exception("Please select a Job Type to search for!");
+        }
+        if (categoryPrimary.equals("Category")) {
+            throw new Exception("Please select a Primary Category to search in!");
+        }
+        */
+
         job.setJobTitle(jobTitleText.getText());
         //System.out.println("jobTitle has been set to: " + job.getJobTitle());
         job.setEmployer(employerText.getText());

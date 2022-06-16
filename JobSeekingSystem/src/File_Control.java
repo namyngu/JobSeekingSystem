@@ -320,7 +320,7 @@ public class File_Control {
         ArrayList<String> updatedCategory = removeById(jobID, "JobCategory.csv");
         clearFile("JobCategory.csv");
         writeFile("JobCategory.csv", "jobID,jobPrimaryCategory,jobSubCategory");
-        writeListToFile(updatedJobs, "JobCategory.csv");
+        writeListToFile(updatedCategory, "JobCategory.csv");
 
         String categoryData = jobID + "," + category.getJobPrimaryCategory() + "," + category.getJobSubCategory();
         try

@@ -16,6 +16,8 @@ public class RecruiterControl {
     private ArrayList<User> userList;
     private ArrayList<Jobseeker> jobseekerList;
 
+    private JSS program;
+
     /**
      * This is the Default constructor for the class.
      */
@@ -58,6 +60,33 @@ public class RecruiterControl {
         locationList = locations;
         jobCategoryList = categories;
         mainSearch = new Search(this, jobList, locationList, jobCategoryList, jobseekerList);
+
+        //update recruiter's jobs
+        updateRecruiterJobs(jobList);
+        //Launch recruiter HomeGUI
+        RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(this, locationList);
+    }
+
+    /**
+     * This is a Non-default constructor for the class.
+     * Accepts JSS as a parameter in addition to others
+     * @param user a User which describes the Recruiter this class is controlling.
+     * @param jobs      an ArrayList containing all the Jobs in the system.
+     * @param locations an ArrayList containing all the Locations in the system.
+     * @param categories an ArrayList containing all the Job Categories in the system.
+     * @param userList  an ArrayList containing all the Users in the system.
+     * @param program the JSS main program
+     */
+    public RecruiterControl(JSS program, User user, ArrayList<Job> jobs, ArrayList<Location> locations,
+                            ArrayList<JobCategory> categories, ArrayList<User> userList) {
+        this.userList = userList;
+        jobseekerList = buildSeekerList();
+        this.recruiter = new Recruiter(user.getUserID(), user.getFirstName(), user.getLastName(), user.getUserName(), user.getPassword(),user.isActive());;
+        jobList = jobs;
+        locationList = locations;
+        jobCategoryList = categories;
+        mainSearch = new Search(this, jobList, locationList, jobCategoryList, jobseekerList);
+        this.program = program;
 
         //update recruiter's jobs
         updateRecruiterJobs(jobList);
@@ -252,4 +281,19 @@ public class RecruiterControl {
         recruiter.setJobs(myJob);
     }
 
+    public void sendWithdrawMessage(int jobID)
+    {
+
+        File_Control io = new File_Control();
+        try
+        {
+            Job toAlert = io.findJob(this.program.getJobList(), jobID);
+            this.program.removeJobAlert(toAlert);
+        }
+        catch (Exception e)
+        {
+            System.out.println("failed to find job");
+            e.printStackTrace();
+        }
+    }
 }
