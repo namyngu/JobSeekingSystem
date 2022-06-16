@@ -52,6 +52,7 @@ public class JobSeekerHomeGUI {
     private JLabel jobseekerEmail;
     private JLabel instructionText;
     private JLabel searchInstructionText;
+    private JButton logoutButton;
     private DefaultListModel jsSkillsModel;
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
@@ -239,6 +240,15 @@ public class JobSeekerHomeGUI {
             }
         });
 
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (JOptionPane.showConfirmDialog(window, "Are you sure you want to Logout?","Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+                    Start program = new Start();
+                    window.dispose();
+                }
+            }
+        });
     }
 
 

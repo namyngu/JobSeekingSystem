@@ -36,6 +36,7 @@ public class RecruiterHomeGUI {
     private JScrollPane recruiterJobsTable;
     private JScrollPane seekerTable;
     private JLabel searchInstructionsText;
+    private JButton logoutButton;
 
     public RecruiterHomeGUI(RecruiterControl parent, ArrayList<Location> locations){
         myParent = parent;
@@ -68,13 +69,6 @@ public class RecruiterHomeGUI {
         }
 
         //launch create job screen
-//        createJobButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                CreateJobGUI createJobGUI = new CreateJobGUI();
-//            }
-//        } );
-
         addSkillButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -199,6 +193,16 @@ public class RecruiterHomeGUI {
                     int selectedRow = jobsTable.getSelectedRow();
                     int ID = Integer.parseInt(jobsTable.getValueAt(selectedRow, 0).toString());
                     RecruiterJobGUI recruiterJobGUI= new RecruiterJobGUI(parent, ID);
+                    window.dispose();
+                }
+            }
+        });
+
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (JOptionPane.showConfirmDialog(window, "Are you sure you want to Logout?","Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+                    Start program = new Start();
                     window.dispose();
                 }
             }

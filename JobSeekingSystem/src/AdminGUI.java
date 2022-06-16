@@ -25,6 +25,7 @@ public class AdminGUI
     private JTextField replyTextField;
     private JButton removeJobButton;
     private JLabel userFirstname;
+    private JButton logoutButton;
 //    private JButton newMessageButton;
 
     private AdminControl adminControl;
@@ -274,6 +275,15 @@ frame.setBounds(250,250,250,250);
                 else
                 {
                     PromptGUI prompt = new PromptGUI("Error job not removed, contact developer");
+                }
+            }
+        });
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to Logout?","Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+                    Start program = new Start();
+                    frame.dispose();
                 }
             }
         });

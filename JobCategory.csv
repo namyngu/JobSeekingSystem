@@ -32,8 +32,6 @@ jobID,jobPrimaryCategory,jobSubCategory
 33,Accounting,Accounts Officers/Clerks
 34,Accounting,Accounts Officers/Clerks
 35,Accounting,Accounts Officers/Clerks
-36,Accounting,Accounts Officers/Clerks
-37,Accounting,Accounts Officers/Clerks
 38,Accounting,Accounts Officers/Clerks
 39,Accounting,Accounts Officers/Clerks
 40,Accounting,Accounts Officers/Clerks
@@ -47,3 +45,7 @@ jobID,jobPrimaryCategory,jobSubCategory
 30,Sport & Recreation,Coaching & Instruction
 31,Engineering,Systems Engineering
 48,Computer Science,Programming
+37,Call Centre & Customer Service,Supervisors/Team Leaders
+36,Insurance & Superannuation,Superannuation
+49,Engineering,Systems Engineering
+50,Banking & Financial Services,Account & Relationship Management
