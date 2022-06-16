@@ -719,8 +719,6 @@ public class JSS
             System.out.println("Error failed to read messages!");
         }
 
-
-
 //        System.out.println("these are the messages: " + rawInput);
         String[] messageString = rawInput.split("\n");
 
@@ -750,6 +748,7 @@ public class JSS
                 {
                     hasMail =true;
                     User temp = this.userList.get(userIndex-1);
+
                     //TODO differentiate between messages and applications etc here
                     if (messageDetails[6].equalsIgnoreCase("Application"))
                     {
@@ -770,7 +769,7 @@ public class JSS
 
                 }
                 this.allMessages.add(new Message(messageID, messageDetails[1],sender,messageTo,messageDetails[4],messageDetails[5],date));
-                //TODO check user type and determine message type accordingly
+
                 //TODO deal with \n -- try replace with String methods? -- do this at point of writing
 
 
@@ -787,6 +786,13 @@ public class JSS
     // Store message method as copied from Gerard's branch.
     public void storeMessage(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String body, int jobRef, LocalDate date)
     {
+
+        header = header.replaceAll(",","<>COMMA");
+        body = body.replaceAll(",", "<>COMMA");
+        header = header.replaceAll("n","<>NEWLINE");
+        body = body.replaceAll("n","<>NEWLINE");
+
+
         String status = "pending";
         if (hasReceived == true)
         {
@@ -1049,6 +1055,8 @@ public void markAsSent(Message message)
         {
             System.out.println("Error failed to read messages!");
         }
+        rawInput = rawInput.replaceAll("<>NEWLINE", "n");
+        rawInput = rawInput.replaceAll("<>COMMA", ",");
 
 //        System.out.println("these are the messages: " + rawInput);
         String[] messageString = rawInput.split("\n");
