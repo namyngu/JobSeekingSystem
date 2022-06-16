@@ -34,6 +34,9 @@ public class JSS
 
     boolean gerardWork;
 
+    /**
+     * This is the Default constructor for the class.
+     */
     public JSS()
     {
         this.gerardWork = true;
@@ -685,7 +688,7 @@ public class JSS
         }
 
     }
-//method to return relevant User details to AdminGUI for review
+    //method to return relevant User details to AdminGUI for review
     public String retrieveUserDetails(int userNumber)
     {
         User userSelected = userList.get(userNumber);
@@ -783,7 +786,18 @@ public class JSS
         return hasMail;
     }
 
-    // Store message method as copied from Gerard's branch.
+    /**
+     * This method creates a new Message Object and saves it to the database.
+     * @param messageID   an Integer containing the ID number of the Message.
+     * @param hasReceived a Boolean describing if the Message has been received or not.
+     * @param senderID    an Integer containing the User ID number of the sender.
+     * @param receiverID  an Integer containing the User ID number of the recipient.
+     * @param header      a String containing the subject line of the Message.
+     * @param body        a String containing the body of the Message.
+     * @param jobRef      an Integer containing the ID number of the Job referred to
+     *                    in this Message.
+     * @param date        a LocalDate describing the date on which this Message was created.
+     */
     public void storeMessage(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String body, int jobRef, LocalDate date)
     {
 
@@ -800,8 +814,6 @@ public class JSS
         }
         String message = messageID + "," + status + "," + senderID + "," + receiverID + "," + header+"," + body+ "," + jobRef + "," + date;
 
-
-
         try
         {
             File_Control io = new File_Control();
@@ -812,6 +824,10 @@ public class JSS
         }
     }
 
+    /**
+     * This method reads in a list of all Messages from the database.
+     * @return an ArrayList of Messages from the system.
+     */
     private ArrayList<Message> allMessagesList()
     {
         ArrayList<Message> totalMessages = new ArrayList<Message>();
@@ -870,28 +886,25 @@ public class JSS
         return totalMessages;
     }
 
-public void markAsSent(Message message)
-{
+    /**
+     * This method creates a new list of Messages and marks them as sent appropriately.
+     * @param message the Message Object to be added to the message list.
+     */
+    public void markAsSent(Message message)
+    {
+        // create ArrayList of all messages
+        ArrayList<Message> messageList = this.allMessages;
+        int messageIndex = message.getMessageID()-1;
+        // System.out.println("message index is " + messageIndex);
+        // remove the message to update the status of and replace with updated status
 
+        // essageList.remove(messageIndex);
+        // System.out.println("JSS800 messageID to remove " + messageList.get(messageIndex).getMessageID());
+        // messageList.add(messageIndex,message);
 
+        messageList.set(messageIndex,message);
 
-//create ArrayList of all messages
-
-            ArrayList<Message> messageList = this.allMessages;
-
-
-
-           int messageIndex = message.getMessageID()-1;
-//    System.out.println("message index is " + messageIndex);
-           //remove the message to update the status of and replace with updated status
-
-//            messageList.remove(messageIndex);
-//    System.out.println("JSS800 messageID to remove " + messageList.get(messageIndex).getMessageID());
-//            messageList.add(messageIndex,message);
-
-    messageList.set(messageIndex,message);
-
-    //clear the old file
+        //clear the old file
             try
             {
                 File_Control fileControl = new File_Control();
@@ -925,9 +938,12 @@ public void markAsSent(Message message)
     }
 
 
-//method to lock/unlock account comes via admin controller.
     //TODO this should come from admin control I think but there must be a neater way of doing this
-
+    /**
+     * This method locks or unlocks a User's account
+     * @param index an Integer containing the index in the User list of the
+     *              User to lock/unlock.
+     */
     public void alterActive(int index)
     {
         User temp = userList.get(index);
@@ -941,7 +957,10 @@ public void markAsSent(Message message)
         }
    this.refreshUserSavedList();
     }
-    //method updates saved user list
+
+    /**
+     * This method saves a new list of Users into the database.
+     */
     private void refreshUserSavedList()
     {
         try
@@ -955,12 +974,13 @@ public void markAsSent(Message message)
         {
             System.out.println("Error failed REFRESH save user into csv.");
         }
-
-
-
-
     }
 
+    /**
+     * This method checks to see if a particular User is currently locked out.
+     * @param userNumber an Integer containing the ID number of the User to be checked.
+     * @return a Boolean representing if this User is currently locked out or not.
+     */
     public boolean checkLocked(int userNumber)
     {
 
@@ -975,21 +995,33 @@ public void markAsSent(Message message)
     }
 
 
+    /**
+     * This method finds a User in the list of Users using their ID number.
+     * @param userID an Integer containing the ID number of the User to be found.
+     * @return the User Object relating to the specified ID number.
+     */
     public User getUserByID(int userID)
     {
         User inQuestion = userList.get(userID);
         return inQuestion;
     }
 
-    //DEBUG: Test to see if jobs have been imported
-    public void display()
+    /**
+     * This method displays each Job in the list of Jobs. Used for testing purposes.
+     */
+    public void displayJob()
     {
         for (Job tmpJob : jobList)
         {
             System.out.println(tmpJob.toString());
         }
     }
-        //issues a messageID to created messages and increments count for next ID
+
+    /**
+     * This method increments the nextMessageID field appropriately and returns
+     * a MessageID for a new Message.
+     * @return
+     */
     public int issueMessageID()
     {
         int messageID = nextMessageID;
@@ -999,6 +1031,10 @@ public void markAsSent(Message message)
         return messageID;
     }
 
+    /**
+     * This method counts the Messages in the database and sets the nextMessageID field
+     * appropriately.
+     */
     private void messageIDloader()
     {
         String rawInput = "";
@@ -1042,6 +1078,12 @@ public void markAsSent(Message message)
         }
     }
 
+    /**
+     * This method retrieves Messages from the database.
+     * @param messageID an Integer containing the ID number of the Message to be
+     *                  read from the database.
+     * @return the Message Object created from the database.
+     */
     public Message retrieveMessage(int messageID)
     {
 
@@ -1112,6 +1154,13 @@ public void markAsSent(Message message)
         return message;
     }
 
+    /**
+     * This method saves contact information for a particular User.
+     * @param userId        an Integer containing the ID number of the User.
+     * @param userLocation  a Location which has been set as the User's Location.
+     * @param userEmail     a String containing the User's email address.
+     * @param userPhone     a String containing the User's phone number.
+     */
     public void saveContactInfo(int userId, Location userLocation, String userEmail, String userPhone )
     {
 
@@ -1153,7 +1202,7 @@ public void markAsSent(Message message)
 
 
     /**
-     * Method that swithces job to archived for the administrators
+     * Method that switches job to archived for the administrators
      * @param jobID
      */
     public void switchJobStatus(int jobID)
@@ -1191,6 +1240,10 @@ public void markAsSent(Message message)
         }
     }
 
+    /**
+     * This method provides an alert to Users that a specific Job has been de-listed.
+     * @param job the Job which has been de-listed.
+     */
     protected void removeJobAlert(Job job)
     {
 
