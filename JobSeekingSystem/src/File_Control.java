@@ -71,74 +71,7 @@ public class File_Control {
         }
         return list;
     }
-
-    /**
-     * This method looks for a specific Job in the list of Jobs and returns it.
-     * @param jobList   an ArrayList of Jobs in the system.
-     * @param ID        an Integer containing the Job ID number to be searched for.
-     * @return          a Job which matches the specified ID number.
-     * @throws Exception Exceptions are thrown if the specified Job cannot be found.
-     */
-    // TODO: This method should not be in this class (put in the JSS class?)
-    protected static Job findJob(ArrayList<Job> jobList, int ID) throws Exception
-    {
-        Job myJob = null;
-        for (Job tmpJob : jobList)
-        {
-            if (tmpJob.getJobID() == ID)
-            {
-                myJob = tmpJob;
-                return myJob;
-            }
-        }
-        throw new Exception("Error: Job doesn't exist!");
-    }
-
-    /**
-     * This method looks for a specific Location in the list of Locations
-     * and returns it.
-     * @param locationList  an ArrayList of Locations in the system.
-     * @param ID            an Integer containing the Location ID number
-     *                      to be searched for.
-     * @return              a Location which matches the specified ID number.
-     * @throws Exception    Exceptions are thrown if the specified Location cannot be found.
-     */
-    protected static Location findLocation(ArrayList<Location> locationList, int ID) throws Exception
-    {
-        Location myLocation = null;
-        for (Location tmpLocation : locationList)
-        {
-            if (tmpLocation.getLocationID() == ID)
-            {
-                myLocation = tmpLocation;
-                return myLocation;
-            }
-        }
-        throw new Exception("Error: Location doesn't exist!");
-    }
-
-    /**
-     * This method looks for a specific User in the list of Users and returns it.
-     * @param userList  an ArrayList of Users in the system.
-     * @param ID        an Integer containing the User ID number to be searched for.
-     * @return          a User which matches the specified ID number.
-     * @throws Exception Exceptions are thrown if the specified User cannot be found.
-     */
-    // TODO: This method should not be in this class (put in the JSS class?)
-    public static User findUser(ArrayList<User> userList, int ID) throws Exception
-    {
-        User myUser = null;
-        for (User tmpUser : userList)
-        {
-            if (tmpUser.getUserID() == ID)
-            {
-                myUser = tmpUser;
-                return myUser;
-            }
-        }
-        throw new Exception("Error: User doesn't exist!");
-    }
-
+    
     /**
      * This method reads in a file of data and returns it.
      * @param fileName      a String describing the filename in the database

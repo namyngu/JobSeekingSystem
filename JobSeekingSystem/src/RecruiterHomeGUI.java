@@ -241,7 +241,7 @@ public class RecruiterHomeGUI {
                     case 3: {
                         try
                         {
-                            Location location = File_Control.findLocation(myParent.getLocationList(), activeJobs.get(i).getLocationID());
+                            Location location = findLocation(myParent.getLocationList(), activeJobs.get(i).getLocationID());
                             data[i][j] = location.getCity();
                         }
                         catch (Exception e)
@@ -278,6 +278,29 @@ public class RecruiterHomeGUI {
         jobsTable.setModel(new DefaultTableModel(data, new String[]{"JobID","Title","Employer","Location","Status","Type", "Applicants"}));
     }
 
+    /**
+     * This method looks for a specific Location in the list of Locations
+     * and returns it.
+     * @param locationList  an ArrayList of Locations in the system.
+     * @param ID            an Integer containing the Location ID number
+     *                      to be searched for.
+     * @return              a Location which matches the specified ID number.
+     * @throws Exception    Exceptions are thrown if the specified Location cannot be found.
+     */
+    public Location findLocation(ArrayList<Location> locationList, int ID) throws Exception
+    {
+        Location myLocation = null;
+        for (Location tmpLocation : locationList)
+        {
+            if (tmpLocation.getLocationID() == ID)
+            {
+                myLocation = tmpLocation;
+                return myLocation;
+            }
+        }
+        throw new Exception("Error: Location doesn't exist!");
+    }
+
     public void populateSkills(String fileName) throws IOException {
         FileReader file = new FileReader(fileName);
         Scanner scan = new Scanner(file);
@@ -290,6 +313,8 @@ public class RecruiterHomeGUI {
         allSkillList.setListData(returnModel.toArray());
         file.close();
     }
+
+
 }
 
 

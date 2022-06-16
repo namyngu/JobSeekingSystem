@@ -54,7 +54,7 @@ public class RecruiterJobGUI {
         //find job from the jobID
         try
         {
-            myJob = File_Control.findJob(control.getJobList(), jobID);
+            myJob = findJob(control.getJobList(), jobID);
         }
         catch (Exception e)
         {
@@ -143,7 +143,7 @@ public class RecruiterJobGUI {
             try
             {
                 int jobseekerID = applicationList.get(i).getSenderID();
-                jobseeker = File_Control.findUser(control.getUserList(), jobseekerID);
+                jobseeker = findUser(control.getUserList(), jobseekerID);
             }
             catch (Exception e)
             {
@@ -204,8 +204,45 @@ public class RecruiterJobGUI {
         applicationsTable.setModel(new DefaultTableModel(data, new String[]{"Application ID","Name","Email","Applied Date","Status"}));
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
+    /**
+     * This method looks for a specific Job in the list of Jobs and returns it.
+     * @param jobList   an ArrayList of Jobs in the system.
+     * @param ID        an Integer containing the Job ID number to be searched for.
+     * @return          a Job which matches the specified ID number.
+     * @throws Exception Exceptions are thrown if the specified Job cannot be found.
+     */
+    public Job findJob(ArrayList<Job> jobList, int ID) throws Exception
+    {
+        Job myJob = null;
+        for (Job tmpJob : jobList)
+        {
+            if (tmpJob.getJobID() == ID)
+            {
+                myJob = tmpJob;
+                return myJob;
+            }
+        }
+        throw new Exception("Error: Job doesn't exist!");
+    }
 
+    /**
+     * This method looks for a specific User in the list of Users and returns it.
+     * @param userList  an ArrayList of Users in the system.
+     * @param ID        an Integer containing the User ID number to be searched for.
+     * @return          a User which matches the specified ID number.
+     * @throws Exception Exceptions are thrown if the specified User cannot be found.
+     */
+    public User findUser(ArrayList<User> userList, int ID) throws Exception
+    {
+        User myUser = null;
+        for (User tmpUser : userList)
+        {
+            if (tmpUser.getUserID() == ID)
+            {
+                myUser = tmpUser;
+                return myUser;
+            }
+        }
+        throw new Exception("Error: User doesn't exist!");
     }
 }
