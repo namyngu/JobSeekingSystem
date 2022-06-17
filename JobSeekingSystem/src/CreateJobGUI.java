@@ -32,7 +32,6 @@ public class CreateJobGUI {
     private JLabel statusLabel;
     private JComboBox statusMenu;
     private JButton submitButton;
-    private JScrollPane descriptionScroll;
     private JTextField employerText;
     private JLabel statusMessageLabel;
     private JLabel categoryLabelPrimary;
