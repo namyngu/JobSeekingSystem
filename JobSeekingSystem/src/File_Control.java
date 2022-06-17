@@ -33,6 +33,13 @@ public class File_Control {
     }
 
     /**
+     * This is the display method for the class.
+     */
+    public void display(){
+        System.out.println("FileControl: " + this);
+    }
+
+    /**
      * This method searches through a given file and returns all matching values.
      * @param id       an Integer containing the ID number to be searched for.
      * @param filename a String containing the filename to be opened.

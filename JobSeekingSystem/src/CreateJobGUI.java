@@ -32,7 +32,6 @@ public class CreateJobGUI {
     private JLabel statusLabel;
     private JComboBox statusMenu;
     private JButton submitButton;
-    private JScrollPane descriptionScroll;
     private JTextField employerText;
     private JLabel statusMessageLabel;
     private JLabel categoryLabelPrimary;
@@ -140,7 +139,7 @@ public class CreateJobGUI {
                     return;
                 }
                 if (descriptionText.getText().isEmpty()) {
-                    Validation.invalidInputWarning(descriptionWarning, "Job desciprtion cannot be blank");
+                    Validation.invalidInputWarning(descriptionWarning, "Job description cannot be blank");
                     return;
                 }
                 frame.setVisible(false);

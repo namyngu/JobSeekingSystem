@@ -82,8 +82,9 @@ public class RegisterGUI
                     allowRegistration = false;
                 }
 
-                //email validation
+                //email validation & phone format validation
                 allowRegistration = Validation.isValidEmail(userEmailText.getText(), emailWarning);
+                allowRegistration = Validation.isValidPhoneNo(userPhoneText.getText(), phoneWarning);
 
                 //check if username exists
                 if(Validation.usernameIndex(program.getUserList(), usernameTextTextField.getText()) >= 0)

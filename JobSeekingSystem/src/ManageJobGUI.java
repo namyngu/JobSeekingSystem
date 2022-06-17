@@ -9,33 +9,22 @@ import java.util.ArrayList;
 
 public class ManageJobGUI extends CreateJobGUI {
     private JPanel manageJobPanel;
-    private JLabel formTitle;
-    private JLabel jobIDLabel;
     private JLabel jobTitleLabel;
     private JTextField jobTitleText;
-    private JLabel recruiterIDLabel;
     private JLabel employerLabel;
     private JLabel jobTypeLabel;
     private JComboBox jobTypeMenu;
-    private JLabel salaryLabel;
     private JTextField salaryText;
     private JLabel skillsLabel;
     private JComboBox skillsMenu;
     private JButton addSkillButton;
     private JList skillsList;
     private JButton removeSkillButton;
-    private JLabel applicationsLabel;
-    private JLabel locationLabel;
     private JComboBox locationStateMenu;
-    private JLabel postcodeLabel;
-    private JLabel descriptionLabel;
-    private JLabel categoryLabelPrimary;
-    private JLabel categoryLabelSecondary;
     private JComboBox categoryMenuPrimary;
     private JComboBox categoryMenuSecondary;
     private JLabel statusLabel;
     private JComboBox statusMenu;
-    private JLabel statusMessageLabel;
     private JLabel intNumAppLabel;
     private JLabel intJobIDLabel;
     private JLabel intRecIDLabel;
@@ -44,12 +33,13 @@ public class ManageJobGUI extends CreateJobGUI {
     private JTextField employerText;
     private JLabel salaryTextLabel;
     private JComboBox postcodeMenu;
-    private JScrollPane descriptionScroll;
     private JTextArea descriptionText;
-    private JLabel salaryMessage;
     private JButton jobIDButton;
     private JButton submitButton;
     private JButton withdrawJobButton;
+    private JPanel jobUpdateContainer;
+    private JLabel updateTitle;
+    private JLabel descriptionLabel;
     private ArrayList<Job> jobList;
     private Job job;
     private Location location;
@@ -57,6 +47,17 @@ public class ManageJobGUI extends CreateJobGUI {
     private RecruiterControl control;
     private ArrayList<String> skills;
     private ArrayList<Location> locationList;
+
+    private JPanel createJobPanel;
+    private JLabel descriptionWarning;
+    private JLabel employerWarning;
+    private JLabel jobTitleWarning;
+    private JLabel salaryWarning;
+    private JLabel categoryWarning;
+    private JLabel locationWarning;
+    private JLabel skillsWarning;
+
+    private JLabel salaryLabel;
 
     //public ManageJobGUI(User recruiter, ArrayList<Job> jobList, ArrayList<Location> locationList) throws IOException {
     public ManageJobGUI(RecruiterControl control, Job myJob) throws IOException {
@@ -67,6 +68,8 @@ public class ManageJobGUI extends CreateJobGUI {
         skills = new ArrayList<>();
         jobList = control.getJobList();
         locationList = control.getLocationList();
+
+        updateTitle.setText("Update Job " + job.getJobID()+": "+job.getJobTitle()+" "+ "("+job.getEmployer()+")");
 
         JFrame frame = new JFrame("Manage Job");
         frame.setContentPane(this.manageJobPanel);
@@ -150,29 +153,30 @@ public class ManageJobGUI extends CreateJobGUI {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //System.out.println("Submit button has been clicked");
-                if (jobTitleText.getText().isEmpty()) {
-                    PromptGUI prompt = new PromptGUI("Please enter a Job Title!");
+                JTextField[] inputs = {jobTitleText, employerText, salaryText};
+                JLabel[] warnings = {jobTitleWarning, employerWarning,salaryWarning };
+                JLabel[] labels = {jobTitleLabel, employerLabel, salaryLabel};
+
+                if (!Validation.validInputs(inputs, warnings, labels))
+                {
                     return;
-                }
-                if (employerText.getText().isEmpty()) {
-                    PromptGUI prompt = new PromptGUI("Please enter an Employer!");
-                    return;
-                }
-                if (salaryText.getText().isEmpty()) {
-                    PromptGUI prompt = new PromptGUI("Please enter a Salary!");
-                    return;
-                }
+                };
+
                 if (skillsList.getModel().getSize() == 0) {
-                    PromptGUI prompt = new PromptGUI("Please enter a Skill!");
+                    Validation.invalidInputWarning(skillsWarning, "Jobs must require at least 1 skill");
                     return;
                 }
-                if (String.valueOf(locationStateMenu.getSelectedItem()).isEmpty()) {
-                    PromptGUI prompt = new PromptGUI("Please enter a State!");
+                if (String.valueOf(locationStateMenu.getSelectedItem()).isEmpty() || String.valueOf(postcodeMenu.getSelectedItem()).isEmpty()) {
+                    Validation.invalidInputWarning(locationWarning, "Jobs require location details");
+                    return;
+                }
+
+                if (String.valueOf(categoryMenuSecondary.getSelectedItem()).isEmpty() || String.valueOf(categoryMenuSecondary.getSelectedItem()).isEmpty()) {
+                    Validation.invalidInputWarning(categoryWarning, "Job category is required");
                     return;
                 }
                 if (descriptionText.getText().isEmpty()) {
-                    PromptGUI prompt = new PromptGUI("Please enter a Description!");
+                    Validation.invalidInputWarning(descriptionWarning, "Job description cannot be blank");
                     return;
                 }
                 frame.setVisible(false);
