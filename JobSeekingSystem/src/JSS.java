@@ -605,7 +605,7 @@ public class JSS
     public Application createApplication(boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate) throws Exception
     {
         //Create application
-        int messageID = allMessages.size() + 1;
+        int messageID = issueMessageID();
         try
         {
             Application application = new Application(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate);
