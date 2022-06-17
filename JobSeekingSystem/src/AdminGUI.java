@@ -51,7 +51,7 @@ public class AdminGUI
         this.userListModel = new DefaultListModel();
         this.userList.setModel(this.userListModel);
 
-        this.userMessages = this.adminControl.relayMessages();
+        this.userMessages = this.adminControl.retrieveMessages();
         this.mailListModel = new DefaultListModel();
         this.inboxList.setModel(this.mailListModel);
         this.userFirstname.setText("Hi, "+ adminControl.getAdminFirstName());
@@ -107,8 +107,6 @@ frame.setBounds(250,250,250,250);
         }
         else
         {
-
-
             for (Message each: userMessages)
             {
                 String toDisplay = "";

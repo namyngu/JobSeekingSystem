@@ -19,6 +19,13 @@ public class EncryptMe {
     }
 
     /**
+     * This is the display method for the class.
+     */
+    public void display(){
+        System.out.println("EncryptMe: " + this);
+    }
+
+    /**
      * This method takes a specified String and encrypts it.
      * @param input a String to be encrypted.
      * @return a String which has been encrypted.

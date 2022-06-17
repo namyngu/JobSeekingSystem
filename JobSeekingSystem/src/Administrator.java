@@ -32,6 +32,19 @@ public class Administrator extends User
     }
 
     /**
+     * This is the display method for the class.
+     */
+    public void display(){
+        System.out.println("Admin ID: " + getUserID());
+        System.out.println("First Name: " + getFirstName());
+        System.out.println("Last Name: " + getLastName());
+        System.out.println("Username: " + getUserName());
+        System.out.println("Password: " + getPassword());
+        System.out.println("Active? " + isActive());
+        System.out.println("Primary Admin? " + isPrimaryAdmin());
+    }
+
+    /**
      * This is the Accessor method for the isPrimaryAdmin field.
      * @return  a Boolean describing if this Administrator is the primary
      *          Administrator of the system or not.

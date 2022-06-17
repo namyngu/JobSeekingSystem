@@ -53,9 +53,13 @@ public class JobSeekerHomeGUI {
     private JLabel instructionText;
     private JLabel searchInstructionText;
     private JButton logoutButton;
+    private JList inboxList;
     private DefaultListModel jsSkillsModel;
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
+
+    private DefaultListModel inboxListModel;
+    private ArrayList<Message> messages;
 
     public int searchCount;
 
@@ -107,6 +111,35 @@ public class JobSeekerHomeGUI {
         window.pack();
         window.setResizable(true);
         window.setVisible(true);
+
+        inboxListModel = new DefaultListModel();
+        inboxList.setModel(inboxListModel);
+
+        //retrieve messages for inbox
+
+        if (this.myParent.checkMessages() == false)
+        {
+            refreshList("Clear inbox...",inboxList,inboxListModel);
+        }
+        else
+        {
+//            JSS program = new JSS();
+//            this.userMessages = pr
+            this.messages = this.myParent.fetchMessages();
+
+            for (Message each: messages)
+            {
+
+                String toDisplay = "";
+
+                String senderName = this.myParent.retrieveUserName();
+
+                toDisplay += senderName + " Re: " + each.getHeader();
+
+                refreshList(toDisplay,inboxList,inboxListModel);
+            }
+        }
+
 
         // Try populate categories to search in.
         try {
@@ -334,7 +367,11 @@ public class JobSeekerHomeGUI {
 
 
 
-
+    private void refreshList(String content, JList list, DefaultListModel listModel)
+    {
+        list.setVisible(true);
+        listModel.addElement(content);
+    }
 
 
 }

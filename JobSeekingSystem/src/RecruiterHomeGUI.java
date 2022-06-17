@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class RecruiterHomeGUI {
+public class RecruiterHomeGUI
+
+{
     private RecruiterControl myParent;
     private JTabbedPane recruiterNav;
     private JPanel jobsContainer;
@@ -28,15 +30,17 @@ public class RecruiterHomeGUI {
     private JButton searchButton;
     private JList allSkillList;
     private JList candidateSkillList;
-    private JTable inboxTable;
     private JTable searchResults;
     private JButton createJobButton;
     private ArrayList<Location> locationList;
-    private JScrollPane recruiterInboxTable;
     private JScrollPane recruiterJobsTable;
     private JScrollPane seekerTable;
     private JLabel searchInstructionsText;
     private JButton logoutButton;
+    private JList inboxList;
+
+    private ArrayList<Message> userMessages;
+    private DefaultListModel inboxListModel;
 
     public RecruiterHomeGUI(RecruiterControl parent, ArrayList<Location> locations){
         myParent = parent;
@@ -44,6 +48,9 @@ public class RecruiterHomeGUI {
         JFrame window = new JFrame("JSS: Recruiter Home");
         window.add(recruiterNav);
         searchInstructionsText.setVisible(false);
+
+
+
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLocation(600,20);
@@ -54,6 +61,37 @@ public class RecruiterHomeGUI {
 
         DefaultListModel candidateListGUI = new DefaultListModel();
         DefaultListModel skillsListGUI = new DefaultListModel();
+
+        this.inboxListModel = new DefaultListModel();
+
+        this.inboxList.setModel(inboxListModel);
+
+
+        //retrieve messages for inbox
+
+        if (this.myParent.checkMessages() == false)
+        {
+            refreshList("Clear inbox...",inboxList,inboxListModel);
+        }
+        else
+        {
+//            JSS program = new JSS();
+//            this.userMessages = pr
+            this.userMessages = this.myParent.fetchMessages();
+
+            for (Message each: userMessages)
+            {
+
+                String toDisplay = "";
+
+                String senderName = this.myParent.retrieveUserName();
+
+                toDisplay += senderName + " Re: " + each.getHeader();
+
+                refreshList(toDisplay,inboxList,inboxListModel);
+            }
+        }
+
 
         try {
             populateSkills("SkillList.csv");
@@ -319,6 +357,11 @@ public class RecruiterHomeGUI {
         file.close();
     }
 
+    private void refreshList(String content, JList list, DefaultListModel listModel)
+    {
+        list.setVisible(true);
+        listModel.addElement(content);
+    }
 
 }
 

@@ -510,7 +510,7 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="39e55" class="javax.swing.JTable">
+                  <component id="672bc" class="javax.swing.JList" binding="inboxList">
                     <constraints/>
                     <properties/>
                   </component>

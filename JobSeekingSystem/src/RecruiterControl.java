@@ -3,10 +3,13 @@
  * @author: Team D - Tom Barker, Jakeob Clarke-Kennedy, Bradley Meyn, Hoang Nguyen, Gerard Samson-Dekker
  */
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class RecruiterControl {
+public class RecruiterControl implements Communication
+
+{
 
     private Recruiter recruiter;
     private Search mainSearch;
@@ -315,5 +318,33 @@ public class RecruiterControl {
             }
         }
         throw new Exception("Error: Job doesn't exist!");
+    }
+
+
+    @Override
+    public User relayUser()
+    {
+        return this.recruiter;
+    }
+
+    @Override
+    public JSS relayProgram()
+    {
+        return this.program;
+    }
+//int messageID, int senderID, int receiverID, String header, String text, LocalDate sentDate, int jobID
+    public void sendInvite(int jobseekerID, int jobRef, String jobName)
+    {
+        int messageID = program.issueMessageID();
+        int sender = this.recruiter.getUserID();
+        String header = "INVITATION TO APPLY: ";
+
+        File_Control io = new File_Control();
+
+        String body = this.recruiter.getFirstName() + " would like to consider you for " + jobName + ". Please reply to organise an interview";
+        LocalDate date = LocalDate.now();
+
+        Message invite = new Invitation(messageID,sender,jobseekerID,header,body,date,jobRef);
+        this.sendMessage(this.program,invite);
     }
 }

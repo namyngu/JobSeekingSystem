@@ -759,11 +759,16 @@ public class JSS
                         int jobRef = Integer.parseInt(messageDetails[6]);
                         application.setJobRef(jobRef);
                         temp.addMessage(application);
+                        this.allMessages.add(application);
+//                        PromptGUI promptGUI = new PromptGUI("adding message to " + application.getReceiverID());
                     }
                     else
                     {
+
                         Message message = new Message(messageID, messageDetails[1], sender, messageTo, messageDetails[4], messageDetails[5], date);
                         temp.addMessage(message);
+                        this.allMessages.add(message);
+
                     }
 
 
@@ -771,7 +776,7 @@ public class JSS
 
 
                 }
-                this.allMessages.add(new Message(messageID, messageDetails[1],sender,messageTo,messageDetails[4],messageDetails[5],date));
+//                this.allMessages.add(new Message(messageID, messageDetails[1],sender,messageTo,messageDetails[4],messageDetails[5],date));
 
                 //TODO deal with \n -- try replace with String methods? -- do this at point of writing
 
@@ -938,7 +943,7 @@ public class JSS
     }
 
 
-    //TODO this should come from admin control I think but there must be a neater way of doing this
+
     /**
      * This method locks or unlocks a User's account
      * @param index an Integer containing the index in the User list of the
@@ -1287,6 +1292,85 @@ public class JSS
             }
         }
         throw new Exception("Error: Job doesn't exist!");
+    }
+
+    public ArrayList<Message> listUserMessages(int userID)
+    {
+        ArrayList<Message> userMessages = new ArrayList<Message>();
+
+        File_Control fileControl = new File_Control();
+        String rawInput= "";
+        try
+        {
+            rawInput += fileControl.readFile("messages.csv");
+        }
+        catch (Exception e)
+        {
+            System.out.println("failed to read file fetching user messages");
+            e.printStackTrace();
+        }
+        String[] messageString = rawInput.split("\n");
+
+        try
+        {
+
+            for (int i = 0; i < messageString.length; i++)
+            {
+                //If messages.csv contains an empty line skip it.
+                if (messageString[i].isEmpty())
+                {
+                    System.out.println("Warning: empty line in messages.csv at line: " + i + ", skipping...");
+                    continue;
+                }
+
+                //split each user into another array of userDetails
+                String[] messageDetails = messageString[i].split(",");
+
+                int destination = Integer.parseInt(messageDetails[3]);
+
+                if (destination == userID)
+                {
+
+                    int messageID = Integer.parseInt(messageDetails[0]);
+                    boolean hasReceived = false;
+                    if (messageDetails[1].equalsIgnoreCase("sent"))
+                    {
+                        hasReceived = true;
+                    }
+                    int sender = Integer.parseInt(messageDetails[2]);
+
+                    String header = messageDetails[4];
+                    String body = messageDetails[5];
+                    LocalDate date = LocalDate.parse(messageDetails[7]);
+
+                    if (header.equalsIgnoreCase("Application"))
+                    {
+                        Message toAdd = new Application(messageID, sender, destination, header, body, date);
+                        toAdd.setHasReceived(hasReceived);
+                        userMessages.add(toAdd);
+                    } else if (header.equalsIgnoreCase("Invitation"))
+                    {
+                        Message toAdd = new Invitation();
+                        PromptGUI a = new PromptGUI("come look at JSS 1349 and set up invitation");
+                        toAdd.setHasReceived(hasReceived);
+                        userMessages.add(toAdd);
+                    } else
+                    {
+                        Message toAdd = new Message(messageID, sender, destination, header, body, date);
+                        toAdd.setHasReceived(hasReceived);
+                        userMessages.add(toAdd);
+                    }
+
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("message read error" + e.getMessage());
+        }
+
+
+        return userMessages;
     }
 }
 
