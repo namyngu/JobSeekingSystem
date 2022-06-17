@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class RecruiterViewCandidateGUI {
@@ -45,6 +47,20 @@ public class RecruiterViewCandidateGUI {
             populateSkills(jobseeker);
             //populate jobComboBox
             populateJobCombo(control);
+        sendInviteButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                ArrayList<Job> recruiterJobs = control.getRecruiter().getJobs();
+                int selectedIndex = selectJob.getSelectedIndex();
+                Job selectedJob = recruiterJobs.get(selectedIndex);
+                int selectedJobID = selectedJob.getJobID();
+                String jobName = selectedJob.getJobTitle();
+
+                control.sendInvite(jobseekerID,selectedJobID, jobName);
+            }
+        });
     }
 
     public void populateLabels (Jobseeker jobseeker)

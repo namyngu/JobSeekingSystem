@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 /**
  * This class represents an Invitation to attend an interview, which is a subtype
  * of a Message Object.
@@ -5,7 +7,6 @@
  */
 public class Invitation extends Message
 {
-    private String invitationText;
     private int jobID;
 
     /**
@@ -13,13 +14,15 @@ public class Invitation extends Message
      */
     public Invitation(){
     }
-
     /**
-     * This is the Accessor method for the invitationText field.
-     * @return a String containing the body of the Invitation.
+     * This is the Default constructor for the class.
+     * @param jobID is the job to be applied for
+     *
      */
-    public String getInvitationText(){
-        return invitationText;
+    public Invitation(int messageID, int senderID, int receiverID, String header, String text, LocalDate sentDate, int jobID)
+    {
+        super(messageID, senderID, receiverID, header, text, sentDate);
+        this.jobID = jobID;
     }
 
     /**
@@ -28,14 +31,6 @@ public class Invitation extends Message
      */
     public int getJobID(){
         return jobID;
-    }
-
-    /**
-     * This is the Mutator method for the invitationText field.
-     * @param newText a String representing the body of the Invitation.
-     */
-    public void setInvitationText(String newText){
-        invitationText = newText;
     }
 
     /**
