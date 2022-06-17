@@ -5,6 +5,8 @@ TODO upon login transfer control to relevant subclass controller
 
  */
 
+import com.sun.source.tree.TryTree;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -121,6 +123,115 @@ public class JSS
     public JSS (String reason)
     {
         System.out.println("reason non default JSS object created");
+    }
+
+    public int authenticateUser(String username, String password)
+    {
+        int userIndex = Validation.usernameIndex(userList, username);
+
+        if(userIndex < 0)
+        {
+            return userIndex;
+
+        }
+
+        String encryptedPW = EncryptMe.encryptThisString(password);
+        if(!encryptedPW.equals(userList.get(userIndex).getPassword()))
+        {
+            userIndex = -1;
+            return userIndex;
+        }
+
+        if(!userList.get(userIndex).isActive())
+        {
+            userIndex = -2;
+            return userIndex;
+        }
+
+        return userIndex;
+
+    };
+
+    //Verifies username/password & logs the user in.
+    public void login(int userIndex) throws Exception
+    {
+        // 1. Verify username
+
+
+
+//        boolean Exists = false;
+//        int userIndex = 0;
+//        for (User tmpUser : userList)
+//        {
+//            if (tmpUser.getUserName().equals(username))
+//            {
+//                //Match on username
+//                Exists = true;
+//                break;
+//            }
+//            userIndex++;
+//        }
+//
+//        if (!Exists)
+//        {
+//            //We did not find a username matching the entered name
+//            throw new Exception("Username doesn't exist!");
+//        }
+//
+//        // 2. Verify password
+//        boolean passwordMatch = false;
+//
+//        //hash user's password
+//        String encryptedPW = EncryptMe.encryptThisString(password);
+//        if (encryptedPW.equals(userList.get(userIndex).getPassword()))
+//            passwordMatch = true;
+//
+//        if (!passwordMatch)
+//        {
+//            //This user's password did not match their stored password
+//            throw new Exception("passwords do not match!");
+//        }
+//
+//        //2.1 check if the account is locked
+//
+//        if (!userList.get(userIndex).isActive())
+//        {
+//            PromptGUI locked = new PromptGUI("This account has been locked.  Contact Administrator");
+//            throw new Exception("Account Locked!");
+//        }
+
+        // 3. Let's check what kind of account this user should have
+        String accountType = userList.get(userIndex).getUserType();
+        switch (accountType)
+        {
+            case "Admin":
+                try
+                {
+                    AdminControl adminControl = new AdminControl((Administrator) userList.get(userIndex), this);
+                    AdminGUI adminGUI = new AdminGUI(adminControl, this);
+//                    throw new Exception("Success! Logging you in as " + accountType + "...");
+                    break;
+                }
+                catch (Exception e)
+                {
+
+                    PromptGUI error = new PromptGUI("Contact Administrator", e.getMessage());
+
+                }
+
+            case "Jobseeker":
+                //Do something else
+                JobseekerControl jobSeekerControl = new JobseekerControl(this,userList.get(userIndex), jobList, locationList, jobCategoryList);
+                break;
+
+            case "Recruiter":
+                //Launch Recruiter Control
+                RecruiterControl recruiterControl = new RecruiterControl(this,userList.get(userIndex), jobList, locationList, jobCategoryList, userList);
+                break;
+
+            default:
+                throw new Exception("error logging user in!");
+        }
     }
 
     //Method to import application from csv to memory
@@ -386,119 +497,12 @@ public class JSS
         }
     }
 
-    public int authenticateUser(String username, String password)
-    {
-        int userIndex = Validation.usernameIndex(userList, username);
-
-        if(userIndex < 0)
-        {
-            return userIndex;
-
-        }
-
-        String encryptedPW = EncryptMe.encryptThisString(password);
-        if(!encryptedPW.equals(userList.get(userIndex).getPassword()))
-        {
-            userIndex = -1;
-            return userIndex;
-        }
-
-        if(!userList.get(userIndex).isActive())
-        {
-            userIndex = -2;
-            return userIndex;
-        }
-
-        return userIndex;
-
-    };
-
-    //Verifies username/password & logs the user in.
-    //TODO: can split this method into two. One for validation, one for logging in.
-    public void login(int userIndex) throws Exception
-    {
-        // 1. Verify username
 
 
 
-//        boolean Exists = false;
-//        int userIndex = 0;
-//        for (User tmpUser : userList)
-//        {
-//            if (tmpUser.getUserName().equals(username))
-//            {
-//                //Match on username
-//                Exists = true;
-//                break;
-//            }
-//            userIndex++;
-//        }
-//
-//        if (!Exists)
-//        {
-//            //We did not find a username matching the entered name
-//            throw new Exception("Username doesn't exist!");
-//        }
-//
-//        // 2. Verify password
-//        boolean passwordMatch = false;
-//
-//        //hash user's password
-//        String encryptedPW = EncryptMe.encryptThisString(password);
-//        if (encryptedPW.equals(userList.get(userIndex).getPassword()))
-//            passwordMatch = true;
-//
-//        if (!passwordMatch)
-//        {
-//            //This user's password did not match their stored password
-//            throw new Exception("passwords do not match!");
-//        }
-//
-//        //2.1 check if the account is locked
-//
-//        if (!userList.get(userIndex).isActive())
-//        {
-//            PromptGUI locked = new PromptGUI("This account has been locked.  Contact Administrator");
-//            throw new Exception("Account Locked!");
-//        }
-
-        // 3. Let's check what kind of account this user should have
-        String accountType = userList.get(userIndex).getUserType();
-        switch (accountType)
-        {
-            case "Admin":
-                try
-                {
-                    AdminControl adminControl = new AdminControl((Administrator) userList.get(userIndex), this);
-                    AdminGUI adminGUI = new AdminGUI(adminControl, this);
-//                    throw new Exception("Success! Logging you in as " + accountType + "...");
-                    break;
-                }
-                catch (Exception e)
-                {
-
-                    PromptGUI error = new PromptGUI("Contact Administrator", e.getMessage());
-
-                }
-
-            case "Jobseeker":
-                //Do something else
-                JobseekerControl jobSeekerControl = new JobseekerControl(this,userList.get(userIndex), jobList, locationList, jobCategoryList);
-                break;
-
-            case "Recruiter":
-                //Launch Recruiter Control
-                RecruiterControl recruiterControl = new RecruiterControl(this,userList.get(userIndex), jobList, locationList, jobCategoryList, userList);
-                break;
-
-            default:
-                throw new Exception("error logging user in!");
-        }
-    }
 
 
     //arraylist starts at 0 but usernames start at 1
-
     public String retrieveUsername(int userID)
     {
         userID -=1;
@@ -595,6 +599,30 @@ public class JSS
             }
         } else
             System.out.println("Error failed to import user, invalid userType");
+    }
+
+    //Create application and links it to the job
+    public Application createApplication(boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate) throws Exception
+    {
+        //Create application
+        int messageID = allMessages.size() + 1;
+        try
+        {
+            Application application = new Application(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate);
+
+            //Link application to job
+            Job job = findJob(jobList, application.getJobRef());
+            job.getApplications().add(application);
+
+            //write application to Application csv.
+            this.saveApplication(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate);
+            return application;
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to create application.");
+        }
+        throw new Exception("Error failed to create application!");
     }
 
     //Create User
@@ -736,6 +764,27 @@ public class JSS
                 index++;
             }
         }
+    }
+
+    //Method to save Application to Application.csv
+    public void saveApplication(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate)
+    {
+        try
+        {
+            //write to application.csv
+            String applicationData = messageID + "," + jobID + ",Pending";
+            File_Control io = new File_Control();
+            io.writeFile("Application.csv", applicationData);
+
+            //write to messages.csv
+            String messageData = messageID + "," + "sent," + senderID + "," + receiverID + "," + header + "," + text + "," + jobID + "," + sentDate;
+            io.writeFile("messages.csv", messageData);
+
+        } catch (Exception e)
+        {
+            System.out.println("Error failed to save application into csv.");
+        }
+
     }
 
     //Method to save user to users.csv

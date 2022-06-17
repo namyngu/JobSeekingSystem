@@ -87,8 +87,8 @@ public class JobseekerControl implements Communication
 
             try
             {
-                int messageID = program.issueMessageID();
-                Application application = new Application(messageID,true,this.jobseeker.getUserID(), recruiterID, "Application", text, jobID, date);
+                //Creates application, writes it to csv and links it to a job.
+                Application application = program.createApplication(true,this.jobseeker.getUserID(), recruiterID, "Application", text, jobID, date);
 
                 //Link application to job
                 applyFor.getApplications().add(application);
@@ -107,6 +107,8 @@ public class JobseekerControl implements Communication
         }
         return false;
     }
+
+
 
     /**
      * This is the display method for the class.
