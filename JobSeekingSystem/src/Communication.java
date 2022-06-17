@@ -23,6 +23,19 @@ public interface Communication
 
     }
 
+    default boolean sendMessageNoID(Message message)
+    {
+        boolean sent = false;
+        JSS program = this.relayProgram();
+        int messageID = program.issueMessageID();
+        message.setMessageID(messageID);
+        if (sendMessage(message))
+        {
+            sent = true;
+        }
+        return sent;
+    }
+
     default boolean sendMessage(Message message)
     {
         JSS program = this.relayProgram();

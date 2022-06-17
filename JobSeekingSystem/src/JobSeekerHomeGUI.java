@@ -55,9 +55,9 @@ public class JobSeekerHomeGUI {
     private JLabel searchInstructionText;
     private JButton logoutButton;
     private JList inboxList;
-    private JTextArea messageTextArea;
-    private JTextField replyTextArea;
     private JButton replyButton;
+    private JTextField replyTextField;
+    private JTextArea messageTextArea;
     private DefaultListModel jsSkillsModel;
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
@@ -292,13 +292,19 @@ public class JobSeekerHomeGUI {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-
+                Message replyTo = messages.get(inboxList.getSelectedIndex());
                 //TODO need this for message to send
-//                int senderID, int receiverID, String header, String body, LocalDate sentDate
-
-                 LocalDate localDate = LocalDate.now();
-//                Message message = new Message();
-//                myParent.sendMessage();
+                int senderID = replyTo.getReceiverID();
+               int receiverID = replyTo.getSenderID();
+               String header = "Re: ";
+               String body = replyTextField.getText();
+               LocalDate sentDate = LocalDate.now();
+                Message message = new Message(senderID,receiverID,header,body,sentDate);
+               if ( myParent.sendMessageNoID(message))
+               {
+                   PromptGUI confirm = new PromptGUI("Reply sent");
+                   replyTextField.setText("");
+               }
             }
         });
     }
