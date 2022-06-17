@@ -32,9 +32,7 @@ public class RegisterGUI
     private JLabel usernameWarning;
     private JLabel passwordWarning;
     private JSS program;
-
     private ArrayList<Location> locations;
-
     private Location userLocation;
 
 
@@ -58,9 +56,11 @@ public class RegisterGUI
             public void actionPerformed(ActionEvent e)
             {
                 boolean allowRegistration = true;
-
+                JTextField[] inputs = {firstNameText, lastNameText, userEmailText, userPhoneText, usernameTextTextField,passwordField};
+                JLabel[] warningLabels = {fnameWarning,lnameWarning,emailWarning,phoneWarning, usernameWarning, passwordWarning};
+                JLabel[] inputLabels = {firstNameLabel,lastNameLabel,emailLabel,phoneLabel,userNameLabel, passwordLabel};
                 //input validation
-                if(!this.validInputs() || !this.validPassword())
+                if(!Validation.validInputs(inputs, warningLabels, inputLabels) || !this.validPassword())
                 {
                     allowRegistration = false;
                 }
@@ -75,7 +75,7 @@ public class RegisterGUI
                     allowRegistration = false;
                 }
 
-                if (allowRegistration == true)
+                if (allowRegistration)
                 {
                     try
                     {
@@ -116,24 +116,7 @@ public class RegisterGUI
             }
 
             //method that loops through all inputs (excluding location & radio), if any are empty a warning message is displayed
-            private Boolean validInputs()
-            {
-                boolean valid = true;
-                JTextField[] inputs = {firstNameText, lastNameText, userEmailText, userPhoneText, usernameTextTextField,passwordField};
-                JLabel[] warningLabels = {fnameWarning,lnameWarning,emailWarning,phoneWarning, usernameWarning, passwordWarning};
-                JLabel[] inputLabels = {firstNameLabel,lastNameLabel,emailLabel,phoneLabel,userNameLabel, passwordLabel};
 
-                for (int i = 0; i < inputs.length; i++) {
-
-                    if((Validation.isInputBlank(inputs[i])))
-                    {
-                        Validation.invalidInputWarning(warningLabels[i], inputLabels[i].getText()+ " cannot be blank");
-                        valid =  false;
-                    }
-                }
-
-               return valid;
-            }
         });
 
         loginButton.addActionListener(new ActionListener() {
