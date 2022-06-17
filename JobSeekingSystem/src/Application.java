@@ -87,12 +87,7 @@ public class Application extends Message
     {
         System.out.println("Job reference is " + jobID);
     }
-
-    //TODO: documentation for this method
-    public void linkApplicationToJob()
-    {
-
-    }
+    
 
     //Setters and Getters below
     /**
