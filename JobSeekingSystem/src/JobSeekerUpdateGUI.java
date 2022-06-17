@@ -8,8 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,6 +29,7 @@ public class JobSeekerUpdateGUI {
     private JLabel phoneWarning;
     private JLabel emailWarning;
     private JLabel locationWarning;
+    private JLabel skillWarning;
     private DefaultListModel userSkillsModel;
     private DefaultListModel allSkillsModel;
 
@@ -98,21 +97,19 @@ public class JobSeekerUpdateGUI {
                 boolean validInput = true;
 
                 //check no inputs are empty
-                if (phoneInput.getText().isEmpty()) {
-                    Validation.invalidInputWarning(phoneWarning, "Phone number cannot be blank.");
-                    validInput = false;
-                }
 
-                if (emailInput.getText().isEmpty()) {
-                    Validation.invalidInputWarning(emailWarning, "Email cannot be blank.");
-                    validInput = false;
-                }
+                JTextField[] inputs = {phoneInput, emailInput};
+                JLabel[] warnings = {phoneWarning, emailWarning};
+                JLabel[] labels = {phoneLabel, emailLabel};
 
-                String email = "^(.+)@(.+)$";
-                Pattern pattern = Pattern.compile(email);
-                Matcher matcher = pattern.matcher(emailInput.getText());
+                validInput = Validation.validInputs(inputs, warnings, labels);
 
                 validInput = Validation.isValidEmail(emailInput.getText(), emailWarning);
+                validInput = Validation.isValidPhoneNo(phoneInput.getText(), phoneWarning);
+                if (userSkillList.getModel().getSize() == 0) {
+                    Validation.invalidInputWarning(skillWarning, "You must list at least 1 skill");
+                    return;
+                }
 
                 if (locationInput.getText().isEmpty()) {
                     Validation.invalidInputWarning(locationWarning, "Location details are required.");

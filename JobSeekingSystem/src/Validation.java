@@ -91,6 +91,27 @@ public class Validation {
     }
 
     /**
+     * This method checks an input string (phone number) and compares to a regex pattern.
+     * @param phone     a String of the phone to be changed against the regex pattern
+     * @param warning  a Jlabel that is used to flash a warning if the phone number is invalid
+     * @return          a Boolean describing if the string matches the phone number format.
+     */
+    public static boolean isValidPhoneNo(String phone, JLabel warning)
+    {
+        boolean validNumber = true;
+        String phoneFormat = "^(\\+?\\(61\\)|\\(\\+?61\\)|\\+?61|\\(0[1-9]\\)|0[1-9])?( ?-?[0-9]){7,9}$";
+        Pattern pattern = Pattern.compile(phoneFormat);
+        Matcher matcher = pattern.matcher(phone);
+
+        if (!matcher.matches()) {
+            Validation.invalidInputWarning(warning, "You have not entered a valid phone number");
+            validNumber = false;
+        }
+
+        return validNumber;
+    }
+
+    /**
      * This method loops through an array of JTextFields to check if they are empty, updating the relevant warning label.
      * @param inputs     an Array of JTextFields that are checked to see if they are empty
      * @param warningLabels an Array of JLabels that are displayed if the associated input is empty
