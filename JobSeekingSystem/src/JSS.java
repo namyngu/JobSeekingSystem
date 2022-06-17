@@ -904,7 +904,7 @@ public class JSS
                     hasMail =true;
                     User temp = this.userList.get(userIndex-1);
 
-
+                    /*
                     //TODO differentiate between messages and applications etc here
                     if (messageDetails[6].equalsIgnoreCase("Application"))
                     {
@@ -923,11 +923,7 @@ public class JSS
                         this.allMessages.add(message);
 
                     }
-
-
-
-
-
+                    */
                 }
 
             }
