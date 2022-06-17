@@ -26,6 +26,7 @@ public class RecruiterJobGUI {
     private JLabel jobTypeLabel;
     private JScrollPane descriptionScrollPane;
     private JTextPane jobDescriptionPane;
+    private JLabel salaryLabel;
 
     private RecruiterControl control;
     private int jobID;

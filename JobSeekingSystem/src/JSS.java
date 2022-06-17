@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class JSS
 {
-    private static ArrayList<String> categories;
-    private static int nextJobID;
+
+    private ArrayList<Application> applicationList = new ArrayList<>();
     private ArrayList<Message> allMessages;
     private static int nextMessageID;
     private final File_Control fileControl = new File_Control();
@@ -21,7 +21,6 @@ public class JSS
     public ArrayList<User> getUserList() {
         return userList;
     }
-
     private ArrayList<User> userList = new ArrayList<>();
     private ArrayList<Job> jobList = new ArrayList<>();
 
@@ -106,7 +105,14 @@ public class JSS
 //            JobSeekerApplication testJob = new JobSeekerApplication();
         }
 
-        //display();
+        try
+        {
+            importApplicationList("Application.csv");
+        } catch (Exception e)
+        {
+            System.out.println("FATAL ERROR!! Failed to import applications!!");
+        }
+
     }
     /**
     non default constructor takes reason for needing constructor
@@ -115,6 +121,51 @@ public class JSS
     public JSS (String reason)
     {
         System.out.println("reason non default JSS object created");
+    }
+
+    //Method to import application from csv to memory
+    public void importApplicationList(String applicationFile) throws Exception
+    {
+        File_Control io = new File_Control();
+        String applicationContent = "";
+        try
+        {
+            applicationContent = io.readFile(applicationFile);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to read files");
+        }
+        if (applicationContent.trim().isEmpty())
+            throw new Exception("File cannot be empty");
+
+        //split each application into an array
+        String[] application = applicationContent.split("\n");
+
+        //iteration through each application array
+        for (int i = 1; i < application.length; i++)
+        {
+            //if line is empty, skip it.
+            if (application[i].isEmpty())
+            {
+                System.out.println("Warning: empty line in Application.csv at line: " + i + ", skipping...");
+                continue;
+            }
+
+            //split each application into applicationDetails
+            //messageID, jobID, status
+            String[] applicationDetails = application[i].split(",");
+
+            //find messages for applications then import application to applicationList
+            for (Message tmpMsg : allMessages)
+            {
+                if (tmpMsg.getMessageID() == Integer.parseInt(applicationDetails[0]))
+                {
+                    importApplication(tmpMsg.getMessageID(), tmpMsg.getHasReceived(), tmpMsg.getSenderID(),
+                            tmpMsg.getReceiverID(), tmpMsg.getHeader(), tmpMsg.getBody(), Integer.parseInt(applicationDetails[1]), tmpMsg.getSentDate());
+                }
+            }
+        }
     }
 
     //Method to read in the user list into memory
@@ -466,7 +517,20 @@ public class JSS
         return count;
     }
 
-    //Method to import location from csv file
+    //Method to import application to applicationList arrayList
+    public void importApplication(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate)
+    {
+        try
+        {
+            Application application = new Application(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate);
+            applicationList.add(application);
+        } catch (Exception e)
+        {
+            System.out.println("Error failed to import application, check your parameters!");
+        }
+    }
+
+    //Method to import location from csv to memory
     public void importLocation(int locationID, String locationState, int postCode, String city)
     {
         try
@@ -607,7 +671,7 @@ public class JSS
         }
     }
 
-    //Method to link all the job databases together
+    //Method to link jobKeywords and jobSkills to the job databases
     public void updateJobs(String jobKeywordFile, String jobSkillsFile) throws Exception
     {
         File_Control reader = new File_Control();
@@ -752,6 +816,7 @@ public class JSS
                     hasMail =true;
                     User temp = this.userList.get(userIndex-1);
 
+                    /*
                     //TODO differentiate between messages and applications etc here
                     if (messageDetails[6].equalsIgnoreCase("Application"))
                     {
@@ -770,7 +835,7 @@ public class JSS
                         this.allMessages.add(message);
 
                     }
-
+                    */
 
 
 

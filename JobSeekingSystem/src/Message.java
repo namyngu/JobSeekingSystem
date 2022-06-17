@@ -76,6 +76,18 @@ public class Message
         this.sentDate = sentDate;
     }
 
+    //Constructor for application
+    public Message(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String body, LocalDate sentDate)
+    {
+        this.messageID = messageID;
+        this.hasReceived = hasReceived;
+        this.senderID = senderID;
+        this.receiverID = receiverID;
+        this.header = header;
+        this.body = body;
+        this.sentDate = sentDate;
+    }
+
     /**
      * This is a Non-default constructor for this class.
      *
@@ -138,6 +150,11 @@ public class Message
     public int getMessageID()
     {
         return messageID;
+    }
+
+    public boolean getHasReceived()
+    {
+        return hasReceived;
     }
 
     /**
