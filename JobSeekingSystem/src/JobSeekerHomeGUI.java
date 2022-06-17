@@ -143,6 +143,7 @@ public class JobSeekerHomeGUI {
 
                 toDisplay += senderName + " Re: " + each.getHeader();
 
+
                 refreshList(toDisplay,inboxList,inboxListModel);
             }
         }
