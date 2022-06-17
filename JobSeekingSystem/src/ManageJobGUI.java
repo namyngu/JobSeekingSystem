@@ -176,7 +176,7 @@ public class ManageJobGUI extends CreateJobGUI {
                     return;
                 }
                 if (descriptionText.getText().isEmpty()) {
-                    Validation.invalidInputWarning(descriptionWarning, "Job desciprtion cannot be blank");
+                    Validation.invalidInputWarning(descriptionWarning, "Job description cannot be blank");
                     return;
                 }
                 frame.setVisible(false);

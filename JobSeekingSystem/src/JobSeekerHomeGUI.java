@@ -54,6 +54,7 @@ public class JobSeekerHomeGUI {
     private JLabel searchInstructionText;
     private JButton logoutButton;
     private JList inboxList;
+    private JLabel skillsMessage;
     private DefaultListModel jsSkillsModel;
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
@@ -153,6 +154,10 @@ public class JobSeekerHomeGUI {
         buildContactInfo();
         //display skills in profile
         buildSkillList();
+        if(jsSkillsModel.getSize() == 0)
+        {
+            skillsMessage.setText("Listing your skills allows JSS to provide job recommendations relevant to you. \nPlease select the Edit Profile button to add new skills.");
+        }
 
         // Display recommended jobs for this Job seeker
         displayRecommendedJobs();
