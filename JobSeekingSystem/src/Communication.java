@@ -23,9 +23,9 @@ public interface Communication
 
     }
 
-    default boolean sendMessage(JSS program, Message message)
+    default boolean sendMessage(Message message)
     {
-
+        JSS program = this.relayProgram();
         boolean sent = false;
         int messageID = message.getMessageID();
         int senderID = message.getSenderID();

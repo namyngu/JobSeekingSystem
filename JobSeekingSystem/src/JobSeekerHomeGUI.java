@@ -3,6 +3,7 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -54,6 +55,9 @@ public class JobSeekerHomeGUI {
     private JLabel searchInstructionText;
     private JButton logoutButton;
     private JList inboxList;
+    private JTextArea messageTextArea;
+    private JTextField replyTextArea;
+    private JButton replyButton;
     private DefaultListModel jsSkillsModel;
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
@@ -281,6 +285,20 @@ public class JobSeekerHomeGUI {
                     Start program = new Start();
                     window.dispose();
                 }
+            }
+        });
+        replyButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+
+                //TODO need this for message to send
+//                int senderID, int receiverID, String header, String body, LocalDate sentDate
+
+                 LocalDate localDate = LocalDate.now();
+//                Message message = new Message();
+//                myParent.sendMessage();
             }
         });
     }

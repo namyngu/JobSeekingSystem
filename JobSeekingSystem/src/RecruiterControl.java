@@ -345,6 +345,6 @@ public class RecruiterControl implements Communication
         LocalDate date = LocalDate.now();
 
         Message invite = new Invitation(messageID,sender,jobseekerID,header,body,date,jobRef);
-        this.sendMessage(this.program,invite);
+        this.sendMessage(invite);
     }
 }

@@ -82,7 +82,7 @@ public class AdminControl implements Communication
         int messageID = this.program.issueMessageID();
         LocalDate date = LocalDate.now();
         Message message = new Message(messageID,sender,destination,header,body,date);
-        this.sendMessage(this.program,message);
+        this.sendMessage(message);
     }
 
     /**
