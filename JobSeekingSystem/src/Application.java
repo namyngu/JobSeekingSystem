@@ -15,7 +15,8 @@ public class Application extends Message
      */
     public Application()
     {
-
+        this.jobRef = -1;
+        this.status = "no status";
     }
 
     /**

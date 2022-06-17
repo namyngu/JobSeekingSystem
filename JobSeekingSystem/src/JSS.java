@@ -479,8 +479,19 @@ public class JSS
         }
     }
 
+    /**
+     * Imports existing job from a .csv file
+     * @param jobID  the ID of the job to be imported
+     * @param jobTitle the title of the job
+     * @param employer the employer
+     * @param recruiterID the ID of the recruiter who created the job post
+     * @param jobType the type of the job
+     * @param jobStatus the status of the job: advertised, draft or archived
+     * @param salary the proposed salary
+     * @param locationID the ID that links to the jobs location
+     * @param jobDescription a brief description of the job
+     */
 
-    //import existing job in .csv file
     public void importJob(int jobID, String jobTitle, String employer, int recruiterID, String jobType, String jobStatus, int salary, int locationID, String jobDescription)
     {
         try
@@ -496,7 +507,18 @@ public class JSS
 
     //create new job and write to .csv
 
-    //import existing user from .csv file
+
+    /**
+     *  Imports the user for the existing .csv file and creates an object of Administrator, Recruiter or Jobseeker
+     * @param userID the user's user ID
+     * @param firstName their first name
+     * @param lastName their surname
+     * @param userName their username
+     * @param password their password
+     * @param userType their user type
+     * @param active their status as being active or not - generally if active is false an administrator will have
+     *               locked the account
+     */
     public void importUser(int userID, String firstName, String lastName, String userName, String password, String userType, boolean active)
     {
         if (userType.trim().equalsIgnoreCase("jobseeker"))
@@ -532,6 +554,19 @@ public class JSS
         } else
             System.out.println("Error failed to import user, invalid userType");
     }
+
+    /**
+     * Method that creates a new user, either a recruiter or job seeker
+     * @param firstName the first name of the user
+     * @param lastName the last name of the user
+     * @param userName the users chosen username
+     * @param password the users selected password
+     * @param userType being recruiter or jobseeker
+     * @param userLocation the location of the user
+     * @param userEmail the users email
+     * @param userPhone the users phone number
+     * @throws Exception thrown if the username already exists or there is an issue with creating the user
+     */
 
     //Create User
     public void createUser(String firstName, String lastName, String userName, String password, String userType, Location userLocation, String userEmail, String userPhone) throws Exception
@@ -607,7 +642,13 @@ public class JSS
         }
     }
 
-    //Method to link all the job databases together
+    /** Method to link all the job databases together
+     *
+     * @param jobKeywordFile
+     * @param jobSkillsFile
+     * @throws Exception
+     */
+
     public void updateJobs(String jobKeywordFile, String jobSkillsFile) throws Exception
     {
         File_Control reader = new File_Control();
@@ -698,9 +739,6 @@ public class JSS
         userDetails += "First name: " + userSelected.getFirstName() + "\n";
         userDetails += "Surname: " + userSelected.getLastName() + "\n";
 
-
-
-
         return userDetails;
     }
 
@@ -772,15 +810,7 @@ public class JSS
 
                     }
 
-
-
-
-
                 }
-//                this.allMessages.add(new Message(messageID, messageDetails[1],sender,messageTo,messageDetails[4],messageDetails[5],date));
-
-                //TODO deal with \n -- try replace with String methods? -- do this at point of writing
-
 
             }
         } catch (Exception e)
@@ -1299,6 +1329,12 @@ public class JSS
         throw new Exception("Error: Job doesn't exist!");
     }
 
+
+    /**
+     * A method that retrieves from file and returns the messages sent to an individual user
+     * @param userID the user ID for whos messages to return
+     * @return an ArrayList of Messages
+     */
     public ArrayList<Message> listUserMessages(int userID)
     {
         ArrayList<Message> userMessages = new ArrayList<Message>();
