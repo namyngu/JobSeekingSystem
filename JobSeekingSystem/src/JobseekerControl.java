@@ -57,14 +57,14 @@ public class JobseekerControl implements Communication
      */
     public JobseekerControl(JSS program, User user, ArrayList<Job> jobs, ArrayList<Location> locations,
                             ArrayList<JobCategory> categories) {
-
+        this.program = program;
         jobseeker = new Jobseeker(user.getUserID(), user.getFirstName(), user.getLastName(), user.getUserName(), user.getPassword(),user.isActive(), true);
         jobList = jobs;
         locationList = locations;
         jobCategoryList = categories;
         mainSearch = new Search(this, jobList, locationList, jobCategoryList);
         JobSeekerHomeGUI jobSeekerHomeGUI = new JobSeekerHomeGUI(this, jobCategoryList, locationList, jobseeker);
-        this.program = program;
+
     }
 
     /**
