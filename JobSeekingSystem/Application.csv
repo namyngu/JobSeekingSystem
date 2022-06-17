@@ -1,8 +1,8 @@
-applicationID,jobSeekerID,Message/Cover Letter
-8,1,"Hi, my name is"
-3,2,"Howdy,"
-2,3,"Sup,"
-10,10,Hire me
+messageID,jobID, status
+8,1,Pending
+3,2,Pending
+2,3,Accepted
+10,10,Rejected
 3,5,
 5,3,
 9,3,

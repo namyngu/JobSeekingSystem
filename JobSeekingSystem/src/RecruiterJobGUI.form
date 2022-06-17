@@ -173,7 +173,7 @@
               </component>
               <component id="c2d10" class="javax.swing.JLabel" binding="locationLabel">
                 <constraints>
-                  <grid row="9" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font style="0"/>
@@ -234,9 +234,9 @@
                   <text value="$"/>
                 </properties>
               </component>
-              <component id="8f1e0" class="javax.swing.JLabel">
+              <component id="8f1e0" class="javax.swing.JLabel" binding="salaryLabel">
                 <constraints>
-                  <grid row="11" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font size="12" style="1"/>

@@ -5,6 +5,8 @@ TODO upon login transfer control to relevant subclass controller
 
  */
 
+import com.sun.source.tree.TryTree;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,8 +14,8 @@ import java.util.ArrayList;
 
 public class JSS
 {
-    private static ArrayList<String> categories;
-    private static int nextJobID;
+
+    private ArrayList<Application> applicationList = new ArrayList<>();
     private ArrayList<Message> allMessages;
     private static int nextMessageID;
     private final File_Control fileControl = new File_Control();
@@ -106,7 +108,14 @@ public class JSS
 //            JobSeekerApplication testJob = new JobSeekerApplication();
         }
 
-        //display();
+        try
+        {
+            importApplicationList("Application.csv");
+        } catch (Exception e)
+        {
+            System.out.println("FATAL ERROR!! Failed to import applications!!");
+        }
+
     }
     /**
     non default constructor takes reason for needing constructor
@@ -115,6 +124,160 @@ public class JSS
     public JSS (String reason)
     {
         System.out.println("reason non default JSS object created");
+    }
+
+    public int authenticateUser(String username, String password)
+    {
+        int userIndex = Validation.usernameIndex(userList, username);
+
+        if(userIndex < 0)
+        {
+            return userIndex;
+
+        }
+
+        String encryptedPW = EncryptMe.encryptThisString(password);
+        if(!encryptedPW.equals(userList.get(userIndex).getPassword()))
+        {
+            userIndex = -1;
+            return userIndex;
+        }
+
+        if(!userList.get(userIndex).isActive())
+        {
+            userIndex = -2;
+            return userIndex;
+        }
+
+        return userIndex;
+
+    };
+
+    //Verifies username/password & logs the user in.
+    public void login(int userIndex) throws Exception
+    {
+        // 1. Verify username
+
+
+
+//        boolean Exists = false;
+//        int userIndex = 0;
+//        for (User tmpUser : userList)
+//        {
+//            if (tmpUser.getUserName().equals(username))
+//            {
+//                //Match on username
+//                Exists = true;
+//                break;
+//            }
+//            userIndex++;
+//        }
+//
+//        if (!Exists)
+//        {
+//            //We did not find a username matching the entered name
+//            throw new Exception("Username doesn't exist!");
+//        }
+//
+//        // 2. Verify password
+//        boolean passwordMatch = false;
+//
+//        //hash user's password
+//        String encryptedPW = EncryptMe.encryptThisString(password);
+//        if (encryptedPW.equals(userList.get(userIndex).getPassword()))
+//            passwordMatch = true;
+//
+//        if (!passwordMatch)
+//        {
+//            //This user's password did not match their stored password
+//            throw new Exception("passwords do not match!");
+//        }
+//
+//        //2.1 check if the account is locked
+//
+//        if (!userList.get(userIndex).isActive())
+//        {
+//            PromptGUI locked = new PromptGUI("This account has been locked.  Contact Administrator");
+//            throw new Exception("Account Locked!");
+//        }
+
+        // 3. Let's check what kind of account this user should have
+        String accountType = userList.get(userIndex).getUserType();
+        switch (accountType)
+        {
+            case "Admin":
+                try
+                {
+                    AdminControl adminControl = new AdminControl((Administrator) userList.get(userIndex), this);
+                    AdminGUI adminGUI = new AdminGUI(adminControl, this);
+//                    throw new Exception("Success! Logging you in as " + accountType + "...");
+                    break;
+                }
+                catch (Exception e)
+                {
+
+                    PromptGUI error = new PromptGUI("Contact Administrator", e.getMessage());
+
+                }
+
+            case "Jobseeker":
+                //Do something else
+                JobseekerControl jobSeekerControl = new JobseekerControl(this,userList.get(userIndex), jobList, locationList, jobCategoryList);
+                break;
+
+            case "Recruiter":
+                //Launch Recruiter Control
+                RecruiterControl recruiterControl = new RecruiterControl(this,userList.get(userIndex), jobList, locationList, jobCategoryList, userList);
+                break;
+
+            default:
+                throw new Exception("error logging user in!");
+        }
+    }
+
+    //Method to import application from csv to memory
+    public void importApplicationList(String applicationFile) throws Exception
+    {
+        File_Control io = new File_Control();
+        String applicationContent = "";
+        try
+        {
+            applicationContent = io.readFile(applicationFile);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to read files");
+        }
+        if (applicationContent.trim().isEmpty())
+            throw new Exception("File cannot be empty");
+
+        //split each application into an array
+        String[] application = applicationContent.split("\n");
+
+        //iteration through each application array
+        for (int i = 1; i < application.length; i++)
+        {
+            //if line is empty, skip it.
+            if (application[i].isEmpty())
+            {
+                System.out.println("Warning: empty line in Application.csv at line: " + i + ", skipping...");
+                continue;
+            }
+
+            //split each application into applicationDetails
+            //messageID, jobID, status
+            String[] applicationDetails = application[i].split(",");
+
+            //find messages for applications then import application to applicationList
+            for (Message tmpMsg : allMessages)
+            {
+                if (tmpMsg.getMessageID() == Integer.parseInt(applicationDetails[0]))
+                {
+                    importApplication(tmpMsg.getMessageID(), tmpMsg.getHasReceived(), tmpMsg.getSenderID(),
+                            tmpMsg.getReceiverID(), tmpMsg.getHeader(), tmpMsg.getBody(), Integer.parseInt(applicationDetails[1]), tmpMsg.getSentDate());
+                }
+            }
+        }
     }
 
     //Method to read in the user list into memory
@@ -466,7 +629,20 @@ public class JSS
         return count;
     }
 
-    //Method to import location from csv file
+    //Method to import application to applicationList arrayList
+    public void importApplication(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate)
+    {
+        try
+        {
+            Application application = new Application(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate);
+            applicationList.add(application);
+        } catch (Exception e)
+        {
+            System.out.println("Error failed to import application, check your parameters!");
+        }
+    }
+
+    //Method to import location from csv to memory
     public void importLocation(int locationID, String locationState, int postCode, String city)
     {
         try
@@ -492,6 +668,7 @@ public class JSS
      * @param jobDescription a brief description of the job
      */
 
+    //import existing job in .csv file
     public void importJob(int jobID, String jobTitle, String employer, int recruiterID, String jobType, String jobStatus, int salary, int locationID, String jobDescription)
     {
         try
@@ -567,6 +744,30 @@ public class JSS
      * @param userPhone the users phone number
      * @throws Exception thrown if the username already exists or there is an issue with creating the user
      */
+
+    //Create application and links it to the job
+    public Application createApplication(boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate) throws Exception
+    {
+        //Create application
+        int messageID = issueMessageID();
+        try
+        {
+            Application application = new Application(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate);
+
+            //Link application to job
+            Job job = findJob(jobList, application.getJobRef());
+            job.getApplications().add(application);
+
+            //write application to Application csv.
+            this.saveApplication(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate);
+            return application;
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error failed to create application.");
+        }
+        throw new Exception("Error failed to create application!");
+    }
 
     //Create User
     public void createUser(String firstName, String lastName, String userName, String password, String userType, Location userLocation, String userEmail, String userPhone) throws Exception
@@ -715,6 +916,27 @@ public class JSS
         }
     }
 
+    //Method to save Application to Application.csv
+    public void saveApplication(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate)
+    {
+        try
+        {
+            //write to application.csv
+            String applicationData = messageID + "," + jobID + ",Pending";
+            File_Control io = new File_Control();
+            io.writeFile("Application.csv", applicationData);
+
+            //write to messages.csv
+            String messageData = messageID + "," + "sent," + senderID + "," + receiverID + "," + header + "," + text + "," + jobID + "," + sentDate;
+            io.writeFile("messages.csv", messageData);
+
+        } catch (Exception e)
+        {
+            System.out.println("Error failed to save application into csv.");
+        }
+
+    }
+
     //Method to save user to users.csv
     public void saveUser(int userID, String firstName, String lastName, String userName, String password, String userType, boolean active)
     {
@@ -738,6 +960,9 @@ public class JSS
         userDetails += "Account type: " + userSelected.getUserType() + "\n";
         userDetails += "First name: " + userSelected.getFirstName() + "\n";
         userDetails += "Surname: " + userSelected.getLastName() + "\n";
+
+
+
 
         return userDetails;
     }
@@ -791,6 +1016,7 @@ public class JSS
                     hasMail =true;
                     User temp = this.userList.get(userIndex-1);
 
+
                     //TODO differentiate between messages and applications etc here
                     if (messageDetails[6].equalsIgnoreCase("Application"))
                     {
@@ -809,6 +1035,10 @@ public class JSS
                         this.allMessages.add(message);
 
                     }
+
+
+
+
 
                 }
 

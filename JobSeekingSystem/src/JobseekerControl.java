@@ -78,14 +78,20 @@ public class JobseekerControl implements Communication
     {
         boolean sent = false;
         JSS program = this.relayProgram();
-        Job applyFor = jobList.get(jobID);
-        int recruiterID = applyFor.getRecruiterID();
-        LocalDate date = LocalDate.now();
+
         try
         {
-            int messageID = program.issueMessageID();
-            Application application = new Application(messageID,this.jobseeker.getUserID(), recruiterID, "Application", text, date);
-            application.setJobRef(applyFor.getJobID());
+            Job applyFor = findJob(jobList, jobID);
+            int recruiterID = applyFor.getRecruiterID();
+            LocalDate date = LocalDate.now();
+
+            try
+            {
+                //Creates application, writes it to csv and links it to a job.
+                Application application = program.createApplication(true,this.jobseeker.getUserID(), recruiterID, "Application", text, jobID, date);
+
+                //Link application to job
+                applyFor.getApplications().add(application);
 
             sent = this.sendMessage(application);
 
@@ -93,9 +99,19 @@ public class JobseekerControl implements Communication
         catch (Exception e)
         {
             e.printStackTrace();
+
+                return sent;
+            }
+
         }
-        return sent;
+        catch (Exception e)
+        {
+            System.out.println("Error: Failed to find job to apply for!");
+        }
+        return false;
     }
+
+
 
     /**
      * This is the display method for the class.
@@ -119,6 +135,28 @@ public class JobseekerControl implements Communication
             System.out.println(jobCat.toString());
         }
         System.out.println("}");
+    }
+
+
+    /**
+     * This method looks for a specific Job in the list of Jobs and returns it.
+     * @param jobList   an ArrayList of Jobs in the system.
+     * @param ID        an Integer containing the Job ID number to be searched for.
+     * @return          a Job which matches the specified ID number.
+     * @throws Exception Exceptions are thrown if the specified Job cannot be found.
+     */
+    public Job findJob(ArrayList<Job> jobList, int ID) throws Exception
+    {
+        Job myJob = null;
+        for (Job tmpJob : jobList)
+        {
+            if (tmpJob.getJobID() == ID)
+            {
+                myJob = tmpJob;
+                return myJob;
+            }
+        }
+        throw new Exception("Error: Job doesn't exist!");
     }
 
     /**
