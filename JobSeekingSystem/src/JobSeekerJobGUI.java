@@ -16,7 +16,6 @@ public class JobSeekerJobGUI {
     private JButton submitApplicationButton;
     private ArrayList<Job> jobList;
     private ArrayList<Location> locationList;
-    private ArrayList<JobCategory> jobCategoryList;
 
     public JobSeekerJobGUI() {
 
@@ -41,7 +40,6 @@ public class JobSeekerJobGUI {
 
         // Initialize our fields so we can obtain necessary job information to display.
         jobList = control.getJobList();
-        jobCategoryList = control.getJobCategoryList();
         locationList = control.getLocationList();
 
         // Apply Job Details to the GUI.
