@@ -96,17 +96,11 @@ public class AdminControl implements Communication
         return admin.getFirstName();
     }
 
-    public ArrayList<Message> relayMessages()
-    {
-
-
-        ArrayList<Message> toRelay = this.admin.getMessages();
-
-
-
-        return toRelay;
-
-    }
+//    public ArrayList<Message> relayMessages()
+//    {
+//        ArrayList<Message> toRelay = this.admin.getMessages();
+//        return toRelay;
+//    }
 
     /**
      * This is the Accessor method for the admin field.

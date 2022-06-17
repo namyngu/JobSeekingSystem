@@ -6,7 +6,9 @@
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class RecruiterControl {
+public class RecruiterControl implements Communication
+
+{
 
     private Recruiter recruiter;
     private Search mainSearch;
@@ -315,5 +317,18 @@ public class RecruiterControl {
             }
         }
         throw new Exception("Error: Job doesn't exist!");
+    }
+
+
+    @Override
+    public User relayUser()
+    {
+        return this.recruiter;
+    }
+
+    @Override
+    public JSS relayProgram()
+    {
+        return this.program;
     }
 }

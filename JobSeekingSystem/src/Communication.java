@@ -3,6 +3,25 @@ import java.util.ArrayList;
 
 public interface Communication
 {
+    //method checks messages of User
+    default boolean checkMessages()
+    {
+        boolean hasMessages = false;
+        JSS program = this.relayProgram();
+        int userID =  this.relayUser().getUserID();
+        if (program.checkMessages(userID) == true)
+        {
+            hasMessages = true;
+        }
+        return hasMessages;
+    }
+
+    default String retrieveUserName()
+    {
+        User user = this.relayUser();
+        return user.getUserName();
+
+    }
 
     default boolean sendMessage(JSS program, Message message)
     {
@@ -49,10 +68,9 @@ public interface Communication
         int senderID = message.getSenderID();
         return senderID;
     }
+
     default Message messageToOpen(int messageID)
     {
-
-
         User user = this.relayUser();
 
         ArrayList<Message> messages = user.getMessages();
@@ -83,9 +101,25 @@ public interface Communication
         //mark the message as sent
         program.markAsSent(toOpen);
 
-
-
         return toOpen;
+    }
+
+    default ArrayList<Message> retrieveMessages()
+    {
+        User user = this.relayUser();
+        relayProgram().checkMessages(user.getUserID());
+        ArrayList<Message> toRelay = user.getMessages();
+        return toRelay;
+    }
+//alternative to debug issue with recruiter control and GUI
+    default ArrayList<Message> fetchMessages()
+    {
+        User user = this.relayUser();
+
+        JSS program = this.relayProgram();
+        ArrayList<Message> toRelay = program.listUserMessages(user.getUserID());
+
+        return toRelay;
     }
 
     default boolean checkHasReceived (int messageID)

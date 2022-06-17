@@ -175,7 +175,9 @@ public abstract class User
      */
     public ArrayList<Message> getMessages()
     {
+
         return messages;
+
     }
 
     /**

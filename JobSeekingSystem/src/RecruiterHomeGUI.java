@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class RecruiterHomeGUI {
+public class RecruiterHomeGUI
+
+{
     private RecruiterControl myParent;
     private JTabbedPane recruiterNav;
     private JPanel jobsContainer;
@@ -36,6 +38,7 @@ public class RecruiterHomeGUI {
     private JLabel searchInstructionsText;
     private JButton logoutButton;
     private JList inboxList;
+
     private ArrayList<Message> userMessages;
     private DefaultListModel inboxListModel;
 
@@ -60,8 +63,34 @@ public class RecruiterHomeGUI {
         DefaultListModel skillsListGUI = new DefaultListModel();
 
         this.inboxListModel = new DefaultListModel();
-        this.userMessages = parent.getRecruiter().getMessages();
+
         this.inboxList.setModel(inboxListModel);
+
+        //retrieve messages for inbox
+
+        if (this.myParent.checkMessages() == false)
+        {
+            refreshList("Clear inbox...",inboxList,inboxListModel);
+        }
+        else
+        {
+//            JSS program = new JSS();
+//            this.userMessages = pr
+            this.userMessages = this.myParent.fetchMessages();
+
+            for (Message each: userMessages)
+            {
+
+                String toDisplay = "";
+
+                String senderName = this.myParent.retrieveUserName();
+
+                toDisplay += senderName + " Re: " + each.getHeader();
+
+                refreshList(toDisplay,inboxList,inboxListModel);
+            }
+        }
+
 
         try {
             populateSkills("SkillList.csv");
@@ -327,6 +356,11 @@ public class RecruiterHomeGUI {
         file.close();
     }
 
+    private void refreshList(String content, JList list, DefaultListModel listModel)
+    {
+        list.setVisible(true);
+        listModel.addElement(content);
+    }
 
 }
 
