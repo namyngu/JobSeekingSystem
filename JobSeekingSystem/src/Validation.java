@@ -90,5 +90,27 @@ public class Validation {
         return validEmail;
     }
 
+    /**
+     * This method checks an input string (email) and compares to a regex pattern.
+     * @param email     a String of the email to be changed against the regex pattern
+     * @param warning  a Jlabel that is used to flash a warning if the email is invalid
+     * @return          a Boolean describing if the string matches the email format.
+     */
+    public static Boolean validInputs(JTextField[] inputs, JLabel[] warningLabels, JLabel[] inputLabels)
+    {
+        boolean valid = true;
+
+        for (int i = 0; i < inputs.length; i++) {
+
+            if((Validation.isInputBlank(inputs[i])))
+            {
+                Validation.invalidInputWarning(warningLabels[i], inputLabels[i].getText() + " cannot be blank");
+                valid =  false;
+            }
+        }
+
+        return valid;
+    }
+
 }
 
