@@ -26,6 +26,13 @@ public class Invitation extends Message
     }
 
     /**
+     * This is the display method for the class.
+     */
+    public void display(){
+        System.out.println("Job ID: " + jobID);
+    }
+
+    /**
      * This is the Accessor method for the jobID field.
      * @return an Integer representing the ID number of the corresponding Job.
      */
