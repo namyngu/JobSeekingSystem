@@ -47,7 +47,8 @@ public interface Communication
         else if (message instanceof Invitation)
 
         {
-
+            int jobRef = ((Invitation) message).getJobID();
+            program.storeMessage(messageID, false, senderID, receiverID, header, body, jobRef,date);
         }
             else
 
