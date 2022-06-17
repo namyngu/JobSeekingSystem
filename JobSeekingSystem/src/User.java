@@ -1,5 +1,5 @@
 /**
- * This method represents a user in the System, and contains all the necessary
+ * This class represents a user in the System, and contains all the necessary
  * data for that User.
  * @author  Team D - Tom Barker, Jakeob Clarke-Kennedy, Bradley Meyn, Hoang Nguyen, Gerard Samson-Dekker
  */

@@ -7,13 +7,10 @@ import java.io.*;
 import java.util.*;
 
 public class CreateJobGUI {
-    private JPanel createJobPanel;
-    private JLabel formTitle;
-    private JLabel jobIDLabel;
+
     private JLabel intJobIDLabel;
     private JLabel jobTitleLabel;
     private JTextField jobTitleText;
-    private JLabel recruiterIDLabel;
     private JLabel intRecIDLabel;
     private JLabel employerLabel;
     private JLabel jobTypeLabel;
@@ -29,19 +26,25 @@ public class CreateJobGUI {
     private JComboBox locationStateMenu;
     private JLabel postcodeLabel;
     private JComboBox postcodeMenu;
-    private JLabel descriptionLabel;
     private JTextArea descriptionText;
-    private JLabel categoryLabelPrimary;
-    private JLabel categoryLabelSecondary;
     private JComboBox categoryMenuPrimary;
     private JComboBox categoryMenuSecondary;
     private JLabel statusLabel;
     private JComboBox statusMenu;
     private JButton submitButton;
     private JScrollPane descriptionScroll;
-    private JScrollPane jobTitleScroll;
     private JTextField employerText;
     private JLabel statusMessageLabel;
+    private JLabel categoryLabelPrimary;
+    private JLabel categoryLabelSecondary;
+    private JPanel createJobPanel;
+    private JLabel descriptionWarning;
+    private JLabel employerWarning;
+    private JLabel jobTitleWarning;
+    private JLabel salaryWarning;
+    private JLabel categoryWarning;
+    private JLabel locationWarning;
+    private JLabel skillsWarning;
 
     private User recruiter;
     private ArrayList<Job> jobList;
@@ -57,10 +60,11 @@ public class CreateJobGUI {
     }
     public CreateJobGUI(RecruiterControl recruiterControl) throws IOException {
         JFrame frame = new JFrame("Create Job");
+        frame.setSize ( 500, 300 );
+        frame.setLocationRelativeTo ( null );
         frame.setContentPane(this.createJobPanel);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.pack();
-        frame.setBounds(550, 75, 850, 940);
         frame.setVisible(true);
 
         //Close button event
@@ -88,11 +92,10 @@ public class CreateJobGUI {
         this.job = new Job();
         int numJobs = jobList.size() + 1;
         job.setJobID(numJobs);
-        intJobIDLabel.setText(String.valueOf(numJobs));
+        intJobIDLabel.setText(String.valueOf("Job ID: \n" + numJobs));
 
         job.setRecruiterID(recruiter.getUserID());
 
-        intRecIDLabel.setText(Integer.toString(recruiter.getUserID()));
 
         populateSkills("SkillList.csv", skillsMenu);
         populateCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
@@ -112,29 +115,32 @@ public class CreateJobGUI {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //System.out.println("Submit button has been clicked");
-                if (jobTitleText.getText().isEmpty()) {
-                    PromptGUI prompt = new PromptGUI("Please enter a Job Title!");
+
+
+                JTextField[] inputs = {jobTitleText, employerText, salaryText};
+                JLabel[] warnings = {jobTitleWarning, employerWarning,salaryWarning };
+                JLabel[] labels = {jobTitleLabel, employerLabel, salaryLabel};
+
+                if (!Validation.validInputs(inputs, warnings, labels))
+                {
                     return;
-                }
-                if (employerText.getText().isEmpty()) {
-                    PromptGUI prompt = new PromptGUI("Please enter an Employer!");
-                    return;
-                }
-                if (salaryText.getText().isEmpty()) {
-                    PromptGUI prompt = new PromptGUI("Please enter a Salary!");
-                    return;
-                }
+                };
+
                 if (skillsList.getModel().getSize() == 0) {
-                    PromptGUI prompt = new PromptGUI("Please enter a Skill!");
+                    Validation.invalidInputWarning(skillsWarning, "Jobs must require at least 1 skill");
                     return;
                 }
-                if (String.valueOf(locationStateMenu.getSelectedItem()).isEmpty()) {
-                    PromptGUI prompt = new PromptGUI("Please enter a State!");
+                if (String.valueOf(locationStateMenu.getSelectedItem()).isEmpty() || String.valueOf(postcodeMenu.getSelectedItem()).isEmpty()) {
+                    Validation.invalidInputWarning(locationWarning, "Jobs require location details");
+                    return;
+                }
+
+                if (String.valueOf(categoryMenuSecondary.getSelectedItem()).isEmpty() || String.valueOf(categoryMenuSecondary.getSelectedItem()).isEmpty()) {
+                    Validation.invalidInputWarning(categoryWarning, "Job category is required");
                     return;
                 }
                 if (descriptionText.getText().isEmpty()) {
-                    PromptGUI prompt = new PromptGUI("Please enter a Description!");
+                    Validation.invalidInputWarning(descriptionWarning, "Job desciprtion cannot be blank");
                     return;
                 }
                 frame.setVisible(false);

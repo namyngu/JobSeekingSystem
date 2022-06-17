@@ -90,5 +90,28 @@ public class Validation {
         return validEmail;
     }
 
+    /**
+     * This method loops through an array of JTextFields to check if they are empty, updating the relevant warning label.
+     * @param inputs     an Array of JTextFields that are checked to see if they are empty
+     * @param warningLabels an Array of JLabels that are displayed if the associated input is empty
+     * @param inputLabels an Array of JLabels for the checked inputs used to form the warning message
+     * @return          a Boolean describing if all of the inputs are valid (not empty)
+     */
+    public static Boolean validInputs(JTextField[] inputs, JLabel[] warningLabels, JLabel[] inputLabels)
+    {
+        boolean valid = true;
+
+        for (int i = 0; i < inputs.length; i++) {
+
+            if((Validation.isInputBlank(inputs[i])))
+            {
+                Validation.invalidInputWarning(warningLabels[i], inputLabels[i].getText() + " cannot be blank");
+                valid =  false;
+            }
+        }
+
+        return valid;
+    }
+
 }
 
