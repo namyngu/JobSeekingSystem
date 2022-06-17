@@ -32,9 +32,7 @@ public class RegisterGUI
     private JLabel usernameWarning;
     private JLabel passwordWarning;
     private JSS program;
-
     private ArrayList<Location> locations;
-
     private Location userLocation;
 
 
