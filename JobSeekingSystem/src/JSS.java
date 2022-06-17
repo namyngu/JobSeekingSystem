@@ -721,7 +721,8 @@ public class JSS
         } catch (Exception e) {
             System.out.println("Error failed to read messages!");
         }
-
+        rawInput = rawInput.replaceAll("~", "n");
+        rawInput = rawInput.replaceAll("`", ",");
 //        System.out.println("these are the messages: " + rawInput);
         String[] messageString = rawInput.split("\n");
 
@@ -806,10 +807,10 @@ public class JSS
     public void storeMessage(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String body, int jobRef, LocalDate date)
     {
 
-        header = header.replaceAll(",","<>COMMA");
-        body = body.replaceAll(",", "<>COMMA");
-        header = header.replaceAll("n","<>NEWLINE");
-        body = body.replaceAll("n","<>NEWLINE");
+        header = header.replaceAll(",","`");
+        body = body.replaceAll(",", "`");
+        header = header.replaceAll("n","~");
+        body = body.replaceAll("n","~");
 
 
         String status = "pending";
@@ -848,6 +849,9 @@ public class JSS
             System.out.println("failed to read file allMessagesList");
             e.printStackTrace();
         }
+
+        rawInput = rawInput.replaceAll("~", "n");
+        rawInput = rawInput.replaceAll("`", ",");
         String[] messageString = rawInput.split("\n");
 
         try
@@ -1050,7 +1054,8 @@ public class JSS
         {
             System.out.println("Error failed to read messages!");
         }
-
+        rawInput = rawInput.replaceAll("~", "n");
+        rawInput = rawInput.replaceAll("`", ",");
         String[] messageString = rawInput.split("\n");
         int currentMessageID = 0;
         try
@@ -1102,8 +1107,8 @@ public class JSS
         {
             System.out.println("Error failed to read messages!");
         }
-        rawInput = rawInput.replaceAll("<>NEWLINE", "n");
-        rawInput = rawInput.replaceAll("<>COMMA", ",");
+        rawInput = rawInput.replaceAll("~", "n");
+        rawInput = rawInput.replaceAll("`", ",");
 
 //        System.out.println("these are the messages: " + rawInput);
         String[] messageString = rawInput.split("\n");
@@ -1309,6 +1314,9 @@ public class JSS
             System.out.println("failed to read file fetching user messages");
             e.printStackTrace();
         }
+
+        rawInput = rawInput.replaceAll("~", "n");
+        rawInput = rawInput.replaceAll("`", ",");
         String[] messageString = rawInput.split("\n");
 
         try
