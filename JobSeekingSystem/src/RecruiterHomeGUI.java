@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -38,6 +41,9 @@ public class RecruiterHomeGUI
     private JLabel searchInstructionsText;
     private JButton logoutButton;
     private JList inboxList;
+    private JTextArea messageTextArea;
+    private JTextField replyTextField;
+    private JButton replyButton;
 
     private ArrayList<Message> userMessages;
     private DefaultListModel inboxListModel;
@@ -248,6 +254,38 @@ public class RecruiterHomeGUI
         });
 
         createTable();
+        inboxList.addListSelectionListener(new ListSelectionListener()
+        {
+            @Override
+            public void valueChanged(ListSelectionEvent e)
+            {
+                int selected = inboxList.getSelectedIndex();
+                String display = userMessages.get(selected).getHeader();
+                display += "\n\n";
+                display = userMessages.get(selected).getBody();
+                messageTextArea.setText(display);
+            }
+        });
+        replyButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Message replyTo = userMessages.get(inboxList.getSelectedIndex());
+
+                int senderID = replyTo.getReceiverID();
+                int receiverID = replyTo.getSenderID();
+                String header = "Re: ";
+                String body = replyTextField.getText();
+                LocalDate sentDate = LocalDate.now();
+                Message message = new Message(senderID,receiverID,header,body,sentDate);
+                if ( myParent.sendMessageNoID(message))
+                {
+                    PromptGUI confirm = new PromptGUI("Reply sent");
+                    replyTextField.setText("");
+                }
+            }
+        });
     }
 
     private void createTable()

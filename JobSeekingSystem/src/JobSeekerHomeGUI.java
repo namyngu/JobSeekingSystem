@@ -300,7 +300,7 @@ public class JobSeekerHomeGUI {
             public void actionPerformed(ActionEvent e)
             {
                 Message replyTo = messages.get(inboxList.getSelectedIndex());
-                //TODO need this for message to send
+
                 int senderID = replyTo.getReceiverID();
                int receiverID = replyTo.getSenderID();
                String header = "Re: ";
