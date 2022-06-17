@@ -66,6 +66,7 @@ public class RecruiterHomeGUI
 
         this.inboxList.setModel(inboxListModel);
 
+
         //retrieve messages for inbox
 
         if (this.myParent.checkMessages() == false)
