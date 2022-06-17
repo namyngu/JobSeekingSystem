@@ -1,3 +1,8 @@
+/**
+ * This class is the GUI form for when a User is registering a new account.
+ * @author: Team D - Tom Barker, Jakeob Clarke-Kennedy, Bradley Meyn, Hoang Nguyen, Gerard Samson-Dekker
+ */
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,12 +37,22 @@ public class RegisterGUI
     private JLabel usernameWarning;
     private JLabel passwordWarning;
     private JSS program;
-
     private ArrayList<Location> locations;
-
     private Location userLocation;
 
+    /**
+     * This is the Default constructor for the class.
+     */
+    public RegisterGUI() {
+        program = new JSS();
+        locations = new ArrayList<>();
+        userLocation = new Location();
+    }
 
+    /**
+     * This is a Non-default constructor for the class.
+     * @param program a JSS program which represents the main system.
+     */
     public RegisterGUI(JSS program)
     {
         this.locations = program.getLocationList();
@@ -156,6 +171,10 @@ public class RegisterGUI
         });
     }
 
+    /**
+     * This method loads  all the Locations from the system into the locationSelect
+     * Combo Box.
+     */
     public void buildLocationSelector()
     {
         for (int i = 0; i < locations.size(); i++)
@@ -164,5 +183,6 @@ public class RegisterGUI
         }
     }
 
-
+    // TODO: Display method goes here.
+    // TODO: Setters and getters go here.
 }
