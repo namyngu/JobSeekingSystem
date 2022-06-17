@@ -162,9 +162,8 @@ public class RegisterGUI
      */
     public void buildLocationSelector()
     {
-        for (int i = 0; i < locations.size(); i++)
-        {
-            locationSelect.addItem(locations.get(i).toString());
+        for (Location location : locations) {
+            locationSelect.addItem(location.toString());
         }
     }
 
