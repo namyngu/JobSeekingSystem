@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -303,8 +305,21 @@ public class JobSeekerHomeGUI {
                if ( myParent.sendMessageNoID(message))
                {
                    PromptGUI confirm = new PromptGUI("Reply sent");
-                   replyTextField.setText("");
+                    replyTextField.setText("");
                }
+            }
+        });
+        inboxList.addListSelectionListener(new ListSelectionListener()
+        {
+            @Override
+            public void valueChanged(ListSelectionEvent e)
+            {
+                int selected = inboxList.getSelectedIndex();
+                String display = messages.get(selected).getHeader();
+                display += "\n\n";
+                display = messages.get(selected).getBody();
+                messageTextArea.setText(display);
+
             }
         });
     }
