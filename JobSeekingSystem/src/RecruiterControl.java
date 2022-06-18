@@ -299,6 +299,20 @@ public class RecruiterControl implements Communication
         }
     }
 
+    public Application findApplication(ArrayList<Application> applicationList, int ID) throws Exception
+    {
+        Application myApplication = null;
+        for (Application tmpApplication : applicationList)
+        {
+            if (tmpApplication.getMessageID() == ID)
+            {
+                myApplication = tmpApplication;
+                return myApplication;
+            }
+        }
+        throw new Exception("Error: Job doesn't exist!");
+    }
+
     /**
      * This method looks for a specific Job in the list of Jobs and returns it.
      * @param categoryList   an ArrayList of categories in the system.

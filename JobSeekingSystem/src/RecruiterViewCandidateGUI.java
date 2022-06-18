@@ -22,18 +22,72 @@ public class RecruiterViewCandidateGUI {
     private JLabel candidateLocation;
 
     /**
-     * This is the Default constructor for this class.
+     * This is the Default constructor for this class. Displays from RecruiterHomeGUI
      */
     public RecruiterViewCandidateGUI(){
     }
 
+    public RecruiterViewCandidateGUI(RecruiterControl control, int jobseekerID) {
+        JFrame frame = new JFrame("CandidateGUI");
+        frame.setContentPane(this.candidatePanel);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setLocation(650, 40);
+        frame.setVisible(true);
+
+        //Find jobseeker
+        Jobseeker jobseeker = null;
+        try {
+            for (Jobseeker tmpJobseeker : control.getJobseekerList()) {
+                if (tmpJobseeker.getUserID() == jobseekerID) {
+                    jobseeker = tmpJobseeker;
+                    break;
+                }
+            }
+            //populate labels
+            populateLabels(jobseeker);
+            //populate skillList
+            populateSkills(jobseeker);
+            //populate jobComboBox
+
+        } catch (Exception e) {
+            System.out.println("Error cannot find candidate!");
+        }
+        //populate labels
+        populateLabels(jobseeker);
+        //populate skillList
+        populateSkills(jobseeker);
+        //populate jobComboBox
+        populateJobCombo(control);
+        sendInviteButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                ArrayList<Job> recruiterJobs = control.getRecruiter().getJobs();
+                int selectedIndex = selectJob.getSelectedIndex();
+
+                //get jobID from the selected job
+                String jobSelected = selectJob.getSelectedItem().toString();
+                String[] jobIDandTitle = jobSelected.split(". ");
+
+                int selectedJobID = Integer.parseInt(jobIDandTitle[0]);
+
+                control.sendInvite(jobseekerID,selectedJobID, jobIDandTitle[1]);
+                String toDisplay = "An invitation has been sent";
+
+                PromptGUI confirm = new PromptGUI(toDisplay);
+            }
+        });
+    }
+
     /**
-     * This is a Non-default constructor for the class.
+     * This is a Non-default constructor for the class, displays from RecruiterJobGUI.
      * @param control       a RecruiterControl Object controlling the Recruiter.
      * @param jobseekerID   an Integer containing the ID number of the Jobseeker
      *                      which the Recruiter would like to view details of.
      */
-    public RecruiterViewCandidateGUI(RecruiterControl control, int jobseekerID) {
+    public RecruiterViewCandidateGUI(RecruiterControl control, int jobseekerID, int applicationID, int jobID) {
         JFrame frame = new JFrame("CandidateGUI");
         frame.setContentPane(this.candidatePanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -63,8 +117,10 @@ public class RecruiterViewCandidateGUI {
             populateLabels(jobseeker);
             //populate skillList
             populateSkills(jobseeker);
+
+
             //populate jobComboBox
-            populateJobCombo(control);
+            populateJobCombo(control,jobID);
         sendInviteButton.addActionListener(new ActionListener()
         {
             @Override
@@ -72,12 +128,31 @@ public class RecruiterViewCandidateGUI {
             {
                 ArrayList<Job> recruiterJobs = control.getRecruiter().getJobs();
                 int selectedIndex = selectJob.getSelectedIndex();
-                Job selectedJob = recruiterJobs.get(selectedIndex);
-                int selectedJobID = selectedJob.getJobID();
-                String jobName = selectedJob.getJobTitle();
 
-                control.sendInvite(jobseekerID,selectedJobID, jobName);
+                //get jobID from the selected job
+                String jobSelected = selectJob.getSelectedItem().toString();
+                String[] jobIDandTitle = jobSelected.split(". ");
+                int selectedJobID = Integer.parseInt(jobIDandTitle[0]);
+
+                //change application status to Accepted
+                try
+                {
+                    Job invitedJob = control.findJob(control.getJobList(), selectedJobID);
+                    Application application = control.findApplication(invitedJob.getApplications(), applicationID);
+                    application.setStatus("Accepted");
+                }
+                catch (Exception x)
+                {
+                    System.out.println("Error can't find job");
+                }
+
+                //Send invite and display prompt
+                control.sendInvite(jobseekerID,selectedJobID, jobIDandTitle[1]);
                 String toDisplay = "An invitation has been sent";
+
+
+
+
                 PromptGUI confirm = new PromptGUI(toDisplay);
             }
         });
@@ -186,6 +261,27 @@ public class RecruiterViewCandidateGUI {
         for (int i = 0; i < recruiterJobs.size(); i++)
         {
             selectJob.addItem(recruiterJobs.get(i).getJobID() + ". " +recruiterJobs.get(i).getJobTitle());
+        }
+    }
+
+    /**
+     * This method populates the Jobs this Recruiter has advertised, so they can
+     * invite a Jobseeker to apply.
+     * @param control a RecruiterControl Object which has access to this Recruiter's
+     *                list of Jobs.
+     */
+    public void populateJobCombo(RecruiterControl control, int jobID)
+    {
+        //find job
+        try
+        {
+            Job job = control.findJob(control.getJobList(), jobID);
+            //populate JCombo
+            selectJob.addItem(job.getJobID() + ". " + job.getJobTitle());
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error cannot find job");
         }
     }
 

@@ -125,7 +125,7 @@ public class RecruiterJobGUI {
                             //get jobseeker ID
                             int jobseekerID = tmpApplication.getSenderID();
                             //Launch candidate profile
-                            RecruiterViewCandidateGUI candidateGUI = new RecruiterViewCandidateGUI(control, jobseekerID);
+                            RecruiterViewCandidateGUI Candidate = new RecruiterViewCandidateGUI(control, jobseekerID, tmpApplication.getMessageID(), myJob.getJobID());
                             break;
                         }
                     }
