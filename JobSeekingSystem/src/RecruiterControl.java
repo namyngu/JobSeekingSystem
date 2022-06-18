@@ -382,4 +382,23 @@ public class RecruiterControl implements Communication
         Message invite = new Invitation(messageID,sender,jobseekerID,header,body,date,jobRef);
         this.sendMessage(invite);
     }
+
+    public void sendRejection(int jobseekerID, int jobRef, String jobName)
+    {
+        int messageID = program.issueMessageID();
+        int sender = this.recruiter.getUserID();
+        String header = "Application REJECTED";
+
+        File_Control io = new File_Control();
+
+        String body = "Hi, I am sorry to say that " +
+                "your application for " + jobName + " has been rejected. " +
+                "We wish you all the best in your future endeavours.";
+        LocalDate date = LocalDate.now();
+
+        Message invite = new Invitation(messageID,sender,jobseekerID,header,body,date,jobRef);
+        this.sendMessage(invite);
+    }
 }
+
+

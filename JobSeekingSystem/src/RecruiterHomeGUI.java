@@ -55,9 +55,6 @@ public class RecruiterHomeGUI
         window.add(recruiterNav);
         searchInstructionsText.setVisible(false);
 
-
-
-
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLocation(600,20);
         window.pack();

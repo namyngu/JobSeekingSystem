@@ -20,11 +20,13 @@ public class RecruiterViewCandidateGUI {
     private JLabel nameLabel;
     private JLabel candidateEmail;
     private JLabel candidateLocation;
+    private JButton rejectButton;
 
     /**
      * This is the Default constructor for this class. Displays from RecruiterHomeGUI
      */
     public RecruiterViewCandidateGUI(){
+
     }
 
     public RecruiterViewCandidateGUI(RecruiterControl control, int jobseekerID) {
@@ -34,6 +36,10 @@ public class RecruiterViewCandidateGUI {
         frame.pack();
         frame.setLocation(650, 40);
         frame.setVisible(true);
+
+        //Hide reject button
+        rejectButton.setFocusable(false);
+        rejectButton.setVisible(false);
 
         //Find jobseeker
         Jobseeker jobseeker = null;
@@ -95,6 +101,10 @@ public class RecruiterViewCandidateGUI {
         frame.setLocation(650, 40);
         frame.setVisible(true);
 
+        //Show reject Button
+        rejectButton.setFocusable(true);
+        rejectButton.setVisible(true);
+
         //Find jobseeker
         Jobseeker jobseeker = null;
         try {
@@ -121,14 +131,34 @@ public class RecruiterViewCandidateGUI {
 
             //populate jobComboBox
             populateJobCombo(control,jobID);
+
+        rejectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Job rejectedJob = null;
+                try
+                {
+                    rejectedJob = control.findJob(control.getJobList(), jobID);
+                    Application application = control.findApplication(rejectedJob.getApplications(), applicationID);
+                    application.setStatus("Rejected");
+                }
+                catch (Exception x)
+                {
+                    System.out.println("Error cannot find application");
+                }
+
+                //Send invite and display prompt
+                control.sendRejection(jobseekerID,jobID, rejectedJob.getJobTitle());
+                String toDisplay = "A rejection letter has been sent";
+                PromptGUI confirm = new PromptGUI(toDisplay);
+            }
+        });
+
         sendInviteButton.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                ArrayList<Job> recruiterJobs = control.getRecruiter().getJobs();
-                int selectedIndex = selectJob.getSelectedIndex();
-
                 //get jobID from the selected job
                 String jobSelected = selectJob.getSelectedItem().toString();
                 String[] jobIDandTitle = jobSelected.split(". ");
@@ -137,13 +167,13 @@ public class RecruiterViewCandidateGUI {
                 //change application status to Accepted
                 try
                 {
-                    Job invitedJob = control.findJob(control.getJobList(), selectedJobID);
+                    Job invitedJob = control.findJob(control.getJobList(), jobID);
                     Application application = control.findApplication(invitedJob.getApplications(), applicationID);
                     application.setStatus("Accepted");
                 }
                 catch (Exception x)
                 {
-                    System.out.println("Error can't find job");
+                    System.out.println("Error can't find job and application");
                 }
 
                 //Send invite and display prompt
