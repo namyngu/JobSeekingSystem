@@ -320,7 +320,7 @@ public class JSS
 
                     //messageID, hasReceived, senderID, receiverID, header, body, jobID, sentDate
                     importApplication(Integer.parseInt(messageDetails[0]), false, Integer.parseInt(messageDetails[2]),
-                            Integer.parseInt(messageDetails[3]), messageHead, messageBody, Integer.parseInt(applicationDetails[1]), date);
+                            Integer.parseInt(messageDetails[3]), messageHead, messageBody, Integer.parseInt(applicationDetails[1]), date, applicationDetails[2]);
                 }
             }
         }
@@ -565,11 +565,11 @@ public class JSS
     }
 
     //Method to import application to applicationList arrayList
-    public void importApplication(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate)
+    public void importApplication(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate, String status)
     {
         try
         {
-            Application application = new Application(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate);
+            Application application = new Application(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate, status);
             applicationList.add(application);
             //link application to jobs
             Job myJob = findJob(jobList, jobID);

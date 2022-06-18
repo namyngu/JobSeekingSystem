@@ -80,6 +80,18 @@ public class File_Control {
     }
 
     /**
+     * This method overwrites data of a csv.
+     * @param fileName
+     * @param data
+     */
+    public void overwriteFile(String fileName, String data) throws Exception
+    {
+        FileWriter writer = new FileWriter(fileName);
+        writer.write(data);
+        writer.close();
+    }
+
+    /**
      * This method reads in a file of data and returns it.
      * @param fileName      a String describing the filename in the database
      *                      file directory.
@@ -159,7 +171,6 @@ public class File_Control {
         String jobDescription2 = jobDescription.replaceAll("\n", "|");
 
         String data = jobID + "," + jobTitle + "," + employer + "," + recruiterID + "," + jobType + "," + jobStatus + "," + salary + "," + locationID + "," + "\"" + jobDescription2 + "\"";
-        System.out.println("data is: " + data);
         String data2 = "";
 
         for (String tmpSkill : skills)
@@ -222,7 +233,6 @@ public class File_Control {
         String jobDescription2 = jobDescription.replaceAll("\n", "|");
 
         String data = jobID + "," + jobTitle + "," + employer + "," + recruiterID + "," + jobType + "," + jobStatus + "," + salary + "," + locationID + "," + "\"" + jobDescription2 + "\"";
-        System.out.println("data is: " + data);
         String data2 = "";
 
         ArrayList<String> updatedSkills = removeById(jobID, "JobSkills.csv");

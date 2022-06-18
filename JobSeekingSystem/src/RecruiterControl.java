@@ -367,6 +367,7 @@ public class RecruiterControl implements Communication
     {
         return this.program;
     }
+
 //int messageID, int senderID, int receiverID, String header, String text, LocalDate sentDate, int jobID
     public void sendInvite(int jobseekerID, int jobRef, String jobName)
     {

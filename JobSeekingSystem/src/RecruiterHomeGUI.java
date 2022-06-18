@@ -300,7 +300,7 @@ public class RecruiterHomeGUI
 
         for (int i = 0; i < activeJobs.size(); i++)
         {
-            for (int j = 0; j < 6; j++)
+            for (int j = 0; j < 7; j++)
             {
                 switch (j)
                 {

@@ -66,19 +66,39 @@ public class Application extends Message
 
     /**
      * This is a Non-default constructor for the class.
-     * @param messageID     an Integer containing the ID number of the Application.
-     * @param hasReceived   a Boolean confirming if message was received.
-     * @param senderID      an Integer containing the ID number of the sender.
-     * @param receiverID    an Integer containing the ID number of the recipient.
-     * @param header        a String containing the subject line of the Application.
-     * @param text          a String containing the body of the Application.
-     * @param sentDate      a LocalDate containing the date on which the Application was sent.
+     * @param messageID
+     * @param hasReceived
+     * @param senderID
+     * @param receiverID
+     * @param header
+     * @param text
+     * @param jobID
+     * @param sentDate
      */
     public Application(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate)
     {
         super(messageID, hasReceived, senderID, receiverID, header, text, sentDate);
         this.jobID = jobID;
         this.status = "Pending";
+    }
+
+    /**
+     * This is a Non-default constructor for the class.
+     * @param messageID
+     * @param hasReceived
+     * @param senderID
+     * @param receiverID
+     * @param header
+     * @param text
+     * @param jobID
+     * @param sentDate
+     * @param status
+     */
+    public Application(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate, String status)
+    {
+        super(messageID, hasReceived, senderID, receiverID, header, text, sentDate);
+        this.jobID = jobID;
+        this.status = status;
     }
 
     /**
@@ -133,5 +153,64 @@ public class Application extends Message
      */
     public void setStatus(String status) {
         this.status = status;
+        try
+        {
+            saveStatus(status);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to save application status to memory!");
+        }
+    }
+
+    /**
+     * Method to write Application status to csv.
+     * @throws Exception
+     */
+    public void saveStatus(String status) throws Exception
+    {
+        File_Control io = new File_Control();
+        String appContent = "";
+        //Reading from application csv.
+        try
+        {
+            appContent = io.readFile("Application.csv");
+            String [] application = appContent.split("\n");
+            //Skip first line
+            for (int i = 0; i < application.length; i++)
+            {
+                //skip first line
+                if (i != 0)
+                {
+                    //messageID,jobID,Status
+                    String[] appDetails = application[i].split(",");
+                    if (Integer.parseInt(appDetails[0]) == this.getMessageID())
+                    {
+                        appDetails[2] = status;
+                        application[i] = appDetails[0] + "," + appDetails[1] + "," + appDetails[2];
+                    }
+                }
+            }
+
+            //write back to the csv
+            String appContent2 = "";
+            //skip first line
+            for (int i = 0; i < application.length; i++)
+            {
+                appContent2 += application[i] + "\n";
+            }
+            try
+            {
+                io.overwriteFile("Application.csv", appContent2);
+            }
+            catch (Exception e)
+            {
+                System.out.println("Failed to write file");
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to read file");
+        }
     }
 }
