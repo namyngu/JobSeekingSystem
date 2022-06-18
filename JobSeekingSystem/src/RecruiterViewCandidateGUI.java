@@ -77,6 +77,8 @@ public class RecruiterViewCandidateGUI {
                 String jobName = selectedJob.getJobTitle();
 
                 control.sendInvite(jobseekerID,selectedJobID, jobName);
+                String toDisplay = "An invitation has been sent";
+                PromptGUI confirm = new PromptGUI(toDisplay);
             }
         });
     }
