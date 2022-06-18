@@ -136,7 +136,7 @@ public class ManageJobGUI extends CreateJobGUI {
             }
         });
 
-        //Event on close
+        //Close button event
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -197,20 +197,20 @@ public class ManageJobGUI extends CreateJobGUI {
         });
     }
 
-        public void populateForm(Job job, DefaultListModel popSkillsList) throws IOException {
-            intNumAppLabel.setText(Integer.toString(job.getApplications().size()));
-            intJobIDLabel.setText(Integer.toString(job.getJobID()));
-            intRecIDLabel.setText(Integer.toString(job.getRecruiterID()));
-            jobTitleText.setText(job.getJobTitle());
-            employerText.setText(job.getEmployer());
+    public void populateForm(Job job, DefaultListModel popSkillsList) throws IOException {
+        //intNumAppLabel.setText(Integer.toString(job.getApplications().size()));
+        //intJobIDLabel.setText(Integer.toString(job.getJobID()));
+        //intRecIDLabel.setText(Integer.toString(job.getRecruiterID()));
+        jobTitleText.setText(job.getJobTitle());
+        employerText.setText(job.getEmployer());
 
-            jobTypeMenu.setSelectedItem(job.getJobType());
-            salaryText.setText(String.valueOf(job.getSalary()));
-            //skills list
-            for (String skill : job.getSkills()) {
-                popSkillsList.addElement(skill);
-                skillsList.setModel(popSkillsList);
-            }
+        jobTypeMenu.setSelectedItem(job.getJobType());
+        salaryText.setText(String.valueOf(job.getSalary()));
+        //skills list
+        for (String skill : job.getSkills()) {
+            popSkillsList.addElement(skill);
+            skillsList.setModel(popSkillsList);
+        }
             //location list
             for (Location tmpLocation : control.getLocationList()) {
                 if (tmpLocation.getLocationID() == job.getLocationID()) {
@@ -347,10 +347,6 @@ public class ManageJobGUI extends CreateJobGUI {
             control.setJobList(jobList);
 
             RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(control, control.getLocationList());
-        }
-
-        private void createUIComponents() {
-            // TODO: place custom component creation code here
         }
     }
 
