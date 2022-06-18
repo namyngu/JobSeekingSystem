@@ -268,13 +268,24 @@ public class JSS
             //messageID, jobID, status
             String[] applicationDetails = application[i].split(",");
 
+            //Parses newlines and commas for message header
+            String messageHead = applicationDetails[4];
+            messageHead = messageHead.replaceAll("`",",");
+            messageHead = messageHead.replaceAll("~",",");
+
+            //Parses newlines and commas for message body
+            String messageBody = applicationDetails[5];
+            messageBody = messageBody.replaceAll("`",",");
+            messageBody = messageBody.replaceAll("~",",");
+
+            //TODO: Check with Gerard, does messages get loaded to allMessages on launch?
             //find messages for applications then import application to applicationList
             for (Message tmpMsg : allMessages)
             {
                 if (tmpMsg.getMessageID() == Integer.parseInt(applicationDetails[0]))
                 {
                     importApplication(tmpMsg.getMessageID(), tmpMsg.getHasReceived(), tmpMsg.getSenderID(),
-                            tmpMsg.getReceiverID(), tmpMsg.getHeader(), tmpMsg.getBody(), Integer.parseInt(applicationDetails[1]), tmpMsg.getSentDate());
+                            tmpMsg.getReceiverID(), tmpMsg.getHeader(), messageBody, Integer.parseInt(applicationDetails[1]), tmpMsg.getSentDate());
                 }
             }
         }
@@ -625,7 +636,12 @@ public class JSS
     public Application createApplication(boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate) throws Exception
     {
         //Create application
+
+        //TODO: Check with gerard with messageID incrementation.
+        //Gerard's way of incrementing messageID
         int messageID = issueMessageID();
+        //Nam's way of incrementing messageID - only works if allMessages is loaded on JSS launch
+        //int messageID = allMessages.size() + 1;
         try
         {
             Application application = new Application(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate);
@@ -633,6 +649,12 @@ public class JSS
             //Link application to job
             Job job = findJob(jobList, application.getJobRef());
             job.getApplications().add(application);
+
+            //convert newlines and commas in message body and header to store in csv
+            header = header.replaceAll("\n","~");
+            header = header.replaceAll(",","`");
+            text = text.replaceAll("\n","~");
+            text = text.replaceAll(",","`");
 
             //write application to Application csv.
             this.saveApplication(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate);
@@ -950,7 +972,7 @@ public class JSS
      */
     public void storeMessage(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String body, int jobRef, LocalDate date)
     {
-
+        //TODO: newline is "\n" not n - check with Gerard
         header = header.replaceAll(",","`");
         body = body.replaceAll(",", "`");
         header = header.replaceAll("n","~");

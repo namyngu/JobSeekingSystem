@@ -90,10 +90,8 @@ public class JobseekerControl implements Communication
                 //Creates application, writes it to csv and links it to a job.
                 Application application = program.createApplication(true,this.jobseeker.getUserID(), recruiterID, "Application", text, jobID, date);
 
-                //Link application to job
-                applyFor.getApplications().add(application);
-
-            sent = this.sendMessage(application);
+                //TODO: Check with gerard if commenting this out is ok - creates duplicate messages in message.csv
+                //sent = this.sendMessage(application);
 
         }
         catch (Exception e)
