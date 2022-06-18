@@ -270,24 +270,27 @@ public class JSS
             //messageID, jobID, status
             String[] applicationDetails = application[i].split(",");
 
-            //Parses newlines and commas for message header
-            String messageHead = applicationDetails[4];
-            messageHead = messageHead.replaceAll("`",",");
-            messageHead = messageHead.replaceAll("~","\n");
-
-            //Parses newlines and commas for message body
-            String messageBody = applicationDetails[5];
-            messageBody = messageBody.replaceAll("`",",");
-            messageBody = messageBody.replaceAll("~","\n");
-
             //TODO: Check with Gerard, does messages get loaded to allMessages on launch?
             //find messages for applications then import application to applicationList
             for (Message tmpMsg : allMessages)
             {
                 if (tmpMsg.getMessageID() == Integer.parseInt(applicationDetails[0]))
                 {
+
+
+                    /*
+                    //Parses newlines and commas for message header
+                    String messageHead = applicationDetails[4];
+                    messageHead = messageHead.replaceAll("`",",");
+                    messageHead = messageHead.replaceAll("~","\n");
+
+                    //Parses newlines and commas for message body
+                    String messageBody = applicationDetails[5];
+                    messageBody = messageBody.replaceAll("`",",");
+                    messageBody = messageBody.replaceAll("~","\n");
+                    */
                     importApplication(tmpMsg.getMessageID(), tmpMsg.getHasReceived(), tmpMsg.getSenderID(),
-                            tmpMsg.getReceiverID(), tmpMsg.getHeader(), messageBody, Integer.parseInt(applicationDetails[1]), tmpMsg.getSentDate());
+                            tmpMsg.getReceiverID(), tmpMsg.getHeader(), tmpMsg.getBody(), Integer.parseInt(applicationDetails[1]), tmpMsg.getSentDate());
                 }
             }
         }
@@ -639,7 +642,6 @@ public class JSS
     {
         //Create application
 
-        //TODO: Check with gerard with messageID incrementation.
         //Gerard's way of incrementing messageID
         int messageID = issueMessageID();
         //Nam's way of incrementing messageID - only works if allMessages is loaded on JSS launch
@@ -1412,6 +1414,20 @@ public class JSS
             }
         }
         throw new Exception("Error: Job doesn't exist!");
+    }
+
+    public Message findMessage(ArrayList<Message> allMessages, int messageID) throws Exception
+    {
+        Message myMessage = null;
+        for (Message tmpMsg : allMessages)
+        {
+            if (tmpMsg.getMessageID() == messageID)
+            {
+                myMessage = tmpMsg;
+                return myMessage;
+            }
+        }
+        throw new Exception("Error: Message doesn't exist");
     }
 
 
