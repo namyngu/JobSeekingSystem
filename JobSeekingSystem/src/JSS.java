@@ -1069,14 +1069,24 @@ public class JSS
      * This method locks or unlocks a User's account
      * @param index an Integer containing the index in the User list of the
      *              User to lock/unlock.
+     *              Will not lock an object of the Administrator class
      */
     public void alterActive(int index)
     {
         User temp = userList.get(index);
+
+
+
         if(temp.isActive() == true)
         {
             temp.setActive(false);
         }
+
+        if (temp instanceof Administrator)
+        {
+            temp.setActive(true);
+        }
+
         else
         {
             temp.setActive(true);
