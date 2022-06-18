@@ -211,10 +211,10 @@ frame.setBounds(250,250,250,250);
             public void valueChanged(ListSelectionEvent e)
             {
                 int selected = inboxList.getSelectedIndex();
-                //this access is for GUI array...
-                int messageID = userMessages.get(selected).getMessageID();
 
-                Message toDisplay = adminControl.messageToOpen(messageID);
+                Message toDisplay = userMessages.get(selected);
+
+
                 String title = toDisplay.getHeader().toUpperCase();
                 String content = toDisplay.getBody();
                 String display = title + "\n\n" + content;
