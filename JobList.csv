@@ -53,3 +53,5 @@ jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescript
 54,Friday Application Test,Nam Beta Tester,14,FullTime,Archived,50000,1,Test job
 53,Friday Application Test,ApplicationTestCompany,14,FullTime,Archived,40000,6404,This is a new job apply now!
 52,UpdatedTestJobv1,Nam,14,Casual,Draft,500000,12167,"Line1, word1|Line2, word1, word 2|Line3, word1, word 2, word 3|"
+55,Security Guard,Dodgy Bars Co.,14,FullTime,Advertised,100000,3868,"uard doors|Please,|thank"
+56,TestJob,Nam,14,Casual,Draft,350000,1,"Line 1, word 1|Line 2, word 2"
