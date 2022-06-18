@@ -95,9 +95,9 @@ public class Application extends Message
      * This method returns new characters to be used as the Application ID number.
      * @return an Array of Characters.
      */
-    public char[] getApplicationID()
+    public int getApplicationID()
     {
-        return new char[2];
+        return (this.getMessageID());
     }
 
     /**

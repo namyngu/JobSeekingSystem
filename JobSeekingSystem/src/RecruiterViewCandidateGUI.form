@@ -91,14 +91,6 @@
                   <text value="Skills"/>
                 </properties>
               </component>
-              <component id="e9a33" class="javax.swing.JList" binding="candidateSkillsTable">
-                <constraints>
-                  <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="-1" height="50"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="15a8d" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="10" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
@@ -218,6 +210,19 @@
                   <text value="jobseekerAddress"/>
                 </properties>
               </component>
+              <scrollpane id="58336">
+                <constraints>
+                  <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="e9a33" class="javax.swing.JList" binding="candidateSkillsTable">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
         </children>

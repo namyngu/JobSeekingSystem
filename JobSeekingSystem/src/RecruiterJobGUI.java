@@ -158,7 +158,7 @@ public class RecruiterJobGUI {
                 switch (j)
                 {
                     case 0:
-                        data[i][j] = String.valueOf(applicationList.get(i).getApplicationID());
+                        data[i][j] = String.valueOf(applicationList.get(i).getMessageID());
                         break;
 
                     case 1:
