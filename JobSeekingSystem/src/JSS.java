@@ -10,7 +10,9 @@ import com.sun.source.tree.TryTree;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class JSS
 {
@@ -270,27 +272,55 @@ public class JSS
             //messageID, jobID, status
             String[] applicationDetails = application[i].split(",");
 
-            //TODO: Check with Gerard, does messages get loaded to allMessages on launch?
-            //find messages for applications then import application to applicationList
-            for (Message tmpMsg : allMessages)
+            //find messages for applications in csv then import application to applicationList
+            String msgContent = "";
+            try
             {
-                if (tmpMsg.getMessageID() == Integer.parseInt(applicationDetails[0]))
+                msgContent = io.readFile("messages.csv");
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error failed to read files");
+            }
+
+            //Split each message into an array
+            //
+            String[] message = msgContent.split("\n");
+            for (int j = 0; j < message.length; j++)
+            {
+                //if line is empty, skip it.
+                if (message[j].isEmpty())
+                {
+                    System.out.println("Warning: empty line in messages.csv at line: " + i + ", skipping...");
+                    continue;
+                }
+
+                String[] messageDetails = message[j].split(",");
+                //check if message is an application
+                if (Integer.parseInt(messageDetails[0]) == Integer.parseInt(applicationDetails[0]))
                 {
 
-
-                    /*
                     //Parses newlines and commas for message header
-                    String messageHead = applicationDetails[4];
+                    String messageHead = messageDetails[4];
                     messageHead = messageHead.replaceAll("`",",");
                     messageHead = messageHead.replaceAll("~","\n");
 
                     //Parses newlines and commas for message body
-                    String messageBody = applicationDetails[5];
+                    String messageBody = messageDetails[5];
                     messageBody = messageBody.replaceAll("`",",");
                     messageBody = messageBody.replaceAll("~","\n");
-                    */
-                    importApplication(tmpMsg.getMessageID(), tmpMsg.getHasReceived(), tmpMsg.getSenderID(),
-                            tmpMsg.getReceiverID(), tmpMsg.getHeader(), tmpMsg.getBody(), Integer.parseInt(applicationDetails[1]), tmpMsg.getSentDate());
+
+                    //split date into three integers
+                    String dateStr = messageDetails[7];
+
+                    //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    //formatter = formatter.withLocale(Locale.US);
+                    LocalDate date = LocalDate.parse(dateStr);
+
+
+                    //messageID, hasReceived, senderID, receiverID, header, body, jobID, sentDate
+                    importApplication(Integer.parseInt(messageDetails[0]), false, Integer.parseInt(messageDetails[2]),
+                            Integer.parseInt(messageDetails[3]), messageHead, messageBody, Integer.parseInt(applicationDetails[1]), date);
                 }
             }
         }
@@ -541,6 +571,9 @@ public class JSS
         {
             Application application = new Application(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate);
             applicationList.add(application);
+            //link application to jobs
+            Job myJob = findJob(jobList, jobID);
+            myJob.getApplications().add(application);
         } catch (Exception e)
         {
             System.out.println("Error failed to import application, check your parameters!");
@@ -841,7 +874,7 @@ public class JSS
             io.writeFile("Application.csv", applicationData);
 
             //write to messages.csv
-            String messageData = messageID + "," + "sent," + senderID + "," + receiverID + "," + header + "," + text + "," + jobID + "," + sentDate;
+            String messageData = messageID + "," + "pending" + "," + senderID + "," + receiverID + "," + header + "," + text + "," + jobID + "," + sentDate;
             io.writeFile("messages.csv", messageData);
 
         } catch (Exception e)
