@@ -187,7 +187,7 @@ public class RecruiterJobGUI {
                     }
 
                     case 3: {
-                        //TODO: find a way to display date of application.
+                        data[i][j] = applicationList.get(i).getSentDate().toString();
                         break;
                     }
 
@@ -204,7 +204,7 @@ public class RecruiterJobGUI {
             }
         }
 
-        applicationsTable.setModel(new DefaultTableModel(data, new String[]{"Application ID","Name","Email","Applied Date","Status"}));
+        applicationsTable.setModel(new DefaultTableModel(data, new String[]{"Application ID","Name","Email","Applied at","Status"}));
     }
 
     /**
