@@ -41,8 +41,10 @@ public class JSS
      */
     public JSS()
     {
-        this.gerardWork = true;
-
+        /* This Boolean makes some test GUIs appear for testing purposes.
+         * Should be set to false in the production version of the system.
+         */
+        this.gerardWork = false;
 
         try
         {
@@ -105,7 +107,7 @@ public class JSS
             Jobseeker jobseeker = (Jobseeker) userList.get(10);
             JobseekerControl control = new JobseekerControl(this,jobseeker, this.jobList,this.locationList,this.jobCategoryList);
             TestGUI test = new TestGUI(this,control);
-//            JobSeekerApplication testJob = new JobSeekerApplication();
+            // JobSeekerApplication testJob = new JobSeekerApplication();
         }
 
         try
