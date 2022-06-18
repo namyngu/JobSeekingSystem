@@ -571,6 +571,9 @@ public class JSS
         {
             Application application = new Application(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate);
             applicationList.add(application);
+            //link application to jobs
+            Job myJob = findJob(jobList, jobID);
+            myJob.getApplications().add(application);
         } catch (Exception e)
         {
             System.out.println("Error failed to import application, check your parameters!");
