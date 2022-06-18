@@ -27,20 +27,14 @@ jobID,jobPrimaryCategory,jobSubCategory
 26,Retail & Consumer Products,Buying
 27,Sales,Account & Relationship Management
 28,Science & Technology,Biological & Biomedical Sciences
-32,Call Centre & Customer Service,Collections
-33,Accounting,Accounts Officers/Clerks
-34,Accounting,Accounts Officers/Clerks
-35,Accounting,Accounts Officers/Clerks
 38,Accounting,Accounts Officers/Clerks
 40,Accounting,Accounts Officers/Clerks
 41,Accounting,Accounts Officers/Clerks
-42,Accounting,Accounts Officers/Clerks
 43,Accounting,Accounts Officers/Clerks
 44,Accounting,Accounts Officers/Clerks
 46,Engineering,Other
 47,Retail & Consumer Products,Merchandisers
 45,Banking & Financial Services,Investment Banking
-30,Sport & Recreation,Coaching & Instruction
 31,Engineering,Systems Engineering
 48,Computer Science,Programming
 37,Call Centre & Customer Service,Supervisors/Team Leaders
@@ -50,8 +44,24 @@ jobID,jobPrimaryCategory,jobSubCategory
 36,Insurance & Superannuation,Superannuation
 29,Self Employment,Self Employment
 39,Accounting,Accounts Officers/Clerks
-54,Education & Training,Childcare & Outside School Hours Care
-53,Education & Training,Management - Vocational
 52,Information & Communication Technology,Architects
-55,Human Resources & Recruitment,Training & Development
-56,Accounting,Accounts Officers/Clerks
+53,Real Estate & Property,Administration
+32,Call Centre & Customer Service,Collections
+34,Accounting,Accounts Officers/Clerks
+35,Accounting,Accounts Officers/Clerks
+42,Accounting,Accounts Officers/Clerks
+30,Sport & Recreation,Coaching & Instruction
+54,Retail & Consumer Products,Retail Assistants
+33,Retail & Consumer Products,Retail Assistants
+55,Healthcare & Medical,Medical Administration
+56,Administration & Office Support,Assistant
+57,Legal,Litigation & Dispute Resolution
+58,Legal,Legal Secretaries
+59,Administration & Office Support,Receptionist
+60,Hospitality & Tourism,Bar & Beverage Staff
+61,Retail & Consumer Products,Other
+62,Computer Science,Programming
+63,Education & Training,Management - Vocational
+64,Education & Training,Childcare & Outside School Hours Care
+65,Sport & Recreation,Coaching & Instruction
+66,Community Services,Employment Services

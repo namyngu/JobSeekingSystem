@@ -396,7 +396,11 @@ public class Search
             }
 
             // Weight the keyword match parameter.
-            int keywordResult = (keywordMatch / tmp.getKeywords().size()) * keywordWeight;
+            int keywordResult = 0;
+            if (tmp.getKeywords().size() > 0) {
+                // This Job has some keywords and keywordResult can be calculated.
+                keywordResult = (keywordMatch / tmp.getKeywords().size()) * keywordWeight;
+            }
 
             /* 3. Skills
              * For each of the skills listed against the Job, check to see if they
@@ -416,7 +420,7 @@ public class Search
 
             // Weight the skills match.
             int skillResult = 0;
-            if (seekerSkills.size() != 0) {
+            if (seekerSkills.size() >0) {
                 // Jobseeker has some skills, and skill match can be calculated.
                 skillResult = (skillMatch / seekerSkills.size()) * skillWeight;
             }
@@ -750,7 +754,12 @@ public class Search
             }
 
             // Weight this job's matches as a percentage.
-            int skillResult = (skillMatch / seekerSkills.size() * 50) + locationMatch;
+            int skillResult = 0;
+            if (seekerSkills.size() > 0) {
+                /* This Job seeker has some skills and skillResult can
+                be calculated*/
+                skillResult = (skillMatch / seekerSkills.size() * 50) + locationMatch;
+            }
 
             // Add this job and its score to the TreeMap.
             if (scoredResults.get(skillResult) == null) {

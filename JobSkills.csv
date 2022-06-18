@@ -31,21 +31,8 @@ jobID, skills
 3,Self Service
 6,Information Quality
 3,Self-assembly
-32,SQL
-32,﻿Java
-34,SQL
-35,Communication
-32,Accuracy
-34,Acute care
-34,Application Programming Interface (API)
-35,Effective communication
-35,Emotional intelligence
 38,Active listening
 38,Critical thinking
-42,Customer Relationship Management (CRM)
-33,SQL
-33,Acute care
-33,Adaptability
 41,Accuracy
 41,Ad design
 40,Accounting Software
@@ -64,9 +51,6 @@ jobID, skills
 45,Data analysis
 45,Accuracy
 45,Conflict management
-30,﻿Java
-30,SQL
-30,SQL
 31,Communication
 31,SQL
 48,Java
@@ -93,17 +77,62 @@ jobID, skills
 39,Accuracy
 39,Closing
 39,Clear communication
-54,Business Development
-54,Accuracy
-53,Ad design
-53,Brand management
-53,Business Process Modeling
-53,Business Process Modeling
-53,Business Process Modeling
-53,Content Management Systems (CMS)
 52,Accuracy
 52,Bookkeeping
 52,Content Management Systems (CMS)
-55,Business Process Modeling
-55,Content Management Systems (CMS)
-56,Acute care
+53,Accuracy
+53,Charisma
+53,Clear communication
+32,SQL
+32,﻿Java
+32,Accuracy
+34,SQL
+34,Acute care
+34,Application Programming Interface (API)
+35,Communication
+35,Effective communication
+35,Emotional intelligence
+42,Customer Relationship Management (CRM)
+30,﻿Java
+30,SQL
+30,SQL
+54,Active listening
+54,Negotiation
+33,Acute care
+33,Adaptability
+33,Conflict management
+55,Accuracy
+55,Clear communication
+56,Accuracy
+56,Creativity
+57,Accuracy
+57,Clear communication
+58,Accuracy
+58,Clear communication
+59,Accuracy
+59,Clear communication
+60,Accuracy
+60,Innovation
+60,Patience
+61,Accuracy
+61,Attention to detail
+61,Conflict management
+61,Data entry
+62,Accuracy
+62,Critical thinking
+62,Python
+62,Java
+62,Machine learning
+63,Ad design
+63,Brand management
+63,Business Process Modeling
+63,Business Process Modeling
+63,Business Process Modeling
+63,Content Management Systems (CMS)
+64,Business Development
+64,Accuracy
+65,Accuracy
+65,Patience
+66,Critical thinking
+66,Negotiation
+66,Time management

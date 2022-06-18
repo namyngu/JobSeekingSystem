@@ -60,11 +60,11 @@ public class ManageJobGUI extends CreateJobGUI {
     private JLabel salaryLabel;
 
     //public ManageJobGUI(User recruiter, ArrayList<Job> jobList, ArrayList<Location> locationList) throws IOException {
-    public ManageJobGUI(RecruiterControl control, Job myJob) throws IOException {
+    public ManageJobGUI(RecruiterControl control, Job myJob) throws Exception {
         this.control = control;
         job = myJob;
         location = new Location();
-        category = new JobCategory();
+        category = control.findCategory(control.getJobCategoryList(), myJob.getJobID());
         skills = new ArrayList<>();
         jobList = control.getJobList();
         locationList = control.getLocationList();

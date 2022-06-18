@@ -301,6 +301,27 @@ public class RecruiterControl implements Communication
 
     /**
      * This method looks for a specific Job in the list of Jobs and returns it.
+     * @param categoryList   an ArrayList of categories in the system.
+     * @param ID            an Integer containing the Job ID number to be searched for.
+     * @return              a Job which matches the specified ID number.
+     * @throws Exception    Exceptions are thrown if the specified Job cannot be found.
+     */
+    public JobCategory findCategory(ArrayList<JobCategory> categoryList, int ID) throws Exception
+    {
+        JobCategory myCategory = null;
+        for (JobCategory tmpCategory : categoryList)
+        {
+            if (tmpCategory.getJobID() == ID)
+            {
+                myCategory = tmpCategory;
+                return myCategory;
+            }
+        }
+        throw new Exception("Error: Job doesn't exist!");
+    }
+
+    /**
+     * This method looks for a specific Job in the list of Jobs and returns it.
      * @param jobList   an ArrayList of Jobs in the system.
      * @param ID        an Integer containing the Job ID number to be searched for.
      * @return          a Job which matches the specified ID number.

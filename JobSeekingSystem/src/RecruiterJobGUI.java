@@ -99,6 +99,8 @@ public class RecruiterJobGUI {
                     frame.dispose();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         });

@@ -1,57 +1,67 @@
 jobID,jobTitle,employer,recruiterID,jobType,status,salary,locationID,jobDescription
-1,Software Developer,Walmart,2,FullTime,Advertised,50000,1,Testing
-2,Influencer,State Grid,2,FullTime,Advertised,50000,2,Job Descr1
-3,Tester,Amazon,2,FullTime,Archived,50000,2,Job Descr1
-4,Main Test Analyst,Apple,3,FullTime,Withdrawn,50000,10,Testing
-5,Payroll Officer,CVS Group,3,PartTime,Draft,50000,5,Job Descr1
-6,Communications Officer,McKesson,3,Casual,Archived,50000,6,Job Descr1
-7,Plumber,BP,3,Casual,Advertised,20000,7,Testing
-8,Senior Test Analyst,Shell,3,Casual,Advertised,20000,8,Job Descr1
-9,Graphic Designer,ICBC,4,PartTime,Archived,20000,10,Job Descr1
-10,Junior Business Analyst,Volkswagen,4,PartTime,Withdrawn,100000,22,Testing
-11,Lead Designer,UnitedHealth,4,PartTime,Draft,100000,15,Job Descr1
-12,Accounts Payable Officer,Ping An Insurance,4,PartTime,Archived,100000,12,Job Descr1
-13,Chief Operating Officer,Exor,4,Casual,Archived,100000,13,Testing
-14,Transformation Lead,Allianz,5,Casual,Advertised,100000,14,Job Descr1
-15,Customer Service Officer,Kroger,5,PartTime,Withdrawn,150000,15,Job Descr1
-16,Videographer,Bank of China,5,Casual,Withdrawn,150000,16,Testing
-17,Radiologist,Foxconn,5,Casual,Draft,150000,17,Job Descr1
-18,Store Owner,Samsung Electronics,6,Casual,Draft,150000,6,Job Descr1
-19,Product Analyst,BP,6,Casual,Advertised,180000,7,Testing
-20,Team Leader,Shell,6,FullTime,Advertised,180000,20,Job Descr1
-21,Electrician,Anthem,6,FullTime,Withdrawn,180000,15,Job Descr1
-22,Painter,General Motors,7,FullTime,Withdrawn,180000,22,Testing
-23,Payroll Officer,Home Depot,7,FullTime,Draft,180000,23,Job Descr1
-24,Graphic Designer,Kroger,7,Casual,Draft,75000,24,Job Descr1
-25,Social Media Producer,Bank of China,7,PartTime,Advertised,75000,15,Testing
-26,Barista,Verizon,8,PartTime,Archived,75000,26,Job Descr1
-27,Web Developer,General Motors,8,PartTime,Withdrawn,75000,18,Job Descr1
-28,Leader Designer,Anthem,8,Casual,Withdrawn,20000,28,Testing
-32,new job,employer,11,PartTime,Draft,34545,9124,"desc"
-34,new job,employer,11,PartTime,Draft,34234,3864,"desc"
-35,job title,Boeing,11,FullTime,Advertised,80000,9138,"line1|line2, word 2|line3||line 5"
+1,Software Developer,Walmart,2,FullTime,Advertised,50000,1,"Testing"
+2,Influencer,State Grid,2,FullTime,Advertised,50000,2,"Job Descr1"
+3,Tester,Amazon,2,FullTime,Archived,50000,2,"Job Descr1"
+4,Main Test Analyst,Apple,3,FullTime,Withdrawn,50000,10,"Testing"
+5,Payroll Officer,CVS Group,3,PartTime,Draft,50000,5,"Job Descr1"
+6,Communications Officer,McKesson,3,Casual,Archived,50000,6,"Job Descr1"
+7,Plumber,BP,3,Casual,Advertised,20000,7,"Testing"
+8,Senior Test Analyst,Shell,3,Casual,Advertised,20000,8,"Job Descr1"
+9,Graphic Designer,ICBC,4,PartTime,Archived,20000,10,"Job Descr1"
+10,Junior Business Analyst,Volkswagen,4,PartTime,Withdrawn,100000,22,"Testing"
+11,Lead Designer,UnitedHealth,4,PartTime,Draft,100000,15,"Job Descr1"
+12,Accounts Payable Officer,Ping An Insurance,4,PartTime,Archived,100000,12,"Job Descr1"
+13,Chief Operating Officer,Exor,4,Casual,Archived,100000,13,"Testing"
+14,Transformation Lead,Allianz,5,Casual,Advertised,100000,14,"Job Descr1"
+15,Customer Service Officer,Kroger,5,PartTime,Withdrawn,150000,15,"Job Descr1"
+16,Videographer,Bank of China,5,Casual,Withdrawn,150000,16,"Testing"
+17,Radiologist,Foxconn,5,Casual,Draft,150000,17,"Job Descr1"
+18,Store Owner,Samsung Electronics,6,Casual,Draft,150000,6,"Job Descr1"
+19,Product Analyst,BP,6,Casual,Advertised,180000,7,"Testing"
+20,Team Leader,Shell,6,FullTime,Advertised,180000,20,"Job Descr1"
+21,Electrician,Anthem,6,FullTime,Withdrawn,180000,15,"Job Descr1"
+22,Painter,General Motors,7,FullTime,Withdrawn,180000,22,"Testing"
+23,Payroll Officer,Home Depot,7,FullTime,Draft,180000,23,"Job Descr1"
+24,Graphic Designer,Kroger,7,Casual,Draft,75000,24,"Job Descr1"
+25,Social Media Producer,Bank of China,7,PartTime,Advertised,75000,15,"Testing"
+26,Barista,Verizon,8,PartTime,Archived,75000,26,"Job Descr1"
+27,Web Developer,General Motors,8,PartTime,Withdrawn,75000,18,"Job Descr1"
+28,Leader Designer,Anthem,8,Casual,Withdrawn,20000,28,"Testing"
 38,Sales,Coles,14,Casual,Advertised,33000,12172,"This is a great opportunity to work for a big company like Coles.|We welcome all talents, please apply."
-42,Packer,Aldi,11,PartTime,Draft,60000,3889,"Pack shelves|receive orders|help customers"
-33,checkout assistant,foodland,11,FullTime,Draft,60000,3870,"pdated description|is fu"
-41,Apple Picker,Coles Farm,11,Casual,Archived,30000,10678,"icking apples.|Summer months.|Ideal for uni student.|Update pt "
-40,Builder,Megastructure,14,Casual,Archived,65000,12173,""""
+41,Apple Picker,Coles Farm,11,Casual,Archived,30000,10678,"Picking apples.|Summer months.|Ideal for uni student.|Update pt 2"
+40,Builder,Megastructure,14,Casual,Archived,65000,12173,"Building stuff"
 43,Ticket Scanner,Ticketek,11,Casual,Draft,30000,3882,"This job is to scan people's tickets as they enter the venue.||Locations will be varied, will follow events around."
 44,Bartender,Crown Casino,11,Casual,Draft,40000,10815,"Pouring drinks.|Customer service.|Bar cleanup."
 46,Game Designer,Escape Rooms,11,PartTime,Draft,50000,69,"Design room.|Puzzles.|Difficulty levels vary."
 47,Interior Designer,Bunnings,11,FullTime,Archived,80000,12186,"design rooms|paint and colour scheme|furniture"
-45,Banker,ANZ,11,PartTime,Draft,80000,3914,"nking.|Loans.|Customer Service.|Data Analysi"
-30,new job,employer,11,Casual,Draft,343242,9124,"line 1, word 2|line 2, word 2|line 3, word 2||line 5, word 2"
-31,Builder,Sarah Homes,11,PartTime,Advertised,90000,9124,"ine1|line2,lalala|line 3||line "
+45,Banker,ANZ,11,PartTime,Draft,80000,3914,"Banking.|Loans.|Customer Service.|Data Analysis"
+31,Builder,Sarah Homes,11,PartTime,Advertised,90000,9124,"line1|line2,lalala|line 3||line 5"
 48,Web Developer,Webby Websters,16,PartTime,Archived,50000,6640,"This is a test Job for a Web Developer. You will be required to develop webs and code in Java and Scala."
-37,Coffee Boy,Kickstarter,14,FullTime,Draft,55000,3867,"ELCOME!|This job will help kickstart your career at Kickstarter!"
+37,Coffee Boy,Kickstarter,14,FullTime,Draft,55000,3867,"WELCOME!|This job will help kickstart your career at Kickstarter!"
+30,new job,employer,11,Casual,Draft,343242,9124,"line 1, word 2|line 2, word 2|line 3, word 2||line 5, word 2"
 49,TestJob,Starbucks,14,Casual,Draft,35000,6,"Testing job"
 50,TestJob2,BanksGalore,14,Casual,Draft,10000000,1,"Testing job 2"
 51,Table Dealer,Crown,14,Casual,Draft,55000,3865,"Your job is to deal cards to gamblers|Need to have good conflict resolution skills.|"
-36,Software Developer,Apple,14,PartTime,Archived,85000,3868,"is job will help kickstart your career!|Welcome to Appl"
+36,Software Developer,Apple,14,PartTime,Archived,85000,3868,"is job will help kickstart your career!|Welcome to Apply"
 29,Assistant Programmer,Pied Piper,14,PartTime,Archived,35000,3866,"Welcome, we are a new kickstarter company at Silicon Valley.|We have a great team of highly talented individual, and this is a great opportunity to join a new starting company.|As the company grows, you grow with us"
 39,Manager,McDonalds,14,FullTime,Archived,55000,3895,"This job requires good communication and people skills.|McDonalds is a big company....|"
-54,Friday Application Test,Nam Beta Tester,14,FullTime,Archived,50000,1,Test job
-53,Friday Application Test,ApplicationTestCompany,14,FullTime,Archived,40000,6404,This is a new job apply now!
-52,UpdatedTestJobv1,Nam,14,Casual,Draft,500000,12167,"Line1, word1|Line2, word1, word 2|Line3, word1, word 2, word 3|"
-55,Security Guard,Dodgy Bars Co.,14,FullTime,Advertised,100000,3868,"uard doors|Please,|thank"
-56,TestJob,Nam,14,Casual,Draft,350000,1,"Line 1, word 1|Line 2, word 2"
+52,TestJobV1,Nam,14,Casual,Draft,500000,12167,"Line1, word1|Line2, word1, word 2|Line3, word1, word 2, word 3|"
+53,Office Support / Receptionist,Belle Property,11,PartTime,Draft,65000,76,"We currently seeking an enthusiastic and experienced receptionist / front office manager for our highly successful real estate Agency located on the Northern Beaches. We require an eager individual with immaculate personal presentation, exceptional phone manner, excellent communication skills, a positive attitude and a keen eye for detail.  ||This is a fantastic opportunity to work with the best in the industry!"
+32,new job,employer,11,PartTime,Archived,34545,9124,"desc"
+34,new job,employer,11,PartTime,Archived,34234,3864,"desc"
+35,job title,Boeing,11,FullTime,Archived,80000,9138,"line1|line2, word 2|line3||line 5"
+42,Packer,Aldi,11,PartTime,Draft,60000,3889,"Pack shelves|receive orders|help customers|weekend work"
+54,Nightfill,Coles,11,Casual,Advertised,40000,1,"Save your days and shine during the night on the Coles nightshift. You'll ensure our store is fully stocked and looking good for our customers!||We're one of Australia's most iconic and trusted businesses and we're on the lookout for awesome team members. With over 120,000 people working across more than 2,500 retail outlets, we provide fresh food, groceries, general merchandise, liquor and fuel to millions of people every week.||As part of the Nightfill team, you'll be a person who is most productive later in the day and prefers to work evenings and nights. Working in a team, you'll be restocking the shelves to ensure a great shopping experience for our customers, where they can find what they need to, every time."
+33,Checkout Assistant,Foodland,11,FullTime,Draft,60000,3870,"Updated description|is fun"
+55,Bookings Clerk,UnitingCare Health,11,PartTime,Draft,50000,6399,"We’re seeking Receptionist/Office Administrators to join our Patient Flow Department as a Booking Clerks at The Wesley Hospital, in permanent part-time positions.||Remuneration Value: $30.83 - $31.66 (FTE $60,924 - $62,573) + Super + $15,900 NFP Salary Packaging Value + Shift Penalties/Allowances + Discounted Onsite Staff Parking ||For generations of Queenslanders, The Wesley Hospital has provided care through life’s journey — from birth into childhood, to adulthood and to end of life. As one of Australia’s iconic and largest private, not-for-profit hospitals, we’re proud of the valued role we play in the Queensland community. Here, more than 800 Visiting Medical Practitioners and 2,000 staff come together to provide care for our community.||We offer comprehensive care across a wide range of acute tertiary-level medical and surgical services with a particular focus on cancer care, cardiac care, women’s and children’s care, and complex surgical care. This includes the busiest robotic surgery program and the first Robotic Surgery Centre of Excellence accredited in Australia."
+56,Payroll Assistant,Supernova Security,11,FullTime,Draft,60000,12168,"About the business:||Supernova Security Systems design, supply and install electronic intruder detection, CCTV and access control systems state-wide in Tasmania for our predominantly industrial, commercial and government clients; based from our warehouse in Cambridge.||The position:||We are seeking an administritive assistant approximatley two to three days per week to process payroll, invoicing, receive customer enquiries, materials ordering and provide administritive support for our team.||Previous experience in Xero payroll and invoicing highly preforable and sound general computer skills essential.||Our small team provides a friendly enjoyable work environment and flexible working hours can be offered to the right candidate."
+57,Litigation Assistant,Zervos Lawyers,11,FullTime,Advertised,85000,3864,"A niche law firm established in 2004, centrally located in Inner City Melbourne, we are committed to delivering expert legal advice, pragmatic solutions & efficient outcomes for clients. ||Our teams comprise of skilful, efficient and energetic individuals with a main focus in growth through mentoring, support and training. Delivering exemplary results for clients is part of our ethos, achieved through an energetic and motivated workplace. ||The right candidate will have a positive attitude towards working in a collaborative Litigation Team and the willingness to learn and adapt as the team grows in a nurturing environment. A minimum of two years’ litigation experience is required. "
+58,Admin Assistant,Brydens Lawyers,11,FullTime,Advertised,62000,1,"Brydens Lawyers require an Administration Assistant to join their growing Finance Department in Liverpool.||To be considered for this position you will need to possess strong oral and written communication skills, a good phone manner, an enthusiastic approach to work and be able to work in a busy team environment.||Your duties would include but not limited to:||Accounts receivable with collection calls;|Accounts payable;|Billings;|Banking;|Data entry; and|Administration."
+59,School Admin Officer,Sydney Primary School,11,FullTime,Advertised,70000,51,"About the role||As a part time casual SAO in a busy school office and library, it is essential to be flexible, show initiative, prioritise, have excellent customer service and be able to show empathy to students, community, and staff.||Role criteria||Demonstrated capacity to work effectively as part of a team|Administration skills including a knowledge of computer software programs such as Microsoft Office suite|Effective oral and written communication skills|Ability to work with teachers and students|Ability to perform tasks in one or more of the following areas: office procedures, library administration and sick bay|Working with Children Check clearance|providing first aid for students, including care for sick or distressed students.|other related duties as directed by the school business manager or Principal when required."
+60,Bartender,Sydney Bar,11,Casual,Advertised,40000,120,"Key Duties:||Customer-focused business.|Deliver food and beverage service in a professional corporate manner|Working with our various gaming facilities which includes poker machines, cashier, TAB and KENO|Availability to work a rotating roster|Requirement:||Proven hospitality experience (not essential, but preferred)|Excellent communication skills|Superior customer service|Strong work ethic - willing to learn and be part of a fast-paced dynamic team|Great energy and immaculate presentation|Experience working with TAB & KENO (not essential, but preferred)|Current NSW RSA and RGC certificate"
+61,Warehouse Assistant,Sydney Warehouse,11,PartTime,Draft,55000,1,"Dispatcher and Warehouse Assistant||Your Role||A 40 hour week is available Monday to Friday, 8am – 5pm with an hour for lunch. ||You may be working in our busy warehouse packing goods to be shipped to customers or unloading trucks or containers and putting stock away in the warehouse. General warehouse duties will also be part of your role.||What you are great at:||Positive, Can-do attitude and a team player who can work autonomously.|A current Forklift ticket (LF) – not essential, but nice to have|Physically fit with the ability to lift loads and manually handle goods safely.|Upkeep a safe and neatly organized warehouse.|Additional duties as required.|The Benefits:| ||Work for an exciting company with a global professional presence.|Busy environment, no two days are the same.|Highly competitive salary on offer|Our team describe our Culture as Positive, happy, fun, results-driven, and team orientated|Career growth with a very successful organisation"
+62,Software Engineer,Google,11,FullTime,Advertised,100000,1,"This role will involve training you to gain the exposure to the full software development lifecycle putting you in contact with all levels of the business, customers, suppliers, and technology partners both onsite and remotely. Key areas:||Work in a diverse team to analyse issues in software modules and technologies|Solve unique, unstructured technical problems across our products|Provide software support to internal and external stakeholders|Liaise with our customers to recreate issues in testing environments"
+63,Friday Application Test,ApplicationTestCompany,14,FullTime,Advertised,40000,6404,"This is a new job apply now!"
+64,Friday Application Test,Nam Beta Tester,14,FullTime,Advertised,50000,1,"Test job"
+65,Sports Coach,Kelly Sports,11,Casual,Draft,40000,3912,"We are currently looking for enthusiastic, experienced and committed Sports Coaches to come on board for Term 3 on a casual basis for around 5 - 15 hours a week.||The position will involve organising and delivering a number of sport programs in locations across South East Melbourne - Bayside, Dingley and Berwick/Pakenham zones. The role will also involve assisting with our school holiday sports programmes, birthday parties, corporate events and administration duties.||Our professional programmes provide fun sports activities for 4 to 12 year olds, teaching children the specific skills, rules and games of different sports.||Applicants must be enthusiastic, outgoing, sports-minded people, who are friendly and passionate about working with children of all ages. You are capable of coaching groups with an emphasis on fun, enjoyment, maximum participation, group control and skill development.||Skills & Attributes:||Suitable for students currently studying in relevant fields|Key Requirements:||Must have a valid Drivers Licence and their own car|Experience in Sports Coaching is highly regarded|Experience working with children aged 4 - 12 years old is highly regarded |Pay rates will be between $25 to $35 an hour, dependent on the level of experience and qualifications the successful applicant possesses."
+66,Employment Coach,Nexus,11,FullTime,Draft,60000,6488,"Are you looking to join a vibrant industry leader and kickstart your career in the disability employment sector? No experience is required!|All training is provided!|Make a real difference in the lives of people with disabilities, job seekers and the community!|Join a diverse and multicultural team of dedicated professionals!|Nexus Human Services||Nexus Human Services offers a wide range of support services for individuals with mental illness and disabilities in their journey of gaining and maintaining employment. Our mission is to provide a holistic support service for people with disabilities and mental health conditions by delivering life-changing opportunities to build a better future.||With over 27 years of servicing Canberra, New South Wales and Queensland, we have established a profound name in disability and mental health employment services. We support job seekers to reach their full potential through social inclusion, economic participation, and effectively partnering the ideal candidate with employers who want to create and develop an inclusive workplace.||To match the ongoing demand, we are looking for an Employment Coach to join our team of specialists in Coffs Harbour, NSW and help deliver life-changing opportunities to build a better future.||Kickstart your career in the disability employment sector||In this pivotal role, you will be responsible for assisting people with mental illness and disabilities to secure independent and meaningful employment.||Core duties:||Establish and maintain relationships with employers;|Provide post-placement support to employers; and|Work together with clients to identify performance improvement areas, marketing opportunities and maintenance of information systems.|You will also work with Disability Employment Services staff to ensure appropriate placements are made and outcomes are achieved.||What you will bring to the team||We are looking for a passionate and driven individual who has a can-do attitude, understands disability services and is enthusiastic about establishing a long-lasting career within the employment services sector.||No previous experience is needed! We will provide you with all the training you need to succeed in this role!||In this role, you will be working closely with job seekers and employers to provide positive and impactful changes to all stakeholders. As such, you will be empathetic and have practical interpersonal and communication skills.||Before commencing your journey with us, you will be required to have a Criminal History Check and a Working with Children’s check card. It will also be necessary to have a Driver’s License, a reliable vehicle that is comprehensively insured and be fully vaccinated against COVID-19.||About the Benefits||This is a fantastic opportunity to become a valued team member within an expanding market leading company. We are an organisation with a culturally diverse team that is close-knit and supportive.||You will receive a competitive salary package (commensurate with experience) and salary sacrificing options to increase the value of your take-home pay significantly! We will provide you with all the training, mentoring and coaching needed to set you up with the skills you need to kickstart your career in the disability employment sector.|| ||Don’t miss out on this rewarding and unique opportunity – Apply Now!"
