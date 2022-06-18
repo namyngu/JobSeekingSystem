@@ -207,6 +207,8 @@ public class CreateJobGUI {
         //add job to recruiter's job list
         recruiterControl.getRecruiter().getJobs().add(job);
         //recruiterControl.setJobList(jobList);
+        jobCategoryList.add(category);
+        recruiterControl.getJobCategoryList().add(category);
 
         RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl, locationList);
         //close
