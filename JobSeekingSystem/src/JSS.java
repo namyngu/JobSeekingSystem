@@ -925,27 +925,39 @@ public class JSS
                 {
                     hasMail =true;
                     User temp = this.userList.get(userIndex-1);
+                    boolean hasReceived = false;
 
-                    /*
-                    //TODO differentiate between messages and applications etc here
-                    if (messageDetails[6].equalsIgnoreCase("Application"))
+                    if (messageDetails[1].equalsIgnoreCase("sent"))
                     {
-                        Application application = new Application(messageID, messageDetails[1], sender, messageTo, messageDetails[4], messageDetails[5], date);
+                        hasReceived =true;
+                    }
+
+                    if (messageDetails[4].equalsIgnoreCase("Application"))
+                    {
+                        Application application = new Application(messageID, hasReceived, sender, messageTo, messageDetails[4], messageDetails[5], date);
                         int jobRef = Integer.parseInt(messageDetails[6]);
                         application.setJobRef(jobRef);
                         temp.addMessage(application);
                         this.allMessages.add(application);
-//                        PromptGUI promptGUI = new PromptGUI("adding message to " + application.getReceiverID());
+
+                    }
+                    else if (messageDetails[4].contains("INVITATION"))
+                    {
+                        //int messageID, int senderID, int receiverID, String header, String text, LocalDate sentDate, int jobID)
+                        int jobRef = Integer.parseInt(messageDetails[6]);
+                        Invitation invitation = new Invitation(messageID,sender,messageTo,messageDetails[4], messageDetails[5], date,jobRef);
+                        temp.addMessage(invitation);
+                        this.allMessages.add(invitation);
                     }
                     else
                     {
 
-                        Message message = new Message(messageID, messageDetails[1], sender, messageTo, messageDetails[4], messageDetails[5], date);
+                        Message message = new Message(messageID, hasReceived, sender, messageTo, messageDetails[4], messageDetails[5], date);
                         temp.addMessage(message);
                         this.allMessages.add(message);
 
                     }
-                    */
+
                 }
 
             }
