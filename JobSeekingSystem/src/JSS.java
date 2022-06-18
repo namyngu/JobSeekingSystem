@@ -273,12 +273,12 @@ public class JSS
             //Parses newlines and commas for message header
             String messageHead = applicationDetails[4];
             messageHead = messageHead.replaceAll("`",",");
-            messageHead = messageHead.replaceAll("~",",");
+            messageHead = messageHead.replaceAll("~","\n");
 
             //Parses newlines and commas for message body
             String messageBody = applicationDetails[5];
             messageBody = messageBody.replaceAll("`",",");
-            messageBody = messageBody.replaceAll("~",",");
+            messageBody = messageBody.replaceAll("~","\n");
 
             //TODO: Check with Gerard, does messages get loaded to allMessages on launch?
             //find messages for applications then import application to applicationList
@@ -1008,71 +1008,6 @@ public class JSS
         {
             System.out.println("Error failed to save user into csv.");
         }
-    }
-
-    /**
-     * This method reads in a list of all Messages from the database.
-     * @return an ArrayList of Messages from the system.
-     */
-    private ArrayList<Message> allMessagesList()
-    {
-        ArrayList<Message> totalMessages = new ArrayList<Message>();
-
-        File_Control fileControl = new File_Control();
-        String rawInput= "";
-        try
-        {
-           rawInput += fileControl.readFile("messages.csv");
-        }
-        catch (Exception e)
-        {
-            System.out.println("failed to read file allMessagesList");
-            e.printStackTrace();
-        }
-
-        rawInput = rawInput.replaceAll("~", "n");
-        rawInput = rawInput.replaceAll("`", ",");
-        String[] messageString = rawInput.split("\n");
-
-        try
-        {
-
-            for (int i = 0; i < messageString.length; i++)
-            {
-                //If messages.csv contains an empty line skip it.
-                if (messageString[i].isEmpty())
-                {
-                    System.out.println("Warning: empty line in messages.csv at line: " + i + ", skipping...");
-                    continue;
-                }
-
-                //split each user into another array of userDetails
-                String[] messageDetails = messageString[i].split(",");
-
-                int messageID = Integer.parseInt(messageDetails[0]);
-                boolean hasReceived = false;
-                if (messageDetails[1].equalsIgnoreCase("sent"))
-                {
-                    hasReceived = true;
-                }
-                int sender = Integer.parseInt(messageDetails[2]);
-                int destination = Integer.parseInt(messageDetails[3]);
-                String header = messageDetails[4];
-                String body = messageDetails[5];
-                LocalDate date = LocalDate.parse(messageDetails[6]);
-
-                Message toAdd = new Message(messageID,sender,destination,header,body,date);
-                totalMessages.add(toAdd);
-            }
-            this.allMessages = totalMessages;
-        }
-        catch (Exception e)
-        {
-            System.out.println("message read error" + e.getMessage());
-        }
-
-
-        return totalMessages;
     }
 
     /**
