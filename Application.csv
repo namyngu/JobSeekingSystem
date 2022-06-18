@@ -1,1 +1,2 @@
-messageID,jobSeekerID,Status
+messageID,jobID,Status
+12,64,Pending
