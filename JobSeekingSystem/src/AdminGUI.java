@@ -1,3 +1,8 @@
+/**
+ * This class is the main GUI an Admin User will use to interact with the system.
+ * @author: Team D - Tom Barker, Jakeob Clarke-Kennedy, Bradley Meyn, Hoang Nguyen, Gerard Samson-Dekker
+ */
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -26,21 +31,33 @@ public class AdminGUI
     private JButton removeJobButton;
     private JLabel userFirstname;
     private JButton logoutButton;
-//    private JButton newMessageButton;
-
+    // private JButton newMessageButton;
     private AdminControl adminControl;
     private JSS program;
-
     private DefaultListModel userListModel;
     private ArrayList<String> userNames;
-
     private DefaultListModel mailListModel;
     private  ArrayList<Message> userMessages;
-
     private DefaultListModel jobListModel;
     private ArrayList<Job> allJobs;
 
+    /**
+     * This is the Default constructor.
+     */
+    public AdminGUI() {
+        program = new JSS();
+        userListModel = new DefaultListModel();
+        userMessages = new ArrayList<>();
+        jobListModel = new DefaultListModel();
+        allJobs = new ArrayList<>();
+    }
 
+    /**
+     * This is a Non-default constructor for the class.
+     * @param adminControl an AdminControl Object which is controlling the
+     *                     Administrator User.
+     * @param program      a JSS Object which represents the main system.
+     */
     public AdminGUI(AdminControl adminControl, JSS program)
     {
 
@@ -63,7 +80,7 @@ public class AdminGUI
         JFrame frame = new JFrame("AdminHome");
         frame.setSize(500,500);
         adminHomePanel.setSize(500,500);
-frame.setBounds(250,250,250,250);
+        frame.setBounds(250,250,250,250);
         frame.setContentPane(this.adminHomePanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
@@ -287,22 +304,28 @@ frame.setBounds(250,250,250,250);
         });
     }
 
-    //generic refreshList option to be used by most lists
-private void refreshList(String content, JList list, DefaultListModel listModel)
-{
-    list.setVisible(true);
-    listModel.addElement(content);
-}
+    /**
+     * This method is a generic method to refresh lists displayed on the form.
+     * @param content   a String containing the list content.
+     * @param list      a JList which is the list to be refreshed.
+     * @param listModel a DefaultListModel loaded into the list.
+     */
+    private void refreshList(String content, JList list, DefaultListModel listModel)
+    {
+        list.setVisible(true);
+        listModel.addElement(content);
+    }
 
-//customised for locking list
-
+    /**
+     * This method refreshes the User lock list specifically.
+     * @param name a String representing a User to add to the list.
+     */
     private void refreshList(String name)
     {
         userList.setVisible(true);
         userDetailsText.setBackground(Color.white);
 
         userListModel.addElement(name);
-
     }
 
 
