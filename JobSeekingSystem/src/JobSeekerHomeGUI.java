@@ -61,6 +61,7 @@ public class JobSeekerHomeGUI {
     private JButton replyButton;
     private JTextField replyTextField;
     private JTextArea messageTextArea;
+    private JScrollPane scrollSearch;
     private DefaultListModel jsSkillsModel;
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;

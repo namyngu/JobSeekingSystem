@@ -44,6 +44,8 @@ public class CreateJobGUI {
     private JLabel categoryWarning;
     private JLabel locationWarning;
     private JLabel skillsWarning;
+    private JPanel createPanel;
+    private JScrollPane scrollCreateJob;
 
     private User recruiter;
     private ArrayList<Job> jobList;
