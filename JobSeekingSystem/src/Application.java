@@ -164,7 +164,8 @@ public class Application extends Message
     }
 
     /**
-     * Method to write Application status to csv.
+     * Method to save status attribute persistently.
+     * @param status
      * @throws Exception
      */
     public void saveStatus(String status) throws Exception
