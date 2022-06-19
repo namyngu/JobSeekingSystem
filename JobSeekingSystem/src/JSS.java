@@ -1,19 +1,13 @@
-/*
-Controller class for initial login, account registration and IO
-methods create account types (not admin as yet)
-TODO upon login transfer control to relevant subclass controller
-
+/**
+ * This class represents the main control class which controls the system.
+ * @author: Team D - Tom Barker, Jakeob Clarke-Kennedy, Bradley Meyn, Hoang Nguyen, Gerard Samson-Dekker
  */
 
-import com.sun.source.tree.TryTree;
-
+// TODO upon login transfer control to relevant subclass controller
 import javax.swing.*;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class JSS
 {
@@ -170,55 +164,15 @@ public class JSS
 
     };
 
-    //Verifies username/password & logs the user in.
+    /**
+     * This method logs the User into the system.
+     * @param userIndex an Integer containing the index number of the User.
+     * @throws Exception An Exception is thrown as an error message when the System
+     *                   cannot log the User in.
+     */
     public void login(int userIndex) throws Exception
     {
-        // 1. Verify username
-
-
-
-//        boolean Exists = false;
-//        int userIndex = 0;
-//        for (User tmpUser : userList)
-//        {
-//            if (tmpUser.getUserName().equals(username))
-//            {
-//                //Match on username
-//                Exists = true;
-//                break;
-//            }
-//            userIndex++;
-//        }
-//
-//        if (!Exists)
-//        {
-//            //We did not find a username matching the entered name
-//            throw new Exception("Username doesn't exist!");
-//        }
-//
-//        // 2. Verify password
-//        boolean passwordMatch = false;
-//
-//        //hash user's password
-//        String encryptedPW = EncryptMe.encryptThisString(password);
-//        if (encryptedPW.equals(userList.get(userIndex).getPassword()))
-//            passwordMatch = true;
-//
-//        if (!passwordMatch)
-//        {
-//            //This user's password did not match their stored password
-//            throw new Exception("passwords do not match!");
-//        }
-//
-//        //2.1 check if the account is locked
-//
-//        if (!userList.get(userIndex).isActive())
-//        {
-//            PromptGUI locked = new PromptGUI("This account has been locked.  Contact Administrator");
-//            throw new Exception("Account Locked!");
-//        }
-
-        // 3. Let's check what kind of account this user should have
+        // Let's check what kind of account this user should have
         String accountType = userList.get(userIndex).getUserType();
         switch (accountType)
         {
@@ -227,7 +181,7 @@ public class JSS
                 {
                     AdminControl adminControl = new AdminControl((Administrator) userList.get(userIndex), this);
                     AdminGUI adminGUI = new AdminGUI(adminControl, this);
-//                    throw new Exception("Success! Logging you in as " + accountType + "...");
+                    // throw new Exception("Success! Logging you in as " + accountType + "...");
                     break;
                 }
                 catch (Exception e)
@@ -252,7 +206,13 @@ public class JSS
         }
     }
 
-    //Method to import application from csv to memory
+    /**
+     * This method imports Applications from the database and stores them
+     * in memory for use by the system.
+     * @param applicationFile a String representing the .csv filename of the file
+     *                        in the file system directory.
+     * @throws Exception      Exceptions are thrown when the file cannot be found.
+     */
     public void importApplicationList(String applicationFile) throws Exception
     {
         File_Control io = new File_Control();
@@ -339,7 +299,11 @@ public class JSS
         }
     }
 
-    //Method to read in the user list into memory
+    /**
+     * This method imports User information into the system from the csv file.
+     * @param fileName a String containing the file name to be loaded from the
+     *                 file directory.
+     */
     public void importUserList(String fileName)
     {
         File_Control io = new File_Control();
@@ -395,7 +359,13 @@ public class JSS
             System.out.println("Error filename cannot be empty");
     }
 
-    //Method to read job from csv's into memory
+    /**
+     * This method reads the list of Jobs from the csv file into the system for
+     * use.
+     * @param jobListFile a String containing the file name of the csv file to
+     *                    be loaded in.
+     * @throws Exception  Exceptions are thrown if the file cannot be found.
+     */
     public void importJobList(String jobListFile) throws Exception
     {
         File_Control io = new File_Control();
@@ -435,7 +405,12 @@ public class JSS
         }
     }
 
-    //Method to import job category list from csv into memory.
+    /**
+     * This method loads in Job Category information from the file system.
+     * @param JobCategoryFile a String containing the csv file name to be loaded
+     *                        in from the file directory system.
+     * @throws Exception      Exceptions are thrown if the file cannot be found.
+     */
     public void importJobCategoryList(String JobCategoryFile) throws Exception
     {
         File_Control io = new File_Control();
@@ -479,49 +454,12 @@ public class JSS
         }
     }
 
-    /* NO LONGER USED
-    public void updateSubCategory(String JobSubCategoryFile) throws Exception
-    {
-        File_Control reader = new File_Control();
-
-        //update sub categories
-        String subCategoryContent = "";
-        try
-        {
-            subCategoryContent = reader.readFile(JobSubCategoryFile);
-        } catch (Exception e)
-        {
-            System.out.println("Failed to read JobKeywords.csv");
-        }
-
-        String[] subCategory = subCategoryContent.split("\n");
-
-        //ignore first line!!
-        for (int i = 1; i < subCategory.length; i++)
-        {
-            String[] subCategoryDetails = subCategory[i].split(",");
-
-            //Search through the jobCategoryList for the jobTitle then append keywords to that category
-            //NOTE can optimize search by first sorting out the database - not required extra functionality.
-            int index = 0;
-            for (JobCategory tmpCategory : jobCategoryList)
-            {
-                if (tmpCategory.getJobTitle().equalsIgnoreCase(subCategoryDetails[0]))
-                {
-
-                    jobCategoryList.get(index).appendSubCategory(subCategoryDetails[1]);
-                }
-                else
-                {
-                    System.out.println("Error: cannot find job title for that sub category. Skipping...");
-                }
-                index++;
-            }
-        }
-    }
-    */
-
-    //importing location from .csv file
+    /**
+     * This method loads the Location information from the database.
+     * @param locationFile a String containing the file name of the csv file
+     *                     to be read in from the file directory.
+     * @throws Exception   Exceptions are thrown if the file cannot be found.
+     */
     public void importLocationList(String locationFile) throws Exception
     {
         File_Control io = new File_Control();
@@ -557,8 +495,11 @@ public class JSS
         }
     }
 
-    //arraylist starts at 0 but usernames start at 1
-
+    /**
+     * This method searches the UserList for a particular username.
+     * @param userID an Integer containing the ID number of a User.
+     * @return       a String containing the User's username.
+     */
     public String retrieveUsername(int userID)
     {
         userID -=1;
@@ -567,6 +508,10 @@ public class JSS
         return username;
     }
 
+    /**
+     * This method counts the number of Users in the system.
+     * @return an Integer containing the number of total Users in the system.
+     */
     public int countUsers()
     {
         int count = 0;
@@ -577,12 +522,26 @@ public class JSS
         return count;
     }
 
-    //Method to import application to applicationList arrayList
-    public void importApplication(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate, String status)
+    /**
+     * This method imports a new Application and loads it into the list of Applications.
+     * @param messageID   an Integer containing the Message ID number.
+     * @param hasReceived a Boolean describing if the Message has been received or not.
+     * @param senderID    an Integer containing the ID number of the sender.
+     * @param receiverID  an Integer containing the ID number of the recipient.
+     * @param header      a String containing the subject line of the Application.
+     * @param text        a String containing the body of the Application.
+     * @param jobID       an Integer containing the ID number of the Job.
+     * @param sentDate    a LocalDate describing the date on which the Application was sent.
+     * @param status      a String containing the current status of the Application.
+     */
+    public void importApplication(int messageID, boolean hasReceived, int senderID,
+                                  int receiverID, String header, String text,
+                                  int jobID, LocalDate sentDate, String status)
     {
         try
         {
-            Application application = new Application(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate, status);
+            Application application = new Application(messageID, hasReceived,
+                    senderID, receiverID, header, text, jobID, sentDate, status);
             applicationList.add(application);
             //link application to jobs
             Job myJob = findJob(jobList, jobID);
@@ -683,8 +642,22 @@ public class JSS
             System.out.println("Error failed to import user, invalid userType");
     }
 
-    //Create application and links it to the job
-    public Application createApplication(boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate) throws Exception
+    /**
+     * This method creates a new Application and links it to the relevant Job.
+     * @param hasReceived a Boolean describing if the Application has been received
+     *                    or nt.
+     * @param senderID    an Integer containing the ID number of the sender.
+     * @param receiverID  an Integer containing the ID number of the recipient.
+     * @param header      a String containing the subject line of the Application.
+     * @param text        a String containing the body of the Application.
+     * @param jobID       an Integer containing the ID number of the Job.
+     * @param sentDate    a LocalDate relating the date on which the Application was sent.
+     * @return            an Applicationc created from the provided details.
+     * @throws Exception  Exceptions are thrown when any errors are encountered.
+     */
+    public Application createApplication(boolean hasReceived, int senderID, int receiverID,
+                                         String header, String text, int jobID,
+                                         LocalDate sentDate) throws Exception
     {
         //Create application
 
@@ -694,7 +667,8 @@ public class JSS
         //int messageID = allMessages.size() + 1;
         try
         {
-            Application application = new Application(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate);
+            Application application = new Application(messageID, hasReceived, senderID,
+                    receiverID, header, text, jobID, sentDate);
 
             //Link application to job
             Job job = findJob(jobList, application.getJobRef());
@@ -707,7 +681,8 @@ public class JSS
             text = text.replaceAll(",","`");
 
             //write application to Application csv.
-            this.saveApplication(messageID, hasReceived, senderID, receiverID, header, text, jobID, sentDate);
+            this.saveApplication(messageID, hasReceived, senderID, receiverID, header,
+                    text, jobID, sentDate);
             return application;
         }
         catch (Exception e)
@@ -804,10 +779,11 @@ public class JSS
     }
 
     /** Method to link all the job databases together
-     *
-     * @param jobKeywordFile
-     * @param jobSkillsFile
-     * @throws Exception
+     * @param jobKeywordFile a String containing the filename of the Job Keyword
+     *                       csv file.
+     * @param jobSkillsFile  a String containing the filename of the Job Skills
+     *                       csv file.
+     * @throws Exception     Exceptions are thrown when the files cannot be found.
      */
 
     public void updateJobs(String jobKeywordFile, String jobSkillsFile) throws Exception
@@ -876,8 +852,20 @@ public class JSS
         }
     }
 
-    //Method to save Application to Application.csv
-    public void saveApplication(int messageID, boolean hasReceived, int senderID, int receiverID, String header, String text, int jobID, LocalDate sentDate)
+    /**
+     * This method saves an Application to the Application csv file.
+     * @param messageID   an Integer containing the ID number of the Application.
+     * @param hasReceived a Boolean describing if the Application has been received.
+     * @param senderID    an Integer containing the ID number of the sender.
+     * @param receiverID  an Integer containing the ID number of the recipient.
+     * @param header      a String containing the subject line of the Application.
+     * @param text        a String containing the body of the Application.
+     * @param jobID       an Integer containing the ID number of the Job.
+     * @param sentDate    a LocalDate containing the date on which the Application
+     *                    was sent.
+     */
+    public void saveApplication(int messageID, boolean hasReceived, int senderID, int receiverID,
+                                String header, String text, int jobID, LocalDate sentDate)
     {
         try
         {
@@ -887,7 +875,8 @@ public class JSS
             io.writeFile("Application.csv", applicationData);
 
             //write to messages.csv
-            String messageData = messageID + "," + "pending" + "," + senderID + "," + receiverID + "," + header + "," + text + "," + jobID + "," + sentDate;
+            String messageData = messageID + "," + "pending" + "," + senderID + "," +
+                    receiverID + "," + header + "," + text + "," + jobID + "," + sentDate;
             io.writeFile("messages.csv", messageData);
 
         } catch (Exception e)
@@ -897,12 +886,23 @@ public class JSS
 
     }
 
-    //Method to save user to users.csv
-    public void saveUser(int userID, String firstName, String lastName, String userName, String password, String userType, boolean active)
+    /**
+     * This method saves User details to the User csv file in the file directory.
+     * @param userID    an Integer containing the User's ID number.
+     * @param firstName a String containing the User's first name.
+     * @param lastName  a String containing the User's last name.
+     * @param userName  a String containing the User's username.
+     * @param password  a String containing the User's password.
+     * @param userType  a String containing the Type of User.
+     * @param active    a Boolean describing if the User is currently active.
+     */
+    public void saveUser(int userID, String firstName, String lastName, String userName,
+                         String password, String userType, boolean active)
     {
         try
         {
-            String userData = userID + "," + firstName + "," + lastName + "," + userName + "," + password + "," + userType + "," + active;
+            String userData = userID + "," + firstName + "," + lastName + "," +
+                    userName + "," + password + "," + userType + "," + active;
             File_Control io = new File_Control();
             io.writeFile("users.csv", userData);
         } catch (Exception e)
@@ -911,7 +911,12 @@ public class JSS
         }
 
     }
-    //method to return relevant User details to AdminGUI for review
+
+    /**
+     * This method returns relevant User details to the Admin GUI for view.
+     * @param userNumber an Integer containng the ID number of the User to be viewed.
+     * @return a String containing the User details.
+     */
     public String retrieveUserDetails(int userNumber)
     {
         User userSelected = userList.get(userNumber);
@@ -927,7 +932,11 @@ public class JSS
         return userDetails;
     }
 
-    // Check Messages method provided by Gerard.
+    /**
+     * This method handles Message sending and receiving between Users.
+     * @param userIndex an Integer containing the index number of the User.
+     * @return a Boolean describing if the Message have been received or not.
+     */
     public boolean checkMessages(int userIndex)
     {
 
