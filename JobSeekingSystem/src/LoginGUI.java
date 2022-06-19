@@ -87,7 +87,6 @@ public class LoginGUI {
                 try
                 {
                    RegisterGUI register = new RegisterGUI(program);
-                   frame.dispose();
                 }
                 catch (Exception x)
                 {

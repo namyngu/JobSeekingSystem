@@ -7,6 +7,7 @@ TODO upon login transfer control to relevant subclass controller
 
 import com.sun.source.tree.TryTree;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -47,6 +48,18 @@ public class JSS
          * Should be set to false in the production version of the system.
          */
         this.gerardWork = false;
+
+        //Set default look & feel for application
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Metal".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+        }
 
         try
         {
@@ -1118,15 +1131,16 @@ public class JSS
             temp.setActive(false);
         }
 
+        else
+        {
+            temp.setActive(true);
+        }
+
         if (temp instanceof Administrator)
         {
             temp.setActive(true);
         }
 
-        else
-        {
-            temp.setActive(true);
-        }
    this.refreshUserSavedList();
     }
 

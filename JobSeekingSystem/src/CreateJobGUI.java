@@ -67,6 +67,7 @@ public class CreateJobGUI {
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        frame.setLocation(650,40);
 
         //Close button event
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
