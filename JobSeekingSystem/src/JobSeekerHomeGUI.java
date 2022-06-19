@@ -124,17 +124,14 @@ public class JobSeekerHomeGUI {
         inboxList.setModel(inboxListModel);
 
         //retrieve messages for inbox
-        System.out.println("Time to check my messages");
         if (myParent.checkMessages() == false)
         {
-            System.out.println("false");
             refreshList("Clear inbox...",inboxList,inboxListModel);
         }
         else
         {
 //            JSS program = new JSS();
 //            this.userMessages = pr
-            System.out.println("true");
             messages = myParent.fetchMessages();
 
             for (Message each: messages)
@@ -147,8 +144,6 @@ public class JobSeekerHomeGUI {
                 //String senderName = myParent.retrieveUserName();
 
                 toDisplay += senderName + " Re: " + each.getHeader();
-                System.out.println("toDisplay is: " + toDisplay);
-
 
                 refreshList(toDisplay,inboxList,inboxListModel);
             }
