@@ -93,7 +93,4 @@ public class JobSeekerJobGUI {
             }
         });
     }
-
-    // TODO: Display method goes here.
-    // TODO: Setters and getters go here.
 }
