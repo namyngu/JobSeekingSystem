@@ -444,7 +444,7 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="627a8" class="javax.swing.JTable">
+                  <component id="627a8" class="javax.swing.JTable" binding="applicationsTable">
                     <constraints/>
                     <properties/>
                   </component>

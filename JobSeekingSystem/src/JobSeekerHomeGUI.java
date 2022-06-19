@@ -62,6 +62,7 @@ public class JobSeekerHomeGUI {
     private JTextField replyTextField;
     private JTextArea messageTextArea;
     private JScrollPane scrollSearch;
+    private JTable applicationsTable;
     private DefaultListModel jsSkillsModel;
     private ArrayList<Location> locationList;
     private ArrayList<JobCategory> jobCategoryList;
@@ -120,6 +121,8 @@ public class JobSeekerHomeGUI {
         window.setResizable(true);
         window.setVisible(true);
 
+        createApplicationsTable();
+
         inboxListModel = new DefaultListModel();
         inboxList.setModel(inboxListModel);
 
@@ -148,6 +151,23 @@ public class JobSeekerHomeGUI {
                 refreshList(toDisplay,inboxList,inboxListModel);
             }
         }
+
+        //double click on jobs to bring up the jobs menu
+        applicationsTable.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                applicationsTable = (JTable) mouseEvent.getSource();
+                Point point = mouseEvent.getPoint();
+                int row = applicationsTable.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && applicationsTable.getSelectedRow() != -1) {
+                    // Action to take after double clicking.
+                    int selectedRow = applicationsTable.getSelectedRow();
+                    int ID = Integer.parseInt(applicationsTable.getValueAt(selectedRow, 0).toString());
+                    JobSeekerJobGUI jobSeekerJobGUI= new JobSeekerJobGUI(parent, ID);
+                    window.dispose();
+                }
+            }
+        });
+
 
 
         // Try populate categories to search in.
@@ -331,6 +351,147 @@ public class JobSeekerHomeGUI {
         });
     }
 
+    private void createApplicationsTable()
+    {
+        ArrayList<Application> myApps = new ArrayList<>();
+        File_Control io = new File_Control();
+
+        String rawInput = "";
+        try {
+            rawInput = io.readFile("messages.csv");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        rawInput = rawInput.replaceAll("~", "n");
+        String[] messageString = rawInput.split("\n");
+
+        try {
+            for (int i = 0; i < messageString.length; i++) {
+                if (messageString[i].isEmpty()) {
+                    System.out.println("Warning: empty line in messages.csv at line: " + i + ", skipping...");
+                    continue;
+                }
+
+                String[] messageDetails = messageString[i].split(",");
+                messageDetails[5] = messageDetails[5].replaceAll("`", ",");
+
+                int messageID = Integer.parseInt(messageDetails[0]);
+                int sender = Integer.parseInt(messageDetails[2]);
+                int messageTo = Integer.parseInt(messageDetails[3]);
+                String dateStr = messageDetails[7];
+                LocalDate date = LocalDate.parse(dateStr);
+                if (sender == myParent.getJobseeker().getUserID()) {
+                    System.out.println("messageDetails[4] is: " + messageDetails[4]);
+                    boolean hasReceived = false;
+                    if (messageDetails[1].equalsIgnoreCase("sent")) {
+                        hasReceived = true;
+                    }
+                    if (messageDetails[4].contains("Application")) {
+                        int jobRef = Integer.parseInt(messageDetails[6]);
+
+
+
+
+                        myApps.add(new Application(messageID, hasReceived, sender, messageTo, "Application", messageDetails[5], jobRef, date));
+                        System.out.println("adding application");
+                    }
+                    System.out.println("messageTo is: " + messageTo);
+                    System.out.println("userID is: " + myParent.getJobseeker().getUserID());
+                    System.out.println("messageID is: " + messageID);
+                }
+            }
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(e);
+        }
+
+        String appInput = "";
+        try {
+            appInput = io.readFile("Application.csv");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String[] appString = appInput.split("\n");
+
+        try {
+            for (int i = 1; i < appString.length; i++) {
+                if (appString[i].isEmpty()) {
+                    System.out.println("Warning: empty line in Application.csv at line: " + i + ", skipping...");
+                    continue;
+                }
+
+                String[] appDetails = appString[i].split(",");
+                String status = appDetails[2];
+                System.out.println("status is: " + status);
+
+                for (Application tmpApp : myApps) {
+                    int x = 0;
+                    System.out.println("appDetails[0] is: " + appDetails[0]);
+                    System.out.println("tmpApp.getMessageID() is: " + tmpApp.getMessageID());
+                    if (Integer.parseInt(appDetails[0]) == tmpApp.getMessageID()) {
+                        tmpApp.setStatus(status);
+                        myApps.set(x, tmpApp);
+                        break;
+                    }
+                    x++;
+                }
+            }
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (Application tmpApp : myApps) {
+            tmpApp.display();
+            System.out.println("status is: " + tmpApp.getStatus());
+        }
+
+
+        int columns = 4;
+        String[][] data = new String[myApps.size()][columns];
+        ArrayList<Job> jobList = myParent.getJobList();
+
+        for (int i = 0; i < myApps.size(); i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                switch (j)
+                {
+                    case 0:
+                        data[i][j] = String.valueOf(myApps.get(i).getJobRef());
+                        break;
+
+                    case 1:
+                        for (Job tmpJob : jobList) {
+                            if (myApps.get(i).getJobRef() == tmpJob.getJobID()) {
+                                data[i][j] = tmpJob.getJobTitle();
+                                break;
+                            }
+                        }
+                        break;
+
+                    case 2:
+                        for (Job tmpJob : jobList) {
+                            if (myApps.get(i).getJobRef() == tmpJob.getJobID()) {
+                                data[i][j] = tmpJob.getEmployer();
+                                break;
+                            }
+                        }
+                        break;
+
+                    case 3: {
+                        data[i][j] = myApps.get(i).getStatus();
+                        break;
+                    }
+
+                    default:
+                        System.out.println("Error");
+                        break;
+                }
+
+            }
+        }
+
+        applicationsTable.setModel(new DefaultTableModel(data, new String[]{"JobID","Title","Employer","Status"}));
+    }
 
     public void displayRecommendedJobs() {
         // Obtain a list of recommended jobs for this seeker.
