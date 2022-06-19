@@ -242,10 +242,7 @@ public class ManageJobGUI extends CreateJobGUI {
             populatePostcode("Location.csv", locationStateMenu, postcodeMenu);
             postcodeMenu.setSelectedItem(location.getPostcode() + ", " + location.getCity());
 
-            String tmpDescription = "";
-            for (int i = 1; i < job.getJobDescription().length() - 1; i++) {
-                tmpDescription += job.getJobDescription().charAt(i);
-            }
+            String tmpDescription = job.getJobDescription().replaceAll("^\"|\"$", "");
             descriptionText.setText(tmpDescription);
 
             //categories
