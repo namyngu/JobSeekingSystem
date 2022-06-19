@@ -1,150 +1,20 @@
 jobID, skills
-1,A/R Management
 1,Java
-1,SQL
-4,Sanding
-4,SQL
-5,A/R Management
-10,A/R Management
-2,A/R Management
-10,Sanding
-1,Sanding
-6,Sanding
-10,Nursing Management
-6,Nursing Management
-9,Nursing Management
-4,Nursing Management
-5,Nursing Management
-3,Nursing Management
-9,Infrastructure
-5,Infrastructure
-6,Infrastructure
-2,Infrastructure
-1,Infrastructure
-10,Infrastructure
-8,CL Programming
-5,CL Programming
-6,CL Programming
-9,CL Programming
-1,CL Programming
-6,Life Support
-3,Self Service
-6,Information Quality
-3,Self-assembly
-38,Active listening
-38,Critical thinking
-41,Accuracy
-41,Ad design
-40,Accounting Software
-40,Ad design
-40,Big Data Analysis & SQL
-43,Charisma
-43,Clear communication
-44,Charisma
-44,Customer Relationship Management (CRM)
-44,Enthusiasm
-46,Photo editing
-46,People management
-46,Enthusiasm
-47,Accuracy
-47,People management
-45,Data analysis
-45,Accuracy
-45,Conflict management
-31,Communication
-31,SQL
-48,Java
-48,Scala
-37,Charisma
-37,Clear communication
-37,Consumer Behavior Drivers
-49,Active listening
-49,Acute care
-49,Bookkeeping
-49,Copywriting
-50,Active listening
-51,Adobe Illustrator
-51,Active listening
-51,Adaptability
-36,Java
-36,Microsoft Powerpoint
-36,PESTEL
-36,Data analysis
-36,Customer Relationship Management (CRM)
-29,SQL
-29,Ad design
-29,Adobe Illustrator
-39,Accuracy
-39,Closing
-39,Clear communication
-52,Accuracy
-52,Bookkeeping
-52,Content Management Systems (CMS)
-53,Accuracy
-53,Charisma
-53,Clear communication
-32,SQL
-32,﻿Java
-32,Accuracy
-34,SQL
-34,Acute care
-34,Application Programming Interface (API)
-35,Communication
-35,Effective communication
-35,Emotional intelligence
-42,Customer Relationship Management (CRM)
-30,﻿Java
-30,SQL
-30,SQL
-54,Active listening
-54,Negotiation
-33,Acute care
-33,Adaptability
-33,Conflict management
-55,Accuracy
-55,Clear communication
-56,Accuracy
-56,Creativity
-57,Accuracy
-57,Clear communication
-58,Accuracy
-58,Clear communication
-59,Accuracy
-59,Clear communication
-60,Accuracy
-60,Innovation
-60,Patience
-61,Accuracy
-61,Attention to detail
-61,Conflict management
-61,Data entry
-62,Accuracy
-62,Critical thinking
-62,Python
-62,Java
-62,Machine learning
-63,Ad design
-63,Brand management
-63,Business Process Modeling
-63,Business Process Modeling
-63,Business Process Modeling
-63,Content Management Systems (CMS)
-64,Business Development
-64,Accuracy
-65,Accuracy
-65,Patience
-66,Critical thinking
-66,Negotiation
-66,Time management
-67,Accuracy
-67,Effective communication
-67,Java
-67,Machine learning
-67,Problem-solving
-69,Accuracy
-69,Attention to detail
-69,Data entry
-68,Attention to detail
-68,Creativity
-68,Enthusiasm
-68,Python
+1,Enthusiasm
+1,Git/Version control (Github, gitlab)
+2,Ad design
+2,Brand management
+2,Buyer engagement
+2,Creativity
+2,Enthusiasm
+2,Logo creation
+2,Negotiation
+2,Project/campaign management
+2,Search Engine Optimization (SEO)
+3,Active listening
+3,Enthusiasm
+3,Enterprise Resource Planning
+4,Active listening
+4,Attention to detail
+4,Compassion
+5,Bookkeeping
