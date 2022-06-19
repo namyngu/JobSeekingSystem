@@ -74,7 +74,6 @@ public class Jobseeker extends User {
         this.totalInvites = 0;
         loadSkills();
         loadContact();
-        System.out.println(getFullName());
     }
 
     /**
@@ -101,7 +100,6 @@ public class Jobseeker extends User {
         this.totalInvites = 0;
         loadSkills();
         loadContact();
-        System.out.println(getFullName());
     }
 
     public void display(){
@@ -260,7 +258,7 @@ public class Jobseeker extends User {
 
         //state postcode suburb
         location = new Location(locationId, temp.get(0), Integer.parseInt(temp.get(1)), temp.get(2));
-        System.out.println(location.toString());
+
     }
 
     /**
@@ -273,9 +271,6 @@ public class Jobseeker extends User {
 
         skills = fc.fileSearchId(super.getUserID(), "jobseeker-skills.csv");
 
-        System.out.println("skills loaded\n");
-
-        System.out.println(skills);
     }
 
     /**
