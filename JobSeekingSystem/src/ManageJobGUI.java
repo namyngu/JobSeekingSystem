@@ -1,3 +1,8 @@
+/**
+ * This class represents the Manage a Job function
+ * @author: Team D - Tom Barker, Jakeob Clarke-Kennedy, Bradley Meyn, Hoang Nguyen, Gerard Samson-Dekker
+ */
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -59,7 +64,13 @@ public class ManageJobGUI extends CreateJobGUI {
 
     private JLabel salaryLabel;
 
-    //public ManageJobGUI(User recruiter, ArrayList<Job> jobList, ArrayList<Location> locationList) throws IOException {
+    /**
+     * This is a Non-default constructor for the class.
+     * @param control  RecruiterControl Object which is controlling the
+     *                 Recruiter User.
+     * @param myJob     a Job object that is passed in with all the details
+     *                  of the job that is going to be managed.
+     */
     public ManageJobGUI(RecruiterControl control, Job myJob) throws Exception {
         this.control = control;
         job = myJob;
@@ -197,6 +208,11 @@ public class ManageJobGUI extends CreateJobGUI {
         });
     }
 
+    /**
+     * This method is to populate the manage job form
+     * @param job   a Job object that has all the job details
+     * @param popSkillsList a DefaultListModel for managing the list of skills
+     */
     public void populateForm(Job job, DefaultListModel popSkillsList) throws IOException {
         //intNumAppLabel.setText(Integer.toString(job.getApplications().size()));
         //intJobIDLabel.setText(Integer.toString(job.getJobID()));
@@ -246,25 +262,32 @@ public class ManageJobGUI extends CreateJobGUI {
             populateCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
             categoryMenuSecondary.setSelectedItem(category.getJobSubCategory());
             statusMenu.setSelectedItem(job.getJobStatus());
-        }
+    }
 
-        public void restrictEdit() {
-            jobTitleText.setEditable(false);
-            employerText.setEditable(false);
-            salaryText.setEditable(false);
-            jobTypeMenu.setEnabled(false);
-            locationStateMenu.setEnabled(false);
-            skillsMenu.setEnabled(false);
-            postcodeMenu.setEnabled(false);
-            categoryMenuPrimary.setEnabled(false);
-            categoryMenuSecondary.setEnabled(false);
-            postcodeMenu.setEnabled(false);
-            descriptionText.setEditable(false);
-            statusMenu.setEnabled(false);
-            removeSkillButton.setEnabled(false);
-            addSkillButton.setEnabled(false);
-        }
+    /**
+     * This is the method to restrict editing an advertised job
+     */
+    public void restrictEdit() {
+        jobTitleText.setEditable(false);
+        employerText.setEditable(false);
+        salaryText.setEditable(false);
+        jobTypeMenu.setEnabled(false);
+        locationStateMenu.setEnabled(false);
+        skillsMenu.setEnabled(false);
+        postcodeMenu.setEnabled(false);
+        categoryMenuPrimary.setEnabled(false);
+        categoryMenuSecondary.setEnabled(false);
+        postcodeMenu.setEnabled(false);
+        descriptionText.setEditable(false);
+        statusMenu.setEnabled(false);
+        removeSkillButton.setEnabled(false);
+        addSkillButton.setEnabled(false);
+    }
 
+    /**
+     * This is the method to update an edited job
+     * @param job   a Job object the is overwritten with inputed details on the form.
+     */
     public void submitButtonActionsUpdate(Job job) {
         job.setJobTitle(jobTitleText.getText());
         //System.out.println("jobTitle has been set to: " + job.getJobTitle());
@@ -324,29 +347,30 @@ public class ManageJobGUI extends CreateJobGUI {
         }
 
         job.setJobDescription(String.valueOf(descriptionText.getText()));
-
         category.setJobID(job.getJobID());
         category.setJobPrimaryCategory(String.valueOf(categoryMenuPrimary.getSelectedItem()));
         category.setJobSubCategory(String.valueOf(categoryMenuSecondary.getSelectedItem()));
-
         job.setJobStatus(String.valueOf(statusMenu.getSelectedItem()));
     }
 
-        public void updateDatabase(Job myJob) {
-            File_Control io = new File_Control();
-            try {
-                io.updateJob(job.getJobID(), job.getJobTitle(), job.getEmployer(), job.getRecruiterID(),
-                        job.getJobType(), job.getJobStatus(), job.getSalary(), job.getLocationID(), job.getJobDescription(), job.getSkills(), category);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-
-            //update JobList
-            jobList.remove(myJob);
-            jobList.add(job);
-            control.setJobList(jobList);
-
-            RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(control, control.getLocationList());
+    /**
+     * This is the method to write the edited job to the database.
+     * @param myJob a Job object storing all the updated job information.
+     */
+    public void updateDatabase(Job myJob) {
+        File_Control io = new File_Control();
+        try {
+            io.updateJob(job.getJobID(), job.getJobTitle(), job.getEmployer(), job.getRecruiterID(),
+                    job.getJobType(), job.getJobStatus(), job.getSalary(), job.getLocationID(), job.getJobDescription(), job.getSkills(), category);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
+
+        //update JobList
+        jobList.remove(myJob);
+        jobList.add(job);
+        control.setJobList(jobList);
+        RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(control, control.getLocationList());
     }
+}
 

@@ -1,3 +1,8 @@
+/**
+ * This class represents the Create a Job function
+ * @author: Team D - Tom Barker, Jakeob Clarke-Kennedy, Bradley Meyn, Hoang Nguyen, Gerard Samson-Dekker
+ */
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +12,6 @@ import java.io.*;
 import java.util.*;
 
 public class CreateJobGUI {
-
     private JLabel intJobIDLabel;
     private JLabel jobTitleLabel;
     private JTextField jobTitleText;
@@ -46,7 +50,6 @@ public class CreateJobGUI {
     private JLabel skillsWarning;
     private JPanel createPanel;
     private JScrollPane scrollCreateJob;
-
     private User recruiter;
     private ArrayList<Job> jobList;
     private ArrayList<Location> locationList;
@@ -56,9 +59,18 @@ public class CreateJobGUI {
     private ArrayList<String> skills;
     private JobCategory category;
 
+    /**
+     * This is the Default constructor.
+     */
     public CreateJobGUI() {
 
     }
+
+    /**
+     * This is a Non-default constructor for the class.
+     * @param recruiterControl  RecruiterControl Object which is controlling the
+     *                          Recruiter User.
+     */
     public CreateJobGUI(RecruiterControl recruiterControl) throws IOException {
         JFrame frame = new JFrame("Create Job");
         frame.setSize ( 500, 300 );
@@ -89,15 +101,11 @@ public class CreateJobGUI {
         this.locationList = recruiterControl.getLocationList();
         this.jobCategoryList = recruiterControl.getJobCategoryList();
         category = new JobCategory();
-
-
         this.job = new Job();
         int numJobs = jobList.size() + 1;
         job.setJobID(numJobs);
         intJobIDLabel.setText(String.valueOf("Job ID: \n" + numJobs));
-
         job.setRecruiterID(recruiter.getUserID());
-
 
         populateSkills("SkillList.csv", skillsMenu);
         populateCategories("CategoryList.csv", categoryMenuPrimary, categoryMenuSecondary);
@@ -117,7 +125,6 @@ public class CreateJobGUI {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
 
                 JTextField[] inputs = {jobTitleText, employerText, salaryText};
                 JLabel[] warnings = {jobTitleWarning, employerWarning,salaryWarning };
@@ -197,9 +204,13 @@ public class CreateJobGUI {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
+
     }
 
+    /**
+     * This is the method to write a newly created job
+     * to the database.
+     */
     public void newJobToDatabase() {
         File_Control io = new File_Control();
         io.saveJob(job.getJobID(), job.getJobTitle(), job.getEmployer(), recruiter.getUserID(),
@@ -216,11 +227,18 @@ public class CreateJobGUI {
         RecruiterHomeGUI recruiterHomeGUI = new RecruiterHomeGUI(recruiterControl, locationList);
         //close
     }
+
+    /**
+     * This is the method to generate a new jobID.
+     */
     public int generateJobID() throws IOException {
         int numJobs = jobList.size() + 1;
         return numJobs;
     }
 
+    /**
+     * This is the method to populate the primary categories menu.
+     */
     public void populateCategories(String fileName, JComboBox menuCatPrim, JComboBox menuCatSec) throws IOException {
         FileReader file = new FileReader(fileName);
         Scanner scan = new Scanner(file);
@@ -247,6 +265,9 @@ public class CreateJobGUI {
         populateSecondaryCategories(fileName, menuCatPrim, menuCatSec);
     }
 
+    /**
+     * This is the method to populate the postcode menu.
+     */
     public void populatePostcode(String fileName, JComboBox menuState, JComboBox menuPC) throws FileNotFoundException {
         menuPC.removeAllItems();
         String state = String.valueOf(menuState.getSelectedItem());
@@ -276,6 +297,9 @@ public class CreateJobGUI {
         }
     }
 
+    /**
+     * This is the menu to populate the secondary categories menu.
+     */
     public void populateSecondaryCategories(String fileName, JComboBox menuCatPrim, JComboBox menuCatSec) throws FileNotFoundException {
         menuCatSec.removeAllItems();
         int index = menuCatPrim.getSelectedIndex();
@@ -303,6 +327,9 @@ public class CreateJobGUI {
         menuCatSec.removeItemAt(0);
     }
 
+    /**
+     * This is the method to populate the skills list.
+     */
     public void populateSkills(String fileName, JComboBox menuSkill) throws IOException {
         FileReader file = new FileReader(fileName);
         Scanner scan = new Scanner(file);
@@ -316,20 +343,12 @@ public class CreateJobGUI {
         file.close();
     }
 
+    /**
+     * This is the method to set the inputs from the form to job and category objects.
+     * @param job a job object that is overwritten to save the newly created job.
+     */
     public void submitButtonActions(Job job) throws Exception {
         // Throw notification messages if needed data is missing.
-
-        /*
-        if (location.isEmpty()) {
-            throw new Exception("Please enter a location to search in!");
-        }
-        if (!fullTime && !partTime && !casual) {
-            throw new Exception("Please select a Job Type to search for!");
-        }
-        if (categoryPrimary.equals("Category")) {
-            throw new Exception("Please select a Primary Category to search in!");
-        }
-        */
 
         job.setJobTitle(jobTitleText.getText());
         //System.out.println("jobTitle has been set to: " + job.getJobTitle());
@@ -389,13 +408,9 @@ public class CreateJobGUI {
         }
 
         job.setJobDescription(String.valueOf(descriptionText.getText()));
-
         category.setJobID(job.getJobID());
         category.setJobPrimaryCategory(String.valueOf(categoryMenuPrimary.getSelectedItem()));
         category.setJobSubCategory(String.valueOf(categoryMenuSecondary.getSelectedItem()));
-
         job.setJobStatus(String.valueOf(statusMenu.getSelectedItem()));
-
-
     }
 }
