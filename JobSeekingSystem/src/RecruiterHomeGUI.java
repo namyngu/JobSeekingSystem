@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -87,7 +88,9 @@ public class RecruiterHomeGUI
 
                 String toDisplay = "";
 
-                String senderName = this.myParent.retrieveUserName();
+                File_Control io = new File_Control();
+                String senderName = io.fileSearchId(each.getSenderID(), "users.csv").get(2);
+                //String senderName = this.myParent.retrieveUserName();
 
                 toDisplay += senderName + " Re: " + each.getHeader();
 

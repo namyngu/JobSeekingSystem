@@ -957,8 +957,8 @@ public class JSS
                 int sender = Integer.parseInt(messageDetails[2]);
                 int messageID = Integer.parseInt(messageDetails[0]);
                 String dateStr = messageDetails[7];
-                System.out.println("messageString is: " + messageString[i]);
-                System.out.println("dateStr is: " + dateStr);
+                //System.out.println("messageString is: " + messageString[i]);
+                //System.out.println("dateStr is: " + dateStr);
                 LocalDate date = LocalDate.parse(dateStr);
                 //if it is for the user checking, add it to their list
                 if (messageTo == userIndex)
@@ -1499,7 +1499,7 @@ public class JSS
         }
 
         rawInput = rawInput.replaceAll("~", "n");
-        rawInput = rawInput.replaceAll("`", ",");
+        //rawInput = rawInput.replaceAll("`", ",");
         String[] messageString = rawInput.split("\n");
 
         try
@@ -1516,6 +1516,7 @@ public class JSS
 
                 //split each user into another array of userDetails
                 String[] messageDetails = messageString[i].split(",");
+                messageDetails[5] = messageDetails[5].replaceAll("`", ",");
 
                 int destination = Integer.parseInt(messageDetails[3]);
 

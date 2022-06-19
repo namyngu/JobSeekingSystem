@@ -61,4 +61,5 @@ public class Administrator extends User
     public void setPrimaryAdmin(Boolean primary) {
         isPrimaryAdmin = primary;
     }
+
 }

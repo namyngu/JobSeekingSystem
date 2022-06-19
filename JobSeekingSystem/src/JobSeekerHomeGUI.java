@@ -124,25 +124,30 @@ public class JobSeekerHomeGUI {
         inboxList.setModel(inboxListModel);
 
         //retrieve messages for inbox
-
-        if (this.myParent.checkMessages() == false)
+        System.out.println("Time to check my messages");
+        if (myParent.checkMessages() == false)
         {
+            System.out.println("false");
             refreshList("Clear inbox...",inboxList,inboxListModel);
         }
         else
         {
 //            JSS program = new JSS();
 //            this.userMessages = pr
-            this.messages = this.myParent.fetchMessages();
+            System.out.println("true");
+            messages = myParent.fetchMessages();
 
             for (Message each: messages)
             {
 
                 String toDisplay = "";
 
-                String senderName = this.myParent.retrieveUserName();
+                File_Control io = new File_Control();
+                String senderName = io.fileSearchId(each.getSenderID(), "users.csv").get(2);
+                //String senderName = myParent.retrieveUserName();
 
                 toDisplay += senderName + " Re: " + each.getHeader();
+                System.out.println("toDisplay is: " + toDisplay);
 
 
                 refreshList(toDisplay,inboxList,inboxListModel);
