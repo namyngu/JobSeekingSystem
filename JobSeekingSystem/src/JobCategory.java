@@ -15,7 +15,6 @@ public class JobCategory
      */
     public JobCategory()
     {
-        System.out.println("Error: JobCategory class accepts two parameters at least.");
     }
 
     /**
