@@ -19,6 +19,8 @@ public class JobSeekerJobGUI {
     private JTextArea coverLetter;
     private JPanel jobPanel;
     private JButton submitApplicationButton;
+    private JList skillList;
+    private JLabel skillsLabel;
     private ArrayList<Job> jobList;
     private ArrayList<Location> locationList;
 
@@ -92,5 +94,18 @@ public class JobSeekerJobGUI {
 
             }
         });
+        populateSkillList(thisJob);
+    }
+
+    public void populateSkillList(Job job)
+    {
+        DefaultListModel data = new DefaultListModel();
+        ArrayList<String> skills = job.getSkills();
+        for (String skill : skills)
+        {
+            data.addElement(skill);
+        }
+
+        skillList.setModel(data);
     }
 }
