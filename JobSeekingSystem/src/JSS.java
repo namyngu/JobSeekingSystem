@@ -2,8 +2,6 @@
  * This class represents the main control class which controls the system.
  * @author: Team D - Tom Barker, Jakeob Clarke-Kennedy, Bradley Meyn, Hoang Nguyen, Gerard Samson-Dekker
  */
-
-// TODO upon login transfer control to relevant subclass controller
 import javax.swing.*;
 import java.io.IOException;
 import java.time.LocalDate;
