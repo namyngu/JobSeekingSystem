@@ -1131,15 +1131,16 @@ public class JSS
             temp.setActive(false);
         }
 
+        else
+        {
+            temp.setActive(true);
+        }
+
         if (temp instanceof Administrator)
         {
             temp.setActive(true);
         }
 
-        else
-        {
-            temp.setActive(true);
-        }
    this.refreshUserSavedList();
     }
 
