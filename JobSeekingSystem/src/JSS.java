@@ -225,7 +225,7 @@ public class JSS
                 }
 
             case "Jobseeker":
-                //Do something else
+                //Launch Jobseeker Control
                 JobseekerControl jobSeekerControl = new JobseekerControl(this,userList.get(userIndex), jobList, locationList, jobCategoryList);
                 break;
 
