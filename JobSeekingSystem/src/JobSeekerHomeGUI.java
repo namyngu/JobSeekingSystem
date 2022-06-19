@@ -1,3 +1,8 @@
+/**
+ * This class is the Job Seeker Home GUI, the jobseeker will use to interact with the system.
+ * @author: Team D - Tom Barker, Jakeob Clarke-Kennedy, Bradley Meyn, Hoang Nguyen, Gerard Samson-Dekker
+ */
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -72,6 +77,9 @@ public class JobSeekerHomeGUI {
 
     public int searchCount;
 
+    /**
+     * This is the method to populate the categories menu.
+     */
     public void populateCategories() throws IOException {
         File_Control IO = new File_Control();
         String catList = IO.readFile("CategoryList.csv");
@@ -83,6 +91,9 @@ public class JobSeekerHomeGUI {
         }
     }
 
+    /**
+     * This is the method to populate the secondary categories menu.
+     */
     public void populateSecondaryCategories(String primaryCategory) throws IOException {
         File_Control IO = new File_Control();
         String catList = IO.readFile("CategoryList.csv");
@@ -103,6 +114,13 @@ public class JobSeekerHomeGUI {
         }
     }
 
+    /**
+     * This is the Non-Default constructor.
+     * @param parent    a JobseekerControl object to manage the jobseeker object
+     * @param categories a JobCategory Arraylist to store the job categories
+     * @param locations a Location ArrayList to store the locations
+     * @param seeker a Jobseeker object that stores the users details
+     */
     public JobSeekerHomeGUI(JobseekerControl parent, ArrayList<JobCategory> categories,
                             ArrayList<Location> locations, Jobseeker seeker) {
         JobSeekerHomeGUI home = this;
@@ -351,6 +369,9 @@ public class JobSeekerHomeGUI {
         });
     }
 
+    /**
+     * This is the method to create the applications table.
+     */
     private void createApplicationsTable()
     {
         ArrayList<Application> myApps = new ArrayList<>();
@@ -493,6 +514,9 @@ public class JobSeekerHomeGUI {
         applicationsTable.setModel(new DefaultTableModel(data, new String[]{"JobID","Title","Employer","Status"}));
     }
 
+    /**
+     * This is the method to display recommended jobs.
+     */
     public void displayRecommendedJobs() {
         // Obtain a list of recommended jobs for this seeker.
         TreeMap<Integer, ArrayList<Job>> searchResults = myParent.recommendedSearch();
@@ -546,9 +570,11 @@ public class JobSeekerHomeGUI {
         } else {
             instructionText.setVisible(false);
         }
-
     }
 
+    /**
+     * This is the method to build the skill list.
+     */
     public void buildSkillList(){
         jsSkillsModel = new DefaultListModel<>();
         ArrayList<String> skills = myParent.getSkills();
@@ -563,7 +589,9 @@ public class JobSeekerHomeGUI {
         jsSkillsTable.setModel(jsSkillsModel);
     }
 
-
+    /**
+     * This is the method to build contact info.
+     */
     public void buildContactInfo()
     {
         jobSeekerFullname.setText(myParent.getFullName());
@@ -572,8 +600,9 @@ public class JobSeekerHomeGUI {
         jobseekerLocation.setText(myParent.getLocation().toString());
     }
 
-
-
+    /**
+     * This is the method to refresh a list.
+     */
     private void refreshList(String content, JList list, DefaultListModel listModel)
     {
         list.setVisible(true);
