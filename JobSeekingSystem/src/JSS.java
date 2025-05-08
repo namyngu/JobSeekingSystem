@@ -590,8 +590,6 @@ public class JSS
         }
     }
 
-    //create new job and write to .csv
-
 
     /**
      *  Imports the user for the existing .csv file and creates an object of Administrator, Recruiter or Jobseeker

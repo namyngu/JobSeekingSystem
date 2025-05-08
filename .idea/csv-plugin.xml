@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\CategoryList.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\JobApplication.csv">
           <value>
             <Attribute>
@@ -38,20 +45,6 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\JobSeekingSystem\KeywordList.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\JobSeekingSystem\messages.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="\JobSkills.csv">
           <value>
             <Attribute>
@@ -67,6 +60,13 @@
           </value>
         </entry>
         <entry key="\SkillList.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\jobseeker-skills.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
